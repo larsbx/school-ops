@@ -11,9 +11,13 @@ progression are maintained here, along with reasons, demonstrations, and evidenc
    explicitly selected by the user; our first course is 2nd grade.
 3. Review starting skills, notation, difficulty, and fit to the intended work.
 4. Create a [resource record](../templates/resource.md) from actual returned
-   metadata, with the query, review date, and intended art and practice.
-5. Register the reviewed resource and link it from a lesson. Keep class-specific
-   assignment links privately.
+   metadata, with the query, intended roles, audience, and art and practice. Check
+   access and availability and record the dated suitability review.
+5. Complete the [resource readiness checks](curriculum-model.md#resource-readiness),
+   record the supporting review pull request, mark the resource `ready`, and add
+   it to the register. Link consuming lessons when they are authored; registration
+   does not depend on lesson readiness. Assessment use also requires a linked ready
+   assessment design. Keep class-specific assignment links privately.
 6. Combine practice with a reasoning question and an explanation task. Exercise
    completion is evidence to consider, not a complete judgment of understanding.
 

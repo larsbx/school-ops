@@ -17,8 +17,9 @@ record, `scope.md` brief, and `units/<unit-slug>/README.md` unit records. Lesson
 live under their unit in `lessons/<lesson-slug>.md`.
 
 Assessment designs live in `assessments/<course-id>/`. Shared resource records
-live in `resources/<resource-id>.md`. Register courses and resources in their
-respective indexes when adding them.
+live in `resources/<resource-id>.md`. Register courses as they are developed;
+register resources only after they meet resource readiness. Draft resource records
+may be authored before registration.
 
 ## Stable identifiers
 
@@ -88,10 +89,12 @@ duplicated. Assessments require their own tasks and evidence criteria, not a cou
 sequence. Scope briefs and weekly plans may reference these records without
 repeating their rubrics.
 
-A ready course or unit includes ready child teaching records, required resources,
-and assessment designs. Check each child against its own record type. Weekly plans
-likewise reference ready material for the sessions to be delivered. A ready resource
-does not make its consuming lesson, unit, or course ready.
+A ready course or unit includes ready child teaching records. For ready courses,
+units, and lessons, any required resource records or linked assessment designs must
+also be ready. Check each dependency against its own record type. Weekly plans
+likewise reference ready lessons, required resources, and assessment designs for
+the sessions to be delivered. A ready resource does not make its consuming lesson,
+unit, or course ready.
 
 ### Resource readiness
 
@@ -107,16 +110,18 @@ Before marking a resource `ready`, record and review:
   reference-only use does not require permission to redistribute the content.
 - A dated review and supporting pull request confirming these checks.
 
-Instruction and practice resources do not require a teaching sequence, assessment
-design, or assessment criteria. They may be reviewed and registered before a
-consuming lesson is authored. A time estimate is useful where applicable but is
-not a required teaching plan. Missing provider-reported IDs, levels, or curricular
-labels are non-blocking optional metadata when the source is otherwise identified.
+Resources used only for instruction or practice do not require a teaching sequence,
+assessment design, or assessment criteria. They may be reviewed and registered
+before a consuming lesson is authored. A time estimate is useful where applicable
+but is not a required teaching plan. Missing provider-reported IDs, levels, or
+curricular labels are non-blocking optional metadata when the source is otherwise
+identified.
 
-If the intended roles include assessment, link a ready assessment design specifying
-the relevant tasks, conditions, and evidence/success criteria. Keep those criteria
-in the assessment record; the resource record supplies the source and intended use.
-This additional check applies only to assessment use.
+If any intended role includes assessment, including combined instruction/practice
+and assessment use, link a ready assessment design specifying the relevant tasks,
+conditions, and evidence/success criteria. Keep those criteria in the assessment
+record; the resource record supplies the source and intended use. This additional
+check applies only to assessment use.
 
 Status describes teaching material. Learner mastery is a separate judgment based
 on the stated assessment criteria; it cannot be inferred from material status or

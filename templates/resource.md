@@ -27,19 +27,22 @@
 
 ## Suitability review
 
-[Record starting skills, difficulty, notation, accessibility, time estimate, and
-fit to the stated outcomes. Distinguish reviewed observations from open questions.]
+[Record starting skills, difficulty, notation, accessibility, and fit to the
+stated outcomes; add a time estimate when useful. Distinguish reviewed observations
+from open questions.]
 
 ## Use in teaching
 
-[Link lessons and describe whether this is instruction, practice, or assessment
-evidence. Class-specific assignment links are stored in private planning.]
+[Describe the planned instruction, practice, or assessment use; link consuming
+lessons if already authored. Class-specific assignment links are stored in private
+planning.]
 
-- Assessment design, only for assessment use: [ready assessment ID and link, or not applicable for instruction/practice]
+- Assessment design, only for assessment use: [ready assessment ID and link, or not applicable when no assessment role]
 
 Apply [resource readiness](../docs/curriculum-model.md#resource-readiness).
-Instruction/practice records require neither a teaching sequence nor assessment
-criteria. Keep assessment criteria in the linked assessment design when applicable.
+Instruction/practice-only records require neither a teaching sequence nor assessment
+criteria. Any assessment role requires the linked ready assessment design, which
+holds the assessment criteria.
 Consuming lessons may be added later; optional provider metadata may be `not reported`.
 
 ## Changes and replacement

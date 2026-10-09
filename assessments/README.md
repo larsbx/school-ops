@@ -3,10 +3,16 @@
 Store assessment plans and rubrics in `assessments/<course-id>/<assessment-id>.md`
 using the [assessment template](../templates/assessment.md).
 
-Each design links to course outcome IDs and describes the task, conditions,
-permitted support, evidence, and success criterion. Use entry checks for
-prerequisites, formative checks to guide instruction, and end-of-unit assessments
-to decide whether outcomes have been demonstrated.
+Each design links to course outcome IDs or identifies the named entry skills being
+checked and describes the task, conditions, permitted support, evidence, and
+success criterion. Use entry checks for prerequisites, formative checks to guide
+instruction, and end-of-unit assessments to decide whether outcomes have been
+demonstrated.
+
+Keep designs `draft` until the [assessment readiness requirements](../docs/curriculum-model.md#readiness-by-record-type)
+are met, including actual tasks, conditions, criteria, a teacher key or model
+evidence, and a dated review with a supporting pull request. Assessment resources
+must link to a ready design before entering the resource register for that use.
 
 The course outcome table links to the assessment that checks each outcome. A
 Khan Academy exercise set can supply practice or evidence when reviewed for that

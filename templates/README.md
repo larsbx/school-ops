@@ -2,8 +2,10 @@
 
 Copy a template into the destination described by the
 [curriculum model](../docs/curriculum-model.md). Replace bracketed placeholders,
-assign stable IDs, and register the new record. Templates remain examples with
-unresolved fields; completed material stays `draft` until reviewed.
+assign stable IDs, and use the applicable index workflow. Courses may be registered
+as drafts; resources enter the register only after their resource-specific review
+is complete and their status is `ready`. Templates remain examples with unresolved
+fields; authored material stays `draft` until its record-type readiness checks pass.
 
 | Template | Use |
 | --- | --- |

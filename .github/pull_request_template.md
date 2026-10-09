@@ -9,7 +9,8 @@ Identify the record types changed and their applicable readiness checks. For
 teaching/assessment records, describe prerequisites, outcomes, and evidence criteria;
 for resources, describe role, source, access, and suitability review.
 Distinguish proposed material from teaching observations.
-Describe the Quadrivium content and the grammar, logic, and rhetoric work.
+For curriculum design, describe the Quadrivium content and the grammar, logic,
+and rhetoric work; for resources, state the intended contribution to that work.
 
 ## Validation
 

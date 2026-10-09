@@ -6,7 +6,8 @@ title: "Resource: "
 
 ## Source
 
-Actual title, provider or author, general source URL, and discovery date:
+Actual title, provider or author, source locator (general URL, citation, or private
+reference), and discovery date:
 
 ## Intended use
 
@@ -14,7 +15,8 @@ Course, grade range, outcome IDs, and instruction/practice/assessment role:
 
 ## Review
 
-Starting skills, difficulty, notation, access needs, suitability, and reuse rights:
+Starting skills, difficulty, notation, checked access/availability, suitability,
+and reuse rights if copying:
 
 ## Khan Academy selection, if applicable
 
