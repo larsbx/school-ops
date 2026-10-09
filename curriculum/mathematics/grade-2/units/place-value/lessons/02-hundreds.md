@@ -33,7 +33,9 @@ Demonstrate 305 to another person and explain why its middle position is zero.
 
 1. Retrieval: build 40 and explain the grouped unit (3 minutes).
 2. Model: exchange ten tens for one hundred; compare 100 and 200 (5 minutes).
-3. Supported work: model 140, 305, and 350 (7 minutes).
+3. Supported work: model 140, 305, and 350. In 140, unpack one hundred into
+   ten tens, then one ten into ten ones; name the groups after each exchange
+   and explain the preserved amount (7 minutes; split if needed).
 4. Independent work: model 406 and 230 and name every position (7 minutes).
 5. Exit: explain 402 and the ten-tens exchange (3 minutes).
 
@@ -43,6 +45,9 @@ Demonstrate 305 to another person and explain why its middle position is zero.
 - 350: 3 hundreds, 5 tens, 0 ones; 406: 4 hundreds, 0 tens, 6 ones.
 - 230: 2 hundreds, 3 tens, 0 ones; 402: 4 hundreds, 0 tens, 2 ones.
 - Ten tens and one hundred both represent 100.
+- Unpacking: 140 = 1 hundred + 4 tens = 14 tens = 13 tens + 10 ones.
+  The hundred-to-tens and ten-to-ones exchanges each preserve 140; neither
+  exchange changes the counted one-unit or adds/removes any amount.
 - If the exchange is not understood, repeat it with objects rather than moving
   directly to a rule for written digits.
 

@@ -15,7 +15,10 @@
 
 The selected teaching route or equivalent evidence in its scope: lesson 1 and the
 chosen examples in lessons 3–5, plus lesson 2 when hundreds are included. Assess
-the thousand extension only after its grouping and boundary work have been taught.
+the thousand extension only after lesson 3's
+[grouping and four-position activity](03-number-forms.md#optional-thousand-extension)
+and lesson 4's [boundary activity](04-counting.md#optional-count-through-1000),
+including their checks. Those teaching activities need separate time before PVX.
 
 ## Grammar
 

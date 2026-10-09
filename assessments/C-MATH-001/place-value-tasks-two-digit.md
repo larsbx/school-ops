@@ -1,6 +1,6 @@
 # Place-value tasks: two-digit form PV2
 
-- Part of [A-MATH-001-02](place-value-check.md)
+- Part of assessment: A-MATH-001-02; form PV2
 - Intended learners: 2nd grade; use after the relevant ones/tens work
 - Status: draft
 - Scope: ones/tens and values within 99

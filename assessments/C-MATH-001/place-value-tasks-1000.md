@@ -1,6 +1,6 @@
 # Place-value tasks: optional 1,000 extension PVX
 
-- Part of [A-MATH-001-02](place-value-check.md)
+- Part of assessment: A-MATH-001-02; form PVX
 - Intended learners: 2nd grade; use only after the thousand grouping and boundary have been taught
 - Status: draft
 - Scope: ten hundreds as a thousand and counting through 1,000
@@ -14,7 +14,7 @@ two-digit and three-digit checks.
 
 | Item | Task |
 | --- | --- |
-| PVX-01 | Regroup ten hundreds into one larger unit. Write and name the amount, express it as a sum of place values, and show its model. Explain how many digit positions its numeral needs and what each position records. |
+| PVX-01 | Regroup ten hundreds into one larger unit. Explain why the exchange keeps the amount unchanged. Write and name the amount, express it as a sum of place values, and show its model. Explain how many digit positions its numeral needs and what each position records. |
 | PVX-02 | Count by ones from 996 through 1,000. Show or explain the exchanges when you pass from 999 to 1,000. |
 
 The teacher keeps the answer guide separate. Individual work belongs in private

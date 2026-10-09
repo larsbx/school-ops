@@ -1,6 +1,6 @@
 # Place-value tasks: three-digit form PV3
 
-- Part of [A-MATH-001-02](place-value-check.md)
+- Part of assessment: A-MATH-001-02; form PV3
 - Intended learners: 2nd grade; use after the relevant ones/tens/hundreds work
 - Status: draft
 - Scope: ones/tens/hundreds and values within 999

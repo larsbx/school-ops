@@ -6,7 +6,7 @@
 - Status: draft
 - Primary art: Arithmetic, with grammar, logic, and rhetoric throughout
 - Quantity range: chosen after entry work; prepared extensions through 1,000
-- Time estimate: six 25-minute sessions, plus optional prerequisite review
+- Time estimate: five 25-minute core sessions for ones/tens or six for hundreds; optional review and thousand work need additional time
 - Actual dates and weekly allocation: not selected
 - Materials: counters/bundled sticks or base-ten blocks, place-value chart, paper, pencil
 - Authoring review: 2026-10-09; [first-unit review](../../../../../docs/reviews/2026-10-09-first-unit.md)
@@ -56,13 +56,18 @@ or an agreed schedule. Preserve lesson IDs and record the route used privately.
 | --- | --- | --- | --- |
 | Ones/tens | Lesson 1, then the two-digit routes in lessons 3–5, then lesson 6 | PV2 | Lesson 2's hundreds work, three-digit examples, and the thousand boundary |
 | Ones/tens/hundreds | Lessons 1–6 using the main three-digit examples where present | PV3 | The thousand grouping and counting boundary |
-| Thousand extension | Teach lesson 3's ten-hundreds grouping and lesson 4's separate count through 1,000 after the hundreds work | PVX as a separate supplement | Further four-digit work |
+| Thousand extension | After the hundreds route, teach lesson 3's [optional thousand activity](lessons/03-number-forms.md#optional-thousand-extension) and lesson 4's [boundary activity](lessons/04-counting.md#optional-count-through-1000), including their practice and checks | PVX as a separate supplement in lesson 6 | Further four-digit work |
 
 The two-digit route does not silently certify the skipped hundreds work. Lesson
 3 includes zero ones in its concrete smaller-range tasks. Its alternative form
 does not require lesson 2. Larger examples are taught and checked later when
 appropriate. Use the entry check and lesson evidence to add prerequisite review;
 choose additional time rather than treating the estimates as a speed requirement.
+
+The optional thousand activity adds an estimated 25 minutes of instruction;
+the boundary activity adds 10–15 minutes. Allow another 5–10 minutes for PVX in
+a separate assessment sitting. These are proposed budgets, not agreed teaching
+dates or demonstrated delivery times. Neither core route requires this extension.
 
 ## Resources
 

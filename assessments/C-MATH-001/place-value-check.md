@@ -25,7 +25,11 @@ and permitted support privately before administering it.
 | PVX | [Optional 1,000 extension](place-value-tasks-1000.md) | Ten hundreds as one thousand; four-digit notation and counting through 1,000 | Other four-digit calculations or comparisons |
 
 PVX supplements PV3 only after grouping ten hundreds, the thousand position, and
-counting through that boundary have been taught. It is not a prerequisite for
+counting through that boundary have been taught: use lesson 3's
+[optional thousand activity](../../curriculum/mathematics/grade-2/units/place-value/lessons/03-number-forms.md#optional-thousand-extension),
+then lesson 4's [boundary activity](../../curriculum/mathematics/grade-2/units/place-value/lessons/04-counting.md#optional-count-through-1000).
+Their instruction time is additional to the extension assessment estimate.
+PVX is not a prerequisite for
 two-digit or three-digit progression. PV2 evidence supports only the two-digit
 portion of the course outcomes; it does not establish the hundreds component of
 outcome 001. Record unassessed extensions as pending, not as failures or completed
@@ -37,8 +41,12 @@ criteria for review before use; do not treat an improvised change as this form.
 
 ## Administration
 
-The linked task sheets contain original school-ops questions without teacher keys.
-Present only the chosen task sheet; keep this guide out of view during the check.
+The linked task sheets contain original school-ops questions without teacher keys
+or links to this answer guide. Their non-clickable assessment ID preserves the
+connection to this teacher record. Distribute a standalone copy or export of only
+the chosen learner sheet and any blank chart; keep this guide and lesson keys out
+of view during the check. Repository navigation exposes teacher material, so use
+the learner copy for administration.
 Read directions without explaining the answer. Where a number of counting terms
 is requested, the starting value is the first term; range endpoints are included.
 
@@ -97,7 +105,7 @@ Use with PV3 only. Zero terms in expanded form are optional.
 
 | Item | Teacher key or model evidence |
 | --- | --- |
-| PVX-01 | Ten hundreds = 1,000 = one thousand; its place-value sum is 1,000, with zero lower-place terms optional. It has one thousand, zero hundreds, zero tens, and zero ones; four digit positions |
+| PVX-01 | Each hundred represents 100 ones, so ten hundreds represent 10 × 100 = 1,000 ones. Exchanging those groups for one thousand preserves that amount; no ones are added or removed. Numeral: 1,000; name: one thousand; place-value sum: 1,000 (or 1,000 + 0 + 0 + 0). The model/chart has one thousand, zero hundreds, zero tens, and zero ones; four digit positions, with the comma only a separator |
 | PVX-02 | 996, 997, 998, 999, 1,000; at 999 to 1,000, ten ones become one ten, ten tens become one hundred, and ten hundreds become one thousand |
 
 1,000 is a four-digit numeral. PV3 comparison tasks use three-digit values only;
