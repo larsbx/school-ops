@@ -8,13 +8,20 @@
 - Prerequisites: [entry skills or prior outcome IDs and links]
 - Planned time: [minutes]
 - Materials: [resources and access needs]
+- Primary Quadrivium art: [arithmetic, geometry, or astronomy]
 - Review date and pull request: [date and link, or not reviewed]
 
 ## Observable goal
 
 [State what learners will demonstrate, under what conditions, and the success criterion.]
 
-## Teaching sequence
+## Trivium work
+
+- Grammar: [names, symbols, definitions, or factual relationships to use accurately]
+- Logic: [comparison, reason, inference, or counterexample to investigate]
+- Rhetoric: [spoken, drawn, or written explanation addressed to another person]
+
+## Activities
 
 | Stage | Activity | Minutes | Resource or assessment record |
 | --- | --- | --- | --- |

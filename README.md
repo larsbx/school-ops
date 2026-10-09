@@ -3,14 +3,23 @@
 Develop and organize our K–12 curriculum: learning goals, course sequences,
 teaching materials, assessments, and weekly plans.
 
+The [Trivium and Quadrivium](docs/trivium-quadrivium.md) organize the curriculum:
+grammar, logic, and rhetoric guide inquiry across arithmetic, geometry,
+and astronomy. Second grade identifies our starting learners; the course develops
+understanding through concrete work, reasoning, and explanation.
+
 This repository is the shared source of truth for curriculum development.
 GitHub issues track work; pull requests review changes; the files hold the
 current curriculum. Khan Academy is a source of assignable mathematics practice.
 
 ## Start here
 
+Our first course is [Second-grade mathematics](curriculum/mathematics/grade-2/README.md).
+Start with its [entry check](assessments/C-MATH-001/entry-check.md), then the draft
+[place-value unit](curriculum/mathematics/grade-2/units/place-value/README.md).
+
 1. Complete a [scope brief](templates/scope-brief.md) for the first course:
-   intended grades, starting skills, goals, available time, and any chosen standards.
+   intended learners, starting skills, chosen arts, goals, and available time.
 2. Review the [subject map](curriculum/subject-map.md) and register the course in
    the [curriculum index](curriculum/README.md).
 3. Use the [course](templates/course.md), [unit](templates/unit.md), and
@@ -31,18 +40,20 @@ current curriculum. Khan Academy is a source of assignable mathematics practice.
 | [planning/](planning/README.md) | Weekly plans and curriculum review decisions |
 | [templates/](templates/README.md) | Reusable briefs, course plans, and teaching documents |
 | [docs/curriculum-model.md](docs/curriculum-model.md) | Identifiers, prerequisites, outcomes, and readiness rules |
+| [docs/trivium-quadrivium.md](docs/trivium-quadrivium.md) | The seven arts and their application in lessons |
 | [docs/roadmap.md](docs/roadmap.md) | Development milestones and acceptance criteria |
 | [docs/decisions/](docs/decisions/0001-k12-scope.md) | Recorded curriculum decisions |
 
 ## Current state
 
-The repository has a K–12 organizing framework and reusable templates. The
-subject map is a proposal; individual course grades and subject coverage remain
-to be selected. There are no approved courses, registered teaching resources,
-completed assessments, or learner-progress claims yet.
+The first subject and grade are selected: second-grade mathematics, `C-MATH-001`.
+Its draft includes a course outline, outcomes, an entry check, and six first-unit
+lessons with a place-value assessment. Other subject coverage remains open.
 
-The next milestone is to define the scope of one course and develop its first
-unit. See the [roadmap](docs/roadmap.md).
+The organizing framework is selected: the Trivium and Quadrivium. Teaching dates
+and weekly time remain undecided.
+Khan Academy exercise selection is pending. No teaching results have been recorded.
+See the [roadmap](docs/roadmap.md) for the remaining development work.
 
 ## Working method
 

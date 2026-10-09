@@ -7,6 +7,7 @@ Link the relevant issue, course, unit, or outcome IDs.
 
 State the intended grades, prerequisites, outcomes, source review, and assessment
 coverage. Distinguish proposed material from teaching observations.
+Describe the Quadrivium content and the grammar, logic, and rhetoric work.
 
 ## Validation
 

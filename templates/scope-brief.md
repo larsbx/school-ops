@@ -18,7 +18,8 @@
 | Desired outcomes | [what learners should demonstrate by the end] |
 | Time budget | [minutes per session, sessions per week, and course duration] |
 | Calendar | [teaching dates or not selected] |
-| Standards | [framework and exact source, or not selected] |
+| Curriculum framework | Trivium and Quadrivium |
+| Arts in this course | [primary art and connections to the other arts] |
 | Materials and access | [books, devices, online access, and other needs] |
 | Resource preferences | [chosen providers or not selected] |
 | First unit | [initial unit topic and rationale] |

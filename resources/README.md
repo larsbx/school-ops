@@ -9,6 +9,10 @@ source, intended use, review, and relevant outcomes.
 
 No resources are registered yet.
 
+The [second-grade mathematics search queue](second-grade-math-searches.md) lists
+proposed Khan Academy queries for the first course. These are pending searches,
+not selected or reviewed resources.
+
 ## Review and register a resource
 
 1. Find material for a stated outcome. Use the
@@ -16,7 +20,8 @@ No resources are registered yet.
 2. Copy the [resource template](../templates/resource.md) to
    `resources/<resource-id>.md` and assign a stable resource ID.
 3. Record the actual source, metadata, review date, starting skills, access needs,
-   and outcome fit. Distinguish provider-reported standards from reviewed alignment.
+   and outcome fit. Review its contribution to the chosen art and Trivium work;
+   provider curricular labels are provenance rather than the curriculum structure.
 4. Keep the record `draft` until its suitability review is complete. Mark it
    `ready` when reviewed, then add it to this register and the relevant lessons.
 5. If a resource changes or becomes unavailable, revise its record, update affected

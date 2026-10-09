@@ -13,4 +13,10 @@ Khan Academy exercise set can supply practice or evidence when reviewed for that
 purpose; completing a set alone does not establish all course outcomes.
 
 Individual responses, scores, and learner judgments belong in private records.
-This directory holds reusable assessment designs. No assessments are registered yet.
+This directory holds reusable assessment designs.
+
+| Assessment ID | Course | Design | Status |
+| --- | --- | --- | --- |
+| A-MATH-001-01 | C-MATH-001 | [Entry check](C-MATH-001/entry-check.md) | draft |
+| A-MATH-001-02 | C-MATH-001 | [Place-value check](C-MATH-001/place-value-check.md) | draft |
+| A-MATH-001-03 | C-MATH-001 | [Later-unit evidence plan](C-MATH-001/course-evidence-plan.md) | draft; tasks not authored |

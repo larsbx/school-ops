@@ -6,8 +6,7 @@ reviewed teaching material.
 
 | Course ID | Subject | Title | Intended grades | Status | Course record |
 | --- | --- | --- | --- | --- | --- |
-
-No courses are registered yet.
+| C-MATH-001 | Mathematics | Second-grade mathematics | 2nd grade | draft | [Course](mathematics/grade-2/README.md) |
 
 ## Add a course
 

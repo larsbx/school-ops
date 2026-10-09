@@ -11,6 +11,7 @@ Subject, grades or grade range, starting skills, and course or unit ID if presen
 ## Learning outcome
 
 What should learners be able to demonstrate, and under what conditions?
+Which arts does the work serve, and how will learners name, reason, and explain?
 
 ## Proposed work
 
@@ -25,4 +26,4 @@ Course, unit, lessons, resources, assessments, and expected time:
 
 ## Open decisions
 
-Standards, schedule, source choices, or other decisions needed:
+Arts, schedule, source choices, or other decisions needed:

@@ -6,7 +6,8 @@
 - Status: draft
 - Scope brief: [relative link]
 - Time budget: [sessions, minutes, and duration]
-- Standards: [selected framework and source, or not selected]
+- Framework: Trivium and Quadrivium
+- Primary art and connections: [arts and their actual content]
 - Review date and pull request: [date and link, or not reviewed]
 
 ## Purpose and prerequisites
@@ -15,9 +16,9 @@
 
 ## Course outcomes
 
-| Outcome ID | Observable outcome | Success criterion | Assessment record | Standards alignment |
+| Outcome ID | Observable outcome | Success criterion | Assessment record | Art and Trivium practice |
 | --- | --- | --- | --- | --- |
-| [O-SUBJECT-NNN-NNN] | [demonstration and conditions] | [observable criterion] | [link] | [exact reviewed ID and source, or not reviewed] |
+| [O-SUBJECT-NNN-NNN] | [demonstration and conditions] | [observable criterion] | [link] | [art, vocabulary, reasoning, and explanation] |
 
 Define each outcome here once. Units and lessons reference these IDs.
 

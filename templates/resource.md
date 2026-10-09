@@ -16,8 +16,8 @@
 - Explicit search limits: [user-specified grade and/or standard, or none]
 - Returned title: [actual title or not reported]
 - Returned provider identifier: [actual ID or not reported]
-- Provider-reported standard: [exact ID or not reported]
-- Reviewed standards alignment: [exact ID, source, and rationale, or not reviewed]
+- Provider-reported curricular label: [optional provenance only, or not reported]
+- Art and practice served: [Quadrivium content and Trivium work]
 - Access and reuse rights: [requirements and source for rights, or not reviewed]
 
 ## Suitability review

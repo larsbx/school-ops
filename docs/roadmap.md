@@ -1,33 +1,29 @@
 # school-ops roadmap
 
-Develop one usable course and unit before expanding the catalogue. Specific
-grades, standards, term dates, and subject priorities will come from course briefs.
+Start with [second-grade mathematics](../curriculum/mathematics/grade-2/README.md).
+The [Trivium and Quadrivium](trivium-quadrivium.md) govern structure and progression;
+modern tools and applications support the studies. Dates and weekly time remain open.
 
-| Milestone | Current state | Acceptance criteria |
+| Milestone | State | Acceptance criteria |
 | --- | --- | --- |
-| M0 — Organizing foundation | Prepared for review | K–12 scope, indexes, templates, development workflow, and Khan Academy workflow reviewed and merged |
-| M1 — First course scope | Open | Subject and grades selected; entry skills, goals, teaching time, materials, and standards decision recorded in a scope brief |
-| M2 — Course sequence | Open | Course registered; stable outcome IDs, prerequisite order, unit outline, and outcome-to-assessment map reviewed |
-| M3 — First teaching unit | Open | One unit has ready lessons, reviewed resources, assessment criteria, and a feasible weekly plan |
-| M4 — Pilot and revision | Open | Unit taught; curriculum review records pacing, material changes, and follow-up work; learner evidence remains private |
-| M5 — Expand coverage | Open | Additional units and subjects added using the same review and planning process |
+| M0 — Organizing foundation | Prepared for review | Framework, indexes, templates, and development workflow reviewed and merged |
+| M1 — First course scope | Grade 2 mathematics and classical framework selected; brief drafted | Entry work, available time, dates, and materials reviewed |
+| M2 — Course progression | Seven-unit progression and 13 outcomes drafted | Dependencies, meaningful work in the selected mathematical arts, and evidence plans reviewed |
+| M3 — First teaching unit | Six arithmetic lessons and a check drafted | Grammar, reasoning, and explanation tasks reviewed; practice selected; actual pacing agreed |
+| M4 — Pilot and revision | Open | First unit taught; curriculum revisions recorded; individual evidence kept privately |
+| M5 — Develop connected arts | Open | Author geometry and astronomy investigations building on the arithmetic foundations |
+| M6 — Expand coverage | Open | Later levels and other courses added through the same framework and review process |
 
-## First development backlog
+## Next work
 
-- Select the first subject and grade range; complete its scope brief.
-- Choose a standards framework, or record that standards alignment is deferred.
-- Build the course outcome table and prerequisite sequence.
-- Develop the first unit and its assessment rubric.
-- For a mathematics unit, request Khan Academy exercises for a chosen topic,
-  review the returned selection, and register its source metadata.
-- Create the first weekly plan and define what the curriculum review will examine.
+- Use entry work to decide the first unit's quantity range and needed review.
+- Agree on teaching time and dates; adapt session estimates to a weekly plan.
+- Review the first-unit names, reasoning tasks, demonstrations, and criteria.
+- Retrieve and review practice through the [search queue](../resources/second-grade-math-searches.md).
+- Develop concrete sharing/proportion and geometry tasks before connected applications.
+- Author real sky observations and geometric investigations with suitable reviewed resources.
+- Include modern applications throughout without letting a provider taxonomy
+  replace the chosen mathematical progression.
 
-## Review cadence
-
-At the end of each planned week, review time used, resource fit, prerequisite gaps,
-and changes needed for the next plan. After each unit, review whether the planned
-assessments cover its outcomes and whether the course sequence needs adjustment.
-Set actual review dates in the plan when teaching starts.
-
-Recurring reminders or automatic synchronization require a separate scheduling
-decision. This foundation does not create scheduled jobs or assign student work.
+Review pacing, sources, and evidence after each planned week and each unit.
+No recurring jobs or student assignments have been created.

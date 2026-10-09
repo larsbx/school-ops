@@ -23,5 +23,7 @@
 
 [Check that every claimed outcome is assessed and that the task is appropriate
 for the recorded prerequisites and intended grades.]
+Check the learner's use of names and notation, the mathematical reason, and the
+clarity of the explanation. Permit spoken or drawn responses where appropriate.
 
 Individual responses and scores are stored in private records.

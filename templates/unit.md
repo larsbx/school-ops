@@ -5,6 +5,7 @@
 - Intended grades: [grades or range]
 - Status: draft
 - Planned time: [sessions and minutes]
+- Quadrivium arts: [primary art and meaningful connections]
 - Review date and pull request: [date and link, or not reviewed]
 
 ## Prerequisites and entry check
@@ -26,6 +27,8 @@
 ## End-of-unit decision
 
 [Describe the evidence needed to progress and the planned response to gaps.]
+Include accurate language, a reasoned demonstration, and an explanation in the
+evidence; a correct answer alone does not show all three Trivium practices.
 
 ## Review notes
 

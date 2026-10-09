@@ -17,6 +17,8 @@
 
 - Is the intended grade or grade range stated, with starting skills identified?
 - Are outcomes observable, and is each one connected to an assessment criterion?
+- Does the material identify its Quadrivium art and include grammar, reasoning,
+  and explanation as described in the curriculum framework?
 - Do prerequisites refer to existing records or explicitly named entry skills?
 - Are activities feasible within the stated time and materials?
 - Are source titles, links, and review dates recorded accurately?
