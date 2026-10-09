@@ -34,5 +34,8 @@
 
 ## Review
 
-- Supporting issue or pull request: [link]
+- Supporting scope issue: [link or none]
+- Supporting review pull request: [link or not reviewed]
 - Agreed scope: [date or pending]
+
+Review against the [scope-brief readiness requirements](../docs/curriculum-model.md#readiness-by-record-type).

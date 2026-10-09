@@ -60,8 +60,9 @@ understanding. The user welcomed modern usage and excluded music; see
 
 For each lesson, record the primary art, names/notation, reasoning question,
 explanation task, practice, and evidence. Use entry work to choose the number range
-and amount of review. Ready material must have usable tasks, checked sources, and
-clear evidence criteria. Keep actual learner evidence privately.
+and amount of review. Apply the [readiness requirements for the record type](curriculum-model.md#readiness-by-record-type):
+teaching and assessment records need usable tasks and evidence criteria; resources
+need source, access, and suitability review. Keep actual learner evidence privately.
 
 ## Historical vocabulary and our adaptation
 
