@@ -8,7 +8,8 @@
 - Course outcome focus: 001 foundations; review 002–003 (prefix `O-MATH-001-`)
 - Time estimate: 25 minutes, adjustable after entry work
 - Materials: counters/bundled sticks or base-ten blocks, paper, pencil, place-value chart
-- Review: pending in [PR #1](https://github.com/larsbx/school-ops/pull/1)
+- Authoring review: 2026-10-09; [first-unit review](../../../../../../docs/reviews/2026-10-09-first-unit.md)
+- Readiness review: pending
 
 ## Prerequisites
 
@@ -35,13 +36,17 @@ the units, and the amount each digit contributes.
 
 1. Retrieval: count 18 objects and name the counting unit (3 minutes).
 2. Model: bundle ten ones, then build 14 as one ten and four ones (5 minutes).
-3. Supported work: build 27 and 40; rearrange without adding/removing units (7 minutes).
+3. Supported work: build 27 and 40; rearrange without adding/removing units.
+   Unbundle one of 27's tens into ten ones; name the new groups and explain why
+   the amount is still 27 (7 minutes).
 4. Independent work: draw or build 36 and 60, then write their numerals (7 minutes).
 5. Exit: explain both models and why an arrangement change preserves the count (3 minutes).
 
 ## Teacher key and next step
 
 - 14: 1 ten, 4 ones; 27: 2 tens, 7 ones; 40: 4 tens, 0 ones.
+- Unbundling: 27 = 2 tens + 7 ones = 1 ten + 17 ones. A ten and ten single
+  ones have equal value; exchanging either way adds or removes no amount.
 - Exit models: 36 = 3 tens + 6 ones; 60 = 6 tens + 0 ones.
 - Seek correct naming, a preserved count, and a clear explanation of grouping.
 - If counting or grouping is uncertain, stay with smaller collections and repeat
