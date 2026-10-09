@@ -3,6 +3,8 @@
 - Plan dates: [YYYY-MM-DD to YYYY-MM-DD]
 - Course and unit: [IDs and links]
 - Intended grades: [grades or range]
+- Status: draft
+- Review date and supporting pull request: [date and link, or not reviewed]
 - Available teaching time: [minutes or sessions]
 - Curriculum review date: [YYYY-MM-DD]
 
@@ -27,3 +29,6 @@
 | [pacing, resource fit, prerequisite gap, or assessment design] | [revision] | [link] |
 
 Keep learner names, individual scores, and accommodations in private records.
+
+Review against the [weekly-plan readiness requirements](../docs/curriculum-model.md#readiness-by-record-type).
+The after-week review is completed after teaching and does not block plan readiness.

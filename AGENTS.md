@@ -11,9 +11,12 @@
 - Read `README.md`, `docs/curriculum-model.md`, and the relevant course before
   making curriculum changes. Preserve stable IDs and prerequisite relationships.
 - Separate proposed curriculum, reviewed teaching material, and observed results.
-  Do not mark material `ready` while its readiness fields are unresolved.
-- Link outcomes to assessment criteria. Resource availability and exercise
-  completion alone do not establish mastery.
+  Apply `docs/curriculum-model.md` readiness requirements for the record's own type;
+  unresolved required fields block `ready`, but missing optional metadata does not.
+- Link course, unit, lesson, and assessment outcomes to evidence criteria.
+  Instruction/practice resources need source, access, and suitability review;
+  assessment resources link a ready assessment design. Resource availability and
+  exercise completion alone do not establish mastery.
 - Use the connected Khan Academy capability for requested mathematics exercise
   searches. Only apply grade or standard search limits explicitly supplied by
   the user. Do not use web search to retrieve Khan Academy exercises.

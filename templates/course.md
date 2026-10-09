@@ -6,6 +6,7 @@
 - Status: draft
 - Scope brief: [relative link]
 - Time budget: [sessions, minutes, and duration]
+- Required materials: [materials/access or links to the included units' requirements]
 - Framework: Trivium and Quadrivium
 - Primary art and connections: [arts and their actual content]
 - Review date and pull request: [date and link, or not reviewed]
@@ -36,3 +37,5 @@ will guide the next unit. Individual evidence is stored privately.]
 ## Open curriculum work
 
 - [Gap or unresolved decision with an issue link.]
+
+Review against the [course readiness requirements](../docs/curriculum-model.md#readiness-by-record-type).

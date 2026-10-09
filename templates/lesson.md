@@ -40,3 +40,5 @@ outcome gap. Identify review material or the next lesson.]
 
 [Record curriculum revisions, timing, and resource fit. Keep individual learner
 observations in private records.]
+
+Review against the [lesson readiness requirements](../docs/curriculum-model.md#readiness-by-record-type).

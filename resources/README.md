@@ -22,10 +22,21 @@ not selected or reviewed resources.
 3. Record the actual source, metadata, review date, starting skills, access needs,
    and outcome fit. Review its contribution to the chosen art and Trivium work;
    provider curricular labels are provenance rather than the curriculum structure.
-4. Keep the record `draft` until its suitability review is complete. Mark it
-   `ready` when reviewed, then add it to this register and the relevant lessons.
+4. Apply the [resource-specific readiness checks](../docs/curriculum-model.md#resource-readiness).
+   Keep the record `draft` until those checks pass; record the review date and
+   supporting pull request, then mark it `ready` and add it to this register.
+   Link consuming lessons when they are authored.
 5. If a resource changes or becomes unavailable, revise its record, update affected
    lessons, and retain the ID. Record a replacement when retiring it.
+
+Instruction and practice resources need a source, intended role/audience, access,
+and suitability review. They do not need a lesson sequence or assessment criteria.
+For assessment use, link a ready assessment design containing the tasks, conditions,
+and criteria. Review that design under the assessment requirements.
+
+A resource can be ready while a consuming lesson is still draft. Preserve existing
+register entries when their status changes, and recheck resource readiness after
+changes to the source, access, or intended use.
 
 Use source links and attribution. Record reuse rights before storing copies of
 external material. Public records hold general sources; class-specific assignment

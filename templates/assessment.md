@@ -19,7 +19,12 @@
 | --- | --- | --- | --- |
 | [ID and link] | [observable response or work] | [criterion] | [review or reassessment plan] |
 
-## Review of the assessment design
+## Teacher key or model evidence
+
+[Provide answers for objective tasks or describe acceptable model evidence for
+open tasks; use a separate teacher-facing record if needed.]
+
+## Readiness review
 
 [Check that every claimed outcome is assessed and that the task is appropriate
 for the recorded prerequisites and intended grades.]
@@ -27,3 +32,5 @@ Check the learner's use of names and notation, the mathematical reason, and the
 clarity of the explanation. Permit spoken or drawn responses where appropriate.
 
 Individual responses and scores are stored in private records.
+
+Review against the [assessment readiness requirements](../docs/curriculum-model.md#readiness-by-record-type).

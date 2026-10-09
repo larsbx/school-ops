@@ -58,14 +58,65 @@ work. Provider labels are resource provenance, not the organizing framework.
 | Status | Meaning |
 | --- | --- |
 | `draft` | Being developed; unresolved fields and questions remain visible |
-| `ready` | Reviewed for the named level and usable with the recorded plan |
+| `ready` | Reviewed for its declared role and scope; meets its record-type requirements |
 | `retired` | Retained for reference; replacement and reason are recorded |
 
-Before marking material `ready`, state its level, prerequisites, outcomes, time,
-materials, sequence, and assessment criteria. Verify its internal references and
-resource suitability. Remove instructional placeholders. Record the review date
-and supporting pull request. Apply the same checks to the child material included
-in a ready course or unit.
+## Readiness by record type
+
+All ready records have an identified purpose and scope, checked references,
+completed applicable fields, and a review date with a supporting pull request.
+Assign a stable ID where the record type defines one. Resolve required-field
+placeholders and review blockers. Optional metadata may remain `not reported`;
+use `not applicable` with a reason for fields that do not apply. Future delivery
+notes and replacement history need not be filled before the material is used.
+
+Apply the additional requirements for the record's type:
+
+| Record type | Required content for `ready` |
+| --- | --- |
+| Scope brief | Intended learners, entry skills and checks, goals, scope boundary, chosen arts, agreed teaching-time budget, calendar decision, and materials/access decisions |
+| Course | Level, prerequisites, arts, stable outcomes, planned time, materials, ordered units, and outcome-specific assessment criteria or links to assessment designs containing them |
+| Unit | Level, prerequisites and entry check, outcome references, time and materials, lesson sequence, assessment coverage and criteria, and a progression/review decision |
+| Lesson | Level, prerequisites, outcomes, time and materials, usable activity sequence with Trivium work, an outcome-linked check with success criteria, and feedback/next steps |
+| Assessment | Purpose, level, assessed outcomes or entry skills, actual tasks, administration conditions, time/materials/permitted support, evidence criteria, and a teacher key or model evidence appropriate to the task |
+| Resource | Source, role, intended audience, access, and suitability review as defined in [resource readiness](#resource-readiness) |
+| Weekly plan | Dates, agreed time budget, session order, prerequisite checks, available materials/resources, and links to the lessons and outcome checks to be used; planned time fits the budget |
+
+Courses, units, and lessons require teaching sequences and assessment criteria.
+Those criteria and materials may be supplied through explicit links rather than
+duplicated. Assessments require their own tasks and evidence criteria, not a course
+sequence. Scope briefs and weekly plans may reference these records without
+repeating their rubrics.
+
+A ready course or unit includes ready child teaching records, required resources,
+and assessment designs. Check each child against its own record type. Weekly plans
+likewise reference ready material for the sessions to be delivered. A ready resource
+does not make its consuming lesson, unit, or course ready.
+
+### Resource readiness
+
+Before marking a resource `ready`, record and review:
+
+- Its title, provider/author, and source locator: a checked general URL, full
+  citation, or private-location reference sufficient to identify the material.
+- Its role: instruction, practice, assessment, or a combination; its intended
+  audience, relevant outcomes, and contribution to the chosen art and practice.
+- Required access/materials and checked availability, plus suitability for that
+  role and audience: starting skills, difficulty, notation, and accessibility.
+- Whether it is referenced or copied. Verify reuse rights before including copies;
+  reference-only use does not require permission to redistribute the content.
+- A dated review and supporting pull request confirming these checks.
+
+Instruction and practice resources do not require a teaching sequence, assessment
+design, or assessment criteria. They may be reviewed and registered before a
+consuming lesson is authored. A time estimate is useful where applicable but is
+not a required teaching plan. Missing provider-reported IDs, levels, or curricular
+labels are non-blocking optional metadata when the source is otherwise identified.
+
+If the intended roles include assessment, link a ready assessment design specifying
+the relevant tasks, conditions, and evidence/success criteria. Keep those criteria
+in the assessment record; the resource record supplies the source and intended use.
+This additional check applies only to assessment use.
 
 Status describes teaching material. Learner mastery is a separate judgment based
 on the stated assessment criteria; it cannot be inferred from material status or

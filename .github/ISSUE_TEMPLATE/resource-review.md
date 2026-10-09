@@ -24,5 +24,7 @@ metadata. Keep class-specific assignment links in private planning.
 ## Acceptance criteria
 
 - [ ] Suitability reviewed for the stated outcome.
+- [ ] Source, role/audience, access, and review evidence meet resource readiness.
+- [ ] Assessment use, if any, links a ready assessment design; otherwise this check is not applicable.
 - [ ] Resource record and register entry added.
-- [ ] Relevant lesson references updated.
+- [ ] Existing consuming lesson references updated, or future use recorded.
