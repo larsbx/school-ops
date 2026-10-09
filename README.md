@@ -50,6 +50,11 @@ The first subject and grade are selected: second-grade mathematics, `C-MATH-001`
 Its draft includes a course outline, outcomes, an entry check, and six first-unit
 lessons with a place-value assessment. Other subject coverage remains open.
 
+The first unit has a prepared two-digit route and separate learner tasks and
+teacher keys for two-digit, three-digit, and optional 1,000 checks. Its
+[authoring review](docs/reviews/2026-10-09-first-unit.md) records corrections;
+teaching records remain draft pending their applicable readiness review.
+
 The organizing framework is selected: the Trivium and Quadrivium. Teaching dates
 and weekly time remain undecided.
 Khan Academy exercise selection is pending. No teaching results have been recorded.

@@ -8,7 +8,8 @@
 - Course outcome focus: 001 foundations; review 002–003 (prefix `O-MATH-001-`)
 - Time estimate: 25 minutes, adjustable after entry work
 - Materials: counters/bundled sticks or base-ten blocks, paper, pencil, place-value chart
-- Review: pending in [PR #1](https://github.com/larsbx/school-ops/pull/1)
+- Authoring review: 2026-10-09; [first-unit review](../../../../../../docs/reviews/2026-10-09-first-unit.md)
+- Readiness review: pending
 
 ## Prerequisites
 

@@ -8,12 +8,14 @@
 - Course outcome focus: 001–004 (prefix `O-MATH-001-`)
 - Time estimate: 25 minutes, adjustable after entry work
 - Materials: counters/bundled sticks or base-ten blocks, paper, pencil, place-value chart
-- Review: pending in [PR #1](https://github.com/larsbx/school-ops/pull/1)
+- Authoring review: 2026-10-09; [first-unit review](../../../../../../docs/reviews/2026-10-09-first-unit.md)
+- Readiness review: pending
 
 ## Prerequisites
 
-Lessons 1–5 or equivalent evidence in the chosen quantity range. Assess larger
-ranges only after those extensions have been taught.
+The selected teaching route or equivalent evidence in its scope: lesson 1 and the
+chosen examples in lessons 3–5, plus lesson 2 when hundreds are included. Assess
+the thousand extension only after its grouping and boundary work have been taught.
 
 ## Grammar
 
@@ -31,17 +33,20 @@ Give a short demonstration of one representation or comparison to another person
 ## Activities
 
 1. Retrieve the unit language without giving answers to the assessment (3 minutes).
-2. Use [A-MATH-001-02](../../../../../../assessments/C-MATH-001/place-value-check.md)
-   for independent evidence in the taught range (up to 20 minutes, or split sittings).
+2. Select PV2 or PV3 in [A-MATH-001-02](../../../../../../assessments/C-MATH-001/place-value-check.md)
+   from the taught scope and present only its learner task sheet for independent
+   evidence (up to 20 minutes, or split sittings).
 3. Ask for a brief teach-back of one completed reasoning task (about 2 minutes).
 4. Record which relationships need review before choosing the next study.
 
 ## Teacher key and next step
 
-Use the teacher key and outcome criteria in the linked assessment. Keep the key
-separate during the check. If only two-digit work has been taught, adapt the tasks
-to that range and record the three-digit/1,000 extensions as pending. Do not claim
-the full prepared range from evidence on a smaller one.
+Use the teacher key and outcome criteria for the selected form. The linked design
+supplies actual tasks for PV2 (ones/tens) and PV3 (ones/tens/hundreds); keep the key
+separate during the check. Add PVX in a separate sitting only after the thousand
+grouping and boundary have been taught. Record unassessed extensions as pending.
+Do not claim the full prepared range from evidence on a smaller one. Prepare and
+review a fresh keyed application if a full assessment prompt has been practiced.
 
 Record accurate language, the mathematical reason, and clarity of explanation.
 Review the specific relationship when evidence is incomplete, then reassess with

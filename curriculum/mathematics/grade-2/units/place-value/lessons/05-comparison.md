@@ -8,7 +8,8 @@
 - Course outcome focus: 004; review 001 (prefix `O-MATH-001-`)
 - Time estimate: 25 minutes, adjustable after entry work
 - Materials: counters/bundled sticks or base-ten blocks, paper, pencil, place-value chart
-- Review: pending in [PR #1](https://github.com/larsbx/school-ops/pull/1)
+- Authoring review: 2026-10-09; [first-unit review](../../../../../../docs/reviews/2026-10-09-first-unit.md)
+- Readiness review: pending
 
 ## Prerequisites
 
@@ -45,6 +46,22 @@ the reason another person can inspect.
 - Exit: 708 < 780; 659 > 599.
 - Require the correct relation, symbol, and a place-value reason.
 - If the reason relies on a single irrelevant digit, compare concrete models again.
+
+## Two-digit route
+
+Use these examples after ones/tens representations have been taught. Compare
+the amounts represented by the places, not the sizes of isolated digits.
+
+| Stage | Task and mathematical work | Minutes | Teacher key |
+| --- | --- | --- | --- |
+| Retrieval | Read and model 24 and 42 | 3 | 2 tens + 4 ones; 4 tens + 2 ones |
+| Model | Compare 35 and 53 and justify the first differing place | 5 | 35 < 53; three tens are less than five tens |
+| Supported work | Compare 90 with 49, and 66 with 66 | 7 | 90 > 49; nine tens exceed four tens; 66 = 66 |
+| Independent work | Put 19, 29, and 91 in increasing order; explain | 7 | 19 < 29 < 91; compare tens first |
+| Exit | Complete 57 __ 75 and 82 __ 78 with reasons | 3 | 57 < 75; 82 > 78; compare the tens |
+
+Require the relation, matching symbol, and an explanation using the counted units.
+If the reason uses an irrelevant digit, compare the modeled amounts again.
 
 The prompts are original school-ops drafts. Online practice is pending selection.
 Individual evidence is kept privately; curriculum observations guide the next plan.

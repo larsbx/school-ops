@@ -6,7 +6,7 @@
 - Status: draft
 - Purpose: plan evidence for outcomes 005–013 within the chosen classical arts
 - Tasks, timings, and teacher keys: not yet authored
-- Review: pending in [PR #1](https://github.com/larsbx/school-ops/pull/1)
+- Readiness review: pending; draft introduced in merged [PR #1](https://github.com/larsbx/school-ops/pull/1)
 
 This is an authoring backlog, not an assessment that can yet be administered.
 All evidence includes accurate names or representations, a reason, and an

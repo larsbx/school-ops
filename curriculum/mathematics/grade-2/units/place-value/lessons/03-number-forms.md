@@ -8,12 +8,14 @@
 - Course outcome focus: 003; review 001 (prefix `O-MATH-001-`)
 - Time estimate: 25 minutes, adjustable after entry work
 - Materials: counters/bundled sticks or base-ten blocks, paper, pencil, place-value chart
-- Review: pending in [PR #1](https://github.com/larsbx/school-ops/pull/1)
+- Authoring review: 2026-10-09; [first-unit review](../../../../../../docs/reviews/2026-10-09-first-unit.md)
+- Readiness review: pending
 
 ## Prerequisites
 
-An explanation of hundreds/tens/ones. Use two-digit versions if the hundreds
-extension is not yet appropriate.
+For the two-digit route, explain tens/ones and a zero ones position using lesson
+1's models. For the three-digit route, also require lesson 2's explanation of
+hundreds. Choose the corresponding activities below.
 
 ## Grammar
 
@@ -46,6 +48,23 @@ Present one amount in three forms and explain why all three refer to the same qu
 - Optional boundary extension after these forms are secure: ten hundreds = 1,000,
   one thousand. It introduces a fourth digit position, not a three-digit numeral.
 - Accept an accurate spoken explanation even when spelling needs support.
+
+## Two-digit route
+
+Use this route when only ones/tens have been taught. It replaces the three-digit
+examples above; hundreds and the thousand position remain pending.
+
+| Stage | Task and mathematical work | Minutes | Teacher key |
+| --- | --- | --- | --- |
+| Retrieval | Model 40 and explain its zero position | 3 | 4 tens, 0 ones |
+| Model | Connect 57, its spoken name, and its place-value sum | 5 | Fifty-seven; 50 + 7 |
+| Supported work | Convert 60 and 68 between forms; test the claim that the 6 in 68 means six single ones | 7 | Sixty = 60; sixty-eight = 60 + 8; the 6 records six tens |
+| Independent work | Write thirty-nine as a numeral and place-value sum | 7 | 39; 30 + 9 |
+| Exit | Name 82, write its expanded form, and explain the 8 | 3 | Eighty-two; 80 + 2; eight tens |
+
+Seek agreement among the numeral, spoken name, sum, and model. Accept accurate
+spoken names without requiring independent spelling. Return to concrete tens/ones
+if a digit is treated as single ones regardless of its place.
 
 The prompts are original school-ops drafts. Online practice is pending selection.
 Individual evidence is kept privately; curriculum observations guide the next plan.

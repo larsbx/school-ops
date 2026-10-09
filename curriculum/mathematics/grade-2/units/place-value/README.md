@@ -9,7 +9,8 @@
 - Time estimate: six 25-minute sessions, plus optional prerequisite review
 - Actual dates and weekly allocation: not selected
 - Materials: counters/bundled sticks or base-ten blocks, place-value chart, paper, pencil
-- Review: pending in [PR #1](https://github.com/larsbx/school-ops/pull/1)
+- Authoring review: 2026-10-09; [first-unit review](../../../../../docs/reviews/2026-10-09-first-unit.md)
+- Readiness review: pending
 
 ## Prerequisites and entry check
 
@@ -23,7 +24,8 @@ inform the parallel fluency work and are not assumed to prevent place-value lear
 Course outcomes [O-MATH-001-001 through 004](../../README.md#course-outcomes)
 cover modeling place values, counting, reading/writing, and comparison. The
 [unit check](../../../../../assessments/C-MATH-001/place-value-check.md)
-contains a separate evidence group and criterion for each outcome.
+contains a separate evidence group and criterion for each outcome, complete
+two-digit and three-digit forms, and a separate optional 1,000 extension.
 
 Each lesson names the units and symbols, investigates an invariant or comparison,
 and asks for an explanation to another person. Begin with small or two-digit
@@ -45,6 +47,23 @@ The first five sessions each allow roughly 3 minutes of retrieval, 5 of modeling
 7 of supported work, 7 of independent work, and 3 of an exit check. These are
 planning estimates; revisit them after teaching. Pause or split sessions when needed.
 
+## Choose the teaching route
+
+Choose after entry work; these are prepared options, not observed learner skills
+or an agreed schedule. Preserve lesson IDs and record the route used privately.
+
+| Prepared route | Lesson order and actual examples | Assessment | Pending extension |
+| --- | --- | --- | --- |
+| Ones/tens | Lesson 1, then the two-digit routes in lessons 3–5, then lesson 6 | PV2 | Lesson 2's hundreds work, three-digit examples, and the thousand boundary |
+| Ones/tens/hundreds | Lessons 1–6 using the main three-digit examples where present | PV3 | The thousand grouping and counting boundary |
+| Thousand extension | Teach lesson 3's ten-hundreds grouping and lesson 4's separate count through 1,000 after the hundreds work | PVX as a separate supplement | Further four-digit work |
+
+The two-digit route does not silently certify the skipped hundreds work. Lesson
+3 includes zero ones in its concrete smaller-range tasks. Its alternative form
+does not require lesson 2. Larger examples are taught and checked later when
+appropriate. Use the entry check and lesson evidence to add prerequisite review;
+choose additional time rather than treating the estimates as a speed requirement.
+
 ## Resources
 
 The lesson prompts are original school-ops drafts, with teacher keys in the lesson
@@ -56,4 +75,5 @@ and assessment records. Khan Academy questions have not been retrieved. See the
 Use the outcome-level criteria in the unit check. Review the specific outcome
 when evidence is incomplete, then reassess with different numbers. Continue
 revisiting these ideas in later arithmetic units; a single total score cannot
-substitute for evidence on each outcome.
+substitute for evidence on each outcome. Record the selected form and scope;
+hundreds/thousand work that was not taught remains pending.

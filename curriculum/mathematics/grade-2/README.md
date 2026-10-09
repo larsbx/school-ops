@@ -7,7 +7,8 @@
 - Main strand: arithmetic, connected to geometry and astronomy
 - Scope: [scope.md](scope.md)
 - Teaching time and dates: not selected
-- Review: pending in [PR #1](https://github.com/larsbx/school-ops/pull/1)
+- Authoring review: 2026-10-09; [first-unit review](../../../docs/reviews/2026-10-09-first-unit.md)
+- Readiness review: pending
 
 ## Foundation and progression
 
@@ -46,10 +47,10 @@ not learner results. Later-unit tasks still need authoring.
 
 | Outcome ID | Mathematical goal | Art | Evidence design |
 | --- | --- | --- | --- |
-| O-MATH-001-001 | Choose a counting unit; compose tens and hundreds; explain regrouping and a zero position | Arithmetic | [First-unit check](../../../assessments/C-MATH-001/place-value-check.md#outcome-criteria), items 1–3 |
-| O-MATH-001-002 | Continue a count and explain repeated steps, with prepared extensions through 1,000 | Arithmetic | [First-unit check](../../../assessments/C-MATH-001/place-value-check.md#outcome-criteria), items 4–6 |
-| O-MATH-001-003 | Connect a quantity to its numeral, name, and sum of place values | Arithmetic and grammar | [First-unit check](../../../assessments/C-MATH-001/place-value-check.md#outcome-criteria), items 7–9 |
-| O-MATH-001-004 | Compare amounts and justify equality or the first differing place | Arithmetic and logic | [First-unit check](../../../assessments/C-MATH-001/place-value-check.md#outcome-criteria), items 10–12 |
+| O-MATH-001-001 | Choose a counting unit; compose tens and hundreds; explain regrouping and a zero position | Arithmetic | [First-unit check](../../../assessments/C-MATH-001/place-value-check.md#outcome-criteria), PV2/PV3 items 01–03; optional PVX grouping |
+| O-MATH-001-002 | Continue a count and explain repeated steps, with prepared extensions through 1,000 | Arithmetic | [First-unit check](../../../assessments/C-MATH-001/place-value-check.md#outcome-criteria), PV2/PV3 items 04–06; optional PVX-02 boundary |
+| O-MATH-001-003 | Connect a quantity to its numeral, name, and sum of place values | Arithmetic and grammar | [First-unit check](../../../assessments/C-MATH-001/place-value-check.md#outcome-criteria), PV2/PV3 items 07–09; optional PVX-01 representation |
+| O-MATH-001-004 | Compare amounts and justify equality or the first differing place | Arithmetic and logic | [First-unit check](../../../assessments/C-MATH-001/place-value-check.md#outcome-criteria), PV2/PV3 items 10–12 |
 | O-MATH-001-005 | Compose and separate small quantities using mental and concrete methods; develop reliable recall | Arithmetic | [Later-unit plan](../../../assessments/C-MATH-001/course-evidence-plan.md) |
 | O-MATH-001-006 | Interpret a practical story, choose a calculation, and explain the result and its units | Arithmetic and rhetoric | [Later-unit plan](../../../assessments/C-MATH-001/course-evidence-plan.md) |
 | O-MATH-001-007 | Extend calculations to larger quantities by place-value grouping and explain why the method works | Arithmetic | [Later-unit plan](../../../assessments/C-MATH-001/course-evidence-plan.md) |
@@ -88,6 +89,8 @@ makes a relationship visible or supplies useful practice. The
 pending queries for our goals; no question sets have been selected.
 
 First-unit evidence checks accurate naming, a reasoned model, and an explanation.
+Use the [prepared taught-scope routes](units/place-value/README.md#choose-the-teaching-route)
+and corresponding assessment form; smaller-range evidence leaves larger work pending.
 Later units require authored tasks, reviewed sources, and appropriate materials.
 Keep individual learner evidence privately and use it to adjust pacing.
 

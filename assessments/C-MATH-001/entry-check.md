@@ -8,7 +8,8 @@
 - Estimated time: 10–15 minutes; no speed requirement
 - Materials: counters, paper, pencil, optional tens/ones chart
 - Support: read directions aloud; allow objects, drawings, and spoken responses
-- Review: pending in [PR #1](https://github.com/larsbx/school-ops/pull/1)
+- Authoring review: 2026-10-09; [first-unit review](../../docs/reviews/2026-10-09-first-unit.md)
+- Readiness review: pending
 
 ## Prompts and teacher key
 
