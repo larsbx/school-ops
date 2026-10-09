@@ -47,7 +47,7 @@ not learner results. Later-unit tasks still need authoring.
 
 | Outcome ID | Mathematical goal | Art | Evidence design |
 | --- | --- | --- | --- |
-| O-MATH-001-001 | Choose a counting unit; compose tens and hundreds; explain regrouping and a zero position | Arithmetic | [First-unit check](../../../assessments/C-MATH-001/place-value-check.md#outcome-criteria), PV2/PV3 items 01–03; optional PVX grouping |
+| O-MATH-001-001 | Choose a counting unit; compose tens and hundreds; explain regrouping and a zero position | Arithmetic | [First-unit check](../../../assessments/C-MATH-001/place-value-check.md#outcome-criteria), PV2/PV3 items 01–03 and item 04 boundary composition; optional PVX grouping |
 | O-MATH-001-002 | Continue a count and explain repeated steps, with prepared extensions through 1,000 | Arithmetic | [First-unit check](../../../assessments/C-MATH-001/place-value-check.md#outcome-criteria), PV2/PV3 items 04–06; optional PVX-02 boundary |
 | O-MATH-001-003 | Connect a quantity to its numeral, name, and sum of place values | Arithmetic and grammar | [First-unit check](../../../assessments/C-MATH-001/place-value-check.md#outcome-criteria), PV2/PV3 items 07–09; optional PVX-01 representation |
 | O-MATH-001-004 | Compare amounts and justify equality or the first differing place | Arithmetic and logic | [First-unit check](../../../assessments/C-MATH-001/place-value-check.md#outcome-criteria), PV2/PV3 items 10–12 |

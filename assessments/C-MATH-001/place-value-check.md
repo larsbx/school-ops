@@ -119,7 +119,7 @@ alone is insufficient when the task also asks for a reason or model.
 
 | Course outcome | Core items | Proposed evidence to progress in the checked scope |
 | --- | --- | --- |
-| O-MATH-001-001 | PV2/PV3 items 01–03 | All models and digit amounts correct; name the counted unit, explain the applicable exchange and each zero position |
+| O-MATH-001-001 | PV2/PV3 items 01–03 and the boundary composition in item 04 | All models and digit amounts correct; name the counted unit, explain unpacking and each zero position. In item 04, demonstrate composing ten ones into one ten (PV2), or ten ones into one ten and then ten tens into one hundred (PV3), preserving the amount after adding the next one |
 | O-MATH-001-002 | PV2/PV3 items 04–06 | Complete sequences correct, including endpoints/starting terms; identify each step and explain the boundary exchange in item 04 |
 | O-MATH-001-003 | PV2/PV3 items 07–09 | All numeral, name, and place-value conversions correct; connect item 07 to its model |
 | O-MATH-001-004 | PV2/PV3 items 10–12 | All comparisons and symbols correct; justify the first differing place or equality |
@@ -134,6 +134,10 @@ Across each group, inspect grammar (names and representations), logic (the reaso
 and rhetoric (an explanation another person can follow). Keep judgments separate
 by relationship and form: independent, demonstrated with support, needing review,
 or not assessed. Do not replace these judgments with one total score.
+
+Item 04 supplies composition evidence for outcome 001 as well as counting evidence
+for outcome 002. Check both parts: a correct recited sequence alone does not
+demonstrate composition, and a correct exchange alone does not complete the count.
 
 When evidence is incomplete, revisit the relevant lesson and reassess with fresh
 keyed examples in the taught scope. Larger-range work remains pending until taught

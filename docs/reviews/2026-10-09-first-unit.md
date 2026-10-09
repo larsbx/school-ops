@@ -84,6 +84,13 @@ Lesson 1 now explicitly unpacks a ten; lesson 2 unpacks a hundred and then a ten
 matching the reverse-exchange demands of the core checks. PVX-01 explicitly asks
 for its preservation reason, and its key supplies that reason.
 
+The fresh review of `115e39b9ffc345b685d06eac83277d3fe9024b22` identified one
+additional criterion gap: core outcome 001 named composition but counted only
+items 01–03, whose explicit exchange is unpacking. Item 04 already asks for the
+taught forward boundary exchanges. The corrected guide and course evidence link
+now include item 04's composition in outcome 001, separately from its counting
+evidence for outcome 002. The task and key IDs are unchanged.
+
 ### Task, route, and criterion alignment
 
 Outcome numbers below abbreviate `O-MATH-001-NNN`. Each criterion applies only
@@ -93,12 +100,12 @@ to the selected form and taught scope; all parts of each task are checked.
 | --- | --- | --- |
 | PV2-01, PV2-03 | [Lesson 1](../../curriculum/mathematics/grade-2/units/place-value/lessons/01-tens-and-ones.md), lesson 3's two-digit route | 001: unit, tens/ones models, digit amounts, and zero ones |
 | PV2-02 | Lesson 1's supported unbundling | 001: exchange a ten for ten ones; model and explain the preserved amount |
-| PV2-04–06 | [Lesson 4's two-digit route](../../curriculum/mathematics/grade-2/units/place-value/lessons/04-counting.md#two-digit-route) | 002: count by ones/fives/tens, include starting terms, explain the tens boundary and repeated step |
+| PV2-04–06 | [Lesson 4's two-digit route](../../curriculum/mathematics/grade-2/units/place-value/lessons/04-counting.md#two-digit-route) | 001: item 04 composes ten ones into one ten; 002: count by ones/fives/tens, include starting terms, explain the tens boundary and repeated step |
 | PV2-07–09 | [Lesson 3's two-digit route](../../curriculum/mathematics/grade-2/units/place-value/lessons/03-number-forms.md#two-digit-route) | 003: names, numerals, place-value sums, and a matching model |
 | PV2-10–12 | [Lesson 5's two-digit route](../../curriculum/mathematics/grade-2/units/place-value/lessons/05-comparison.md#two-digit-route) | 004: correct symbol, first differing tens place, or equality |
 | PV3-01, PV3-03 | [Lesson 2](../../curriculum/mathematics/grade-2/units/place-value/lessons/02-hundreds.md) | 001: hundreds/tens/ones models and every zero position |
 | PV3-02 | Lesson 2's supported unpacking | 001: unpack a hundred then a ten; explain preservation after both exchanges |
-| PV3-04–06 | [Lesson 4's core activities](../../curriculum/mathematics/grade-2/units/place-value/lessons/04-counting.md#activities), supported by lesson 2's exchanges | 002: complete counts, ones-to-tens-to-hundreds boundary, and steps of five/ten/one hundred |
+| PV3-04–06 | [Lesson 4's core activities](../../curriculum/mathematics/grade-2/units/place-value/lessons/04-counting.md#activities), supported by lesson 2's exchanges | 001: item 04 composes ten ones into one ten, then ten tens into one hundred; 002: complete counts, boundary explanation, and steps of five/ten/one hundred |
 | PV3-07–09 | [Lesson 3's core activities](../../curriculum/mathematics/grade-2/units/place-value/lessons/03-number-forms.md#activities) | 003: three-digit names, numerals, sums, zero places, and a matching model |
 | PV3-10–12 | [Lesson 5's core activities](../../curriculum/mathematics/grade-2/units/place-value/lessons/05-comparison.md#activities) | 004: first differing hundreds or tens place, or equality |
 | PVX-01 | [Lesson 3's optional thousand activity](../../curriculum/mathematics/grade-2/units/place-value/lessons/03-number-forms.md#optional-thousand-extension) | 001/003 extension: ten hundreds as one thousand, preservation, numeral/name/sum, and four-position model |
