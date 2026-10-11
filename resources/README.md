@@ -8,11 +8,18 @@ and relevant outcomes.
 | Resource ID | Provider or author | Title | Status | Resource record |
 | --- | --- | --- | --- | --- |
 
-No resources are registered yet.
+| R-KHAN-001 | Khan Academy | Place value blocks within 1,000 | ready — optional practice | [Record](r-khan-001.md) |
+| R-KHAN-002 | Khan Academy | Place value tables within 1,000 | ready — optional practice | [Record](r-khan-002.md) |
+| R-KHAN-003 | Khan Academy | Write numbers in number and expanded form | ready — optional practice | [Record](r-khan-003.md) |
+| R-KHAN-004 | Khan Academy | Compare 3-digit numbers | ready — optional practice | [Record](r-khan-004.md) |
+| R-KHAN-005 | Khan Academy | Skip-count by 5s | ready — optional practice | [Record](r-khan-005.md) |
+| R-KHAN-006 | Khan Academy | Skip-count by 10s | ready — optional practice | [Record](r-khan-006.md) |
+| R-KHAN-007 | Khan Academy | Hundreds, tens, and ones | ready — optional practice | [Record](r-khan-007.md) |
 
 The [second-grade mathematics search queue](second-grade-math-searches.md) lists
-proposed Khan Academy queries for the first course. These are pending searches,
-not selected or reviewed resources.
+Khan Academy retrieval and review status for the first course. Seven resources
+are reviewed for optional practice after hundreds; two-digit-only and thousand
+coverage gaps remain. See the [dated route review](../docs/reviews/2026-10-11-khan-place-value.md).
 
 ## Review and register a resource
 

@@ -57,7 +57,10 @@ teaching records remain draft pending their applicable readiness review.
 
 The organizing framework is selected: the Trivium and Quadrivium. Teaching dates
 and weekly time remain undecided.
-Khan Academy exercise selection is pending. No teaching results have been recorded.
+Seven Khan Academy resources are reviewed for optional place-value practice after
+hundreds. The [route review](docs/reviews/2026-10-11-khan-place-value.md) preserves
+the two-digit route and records unresolved bounded-practice and thousand gaps.
+No teaching results or class assignments have been recorded.
 See the [roadmap](docs/roadmap.md) for the remaining development work.
 
 ## Working method

@@ -72,8 +72,13 @@ dates or demonstrated delivery times. Neither core route requires this extension
 ## Resources
 
 The lesson prompts are original school-ops drafts, with teacher keys in the lesson
-and assessment records. Khan Academy questions have not been retrieved. See the
-[pending search queue](../../../../../resources/second-grade-math-searches.md).
+and assessment records. Seven Khan Academy sets are reviewed as optional practice
+for the hundreds route; see the [resource mapping](../../../../../docs/reviews/2026-10-11-khan-place-value.md)
+and [search queue](../../../../../resources/second-grade-math-searches.md).
+No whole returned set is verified as two-digit-only or as the specific thousand
+extension. Keep the local ones/tens practice and thousand activities. Optional
+practice neither adds prerequisites to those routes nor changes draft teaching
+or assessment readiness.
 
 ## End-of-unit decision
 

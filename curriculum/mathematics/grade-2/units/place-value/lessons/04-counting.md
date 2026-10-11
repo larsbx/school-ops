@@ -92,5 +92,7 @@ between adding and regrouping, and the three exchanges with matching digit place
 Review lesson 3's group model if the thousand exchange is uncertain. PVX-02 checks
 this relationship with a different starting point, not further four-digit work.
 
-The prompts are original school-ops drafts. Online practice is pending selection.
+The prompts are original school-ops drafts. See the [reviewed optional practice mapping](../../../../../../docs/reviews/2026-10-11-khan-place-value.md).
+Whole returned sets require hundreds; keep this lesson's local two-digit practice
+and any separate thousand work within their prepared scope.
 Individual evidence is kept privately; curriculum observations guide the next plan.

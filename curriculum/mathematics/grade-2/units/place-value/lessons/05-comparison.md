@@ -63,5 +63,7 @@ the amounts represented by the places, not the sizes of isolated digits.
 Require the relation, matching symbol, and an explanation using the counted units.
 If the reason uses an irrelevant digit, compare the modeled amounts again.
 
-The prompts are original school-ops drafts. Online practice is pending selection.
+The prompts are original school-ops drafts. See the [reviewed optional practice mapping](../../../../../../docs/reviews/2026-10-11-khan-place-value.md).
+Whole returned sets require hundreds; keep this lesson's local two-digit practice
+and any separate thousand work within their prepared scope.
 Individual evidence is kept privately; curriculum observations guide the next plan.
