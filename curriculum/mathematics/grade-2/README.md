@@ -86,7 +86,9 @@ on demonstrated earlier relationships, with review added where needed.
 Use objects, drawings, and modern notation together. Select technology when it
 makes a relationship visible or supplies useful practice. The
 [Khan Academy queue](../../../resources/second-grade-math-searches.md) contains
-pending queries for our goals; no question sets have been selected.
+retrieval status for our goals. Seven optional hundreds-route practice sets have
+been reviewed; the [route review](../../../docs/reviews/2026-10-11-khan-place-value.md)
+records two-digit-only and thousand gaps. Teaching and assessment records remain draft.
 
 First-unit evidence checks accurate naming, a reasoned model, and an explanation.
 Use the [prepared taught-scope routes](units/place-value/README.md#choose-the-teaching-route)

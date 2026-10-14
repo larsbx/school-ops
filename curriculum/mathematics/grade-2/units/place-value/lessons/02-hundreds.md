@@ -51,5 +51,25 @@ Demonstrate 305 to another person and explain why its middle position is zero.
 - If the exchange is not understood, repeat it with objects rather than moving
   directly to a rule for written digits.
 
-The prompts are original school-ops drafts. Online practice is pending selection.
+## Optional online practice
+
+The [dated route review](../../../../../../docs/reviews/2026-10-11-khan-place-value.md)
+maps three reviewed resources to this lesson:
+
+- [R-KHAN-001: Place value blocks within 1,000](../../../../../../resources/r-khan-001.md)
+  reinforces model recognition after the lesson's hundreds work.
+- [R-KHAN-002: Place value tables within 1,000](../../../../../../resources/r-khan-002.md)
+  reinforces place/chart recognition after the lesson's hundreds work.
+- [R-KHAN-007: Hundreds, tens, and ones](../../../../../../resources/r-khan-007.md)
+  supplies equivalent regroupings after the concrete hundred-to-tens and
+  ten-to-ones exchanges.
+
+Check delivery and access before use; retain the concrete model, preservation
+reason, and spoken explanation. These are approved optional practice resources,
+not recorded classroom assignments or assessment evidence. No whole returned set
+is verified as two-digit-only or for the exact thousand extension. Keep local
+practice within each prepared route. Resource readiness does not make this lesson
+or its assessment ready; teaching and assessment records remain draft.
+
+The prompts are original school-ops drafts.
 Individual evidence is kept privately; curriculum observations guide the next plan.

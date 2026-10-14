@@ -30,7 +30,7 @@ explanations throughout. Actual starting skills are unknown; use the
 | First materials | Counters/bundled sticks or base-ten blocks, a place-value chart, paper, pencil |
 | Later materials | Geometry tools and an observation notebook; choose when developing those units |
 | Excluded art | Music, by user direction |
-| Online practice | Khan Academy is a selected provider; actual sets are pending |
+| Online practice | Seven Khan Academy resources reviewed and registered for optional hundreds-route practice; see the [route review](../../../docs/reviews/2026-10-11-khan-place-value.md). No whole set is verified as two-digit-only or for the exact thousand extension. No classroom assignments or learner results are recorded. |
 
 ## Scope and progression
 
@@ -47,5 +47,10 @@ has draft lessons and tasks. Refine ranges, examples, and duration after entry w
 
 - Available weekly time and teaching dates.
 - Actual starting skills and any prerequisite review.
-- Materials on hand and the first online practice sets.
+- Materials on hand and delivery/access checks for reviewed optional practice.
+- Bounded two-digit-only online practice and exact thousand-extension coverage.
 - Review of tasks, progression, and local evidence criteria.
+
+Reviewed resource readiness does not establish teaching readiness. The scope,
+course, unit, lesson, and assessment records remain draft pending their own
+applicable reviews; keep individual learner evidence privately.

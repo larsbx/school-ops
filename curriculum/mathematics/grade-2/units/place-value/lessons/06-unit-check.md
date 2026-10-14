@@ -55,5 +55,7 @@ Record accurate language, the mathematical reason, and clarity of explanation.
 Review the specific relationship when evidence is incomplete, then reassess with
 fresh quantities. Keep individual results privately.
 
-The prompts are original school-ops drafts. Online practice is pending selection.
+The prompts are original school-ops drafts. The [reviewed online resources](../../../../../../docs/reviews/2026-10-11-khan-place-value.md)
+are optional hundreds-route practice only; none is approved for this unit check.
+Teaching and assessment records remain draft.
 Individual evidence is kept privately; curriculum observations guide the next plan.
