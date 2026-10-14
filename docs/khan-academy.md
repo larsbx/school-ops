@@ -33,9 +33,20 @@ content. Use a private location for links exposing class or learner details.
 
 Exercise-selection responses follow the tool's interactive rendering rules;
 repository discussion and edits take place in a separate interaction. The
-[Grade 2 queue](../resources/second-grade-math-searches.md) lists pending searches.
+[Grade 2 queue](../resources/second-grade-math-searches.md) records retrieved resources
+and remaining searches.
 
 This capability retrieves assignable mathematics questions. It does not provide
-learner-progress import or automatic curriculum synchronization. No exercises have
-been retrieved or assigned for the course. Astronomy investigations need actual sky material beyond generic
-mathematics practice.
+learner-progress import or automatic curriculum synchronization. The
+[2026-10-11 review](reviews/2026-10-11-khan-place-value.md) examined 112 items
+across 25 provider-returned pages and approved seven resources for optional
+hundreds-route practice, now in the [resource register](../resources/README.md).
+Use each resource only after its recorded prerequisites and a delivery/access
+check. No whole returned set is verified for a strictly two-digit-only assignment
+or the exact thousand extension; retain local practice for those routes.
+
+No classroom assignments or learner results are recorded. General exercise links
+do not establish assignment creation. Resource readiness applies only to the
+reviewed optional practice role; course, unit, lesson, and assessment records
+remain draft. Provider completion does not establish mastery. Astronomy
+investigations need actual sky material beyond generic mathematics practice.
