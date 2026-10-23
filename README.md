@@ -36,6 +36,7 @@ Start with its [entry check](assessments/C-MATH-001/entry-check.md), then the dr
 | --- | --- |
 | [curriculum/](curriculum/README.md) | Subject map, course index, courses, units, and lessons |
 | [resources/](resources/README.md) | Reviewed resource register and source records |
+| [bank/](bank/README.md) | Seeded local exercises and conceptual tests; developer workflow and validation |
 | [assessments/](assessments/README.md) | Assessment designs, rubrics, and completion criteria |
 | [planning/](planning/README.md) | Weekly plans and curriculum review decisions |
 | [templates/](templates/README.md) | Reusable briefs, course plans, and teaching documents |
@@ -75,3 +76,8 @@ scores, accommodations, and assignment links exposing class details in a private
 system. Weekly reviews in this repository record changes to teaching plans.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow.
+
+The first [local seeded bank](bank/place-value/README.md) generates independent PV2/PV3
+fluency drills and untimed conceptual assessment variants with separate learner
+sheets, keys, manifests and automated validation. It remains draft pending
+readiness review; no learner results or teaching schedule are implied.
