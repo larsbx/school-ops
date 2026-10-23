@@ -1,2 +1,3 @@
 batch	started	ended	attempted	fetched	stored	failed	bytes	pending_after	known
 1	2026-10-23T10:40:14Z	2026-10-23T10:40:17Z	1	1	0	0	1373018	4370	9037
+2	2026-10-23T10:41:25Z	2026-10-23T11:01:58Z	100	94	0	6	245808139	4270	9037
