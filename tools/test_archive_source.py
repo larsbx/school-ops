@@ -81,5 +81,45 @@ class Manifest(unittest.TestCase):
             self.assertEqual(out[BASE + "c"]["status"], "pending")
 
 
+IA = "https://archive.org/"
+
+
+class ArchiveOrg(unittest.TestCase):
+    def test_item_ids(self):
+        self.assertEqual(a.ia_item(IA + "details/Kitten"), "Kitten")
+        self.assertEqual(a.ia_item(IA + "details/Kitten/page/n5"), "Kitten")
+        self.assertEqual(a.ia_item(IA + "download/Kitten/"), "Kitten")
+        self.assertIsNone(a.ia_item(IA + "download/Kitten/k.pdf"))
+        self.assertIsNone(a.ia_item(IA + "compress/Kitten"))
+        self.assertIsNone(a.ia_item(BASE + "details/Kitten"))
+
+    def test_fetchable_covers_site_ia_items_and_ia_files(self):
+        self.assertTrue(a.fetchable(BASE + "x.pdf"))
+        self.assertTrue(a.fetchable(IA + "details/Kitten"))
+        self.assertTrue(a.fetchable(IA + "download/Kitten/k.pdf"))
+        self.assertFalse(a.fetchable(IA + "compress/Kitten"))
+        self.assertFalse(a.fetchable("https://www.youtube.com/watch?v=q"))
+
+    def test_reconcile_promotes_newly_fetchable_externals(self):
+        rows = {u: a.row(u, status="external") for u in (IA + "details/K", "https://youtu.be/q")}
+        out = a.reconcile(rows, Path("/nonexistent"), retry_failed=False)
+        self.assertEqual(out[IA + "details/K"]["status"], "pending")
+        self.assertEqual(out["https://youtu.be/q"]["status"], "external")
+
+    def test_ia_files_keeps_originals_except_bookkeeping(self):
+        meta = {"metadata": {"title": "Kitten"}, "files": [
+            {"name": "k.pdf", "source": "original", "format": "Image Container PDF", "size": "31"},
+            {"name": "k_djvu.txt", "source": "derivative", "format": "DjVuTXT"},
+            {"name": "K_meta.xml", "source": "original", "format": "Metadata"},
+            {"name": "__ia_thumb.jpg", "source": "original", "format": "Item Tile"},
+            {"name": "a b/c.zip", "source": "original", "format": "ZIP"}]}
+        self.assertEqual(a.ia_files("K", meta), [(IA + "download/K/k.pdf", "Kitten"),
+                                                 (IA + "download/K/a%20b/c.zip", "Kitten")])
+
+    def test_order_puts_site_before_archive_org(self):
+        urls = [IA + "details/A", BASE + "z.pdf", BASE + "a.pdf"]
+        self.assertEqual(sorted(urls, key=a.order), [BASE + "a.pdf", BASE + "z.pdf", IA + "details/A"])
+
+
 if __name__ == "__main__":
     unittest.main()
