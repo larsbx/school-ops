@@ -87,3 +87,10 @@ when evidence is incomplete, then reassess with different numbers. Continue
 revisiting these ideas in later arithmetic units; a single total score cannot
 substitute for evidence on each outcome. Record the selected form and scope;
 hundreds/thousand work that was not taught remains pending.
+
+## Local generated practice and checks
+
+The draft [seeded bank](../../../../../bank/place-value/README.md) provides
+independent PV2/PV3 fluency drills and conceptual assessment variants following
+the existing unit-check criteria. Software validation does not complete readiness
+review or establish mastery. The thousand supplement remains separate.

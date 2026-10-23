@@ -26,3 +26,9 @@ This directory holds reusable assessment designs.
 | A-MATH-001-01 | C-MATH-001 | [Entry check](C-MATH-001/entry-check.md) | draft |
 | A-MATH-001-02 | C-MATH-001 | [Place-value check](C-MATH-001/place-value-check.md): PV2/PV3 with optional PVX | draft |
 | A-MATH-001-03 | C-MATH-001 | [Later-unit evidence plan](C-MATH-001/course-evidence-plan.md) | draft; tasks not authored |
+
+## Reproducible local forms
+
+The draft [place-value bank](../bank/place-value/README.md) generates PV2/PV3
+assessment variants following A-MATH-001-02 and separate timed fluency drills.
+Drills do not establish conceptual outcomes. PVX remains a separate supplement.
