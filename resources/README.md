@@ -47,6 +47,9 @@ A resource can be ready while a consuming lesson is still draft. Preserve existi
 register entries when their status changes, and recheck resource readiness after
 changes to the source, access, or intended use.
 
+Source archives kept for analysis, not as reviewed resources, record their
+metadata under `sources/`: see the [Arvind Gupta archive](sources/arvindguptatoys/README.md).
+
 Use source links and attribution. Record reuse rights before storing copies of
 external material. Public records hold general sources; class-specific assignment
 links belong in private planning.
