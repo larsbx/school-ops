@@ -49,5 +49,25 @@ python3 -I tools/archive_source.py --archive ~/arvind-archive --batches 0 --git 
 - **Resume:** each batch (default 100 URLs) rewrites the manifest atomically and
   appends to the log. `--git push` commits and pushes both after every batch.
   On a fresh machine, `fetched` rows with no local file go back to `pending`, so
-  only `stored` rows are durable.
+  upload retries include existing local `fetched` rows even if no URLs remain
+  pending. Each upload batch is bounded by `--batch-size`; a failed upload-only
+  batch stops without pruning, ready for a later retry. `stored` records remote
+  copy success, not independent long-term durability or a rights review.
 - **Verify:** `sha256` lets you check any copy against the manifest.
+
+## Archive paths and offline validation
+
+New copies use `<host>/_urls/<digest-prefix>/<sha256-of-url>` below the archive
+root. Exact URL identities remain distinct for directory/index, file/directory,
+encoded path and query variants. The manifest maps each URL to its content hash;
+the path digest identifies the URL, not its contents.
+
+On resume, a legacy local `fetched` copy is moved into the new layout only when
+its content hash matches the row. Missing or mismatched legacy copies return to
+`pending`. Existing `stored` rows are not rewritten or independently verified;
+legacy remote archives need a separate hash audit before relying on old aliases.
+`--batch-size` must be positive, `--batches` nonnegative, and pruning requires a
+remote. Robots checks and pacing use the actual Archive.org metadata endpoint.
+
+Run `python -m unittest discover -s tools -p 'test_archive_source.py' -v`.
+Tests mock network and rclone effects; they do not crawl, upload, commit or push.

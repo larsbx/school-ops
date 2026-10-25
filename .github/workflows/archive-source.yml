@@ -1,0 +1,25 @@
+name: Source archiver
+on:
+  pull_request:
+    paths:
+      - 'tools/**'
+      - '.github/workflows/archive-source.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/**'
+      - '.github/workflows/archive-source.yml'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m unittest discover -s tools -p 'test_archive_source.py' -v

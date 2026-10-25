@@ -94,6 +94,12 @@ def ia_files(item, meta):
 
 
 def local_path(root, url):
+    """URL-addressed objects avoid directory/index, query and file/tree aliases."""
+    digest = hashlib.sha256(url.encode("utf-8")).hexdigest()
+    return Path(root, urlsplit(url).netloc, "_urls", digest[:2], digest)
+
+
+def legacy_local_path(root, url):
     parts = urlsplit(url)
     segs = [s for s in unquote(parts.path).split("/") if s not in ("", ".", "..")]
     if parts.path.endswith("/") or not segs:
@@ -148,7 +154,17 @@ def reconcile(rows, root, retry_failed):
     """Requeue lost local-only copies (new container), newly fetchable externals,
     and, optionally, failures."""
     def requeue(r):
-        lost = r["status"] == "fetched" and not local_path(root, r["url"]).is_file()
+        dest = local_path(root, r["url"])
+        if r["status"] == "fetched" and not dest.is_file():
+            old = legacy_local_path(root, r["url"])
+            # A legacy alias may hold another URL's bytes. Migrate only a verified copy.
+            if old.is_file() and r["sha256"]:
+                with old.open("rb") as src:
+                    digest = hashlib.file_digest(src, "sha256").hexdigest()
+                if digest == r["sha256"]:
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    old.replace(dest)
+        lost = r["status"] == "fetched" and not dest.is_file()
         promoted = r["status"] == "external" and fetchable(r["url"])
         failed = retry_failed and r["status"].startswith("failed")
         return {**r, "status": "pending"} if lost or promoted or failed else r
@@ -202,7 +218,7 @@ def fetch(url, dest):
 def expand(url, title):
     """Fetch an archive.org item's metadata; return (row fields, file links)."""
     item = ia_item(url)
-    req = urllib.request.Request(f"https://{IA}/metadata/{quote(item)}", headers={"User-Agent": UA})
+    req = urllib.request.Request(metadata_url(url), headers={"User-Agent": UA})
     try:
         with urllib.request.urlopen(req, timeout=120) as resp:
             meta = json.load(resp)
@@ -218,11 +234,19 @@ def expand(url, title):
             "fetched_at": now(), "title": title or clean(str(info.get("title", "")))}, links
 
 
+def metadata_url(url):
+    return f"https://{IA}/metadata/{quote(ia_item(url), safe='')}"
+
+
 def rclone_store(root, remote, urls):
     rels = [str(local_path(root, u).relative_to(root)) for u in urls]
     listing = Path(root, ".batch-files")
     listing.write_text("\n".join(rels) + "\n", encoding="utf-8")
-    ok = subprocess.run(["rclone", "copy", str(root), remote, "--files-from", str(listing)]).returncode == 0
+    try:
+        ok = subprocess.run(["rclone", "copy", str(root), remote, "--files-from", str(listing)]).returncode == 0
+    except OSError as error:
+        print(f"warning: rclone unavailable: {error}", file=sys.stderr)
+        ok = False
     return set(urls) if ok else set()
 
 
@@ -277,10 +301,11 @@ def run_batch(n, rows, args, polite):
             print(f"stopping: under {args.min_free_gb} GB free in {args.archive}", flush=True)
             break
         attempted.append(url)
-        if not polite.allowed(url):
+        target = metadata_url(url) if ia_item(url) else url
+        if not polite.allowed(target):
             rows = {**rows, url: {**rows[url], "status": "failed:robots"}}
             continue
-        polite.wait(url)
+        polite.wait(target)
         if ia_item(url):
             fields, links = expand(url, rows[url]["title"])
             rows = discover({**rows, url: {**rows[url], **fields}}, links, found_on=url)
@@ -292,7 +317,9 @@ def run_batch(n, rows, args, polite):
         if fields["status"] == "fetched":
             fetched.append(url)
         print(f"[{n}:{i + 1}/{len(todo)}] {fields['status']:<14} {url}", flush=True)
-    stored = rclone_store(args.archive, args.remote, fetched) if args.remote and fetched else set()
+    uploads = [u for u in sorted(rows, key=order)
+               if rows[u]["status"] == "fetched" and local_path(args.archive, u).is_file()][:args.batch_size]
+    stored = rclone_store(args.archive, args.remote, uploads) if args.remote and uploads else set()
     rows = {u: ({**r, "status": "stored"} if u in stored else r) for u, r in rows.items()}
     if args.prune_stored:
         for u in stored:
@@ -322,16 +349,26 @@ def main(argv=None):
                     help="commit (and push) manifest + log after every batch")
     ap.add_argument("--trailer", default="", help="extra lines appended to commit messages")
     args = ap.parse_args(argv)
+    if args.batch_size < 1:
+        ap.error("--batch-size must be at least 1")
+    if args.batches < 0:
+        ap.error("--batches must be zero or positive")
+    if args.prune_stored and not args.remote:
+        ap.error("--prune-stored requires --remote")
 
     manifest, log = args.manifest_dir / "manifest.tsv", args.manifest_dir / "batches.tsv"
     args.manifest_dir.mkdir(parents=True, exist_ok=True)
     args.archive.mkdir(parents=True, exist_ok=True)
     rows = reconcile(load(manifest), args.archive, args.retry_failed) or {SEED: row(SEED, status="pending")}
     polite = Polite({HOST: args.delay, IA: args.ia_delay})
-    n0 = sum(1 for _ in log.open()) - 1 if log.exists() else 0
+    n0 = 0
+    if log.exists():
+        with log.open(encoding="utf-8") as history:
+            n0 = sum(1 for _ in history) - 1
     n = n0
     while args.batches == 0 or n - n0 < args.batches:
-        if not any(r["status"] == "pending" for r in rows.values()):
+        if not any(r["status"] == "pending" or
+                   (args.remote and r["status"] == "fetched") for r in rows.values()):
             print("nothing pending")
             break
         n += 1
@@ -347,6 +384,9 @@ def main(argv=None):
                    f"{stats['failed']} failed, {stats['pending_after']} pending\n\n{args.trailer}").strip()
             git_commit([manifest, log], msg, push=args.git == "push")
         if disk_low(args.archive, args.min_free_gb):
+            break
+        if not stats["attempted"] and not stats["stored"]:
+            print("stopping: no progress; local-only copies retained for a later upload retry")
             break
 
 
