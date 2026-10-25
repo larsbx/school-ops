@@ -8,6 +8,7 @@ import tempfile
 import unittest
 from exercise_bank.core import canonical, countdown, seal
 from exercise_bank.place_value import generate, groups, name
+from exercise_bank.place_value_v1 import generate as generate_v1
 from exercise_bank.validate import check, read_name
 from exercise_bank.__main__ import render
 
@@ -37,6 +38,30 @@ class BankTests(unittest.TestCase):
             self.assertEqual(render(form), (directory / 'learner.md').read_text())
             self.assertEqual(render(form, True), (directory / 'teacher.md').read_text())
             check(json.loads((directory / 'manifest.json').read_text()))
+
+    def test_pv3_representation_and_equality_require_hundreds(self):
+        for seed in ('16', *(str(i) for i in range(1000))):
+            form = check(generate('PV3', 'assessment', seed))
+            amount = form['items'][8]['answer']['number']
+            self.assertGreaterEqual(amount, 100)
+            self.assertLessEqual(amount, 990)
+            self.assertEqual(0, amount % 10)
+            self.assertEqual({'a': amount, 'b': amount}, form['items'][11]['data'])
+
+    def test_legacy_forms_and_rendered_fixtures_still_reproduce(self):
+        base = Path('bank/place-value/legacy-v1')
+        fixtures = json.loads((base / 'golden-ids.json').read_text())
+        for key, digest in fixtures.items():
+            route, mode = key.split('/')
+            self.assertEqual(digest, check(generate_v1(route, mode, 'review-1'))['form_id'])
+        for route in ('PV2', 'PV3'):
+            directory = base / 'examples' / route.lower()
+            form = check(generate_v1(route, 'assessment', 'review-1'))
+            self.assertEqual(canonical(form), (directory / 'manifest.json').read_text())
+            self.assertEqual(render(form), (directory / 'learner.md').read_text())
+            self.assertEqual(render(form, True), (directory / 'teacher.md').read_text())
+        # Keep the known legacy shortcoming reproducible, rather than silently rewriting it.
+        self.assertEqual(40, generate_v1('PV3', 'assessment', '16')['items'][8]['answer']['number'])
 
     def test_exhaustive_number_names_and_digit_arithmetic(self):
         for n in range(1000):

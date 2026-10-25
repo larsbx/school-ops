@@ -2,6 +2,7 @@
 from collections import Counter
 from .core import seal
 from .place_value import generate
+from .place_value_v1 import generate as generate_v1
 
 UNITS = dict(zip('zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen'.split(), range(20)))
 DECADES = dict(zip('twenty thirty forty fifty sixty seventy eighty ninety'.split(), range(20, 100, 10)))
@@ -21,6 +22,10 @@ def check(form):
     """Reject modified keys, ranges, coverage, blueprint or identity; return form."""
     if form != seal(form):
         raise ValueError('form identity mismatch')
+    factories = {'1.0.0': generate_v1, '1.0.1': generate}
+    if form.get('generator_version') not in factories:
+        raise ValueError('unsupported generator version')
+    factory = factories[form['generator_version']]
     digits = {'PV2': 2, 'PV3': 3}[form['route']]
     maximum = 10**digits-1
     def parts(n):
@@ -93,7 +98,7 @@ def check(form):
     if [counts[f'O-MATH-001-{i:03}'] for i in range(1, 5)] != list(expected_counts) or len(counts) != 4:
         raise ValueError('coverage mismatch')
     # Arithmetic correctness alone cannot establish prompt/criterion/blueprint integrity.
-    reference = generate(form['route'], form['mode'], form['seed'], form['duration_seconds'] or 60)
+    reference = factory(form['route'], form['mode'], form['seed'], form['duration_seconds'] or 60)
     if form != reference:
         raise ValueError('form does not reproduce from its versioned configuration')
     return form

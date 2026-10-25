@@ -99,7 +99,7 @@ def generate(route, mode, seed, duration=60):
         n = number()
         add('from-name', {'words': name(n)}, {'number': n, 'expanded': expanded(n, digits)}, [3],
             'Correct numeral and place-value sum; read directions without answer cues.')
-        n = rng.integer(1, maximum//10)*10
+        n = rng.integer(1 if digits == 2 else 10, maximum//10)*10
         add('from-groups', {'groups': groups(n, digits)}, {'number': n, 'name': name(n), 'expanded': expanded(n, digits)}, [3],
             'Correct numeral, spoken name and sum; explain zero ones. Zero terms in sum optional.')
         # Compare same leading place, then different leading places, then equality.

@@ -71,8 +71,12 @@ signatures; an adversary can rehash content, so identity alone is insufficient.
 refresh fixtures when a test fails. Change generator version for any change to
 sampling, blueprint, key, prompt or rendering semantics; change schema for an
 incompatible representation. Preserve old generators in versioned modules before
-releasing a successor so archived forms remain reproducible. Version 1 is the only
-current version; the validator rejects unsupported versions.
+releasing a successor so archived forms remain reproducible. Version 1.0.1 is current; the validator also accepts archived 1.0.0 forms
+through `place_value_v1.py`. Original fixtures remain under
+`bank/place-value/legacy-v1/`. Version 1.0.1 keeps PV3 assessment item 09
+and its item 12 equality pair within 100–990; the old generator can produce
+two-digit amounts for those items, so legacy forms need that scope review
+before use. Other unsupported versions are rejected.
 
 ## Extend to another unit or course
 
@@ -100,3 +104,6 @@ validation on 2026-10-23 passed 11 tests, including 1,000 seed/route/mode forms,
 all number names 0–999, seeded boundary coverage, re-sealed key/coverage mutations,
 CLI exports/validation and a real one-second drill countdown. Hosted results must
 be checked on the PR; local success does not claim hosted execution or learner use.
+
+On 2026-10-25 the PV3 scope regression was fixed with versioned generation,
+1,001 targeted seeds and unchanged legacy hashes and rendered fixtures.

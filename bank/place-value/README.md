@@ -1,7 +1,7 @@
 # Seeded place-value bank v1
 
 - Bank identifier: `C-MATH-001/place-value`
-- Generator: `1.0.0`; form schema: `1`
+- Generator: `1.0.1` (legacy `1.0.0` preserved); form schema: `1`
 - Status: draft; readiness review pending
 - Audience: Grade 2 after demonstrated entry and route prerequisites
 - Art: Arithmetic — decimal grouping, conservation under exchanges, repeated steps and order

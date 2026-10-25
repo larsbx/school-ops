@@ -3,7 +3,7 @@ import hashlib
 import json
 import time
 
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 SCHEMA = 1
 
 
@@ -13,8 +13,8 @@ def canonical(value):
 
 class Sampler:
     """SHA-256 counter stream with rejection sampling, independent of random module."""
-    def __init__(self, namespace, seed):
-        self.prefix = canonical([VERSION, namespace, seed]).encode()
+    def __init__(self, namespace, seed, *, version=VERSION):
+        self.prefix = canonical([version, namespace, seed]).encode()
         self.counter = 0
 
     def integer(self, low, high):
