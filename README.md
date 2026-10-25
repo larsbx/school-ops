@@ -30,6 +30,12 @@ Start with its [entry check](assessments/C-MATH-001/entry-check.md), then the dr
 5. Prepare a [weekly plan](templates/weekly-plan.md), teach the planned work,
    and use the review to update the next plan and curriculum backlog.
 
+For reusable teaching sequences, use the [instructional pattern library](templates/instruction/README.md).
+It includes Interchange, Khan-style feedback, test–teach–test, scaffold fading,
+retrieval/spacing and inquiry, with original Grade 2 examples and complete keys.
+The [M01 two-cycle pilot](curriculum/mathematics/grade-2/units/place-value/two-cycle/README.md)
+provides a complete draft learner/workbook/teacher material family.
+
 ## Repository map
 
 | Location | Purpose |

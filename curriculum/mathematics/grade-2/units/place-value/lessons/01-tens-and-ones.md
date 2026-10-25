@@ -42,6 +42,16 @@ the units, and the amount each digit contributes.
 4. Independent work: draw or build 36 and 60, then write their numerals (7 minutes).
 5. Exit: explain both models and why an arrangement change preserves the count (3 minutes).
 
+## Alternative two-cycle implementation
+
+Use the [M01 learner/workbook/teacher pack](../two-cycle/README.md) when a modeled
+exchange and partner reconstruction are useful. This replaces the standard
+25-minute implementation with two 25-minute sessions, adding 25 core minutes to
+the selected unit route. Its workbook and formative-review budgets are additional
+and explicit. Keep this lesson ID; record which implementation was used privately.
+The alternative stays within 0–99 and does not replace the hundreds lesson or the
+whole-unit assessment. It remains draft pending its own applicable review.
+
 ## Teacher key and next step
 
 - 14: 1 ten, 4 ones; 27: 2 tens, 7 ones; 40: 4 tens, 0 ones.
