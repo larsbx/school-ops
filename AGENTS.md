@@ -3,6 +3,11 @@
 - This repository develops a K–12 curriculum through the Trivium and Quadrivium.
   Read `docs/trivium-quadrivium.md` and follow the current course scope. Do not
   infer learner skills or schedules or introduce standards-based alignment.
+- For Grade 2 mathematics, select or combine the reusable teaching patterns in
+  `templates/instruction/README.md`: Interchange communication, Khan-style feedback,
+  test–teach–test, worked-example fading, retrieval/spacing, or 5E inquiry.
+  Keep course outcomes/prerequisites authoritative. Fading removes solution/output
+  cues without lowering the mathematical criterion or withdrawing access supports.
 - Music is excluded by user direction. Do not introduce musical activities,
   rhythm exercises, harmony lessons, or music resources.
 - Include substantive grammar, logic, and rhetoric work in lessons. Identify
