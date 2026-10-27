@@ -30,13 +30,18 @@ Start with its [entry check](assessments/C-MATH-001/entry-check.md), then the dr
 5. Prepare a [weekly plan](templates/weekly-plan.md), teach the planned work,
    and use the review to update the next plan and curriculum backlog.
 
+For reusable teaching sequences, use the [instructional pattern library](templates/instruction/README.md).
+It includes Interchange, Khan-style feedback, test–teach–test, scaffold fading,
+retrieval/spacing and inquiry, with original Grade 2 examples and complete keys.
+The [M01 two-cycle pilot](curriculum/mathematics/grade-2/units/place-value/two-cycle/README.md)
+provides a complete draft learner/workbook/teacher material family.
+
 ## Repository map
 
 | Location | Purpose |
 | --- | --- |
 | [curriculum/](curriculum/README.md) | Subject map, course index, courses, units, and lessons |
 | [resources/](resources/README.md) | Reviewed resource register and source records |
-| [bank/](bank/README.md) | Seeded local exercises and conceptual tests; developer workflow and validation |
 | [assessments/](assessments/README.md) | Assessment designs, rubrics, and completion criteria |
 | [planning/](planning/README.md) | Weekly plans and curriculum review decisions |
 | [templates/](templates/README.md) | Reusable briefs, course plans, and teaching documents |
@@ -77,7 +82,6 @@ system. Weekly reviews in this repository record changes to teaching plans.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow.
 
-The first [local seeded bank](bank/place-value/README.md) generates independent PV2/PV3
-fluency drills and untimed conceptual assessment variants with separate learner
-sheets, keys, manifests and automated validation. It remains draft pending
-readiness review; no learner results or teaching schedule are implied.
+The draft [local seeded bank](bank/place-value/README.md) generates PV2/PV3
+fluency practice and untimed conceptual forms with separate learner sheets, keys
+and reproducible manifests. No learner evidence or teaching readiness is implied.

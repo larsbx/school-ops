@@ -6,6 +6,7 @@
 - Status: draft
 - Outcome IDs: [course outcome IDs and links]
 - Prerequisites: [entry skills or prior outcome IDs and links]
+- Teaching pattern: [selected pattern(s), purpose and support/fading choice; see the pattern library]
 - Planned time: [minutes]
 - Materials: [resources and access needs]
 - Primary Quadrivium art: [arithmetic, geometry, or astronomy]
@@ -20,6 +21,10 @@
 - Grammar: [names, symbols, definitions, or factual relationships to use accurately]
 - Logic: [comparison, reason, inference, or counterexample to investigate]
 - Rhetoric: [spoken, drawn, or written explanation addressed to another person]
+
+Select a purposeful sequence from the [pattern library](instruction/README.md).
+Keep actual prompts, full keys and result/model/reason criteria; change response
+frames independently of mathematical scope and access supports.
 
 ## Activities
 

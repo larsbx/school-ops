@@ -47,6 +47,21 @@ The first five sessions each allow roughly 3 minutes of retrieval, 5 of modeling
 7 of supported work, 7 of independent work, and 3 of an exit check. These are
 planning estimates; revisit them after teaching. Pause or split sessions when needed.
 
+## Alternative two-cycle implementation
+
+The [M01 pilot](two-cycle/README.md) implements lesson 1's tens/ones work using
+two cycles, partner communication, a workbook and a complete teacher guide.
+Replace the usual 25-minute lesson-1 implementation with two 25-minute sessions;
+do not add both implementations. The expanded core estimate is therefore
+150 minutes for PV2 (usual 125 + 25) or 175 for PV3 (usual 150 + 25).
+Workbook blocks add an optional 10–16 minutes, and the separate formative review
+adds 5–10 with flexibility. Hundreds lesson 2 and optional thousand preparation
+retain their prerequisites and additional budgets.
+
+This pilot checks only the tens/ones component of outcome 001. Continue the rest
+of the selected route and use A-MATH-001-02 for unit-level evidence.
+Other lessons can select or combine the [pattern templates](../../../../../templates/instruction/README.md).
+
 ## Choose the teaching route
 
 Choose after entry work; these are prepared options, not observed learner skills

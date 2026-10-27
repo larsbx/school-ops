@@ -27,6 +27,22 @@ excluded by [decision 0005](../../../docs/decisions/0005-no-music.md).
 All teaching material is draft. Numerical ranges are adjustable authoring choices;
 start with quantities the learner can demonstrate and extend after checking evidence.
 
+## Teaching patterns and materials
+
+Use the [six reusable patterns](../../../templates/instruction/README.md) to
+choose a lesson sequence: two-cycle communication, targeted practice/feedback,
+test–teach–test, worked-example fading, retrieval/spacing or 5E inquiry.
+Each has an original keyed Grade 2 exemplar. Select by learning need and preserve
+the course's outcomes, prerequisites and numerical routes.
+
+The [Interchange-inspired book map](course-design.md) illustrates sixteen optional
+book modules inside the seven existing curriculum units. Module slots are not new
+unit IDs or claims of completed material. The
+[M01 pilot](units/place-value/two-cycle/README.md) supplies original learner pages,
+workbook, partner cards, teacher guide and a partial formative check.
+[Decision 0006](../../../docs/decisions/0006-instructional-patterns-for-grade-2-math.md)
+records this direction. All resulting teaching material remains draft.
+
 ## Trivium throughout the course
 
 - Grammar: name the unit, amount, relation, form, or pattern; read and use symbols

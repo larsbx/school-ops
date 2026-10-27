@@ -13,6 +13,8 @@ fields; authored material stays `draft` until its record-type readiness checks p
 | [course.md](course.md) | Define outcomes, prerequisites, units, and assessment coverage |
 | [unit.md](unit.md) | Sequence lessons around a coherent set of outcomes |
 | [lesson.md](lesson.md) | Prepare instruction, practice, checks, and follow-up |
+| [instruction/](instruction/README.md) | Select among six source-backed teaching patterns; original keyed Grade 2 examples |
+| [two-cycle-math-module.md](two-cycle-math-module.md) | Prepare a complete two-cycle learner/workbook/teacher module |
 | [assessment.md](assessment.md) | Specify evidence and success criteria for outcomes |
 | [resource.md](resource.md) | Review and attribute teaching materials |
 | [weekly-plan.md](weekly-plan.md) | Plan work, allocate time, and record curriculum revisions |

@@ -26,6 +26,7 @@ This directory holds reusable assessment designs.
 | A-MATH-001-01 | C-MATH-001 | [Entry check](C-MATH-001/entry-check.md) | draft |
 | A-MATH-001-02 | C-MATH-001 | [Place-value check](C-MATH-001/place-value-check.md): PV2/PV3 with optional PVX | draft |
 | A-MATH-001-03 | C-MATH-001 | [Later-unit evidence plan](C-MATH-001/course-evidence-plan.md) | draft; tasks not authored |
+| A-MATH-001-04 | C-MATH-001 | [Tens/ones cycle review](C-MATH-001/tens-and-ones-cycle-review.md): formative component of outcome 001 only | draft |
 
 ## Reproducible local forms
 
