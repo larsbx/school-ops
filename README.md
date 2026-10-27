@@ -81,3 +81,7 @@ scores, accommodations, and assignment links exposing class details in a private
 system. Weekly reviews in this repository record changes to teaching plans.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow.
+
+The draft [local seeded bank](bank/place-value/README.md) generates PV2/PV3
+fluency practice and untimed conceptual forms with separate learner sheets, keys
+and reproducible manifests. No learner evidence or teaching readiness is implied.
