@@ -33,3 +33,9 @@ This directory holds reusable assessment designs.
 The draft [place-value bank](../bank/place-value/README.md) generates PV2/PV3
 assessment variants following A-MATH-001-02 and separate timed fluency drills.
 Drills do not establish conceptual outcomes. PVX remains a separate supplement.
+
+
+The [teaching-pack index](../curriculum/mathematics/grade-2/units/place-value/teaching-pack/README.md)
+links separate entry, PV2, PV3, PVX and M01 learner print sheets and teacher keys.
+The [record-specific review](../docs/reviews/2026-10-27-place-value-pack.md) leaves
+the teaching and assessment records draft pending applicable local decisions.

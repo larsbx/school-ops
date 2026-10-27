@@ -85,3 +85,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow.
 The draft [local seeded bank](bank/place-value/README.md) generates PV2/PV3
 fluency practice and untimed conceptual forms with separate learner sheets, keys
 and reproducible manifests. No learner evidence or teaching readiness is implied.
+
+
+The [complete draft first-unit teaching pack](curriculum/mathematics/grade-2/units/place-value/teaching-pack/README.md)
+provides separate PV2/PV3 teaching routes, learner sheets, teacher keys and print
+editions, with record-specific authoring/readiness findings. The course stays draft.

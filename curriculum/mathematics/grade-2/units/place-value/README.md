@@ -109,3 +109,13 @@ The draft [seeded bank](../../../../../bank/place-value/README.md) provides
 independent PV2/PV3 fluency drills and conceptual assessment variants following
 the existing unit-check criteria. Software validation does not complete readiness
 review or establish mastery. The thousand supplement remains separate.
+
+## Complete draft teaching pack
+
+The [route-specific pack](teaching-pack/README.md) assembles PV2/PV3 teacher scripts,
+separate learner sheets, print editions, assessment navigation and the corrected
+local bank. It reuses M01 unchanged: core proposals are 150 minutes for PV2 and
+175 for PV3, plus entry and optional workbook/review/practice time. The ordinary
+short lesson-1 route remains available under its original estimate.
+The [2026-10-27 record-specific audit](../../../../../docs/reviews/2026-10-27-place-value-pack.md)
+records satisfied authoring fields and remaining local decisions; status stays draft.
