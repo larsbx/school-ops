@@ -1,6 +1,6 @@
 # Place-value pack: record-specific authoring and readiness audit
 
-Review date: 2026-10-27. Supporting PR: pending publication of this focused change.
+Review date: 2026-10-27. Supporting PR: [#14](https://github.com/larsbx/school-ops/pull/14).
 Scope: C-MATH-001 / U-MATH-001-01, PV2/PV3 and separate optional PVX.
 Related work: [issue #9](https://github.com/larsbx/school-ops/issues/9), merged
 [M01 PR #13](https://github.com/larsbx/school-ops/pull/13), corrected
