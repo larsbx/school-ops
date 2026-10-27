@@ -1,0 +1,195 @@
+{
+  "format": 1,
+  "status": "draft",
+  "page_size": "US Letter",
+  "editions": {
+    "pv2-learner": {
+      "audience": "learner",
+      "sources": [
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/two-cycle/learner.md",
+          "sha256": "406adb6e682ffd3d0a27f0e337de0d7ae1630e9f65af77922b2f8276455b99fc"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/two-cycle/workbook.md",
+          "sha256": "14496a79a2dbedd27af1c6478f62bcbd7b41386b392adc4c5cad0b52db9b64b0"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/teaching-pack/learner/pv2-03.md",
+          "sha256": "38ff2bf36183fffd367458fc8b37ce4fe93d5ada0e34b92d6f3d4f26a4efb684"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/teaching-pack/learner/pv2-04.md",
+          "sha256": "e4ee8c2ef1da69d6151d7d5c28646d9b7ce262dccac59f33a807e9d607753fda"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/teaching-pack/learner/pv2-05.md",
+          "sha256": "84467bc39b89d29820ca94a60465b7a9ee57f49a1b31f5291a63e5e6fc633e30"
+        }
+      ],
+      "pdf_sha256": "c526b45c5c315d725bb65e6812894d15b2da656a8a106d34c8bb78013469231d"
+    },
+    "pv3-learner": {
+      "audience": "learner",
+      "sources": [
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/two-cycle/learner.md",
+          "sha256": "406adb6e682ffd3d0a27f0e337de0d7ae1630e9f65af77922b2f8276455b99fc"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/two-cycle/workbook.md",
+          "sha256": "14496a79a2dbedd27af1c6478f62bcbd7b41386b392adc4c5cad0b52db9b64b0"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/teaching-pack/learner/pv3-02.md",
+          "sha256": "0432bb109bfc5ba7e7436f843b6c4d8411579056cc59914f222f94c6fd9041e3"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/teaching-pack/learner/pv3-03.md",
+          "sha256": "3e3d2b6d118f6d1785335810e0ed886bf13c116b7d18bc85058fffafcc685f24"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/teaching-pack/learner/pv3-04.md",
+          "sha256": "6ae502754e58d5ccf82b83a6569e2a2aef8819351884a7b0799abe5aca7fe6ff"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/teaching-pack/learner/pv3-05.md",
+          "sha256": "9f9f71041832ca5740d4887e6f82ede109c30cb1ba61b0b72f927d9f2dd4b82a"
+        }
+      ],
+      "pdf_sha256": "80d6633d384ed079ab7908d3d37232d94efb0fd83ce5793d72fb3fd261b49258"
+    },
+    "partner-cards": {
+      "audience": "learner",
+      "sources": [
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/two-cycle/partner-card-a.md",
+          "sha256": "71073a4ce506e18b2f3498fa962b2944f81af5b37a2bc502db894316ed0f2359"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/two-cycle/partner-card-b.md",
+          "sha256": "d87d59c6959d6a108545ae5dfed37c672cfc840cf207a2cc53432dd794bf8c87"
+        }
+      ],
+      "pdf_sha256": "8e037485fe5ba24d7594f04c833346e6fe3efcaa554097b16f6f8ef1030a32ec"
+    },
+    "entry-learner": {
+      "audience": "learner",
+      "sources": [
+        {
+          "path": "assessments/C-MATH-001/entry-tasks.md",
+          "sha256": "2ad00d5445539e44c2aaae2b2795159af2b48b59e53f300f459e0aa7f3fdbf8f"
+        }
+      ],
+      "pdf_sha256": "c2362430ee614b4603e407144581c1b782bf101978f945b06592447930ba6358"
+    },
+    "pv2-check": {
+      "audience": "learner",
+      "sources": [
+        {
+          "path": "assessments/C-MATH-001/place-value-tasks-two-digit.md",
+          "sha256": "bce8e142351fcdfc037d92c91fa99ff3d202e4bfef1a358974302947337ab49e"
+        }
+      ],
+      "pdf_sha256": "506fd908c2190a51955dd4abd5ea036c00841b63f6e38c510f200d0a1be22784"
+    },
+    "pv3-check": {
+      "audience": "learner",
+      "sources": [
+        {
+          "path": "assessments/C-MATH-001/place-value-tasks-three-digit.md",
+          "sha256": "851002c9622e345c30338882ec1fd295b9bcf71f26ce5b4d57026298573f591f"
+        }
+      ],
+      "pdf_sha256": "83baa0f67d913e98433b4fd80243aa0d08d3bccdb068be0d267fe62c96e10818"
+    },
+    "pvx-check": {
+      "audience": "learner",
+      "sources": [
+        {
+          "path": "assessments/C-MATH-001/place-value-tasks-1000.md",
+          "sha256": "4b8f8e4f38716c4ae4250b0e3843d2a0092e6da157b6d9f1efc6002ae3ff48ce"
+        }
+      ],
+      "pdf_sha256": "be0c88537313a9e6edc78bb2ad3853218591e4e24b51e27b4f0960aedc2e2341"
+    },
+    "m01-review": {
+      "audience": "learner",
+      "sources": [
+        {
+          "path": "assessments/C-MATH-001/tens-and-ones-cycle-tasks.md",
+          "sha256": "84b8b056b0c30b5a4f5e942b9f8c483e56ca8ae30dc61191dd2358d93569f550"
+        }
+      ],
+      "pdf_sha256": "d2da8755e2a91fcf72527cdf183bcc1d7d537c0748a31af86d04bdb981a0fd78"
+    },
+    "pv2-teacher": {
+      "audience": "teacher",
+      "sources": [
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/teaching-pack/teacher/pv2.md",
+          "sha256": "e1edb636ca3236837030137e91d64fc6fc8af7fcf52fdf60543d422f54a465c0"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/two-cycle/teacher.md",
+          "sha256": "9a06a767416d63f5403b36b57e458f0dd210f72862554f2befacbca59aa0da98"
+        },
+        {
+          "path": "assessments/C-MATH-001/entry-check.md",
+          "sha256": "78ae7cae3bbea7bd5c344128b9699839086a45211c15779293faf46e2e434720"
+        },
+        {
+          "path": "assessments/C-MATH-001/place-value-check.md",
+          "sha256": "6e96bc4937d90bf532e5453fbb2f894acf8af483492382737c2f30836488df9c"
+        },
+        {
+          "path": "assessments/C-MATH-001/tens-and-ones-cycle-review.md",
+          "sha256": "895390be07409fc31cd1e6e7ee036e868a704881b18f5a497238683545bb3593"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/teaching-pack/bank-workflow.md",
+          "sha256": "f52435aeb74e52c969301f5cdfa39cfded01f78aa017d4a1bf41688d39a8d86b"
+        }
+      ],
+      "pdf_sha256": "25fe233644d7ca91ed3d00929ef5b66cc8a4240d13380701fdf2b5b76af5ab56"
+    },
+    "pv3-teacher": {
+      "audience": "teacher",
+      "sources": [
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/teaching-pack/teacher/pv3.md",
+          "sha256": "6918feed06805be649a0c9a818ae6ba2ab7a0d3e42630f3eb0b379c6772339ad"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/two-cycle/teacher.md",
+          "sha256": "9a06a767416d63f5403b36b57e458f0dd210f72862554f2befacbca59aa0da98"
+        },
+        {
+          "path": "assessments/C-MATH-001/entry-check.md",
+          "sha256": "78ae7cae3bbea7bd5c344128b9699839086a45211c15779293faf46e2e434720"
+        },
+        {
+          "path": "assessments/C-MATH-001/place-value-check.md",
+          "sha256": "6e96bc4937d90bf532e5453fbb2f894acf8af483492382737c2f30836488df9c"
+        },
+        {
+          "path": "assessments/C-MATH-001/tens-and-ones-cycle-review.md",
+          "sha256": "895390be07409fc31cd1e6e7ee036e868a704881b18f5a497238683545bb3593"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/lessons/03-number-forms.md",
+          "sha256": "4c765589fb329089be5ff8374c34c9cd91129b3c35ff27529e2fc8544820a997"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/lessons/04-counting.md",
+          "sha256": "d9557602493d3e61a6df542c46863e6292488d43cfbbd33e21b502010abcfc89"
+        },
+        {
+          "path": "curriculum/mathematics/grade-2/units/place-value/teaching-pack/bank-workflow.md",
+          "sha256": "f52435aeb74e52c969301f5cdfa39cfded01f78aa017d4a1bf41688d39a8d86b"
+        }
+      ],
+      "pdf_sha256": "588a1918d06af14f6a4d3168a19d9469d5c1a898d3fb63e65c0007a6a9fe6158"
+    }
+  }
+}

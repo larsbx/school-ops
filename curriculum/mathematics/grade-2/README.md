@@ -115,3 +115,12 @@ Keep individual learner evidence privately and use it to adjust pacing.
 The [framework document](../../../docs/trivium-quadrivium.md) records the classical
 vocabulary and our age-appropriate adaptation. The user also explicitly welcomed
 modern usage in [decision 0004](../../../docs/decisions/0004-modern-usage-classical-progression.md).
+
+
+## First-unit teaching pack
+
+Use the [PV2/PV3 pack](units/place-value/teaching-pack/README.md) for route-specific
+scripts, learner materials, keys, printable copies and bank administration.
+The [dated audit](../../../docs/reviews/2026-10-27-place-value-pack.md) distinguishes
+complete first-unit authoring from local entry, materials, access and scheduling
+decisions. Later units remain outlines; this does not promote the course to ready.
