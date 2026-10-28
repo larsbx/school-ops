@@ -2,7 +2,7 @@
 
 - Decision date: 2026-10-28
 - Status: **proposed cross-repository architecture; no content or runtime migration**
-- Paired decisions: [biz-kit extension ADR](https://github.com/larsbx/biz-kit/blob/main/docs/architecture/2026-10-28-cross-repository-extension-and-hawala-capability.md), [hawala-core ADR 0006](https://github.com/larsbx/hawala-core/blob/main/docs/decisions/0006-biz-kit-extension-host-boundary.md), [Eatsbot product ADR](https://github.com/larsbx/eatsbot/blob/dev/docs/modules/decisions/pages/biz-kit-interoperability-and-source-ownership.adoc), [d-patch ADR-0015](https://github.com/larsbx/d-patch/blob/main/docs/adr/0015-biz-kit-extension-and-hawala-client-boundaries.md).
+- Paired decisions: [biz-kit extension ADR](https://github.com/larsbx/biz-kit/blob/main/docs/architecture/2026-10-28-cross-repository-extension-and-hawala-capability.md), [hawala-core ADR 0006](https://github.com/larsbx/hawala-core/blob/main/docs/decisions/0006-biz-kit-extension-host-boundary.md), [Eatsbot retirement ADR](https://github.com/larsbx/eatsbot/blob/dev/docs/modules/decisions/pages/biz-kit-interoperability-and-source-ownership.adoc), [d-patch ADR-0015](https://github.com/larsbx/d-patch/blob/main/docs/adr/0015-biz-kit-extension-and-hawala-client-boundaries.md).
 
 ## Context
 
