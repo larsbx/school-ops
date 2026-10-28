@@ -50,6 +50,10 @@ provides a complete draft learner/workbook/teacher material family.
 | [docs/roadmap.md](docs/roadmap.md) | Development milestones and acceptance criteria |
 | [docs/decisions/](docs/decisions/0001-k12-scope.md) | Recorded curriculum decisions |
 
+> Proposed [decision 0007](docs/decisions/0007-biz-kit-content-authority-and-extension-contract.md)
+> preserves this repository as authoritative curriculum content while the SchoolOps
+> application uses the shared biz-kit extension/admission boundary.
+
 ## Current state
 
 The first subject and grade are selected: second-grade mathematics, `C-MATH-001`.
