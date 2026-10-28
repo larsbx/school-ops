@@ -49,7 +49,7 @@ If a future school business workflow needs a payment, it must use the same gener
 
 ## Rollout and verification
 
-1. Review this decision alongside the four platform/financial/product companion ADRs; do not prematurely declare the still-open Hawala native integration ADR pair (#42/#173) accepted.
+1. Review this decision alongside the four platform/financial/product companion ADRs; do not prematurely declare the merged but still-Proposed Hawala native integration ADR pair (#42/#173) accepted.
 2. Publish and test the pinned-content import manifest schema, source blob checks and invariant error cases. Reject unpinned updates, duplicate IDs, bad references, teaching-readiness inflation and missing provenance.
 3. Implement the SchoolOps domain adapter for the platform's actual extension contract after it is designed; use declared capabilities as *requests*, never authority.
 4. Prove real scoped task admission, revocation, duplicate/retry semantics and event replay against the actual biz-kit ledger; keep content authoring and staff-task state independent.
