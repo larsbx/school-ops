@@ -47,6 +47,14 @@ Hawala-core defines a separate QR-presented identity and Iroh-based financial pr
 
 If a future school business workflow needs a payment, it must use the same general platform and verified Hawala capability boundary as other products, without letting curriculum authoring grant consent, authorize money, or represent financial finality. Financial `Committed(intent)` is not a paid invoice. This ADR makes no decision to build such features.
 
+### S5. Inherit storage through the hosted backend
+
+[Decision 0008](0008-platform-storage-and-operations.md) supplements this
+authority split with the selected October 30 storage contract. Its operational
+obligations apply to `biz-kit/apps/school_ops`; they introduce no PostgreSQL,
+Redis, TigerBeetle or financial identity dependency into curriculum authoring.
+The proposed extension contract and its implementation gates remain separate.
+
 ## Rollout and verification
 
 1. Review this decision alongside the four platform/financial/product companion ADRs; do not prematurely declare the merged but still-Proposed Hawala native integration ADR pair (#42/#173) accepted.

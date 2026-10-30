@@ -33,6 +33,30 @@ These records specify design, not runtime acceptance.
 - Hawala/TigerBeetle remains optional. Content import requires no financial
   identity or balance; no staff task establishes payment or settlement.
 
+## Hosted backend inheritance
+
+The [biz-kit SchoolOps architecture](https://github.com/larsbx/biz-kit/blob/main/docs/architecture/2026-10-23-school-ops.md)
+owns the implementation of these operational obligations. It consumes the shared
+platform contract rather than adding storage services to this repository:
+
+| Concern | Inherited backend contract |
+| --- | --- |
+| Business admission and authorization | Signed platform admission under current installation/scope grants and revocation; declaration of a school role or content revision confers no permission |
+| Durable state and retries | PostgreSQL retains admitted history, original source/effect IDs, immutable content bindings, operational intent and processed receipts; identical retry recovers the original result and changed-body reuse is refused |
+| Replay and recovery | Bounded replay through a verified complete prefix; complete consumer bundle, receipt and cursor commit atomically when co-located, or recover through source-bound idempotent admission across transactions; unknown types and sequence gaps stop advancement |
+| Scheduling and views | Shared Redis delivery, retry, cancellation and reclaim backed by durable intent/receipts; loss of Redis or a wakeup reconstructs work without duplicate task admission or external notification effects |
+
+Recheck current authority before a scheduled effect. A lease, cached role,
+completed preparation task or delivery ACK cannot authorize a school command.
+Retain required effect evidence outside expiring caches and ACK only after
+durable completion at its owner.
+
+Biz-kit's replacement adapter remains subject to P1–P8; any financial bridge
+also retains Hawala S-A1–S-A7 and existing financial release gates. Exact-revision
+Lean/Quint refinement, concurrency, crash/replay and Redis-loss evidence belongs
+in the backend implementation PR. This content repository neither implements
+those adapters nor certifies them by merging an ADR.
+
 ## Acceptance and rollout
 
 - Rebuild after Redis deletion and compare source hashes, IDs, links and
