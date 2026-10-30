@@ -1,5 +1,9 @@
 # school-ops
 
+> Storage decision (2026-10-30): [0008 — Curriculum source custody and shared platform storage](docs/decisions/0008-platform-storage-and-operations.md).
+> Selected integration target; implementation and cutover remain gated.
+> Current services, permissions and durable owners remain in force.
+
 Develop and organize our K–12 curriculum: learning goals, course sequences,
 teaching materials, assessments, and weekly plans.
 
