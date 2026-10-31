@@ -98,3 +98,11 @@ and reproducible manifests. No learner evidence or teaching readiness is implied
 The [complete draft first-unit teaching pack](curriculum/mathematics/grade-2/units/place-value/teaching-pack/README.md)
 provides separate PV2/PV3 teaching routes, learner sheets, teacher keys and print
 editions, with record-specific authoring/readiness findings. The course stays draft.
+
+## Managed browser access control (prototype)
+
+The [site-scoped YouTube guard](tools/browser/site_scoped_youtube_guard/README.md)
+contains an MV3 Chrome 145+ extension and testable rule generator that allow
+YouTube embeds on an approved school portal while blocking standalone YouTube
+navigation. This is **not deployed**, has no real approved hostname yet, and
+requires independently enforced Chrome/device management before it is tamper-resistant.
