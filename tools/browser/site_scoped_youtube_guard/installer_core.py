@@ -207,29 +207,55 @@ def export_bundle(raw, destination):
 
 
 def verify_policy_bundle(bundle):
+    """Verify the whole exported bundle before installing its managed policy."""
     root = Path(bundle).resolve()
     hashes = json.loads((root / "SHA256SUMS.json").read_text(encoding="utf-8"))
-    relative = "deployment/linux-managed-policy.json"
-    if relative not in hashes:
-        raise ValueError("Bundle is missing the managed policy checksum")
-    content = (root / relative).read_bytes()
-    if hashlib.sha256(content).hexdigest() != hashes[relative]:
-        raise ValueError("The managed policy checksum does not match")
+    expected = {
+        "extension/manifest.json",
+        "extension/rules.json",
+        "extension/config.json",
+        "deployment/linux-managed-policy.json",
+        "deployment/extension-settings-value.json",
+        "deployment/README.md",
+    }
+    if not isinstance(hashes, dict) or set(hashes) != expected:
+        raise ValueError("Bundle files or checksum inventory are missing or unexpected")
+    for relative, claimed in hashes.items():
+        content = (root / relative).read_bytes()
+        if hashlib.sha256(content).hexdigest() != claimed:
+            raise ValueError(f"Bundle checksum mismatch: {relative}")
+
+    policy_file = root / "deployment/linux-managed-policy.json"
+    content = policy_file.read_bytes()
     policy = json.loads(content)
     if set(policy) != {"ExtensionSettings"} or len(policy["ExtensionSettings"]) != 1:
         raise ValueError("Unexpected managed policy structure")
     (extension_id, settings), = policy["ExtensionSettings"].items()
-    if not CHROME_ID.fullmatch(extension_id):
-        raise ValueError("Invalid published extension ID")
+    if set(settings) != {"installation_mode", "update_url"}:
+        raise ValueError("Unexpected force-install settings")
     if settings.get("installation_mode") != "force_installed":
         raise ValueError("Policy is not force-installed")
-    if not isinstance(settings.get("update_url"), str):
-        raise ValueError("Missing extension update source")
-    # Validate all fields against the original request, if altered.
-    original = json.loads((root / "extension/config.json").read_text(encoding="utf-8"))
-    build(original)
-    return content
 
+    original = json.loads((root / "extension/config.json").read_text(encoding="utf-8"))
+    url = settings["update_url"]
+    channel = "web_store" if url == WEBSTORE_URL else "self_hosted"
+    checked = validate_settings({
+        **original,
+        "extension_id": extension_id,
+        "update_url": url,
+        "channel": channel,
+        "target_os": "linux",
+    })
+    generated_rules = json.loads((root / "extension/rules.json").read_text(encoding="utf-8"))
+    if generated_rules != checked["rules"]:
+        raise ValueError("Bundle rules differ from the validated administrator settings")
+    admx = json.loads((root / "deployment/extension-settings-value.json").read_text(encoding="utf-8"))
+    if admx != extension_settings_value(checked):
+        raise ValueError("Linux and ADMX policies do not agree")
+    manifest = json.loads((root / "extension/manifest.json").read_text(encoding="utf-8"))
+    if manifest != json.loads((ROOT / "manifest.json").read_text(encoding="utf-8")):
+        raise ValueError("Unexpected extension manifest")
+    return content
 
 def apply_linux_policy(bundle, target=LINUX_MANAGED_PATH):
     """Explicit privileged action, no silently overwriting existing policy."""
