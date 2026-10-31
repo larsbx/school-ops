@@ -43,7 +43,7 @@ def validate_settings(raw):
            cfg["allowed_embed_sites"]):
         raise ValueError("Replace the example .invalid site with the actual school hostname")
     extension_id = str(raw.get("extension_id", "")).strip().lower()
-    if not CHROME_ID.fullmatch(extension_id):
+    if extension_id and not CHROME_ID.fullmatch(extension_id):
         raise ValueError("A published extension ID must have exactly 32 letters a-p")
     channel = raw.get("channel", "web_store")
     if channel not in ("web_store", "self_hosted"):
@@ -54,12 +54,12 @@ def validate_settings(raw):
             raise ValueError("Web Store installations must use the Chrome Web Store update URL")
     else:
         parsed = urlsplit(update_url)
-        if (parsed.scheme != "https" or not parsed.hostname or
+        if extension_id and (parsed.scheme != "https" or not parsed.hostname or
                 parsed.username or parsed.password or parsed.query or parsed.fragment or
                 parsed.hostname in ("localhost", "127.0.0.1") or
                 update_url == WEBSTORE_URL):
             raise ValueError("Self-hosted updates require your own HTTPS update manifest URL")
-        if not parsed.path or parsed.path == "/":
+        if extension_id and (not parsed.path or parsed.path == "/"):
             raise ValueError("Provide a complete HTTPS URL to your update manifest")
     target_os = raw.get("target_os", "linux")
     if target_os not in ("linux", "windows", "macos", "chromeos"):
@@ -77,6 +77,8 @@ def validate_settings(raw):
 
 
 def policy_document(checked):
+    if not checked["extension_id"]:
+        raise ValueError("Cannot issue force-install policy before publication provides an extension ID")
     return {"ExtensionSettings": {
         checked["extension_id"]: {
             "installation_mode": "force_installed",
@@ -122,6 +124,9 @@ def deployment_notes(checked):
         "# SchoolOps YouTube Guard deployment handoff",
         "",
         "Status: NOT INSTALLED. Extension publishing, policy application, and",
+        ("PUBLISHING PENDING: no extension ID was entered; no install policy was created."
+         if not checked["extension_id"] else
+         "POLICY READY FOR ADMIN REVIEW: published extension ID entered."),
         "on-device browser verification are separate administrator steps.",
         "",
         "Target platform: " + checked["target_os"],
@@ -177,10 +182,11 @@ def export_bundle(raw, destination):
             "extension/manifest.json": pretty_json(manifest),
             "extension/rules.json": pretty_json(checked["rules"]),
             "extension/config.json": pretty_json(checked["config"]),
-            "deployment/linux-managed-policy.json": pretty_json(policy_document(checked)),
-            "deployment/extension-settings-value.json": pretty_json(extension_settings_value(checked)),
             "deployment/README.md": deployment_notes(checked),
         }
+        if checked["extension_id"]:
+            files["deployment/linux-managed-policy.json"] = pretty_json(policy_document(checked))
+            files["deployment/extension-settings-value.json"] = pretty_json(extension_settings_value(checked))
         for relative, data in files.items():
             (temp / relative).write_text(data, encoding="utf-8")
         checksums = {
