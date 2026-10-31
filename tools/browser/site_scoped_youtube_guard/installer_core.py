@@ -123,11 +123,12 @@ def deployment_notes(checked):
     lines = [
         "# SchoolOps YouTube Guard deployment handoff",
         "",
-        "Status: NOT INSTALLED. Extension publishing, policy application, and",
+        "Status: NOT INSTALLED.",
         ("PUBLISHING PENDING: no extension ID was entered; no install policy was created."
          if not checked["extension_id"] else
          "POLICY READY FOR ADMIN REVIEW: published extension ID entered."),
-        "on-device browser verification are separate administrator steps.",
+        "Extension publishing, policy application, and on-device browser",
+        "verification are separate administrator steps.",
         "",
         "Target platform: " + checked["target_os"],
         "Extension ID: " + checked["extension_id"],
