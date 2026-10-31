@@ -102,7 +102,10 @@ editions, with record-specific authoring/readiness findings. The course stays dr
 ## Managed browser access control (prototype)
 
 The [site-scoped YouTube guard](tools/browser/site_scoped_youtube_guard/README.md)
-contains an MV3 Chrome 145+ extension and testable rule generator that allow
+includes a [graphical setup wizard](tools/browser/site_scoped_youtube_guard/wizard.py),
+an MV3 Chrome 145+ extension and testable rule generator that allow
 YouTube embeds on an approved school portal while blocking standalone YouTube
 navigation. This is **not deployed**, has no real approved hostname yet, and
 requires independently enforced Chrome/device management before it is tamper-resistant.
+The wizard can prepare a signed-release handoff and Chrome policy, but does not
+publish a signed CRX or silently change enterprise management settings.
