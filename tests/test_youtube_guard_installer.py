@@ -127,6 +127,21 @@ class InstallerCoreTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "checksum"):
                 core.verify_policy_bundle(target)
 
+    def test_checksum_rewritten_rules_still_fail_semantic_validation(self):
+        with tempfile.TemporaryDirectory() as td:
+            target = Path(td) / "bundle"
+            core.export_bundle(settings(), target)
+            rules_file = target / "extension/rules.json"
+            rules = json.loads(rules_file.read_text())
+            rules[0]["condition"]["requestDomains"] = ["arbitrary.example.net"]
+            rules_file.write_text(core.pretty_json(rules))
+            sums_file = target / "SHA256SUMS.json"
+            sums = json.loads(sums_file.read_text())
+            sums["extension/rules.json"] = hashlib.sha256(rules_file.read_bytes()).hexdigest()
+            sums_file.write_text(core.pretty_json(sums))
+            with self.assertRaisesRegex(ValueError, "rules differ"):
+                core.verify_policy_bundle(target)
+
     def test_policy_document_requires_real_id(self):
         checked = core.validate_settings(settings(extension_id=""))
         with self.assertRaisesRegex(ValueError, "extension ID"):
