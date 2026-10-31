@@ -106,7 +106,7 @@ def deployment_notes(checked):
             "Extension management settings policy using Chrome ADMX/GPO or your "
             "enterprise management console. This wizard does not edit the registry. "
             "Non-Web-Store force installs require the prerequisites documented by "
-            "Google, including the applicable enterprise/AD managed environment."
+            "Google, including an Active Directory managed environment where Google requires it."
         ),
         "macos": (
             "macOS: Deploy the ExtensionSettings map from "
