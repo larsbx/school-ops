@@ -16,6 +16,9 @@ From the repository checkout, launch:
 python3 tools/browser/site_scoped_youtube_guard/wizard.py
 ```
 
+On Windows you can double-click `launch-wizard.cmd`; on Linux/macOS run
+`sh tools/browser/site_scoped_youtube_guard/launch-wizard.sh`.
+
 Requires Python 3 and **Tkinter** (on some Linux distributions install the
 system `python3-tk` package). No third-party Python packages or network
 requests are needed. You can run the wizard without administrator privileges.
