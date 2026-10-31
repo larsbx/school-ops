@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Site-Scoped YouTube Guard",
+  "version": "0.1.0",
+  "minimum_chrome_version": "145",
+  "description": "Block direct YouTube navigation and allow YouTube embeds only on approved top-level school sites. Optional top-level whitelist/blacklist.",
+  "permissions": [
+    "declarativeNetRequest"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "site_guard_rules",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}
