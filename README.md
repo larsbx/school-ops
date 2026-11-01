@@ -113,4 +113,6 @@ publish a signed CRX or silently change enterprise management settings.
 
 ## Proposed K–12 class and subject scaffolds
 
-Browse the [13 class overviews and 91 grade/subject planning files](curriculum/scaffolds/README.md). They are **not** 91 courses or ready lessons. Each proposes starting evidence, investigation topics and an assessment task, and preserves Grade 2 mathematics as the authoritative authored course.
+Browse the [13 class overviews and 104 grade/subject planning files](curriculum/scaffolds/README.md). They are **not** 91 courses or ready lessons. Each proposes starting evidence, investigation topics and an assessment task, and preserves Grade 2 mathematics as the authoritative authored course.
+
+Islamic studies now has grade-specific proposals throughout K–12. Its [subject guide](curriculum/scaffolds/islamic-studies-guide.md) requires careful Qur'anic attribution, hadith authentication evidence, scholarly context and qualified review. These files are planning scaffolds, not teaching-ready courses.

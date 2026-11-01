@@ -41,4 +41,6 @@ and reports no learner results.
 
 ## K–12 grade × subject planning (proposed)
 
-The [13-grade, seven-subject planning map](../curriculum/scaffolds/README.md) is an authoring scaffold, not completion of issue #11's prerequisite evidence audit. Grade 2 mathematics remains the teaching priority. New course IDs, delivery schedules, materials and course scope need separate review.
+The [13-grade, eight-subject planning map](../curriculum/scaffolds/README.md) is an authoring scaffold, not completion of issue #11's prerequisite evidence audit. Grade 2 mathematics remains the teaching priority. New course IDs, delivery schedules, materials and course scope need separate review.
+
+Islamic studies is included as an eighth proposed subject in every K–12 grade map. Its [source and teaching guide](../curriculum/scaffolds/islamic-studies-guide.md) records review gates for translations, narrations, hadith authentication and juristic differences. This does not alter the priority to complete existing Grade 2 mathematics instruction.

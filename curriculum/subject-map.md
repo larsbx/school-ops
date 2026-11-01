@@ -31,3 +31,7 @@ above are planned work, not complete subject courses. Refer to the
 ## K–12 provisional coverage map
 
 The [grade × subject planning matrix](scaffolds/README.md) proposes grade-specific investigations, entry checks and performance tasks. This does not adopt new subjects, register courses, assert learner prerequisites or revise the existing Grade 2 mathematics sequence.
+
+## Islamic studies in K–12 planning
+
+The [Islamic studies guide](scaffolds/islamic-studies-guide.md) and [grade × subject map](scaffolds/README.md) now cover Qur'an, belief and character, sīrah, hadith and its authentication, fiqh and Islamic history throughout K–12. Islamic studies is included as a subject, not as a new Quadrivium art; grammar, logic and rhetoric inform its pedagogy. Its source corpus, course records, qualified reviews, interpretations and instructional readiness remain open.
