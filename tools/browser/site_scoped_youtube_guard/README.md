@@ -8,6 +8,46 @@ websites**, while preventing users from opening YouTube as a standalone site.
 school device. The default approved hostname is a reserved `.invalid` placeholder:
 **no actual school website is approved yet**.
 
+## Native wizard binaries (unsigned CI candidates)
+
+The repository can now build a launchable GUI bundle for Windows, macOS and
+Linux without requiring the operator to install Python. This is a **portable
+configuration wizard**, not an OS system installer: it does not request elevation,
+alter Chrome, install the extension, publish a signed CRX, or change MDM policy.
+
+The native build runs on a matching OS. For example:
+
+```sh
+python -m pip install "pyinstaller==6.22.3"
+python tools/browser/site_scoped_youtube_guard/package_native.py \
+  --output-dir native-wizard-output
+```
+
+The dedicated GitHub Actions
+[`YouTube Guard native wizard bundles`](../../../.github/workflows/youtube-guard-native.yml)
+workflow builds on native Windows, macOS and Ubuntu runners. Find its **unsigned**
+artifact under the run's Artifacts section. Output includes a platform-specific
+executable (Windows), a macOS `.app` tarball, or a Linux executable tarball,
+plus `SHA256SUMS.txt`, `build-report.json` and `native-smoke.json`. The
+SHA-256 digest and precise source commit are recorded; build outputs need not
+be bit-for-bit identical across separate native runner environments.
+
+The Linux CI job also runs a real four-step Tkinter UI smoke test under Xvfb.\nThis exercises review and draft export with no actual Chrome installation.\nEvery native build runs a packaged `--self-test`: it loads its bundled Manifest V3
+manifest, compiles example access rules and exports a *draft* package without
+creating a managed policy. A passing smoke test **does not** demonstrate
+interactive UI success, Chrome playback, enterprise enforcement, signed binary
+provenance or tamper resistance. A native binary must also be code-signed and
+staged through an approved software distribution process before school rollout.
+On macOS, unsigned apps may be blocked by Gatekeeper; on Windows they may be
+flagged by SmartScreen. No bypass of platform security controls is recommended.
+
+Production release gates: sign the native app with organization-controlled
+credentials, publish the exact signed Chrome extension and its immutable
+extension ID, configure the real school hostnames, test Chrome 145+ browser
+behavior and actual embedded YouTube, and validate managed-device force-install
+on non-administrator accounts. The CI artifacts are **not approved production
+installers**.
+
 ## Graphical installer / deployment wizard
 
 From the repository checkout, launch:

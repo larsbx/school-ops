@@ -5,6 +5,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 GUARD_ROOT = Path(__file__).resolve().parents[1] / "tools/browser/site_scoped_youtube_guard"
 sys.path.insert(0, str(GUARD_ROOT))
@@ -30,6 +31,40 @@ def settings(**overrides):
 
 
 class InstallerCoreTests(unittest.TestCase):
+    def test_export_checksums_survive_windows_text_newline_translation(self):
+        # Reproduce Windows' default text-mode LF -> CRLF translation on any OS.
+        # Binary writes bypass this, just as they do on Windows.
+        def windows_write_text(path, data, encoding=None, errors=None, newline=None):
+            with path.open("w", encoding=encoding, errors=errors,
+                           newline="\r\n" if newline is None else newline) as stream:
+                return stream.write(data)
+
+        with tempfile.TemporaryDirectory() as td:
+            probe = Path(td) / "newline-probe.txt"
+            with patch.object(Path, "write_text", windows_write_text):
+                probe.write_text("first\nsecond\n", encoding="utf-8")
+                self.assertEqual(probe.read_bytes(), b"first\r\nsecond\r\n")
+                for target_os in ("windows", "macos", "linux", "chromeos"):
+                    for extension_id in (TEST_ID, ""):
+                        with self.subTest(target_os=target_os, extension_id=extension_id):
+                            target = Path(td) / (target_os + ("-policy" if extension_id else "-draft"))
+                            core.export_bundle(settings(target_os=target_os,
+                                                        extension_id=extension_id), target)
+                            if extension_id:
+                                self.assertEqual(core.verify_policy_bundle(target),
+                                                 (target / "deployment/linux-managed-policy.json").read_bytes())
+                            inventory = target / "SHA256SUMS.json"
+                            sums = json.loads(inventory.read_bytes())
+                            exported = {p.relative_to(target).as_posix()
+                                        for p in target.rglob("*") if p.is_file()}
+                            self.assertEqual(exported, set(sums) | {"SHA256SUMS.json"})
+                            self.assertNotIn(b"\r\n", inventory.read_bytes())
+                            for relative, digest in sums.items():
+                                content = (target / relative).read_bytes()
+                                self.assertNotIn(b"\r\n", content, relative)
+                                self.assertEqual(hashlib.sha256(content).hexdigest(), digest,
+                                                 relative)
+
     def test_published_bundle_has_canonical_rules_policy_and_checksums(self):
         with tempfile.TemporaryDirectory() as td:
             target = Path(td) / "generated"

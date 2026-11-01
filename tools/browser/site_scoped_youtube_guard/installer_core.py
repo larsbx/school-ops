@@ -188,13 +188,16 @@ def export_bundle(raw, destination):
         if checked["extension_id"]:
             files["deployment/linux-managed-policy.json"] = pretty_json(policy_document(checked))
             files["deployment/extension-settings-value.json"] = pretty_json(extension_settings_value(checked))
+        # Encode once: disk bytes and digest inputs must be identical on every OS.
+        # Binary writes preserve the generated UTF-8/LF form on Windows too.
+        files = {key: value.encode("utf-8") for key, value in files.items()}
         for relative, data in files.items():
-            (temp / relative).write_text(data, encoding="utf-8")
+            (temp / relative).write_bytes(data)
         checksums = {
-            key: hashlib.sha256(value.encode("utf-8")).hexdigest()
+            key: hashlib.sha256(value).hexdigest()
             for key, value in sorted(files.items())
         }
-        (temp / "SHA256SUMS.json").write_text(pretty_json(checksums), encoding="utf-8")
+        (temp / "SHA256SUMS.json").write_bytes(pretty_json(checksums).encode("utf-8"))
         # os.rename fails when the destination exists on POSIX.
         if destination.exists():
             raise FileExistsError(f"Destination appeared during export: {destination}")
