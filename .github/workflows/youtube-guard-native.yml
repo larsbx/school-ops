@@ -9,6 +9,7 @@ on:
       - 'tools/browser/site_scoped_youtube_guard/package_native.py'
       - 'tools/browser/site_scoped_youtube_guard/manifest.json'
       - 'tests/test_native_youtube_wizard.py'
+      - 'tests/test_youtube_guard_installer.py'
       - 'tools/browser/site_scoped_youtube_guard/smoke_gui.py'
       - '.github/workflows/youtube-guard-native.yml'
   push:
@@ -32,6 +33,8 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
