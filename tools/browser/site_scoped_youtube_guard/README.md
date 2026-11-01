@@ -24,7 +24,7 @@ python tools/browser/site_scoped_youtube_guard/package_native.py \
 ```
 
 The dedicated GitHub Actions
-[`YouTube Guard native wizard bundles`](../../../..//.github/workflows/youtube-guard-native.yml)
+[`YouTube Guard native wizard bundles`](../../../.github/workflows/youtube-guard-native.yml)
 workflow builds on native Windows, macOS and Ubuntu runners. Find its **unsigned**
 artifact under the run's Artifacts section. Output includes a platform-specific
 executable (Windows), a macOS `.app` tarball, or a Linux executable tarball,
