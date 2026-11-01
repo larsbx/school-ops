@@ -20,3 +20,7 @@ reviewed teaching material.
 
 Keep placeholder rows in the templates, rather than adding fictitious courses to
 this index. Record proposed work in a curriculum proposal issue.
+
+## Grade-specific subject planning
+
+The [K–12 class × subject scaffold](scaffolds/README.md) contains 13 class maps and 91 **proposed** grade-specific subject briefs. These are not registered course records or teaching-ready material. Grade 2 mathematics above remains the only currently registered course.
