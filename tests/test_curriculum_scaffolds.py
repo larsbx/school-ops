@@ -24,11 +24,11 @@ class CurriculumScaffoldTests(unittest.TestCase):
                                   "**Logic:**", "**Rhetoric:**", "Gates before course"):
                         self.assertIn(token, body)
                     if (grade, subject) != ("2", "mathematics"):
-                        self.assertNotRegex(body, r"C-[A-Z]+-\\d{3}")
+                        self.assertNotRegex(body, r"C-[A-Z]+-[0-9]{3}")
 
     def test_relative_links_exist(self):
         for file in BASE.rglob("*.md"):
-            for target in re.findall(r"\\]\(([^)]+)\\)", file.read_text(encoding="utf-8")):
+            for target in re.findall(r"[]][(]([^)]+)[)]", file.read_text(encoding="utf-8")):
                 if target.startswith(("http:", "https:", "#")):
                     continue
                 linked = (file.parent / target.split("#")[0]).resolve()
