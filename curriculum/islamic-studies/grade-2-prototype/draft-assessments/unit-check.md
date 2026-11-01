@@ -39,4 +39,4 @@
 
 ## Readiness blockers
 
-Agree course scope and time; approve source translations and hadith handling with qualified reviewer; verify text access, reading supports, task validity, copy rights and formal IDs under [curriculum readiness](../../../docs/curriculum-model.md). No evidence of teaching or pupil mastery exists.
+Agree course scope and time; approve source translations and hadith handling with qualified reviewer; verify text access, reading supports, task validity, copy rights and formal IDs under [curriculum readiness](../../../../docs/curriculum-model.md). No evidence of teaching or pupil mastery exists.
