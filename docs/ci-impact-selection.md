@@ -1,8 +1,8 @@
 # Change-impact CI (initial pilot)
 
 This repository pilots a change-impact selector for the existing **Exercise bank**
-workflow. Its job names remain `Validate (3.11)`, `Validate (3.12)` and
-`Validate (3.13)`; all three interpreter versions remain covered. The workflow
+workflow. Its job names remain `validate (3.11)`, `validate (3.12)` and
+`validate (3.13)`; all three interpreter versions remain covered. The workflow
 is unconditional for pull requests and merge groups. Selection happens after
 the workflow starts, so a path-filtered workflow is not mistaken for a passed
 required check.
@@ -17,15 +17,17 @@ required check.
   shell, and fails when a selected test module is missing.
 - Selection self-tests run on **every** PR, including documentation-only PRs.
 - Unknown files, CI/workflow changes, and a requested full run select **all**
-  suites. Invalid policy, invalid diff, and policy self-test failures block CI;
+  suites and execute unrestricted discovery in both `tests/` and `tools/`.
+  Any test module not registered in the policy causes validation to fail closed. Invalid policy, invalid diff, and policy self-test failures block CI;
   they never produce a green skip.
 - Deletes/renames are compared with `--no-renames` so both sides of a rename
   participate in impact selection. The full clone is needed for merge-base
   calculations.
-- Documentation-only changes select no application suites, but the policy
-  self-tests and a constant final check still run.
+- Repository Markdown changes select the **teaching** suite because it performs
+  repository-wide relative-link and anchor validation. Unknown files still
+  select full verification. The selector self-tests and final check always run.
 - A nightly scheduled run (04:17 UTC), and manual `workflow_dispatch`, run
-  every declared suite on all three Python versions.
+  unrestricted test discovery on all three Python versions.
 - A constant `Exercise bank required gate` fails unless both selection and
   all selected matrix runs have succeeded.
 
@@ -38,7 +40,7 @@ results. This is not a proof that all regressions are discoverable.
 
 | Change | Selected suites |
 | --- | --- |
-| `README.md` | none (policy checks still run) |
+| `README.md` or `docs/guide.md` | teaching (repository Markdown links) |
 | `exercise_bank/generator.py` | bank, teaching |
 | `curriculum/scaffolds/new.md` | curriculum, bank, teaching |
 | `tools/browser/site_scoped_youtube_guard/build_rules.py` | guard, installer, native |
