@@ -9,5 +9,6 @@ Thumbs.db
 *.swp
 *~
 
-# Python bytecode
+# Python runtime artifacts
 __pycache__/
+*.py[cod]

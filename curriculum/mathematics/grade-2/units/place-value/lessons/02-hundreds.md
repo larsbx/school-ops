@@ -73,3 +73,13 @@ or its assessment ready; teaching and assessment records remain draft.
 
 The prompts are original school-ops drafts.
 Individual evidence is kept privately; curriculum observations guide the next plan.
+
+## Pack implementation and review
+
+The [PV3 guide](../teaching-pack/teacher/pv3.md) supplies the route-specific script,
+independent learner-sheet navigation, complete keys and explicit check/follow-up
+criteria. The [pack index](../teaching-pack/README.md) separates learner and teacher
+print editions. Use only the chosen route's examples; retain this lesson ID.
+See the [2026-10-27 audit](../../../../../../docs/reviews/2026-10-27-place-value-pack.md)
+for the record-specific authoring review and remaining readiness decisions.
+Status remains draft; no learner evidence or delivery schedule is inferred.

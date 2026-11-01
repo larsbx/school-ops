@@ -26,6 +26,7 @@ explanations throughout. Actual starting skills are unknown; use the
 | First study | Units, number, and place value; begin with quantities the learner can handle |
 | Numerical range | Initial work can stay within 100; draft extensions through 1,000 are available when grouping is understood |
 | Weekly time, dates, duration | Not selected |
+| Teaching structure | Selectable [instructional patterns](../../../templates/instruction/README.md); an Interchange-derived book map is one option, not the mathematical scope |
 | Session estimate | 25 minutes; an adjustable authoring estimate |
 | First materials | Counters/bundled sticks or base-ten blocks, a place-value chart, paper, pencil |
 | Later materials | Geometry tools and an observation notebook; choose when developing those units |

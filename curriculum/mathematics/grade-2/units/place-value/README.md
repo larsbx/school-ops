@@ -47,6 +47,21 @@ The first five sessions each allow roughly 3 minutes of retrieval, 5 of modeling
 7 of supported work, 7 of independent work, and 3 of an exit check. These are
 planning estimates; revisit them after teaching. Pause or split sessions when needed.
 
+## Alternative two-cycle implementation
+
+The [M01 pilot](two-cycle/README.md) implements lesson 1's tens/ones work using
+two cycles, partner communication, a workbook and a complete teacher guide.
+Replace the usual 25-minute lesson-1 implementation with two 25-minute sessions;
+do not add both implementations. The expanded core estimate is therefore
+150 minutes for PV2 (usual 125 + 25) or 175 for PV3 (usual 150 + 25).
+Workbook blocks add an optional 10–16 minutes, and the separate formative review
+adds 5–10 with flexibility. Hundreds lesson 2 and optional thousand preparation
+retain their prerequisites and additional budgets.
+
+This pilot checks only the tens/ones component of outcome 001. Continue the rest
+of the selected route and use A-MATH-001-02 for unit-level evidence.
+Other lessons can select or combine the [pattern templates](../../../../../templates/instruction/README.md).
+
 ## Choose the teaching route
 
 Choose after entry work; these are prepared options, not observed learner skills
@@ -87,3 +102,20 @@ when evidence is incomplete, then reassess with different numbers. Continue
 revisiting these ideas in later arithmetic units; a single total score cannot
 substitute for evidence on each outcome. Record the selected form and scope;
 hundreds/thousand work that was not taught remains pending.
+
+## Local generated practice and checks
+
+The draft [seeded bank](../../../../../bank/place-value/README.md) provides
+independent PV2/PV3 fluency drills and conceptual assessment variants following
+the existing unit-check criteria. Software validation does not complete readiness
+review or establish mastery. The thousand supplement remains separate.
+
+## Complete draft teaching pack
+
+The [route-specific pack](teaching-pack/README.md) assembles PV2/PV3 teacher scripts,
+separate learner sheets, print editions, assessment navigation and the corrected
+local bank. It reuses M01 unchanged: core proposals are 150 minutes for PV2 and
+175 for PV3, plus entry and optional workbook/review/practice time. The ordinary
+short lesson-1 route remains available under its original estimate.
+The [2026-10-27 record-specific audit](../../../../../docs/reviews/2026-10-27-place-value-pack.md)
+records satisfied authoring fields and remaining local decisions; status stays draft.

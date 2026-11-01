@@ -1,0 +1,8 @@
+{
+  "allowed_embed_sites": [
+    "approved-site.invalid"
+  ],
+  "mode": "blacklist",
+  "allowed_sites": [],
+  "blocked_sites": []
+}

@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "priority": 100,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "requestDomains": [
+        "youtube.com",
+        "youtube-nocookie.com",
+        "youtu.be"
+      ],
+      "resourceTypes": [
+        "main_frame"
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "priority": 90,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "requestDomains": [
+        "youtube.com",
+        "youtube-nocookie.com",
+        "youtu.be",
+        "youtubei.googleapis.com",
+        "youtube.googleapis.com",
+        "googlevideo.com",
+        "ytimg.com"
+      ],
+      "excludedTopDomains": [
+        "approved-site.invalid"
+      ],
+      "excludedResourceTypes": [
+        "main_frame"
+      ]
+    }
+  }
+]

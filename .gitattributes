@@ -1,0 +1,2 @@
+# PDF print editions are generated binary artifacts, not line-oriented text.
+*.pdf binary
