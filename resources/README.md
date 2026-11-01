@@ -7,7 +7,6 @@ and relevant outcomes.
 
 | Resource ID | Provider or author | Title | Status | Resource record |
 | --- | --- | --- | --- | --- |
-
 | R-KHAN-001 | Khan Academy | Place value blocks within 1,000 | ready — optional practice | [Record](r-khan-001.md) |
 | R-KHAN-002 | Khan Academy | Place value tables within 1,000 | ready — optional practice | [Record](r-khan-002.md) |
 | R-KHAN-003 | Khan Academy | Write numbers in number and expanded form | ready — optional practice | [Record](r-khan-003.md) |
@@ -20,6 +19,10 @@ The [second-grade mathematics search queue](second-grade-math-searches.md) lists
 Khan Academy retrieval and review status for the first course. Seven resources
 are reviewed for optional practice after hundreds; two-digit-only and thousand
 coverage gaps remain. See the [dated route review](../docs/reviews/2026-10-11-khan-place-value.md).
+
+The [2026-11-01 follow-up](../docs/reviews/2026-11-01-khan-retrieval-follow-up.md)
+records four rejected retrievals and links existing local draft alternatives.
+It adds no provider resources or readiness approvals.
 
 ## Review and register a resource
 

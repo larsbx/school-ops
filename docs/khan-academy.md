@@ -50,3 +50,16 @@ do not establish assignment creation. Resource readiness applies only to the
 reviewed optional practice role; course, unit, lesson, and assessment records
 remain draft. Provider completion does not establish mastery. Astronomy
 investigations need actual sky material beyond generic mathematics practice.
+
+## Follow-up and existing local bank
+
+The [2026-11-01 screening](reviews/2026-11-01-khan-retrieval-follow-up.md)
+records four further mismatched returns; bounded two-digit and exact thousand
+provider coverage remain unresolved. Use the existing local draft teaching pack
+for those relationships rather than treating a search phrase as scope verification.
+
+The [local bank](../bank/place-value/README.md) already generates original
+PV2/PV3 practice and conceptual forms. Configurable drill duration and countdown
+are local software features, not verified Khan Academy features. Conceptual
+checks remain untimed; PVX remains separate. Apply each selected form's review
+requirements before use and keep learner evidence private.
