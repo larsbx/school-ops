@@ -88,6 +88,7 @@ async function run() {
   if (process.env.GUARD_NO_SANDBOX === '1') args.push('--no-sandbox');
   report.launch = { channel: 'chromium', headless: process.env.GUARD_HEADED !== '1',
     executablePath: process.env.CHROME_EXECUTABLE || chromium.executablePath(), args };
+  report.executableVersion = execFileSync(report.launch.executablePath, ['--version'], { encoding: 'utf8' }).trim();
   report.fixture = { scheme: 'https', address: '127.0.0.1', port,
     dns: 'All fixture hosts resolve to loopback; browser proxy disabled; self-signed test certificate trusted via flag' };
 
