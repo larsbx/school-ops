@@ -1,19 +1,103 @@
 name: Exercise bank
+
+# Unconditional triggers keep existing 'validate (3.x)' check names available.
+# Path-select *inside* the workflow; path-filtered required workflows can pend.
 on:
+  pull_request:
   push:
     branches: [main]
-  pull_request:
+  merge_group:
+  schedule:
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+
 permissions:
   contents: read
+
+concurrency:
+  group: exercise-bank-${{ github.event.pull_request.number || github.event.merge_group.head_sha || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
+  plan:
+    name: Impact plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      suites: ${{ steps.impact.outputs.suites }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Self-test the selection policy
+        run: python -m unittest discover -s ci -p 'test_*.py' -v
+      - name: Select the transitive impacted test suites
+        id: impact
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BASE: ${{ github.event.before }}
+          GROUP_BASE: ${{ github.event.merge_group.base_sha }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          case "$EVENT_NAME" in
+            pull_request) base="$PR_BASE" ;;
+            push)         base="$PUSH_BASE" ;;
+            merge_group)  base="$GROUP_BASE" ;;
+            *)            base="" ;;
+          esac
+          if [[ -z "$base" || "$base" =~ ^0+$ ]]; then
+            python ci/impact.py --full --output ci-plan.json --github-output "$GITHUB_OUTPUT"
+          else
+            python ci/impact.py --base "$base" --head "$HEAD_SHA" \
+              --output ci-plan.json --github-output "$GITHUB_OUTPUT"
+          fi
+      - name: Publish plan and skip reasons
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: exercise-bank-impact-plan
+          path: ci-plan.json
+          if-no-files-found: warn
+
   validate:
-    runs-on: ubuntu-latest
+    name: Validate (${{ matrix.python }})
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
     strategy:
+      fail-fast: false
       matrix:
         python: ['3.11', '3.12', '3.13']
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
-      - run: python -m unittest discover -s tests -v
+      - name: Execute only selected suites
+        env:
+          SELECTED_SUITES: ${{ needs.plan.outputs.suites }}
+        run: python ci/run_selected.py
+
+  required:
+    name: Exercise bank required gate
+    if: always()
+    needs: [plan, validate]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Require successful selection and all selected tests
+        env:
+          PLAN_RESULT: ${{ needs.plan.result }}
+          TEST_RESULT: ${{ needs.validate.result }}
+        run: |
+          test "$PLAN_RESULT" = success
+          test "$TEST_RESULT" = success
