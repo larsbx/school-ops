@@ -67,7 +67,6 @@ jobs:
           if-no-files-found: warn
 
   validate:
-    name: Validate (${{ matrix.python }})
     needs: plan
     runs-on: ubuntu-24.04
     timeout-minutes: 15
