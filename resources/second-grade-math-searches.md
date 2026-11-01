@@ -3,7 +3,8 @@
 Course: [C-MATH-001](../curriculum/mathematics/grade-2/README.md).
 The selected grade limit is `2nd`; no standards-code filter is selected.
 Choose resources for the classical progression, not provider curricular codes.
-Review date: 2026-10-11; [PR #5](https://github.com/larsbx/school-ops/pull/5).
+Initial review: 2026-10-11; merged [PR #5](https://github.com/larsbx/school-ops/pull/5).
+Latest screening: 2026-11-01; [retrieval follow-up and local alternatives](../docs/reviews/2026-11-01-khan-retrieval-follow-up.md).
 
 | Priority | Outcome and goal | Exact queries used or next proposed query | State and reviewed resources |
 | --- | --- | --- | --- |
@@ -23,3 +24,19 @@ No class assignment has been made. Register practice resources only after their
 [readiness review](README.md); assessment use additionally requires a ready
 assessment design. Keep class-specific links privately. These arithmetic exercises
 do not replace astronomy investigations or original timed-drill/test authoring.
+
+## November 1 retrieval follow-up
+
+Four additional grade-`2nd` searches returned mismatched sets on their first
+pages: addition strategy, multi-digit comparison, addition story problems and
+counting by hundreds. None is registered for the requested two-digit role.
+The [dated log](../docs/reviews/2026-11-01-khan-retrieval-follow-up.md) records actual
+titles, URLs, inspected extent and reasons. Priorities 1–4 remain partly unresolved;
+priorities 5–6 have not received a suitability review.
+
+The existing [PV2 teaching pack](../curriculum/mathematics/grade-2/units/place-value/teaching-pack/teacher/pv2.md)
+contains original bounded grouping, names, steps and comparison work with separate
+learner sheets and complete teacher keys. The [local seeded bank](../bank/place-value/README.md)
+already supports configurable drill windows and untimed conceptual forms.
+Both remain draft; source availability, software tests and task exposure do not
+establish teaching readiness or independent learner evidence.
