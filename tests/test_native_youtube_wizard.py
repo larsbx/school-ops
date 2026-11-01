@@ -9,10 +9,16 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1] / "tools/browser/site_scoped_youtube_guard"
 sys.path.insert(0, str(ROOT))
 import package_native as native  # noqa: E402
-import wizard  # noqa: E402
+try:
+    import wizard  # noqa: E402
+except ImportError:
+    # A curriculum-only CI runner may not include optional GUI/Tk libraries.
+    # The dedicated native packaging jobs still require the actual GUI build.
+    wizard = None
 
 
 class NativeWizardTests(unittest.TestCase):
+    @unittest.skipIf(wizard is None, "Optional tkinter GUI libraries not installed")
     def test_headless_source_self_test_exports_valid_draft(self):
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "smoke.json"
