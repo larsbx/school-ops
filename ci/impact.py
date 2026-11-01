@@ -55,6 +55,22 @@ def load_policy(path: Path = POLICY) -> dict:
             raise ValueError(f"unsafe test directory for {name}")
     if not isinstance(policy["full_on"], list) or not isinstance(policy["ignore"], list):
         raise ValueError("full_on and ignore must be lists")
+    # A newly added test must never silently disappear from both targeted and
+    # scheduled exhaustive runs. Enforce complete test-module registration.
+    root = path.resolve().parent.parent
+    discovered = {
+        p.relative_to(root).as_posix()
+        for directory in ("tests", "tools")
+        for p in (root / directory).glob("test*.py")
+        if p.is_file()
+    }
+    registered = {
+        f"{suite['directory']}/{suite['pattern']}"
+        for suite in suites.values()
+    }
+    unregistered = sorted(discovered - registered)
+    if unregistered:
+        raise ValueError(f"unregistered test modules: {unregistered}")
     visited: set[str] = set()
     visiting: set[str] = set()
 
@@ -162,6 +178,7 @@ def main() -> None:
     if args.github_output:
         with Path(args.github_output).open("a", encoding="utf-8") as handle:
             handle.write("suites=" + json.dumps(decision["suites"], separators=(",", ":")) + "\n")
+            handle.write("mode=" + decision["mode"] + "\n")
     print(output, end="")
 
 
