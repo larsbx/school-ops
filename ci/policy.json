@@ -7,11 +7,7 @@
     ".gitattributes",
     ".gitignore"
   ],
-  "ignore": [
-    "README.md",
-    "CONTRIBUTING.md",
-    "docs/**"
-  ],
+  "ignore": [],
   "components": {
     "curriculum": {
       "paths": [
@@ -43,7 +39,8 @@
       ],
       "depends_on": [
         "bank",
-        "curriculum"
+        "curriculum",
+        "documentation"
       ]
     },
     "archive": {
@@ -81,6 +78,14 @@
       "depends_on": [
         "installer"
       ]
+    },
+    "documentation": {
+      "paths": [
+        "README.md",
+        "CONTRIBUTING.md",
+        "docs/**"
+      ],
+      "depends_on": []
     }
   },
   "suites": {
