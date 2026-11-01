@@ -239,13 +239,16 @@ def _package_self_test(report_path):
         manifest = json.loads((bundle / "extension/manifest.json").read_text(encoding="utf-8"))
         rules = json.loads((bundle / "extension/rules.json").read_text(encoding="utf-8"))
         source_manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
-        assert manifest == source_manifest, "Packaged manifest changed"
-        assert manifest["minimum_chrome_version"] == "145", "Unsupported Chrome version"
-        assert rules[0]["condition"]["resourceTypes"] == ["main_frame"]
-        assert rules[1]["condition"]["excludedTopDomains"] == ["portal.school.example"]
-        assert not (bundle / "deployment/linux-managed-policy.json").exists(), (
-            "An unpublished extension must not generate managed policy"
-        )
+        if manifest != source_manifest:
+            raise RuntimeError("Packaged extension manifest differs from source")
+        if manifest.get("minimum_chrome_version") != "145":
+            raise RuntimeError("Unsupported Chrome version")
+        if rules[0]["condition"].get("resourceTypes") != ["main_frame"]:
+            raise RuntimeError("Direct YouTube navigation rule missing")
+        if rules[1]["condition"].get("excludedTopDomains") != ["portal.school.example"]:
+            raise RuntimeError("Scoped YouTube embed rule missing")
+        if (bundle / "deployment/linux-managed-policy.json").exists():
+            raise RuntimeError("An unpublished extension must not generate managed policy")
     report = {
         "status": "passed",
         "scope": "Packaged application data and draft bundle generation; NO GUI, "
