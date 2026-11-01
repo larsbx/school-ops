@@ -1,0 +1,50 @@
+name: SchoolOps YouTube Guard native wizard bundles
+
+on:
+  pull_request:
+    paths:
+      - 'tools/browser/site_scoped_youtube_guard/wizard.py'
+      - 'tools/browser/site_scoped_youtube_guard/installer_core.py'
+      - 'tools/browser/site_scoped_youtube_guard/build_rules.py'
+      - 'tools/browser/site_scoped_youtube_guard/package_native.py'
+      - 'tools/browser/site_scoped_youtube_guard/manifest.json'
+      - 'tests/test_native_youtube_wizard.py'
+      - '.github/workflows/youtube-guard-native.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/browser/site_scoped_youtube_guard/**'
+      - '.github/workflows/youtube-guard-native.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-wizard:
+    name: Unsigned native wizard (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2025, macos-15, ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned native packager
+        run: python -m pip install --disable-pip-version-check "pyinstaller==6.22.3"
+      - name: Validate Python contracts
+        run: python -m unittest discover -s tests -v
+      - name: Build and smoke-test unsigned native wizard
+        run: python tools/browser/site_scoped_youtube_guard/package_native.py --output-dir native-wizard-output
+      - name: Upload unsigned build and smoke evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: schoolops-youtube-guard-${{ matrix.os }}-unsigned
+          path: native-wizard-output/
+          if-no-files-found: warn
+          retention-days: 14
