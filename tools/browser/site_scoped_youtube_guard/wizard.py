@@ -2,6 +2,9 @@
 """SchoolOps YouTube Guard: graphical deployment wizard (Python 3 + Tkinter)."""
 import platform
 from pathlib import Path
+import json
+import sys
+from tempfile import TemporaryDirectory
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
@@ -218,5 +221,49 @@ class GuardWizard(tk.Tk):
             self.output.set(str(Path(path) / "schoolops-youtube-guard-deployment"))
 
 
+def _package_self_test(report_path):
+    """Exercise packaged data and export without opening a GUI or changing policy."""
+    from installer_core import ROOT, export_bundle
+    config = {
+        "allowed_embed_sites": ["portal.school.example"],
+        "mode": "blacklist",
+        "allowed_sites": [],
+        "blocked_sites": ["social.example.net"],
+        "extension_id": "",
+        "channel": "web_store",
+        "update_url": WEBSTORE_URL,
+        "target_os": detect_os(),
+    }
+    with TemporaryDirectory(prefix="schoolops-wizard-selftest-") as temp:
+        bundle = export_bundle(config, Path(temp) / "deployment")
+        manifest = json.loads((bundle / "extension/manifest.json").read_text(encoding="utf-8"))
+        rules = json.loads((bundle / "extension/rules.json").read_text(encoding="utf-8"))
+        source_manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
+        assert manifest == source_manifest, "Packaged manifest changed"
+        assert manifest["minimum_chrome_version"] == "145", "Unsupported Chrome version"
+        assert rules[0]["condition"]["resourceTypes"] == ["main_frame"]
+        assert rules[1]["condition"]["excludedTopDomains"] == ["portal.school.example"]
+        assert not (bundle / "deployment/linux-managed-policy.json").exists(), (
+            "An unpublished extension must not generate managed policy"
+        )
+    report = {
+        "status": "passed",
+        "scope": "Packaged application data and draft bundle generation; NO GUI, "
+                 "Chrome, signed extension or managed-device installation tested",
+        "frozen": bool(getattr(sys, "frozen", False)),
+        "chromeMinimum": manifest["minimum_chrome_version"],
+        "ruleCount": len(rules),
+    }
+    path = Path(report_path)
+    if path.exists():
+        raise FileExistsError(f"Refusing to overwrite self-test report: {path}")
+    path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+
+
 if __name__ == "__main__":
-    GuardWizard().mainloop()
+    if len(sys.argv) == 3 and sys.argv[1] == "--self-test":
+        _package_self_test(sys.argv[2])
+    elif len(sys.argv) != 1:
+        raise SystemExit("Usage: wizard.py [--self-test /path/to/new/report.json]")
+    else:
+        GuardWizard().mainloop()
