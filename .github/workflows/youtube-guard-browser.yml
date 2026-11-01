@@ -1,0 +1,47 @@
+name: YouTube guard browser acceptance
+on:
+  pull_request:
+    paths:
+      - 'tools/browser/site_scoped_youtube_guard/**'
+      - 'tests/test*guard*'
+      - '.github/workflows/youtube-guard-browser.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/browser/site_scoped_youtube_guard/**'
+      - '.github/workflows/youtube-guard-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  chrome-fixtures:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: tools/browser/site_scoped_youtube_guard/acceptance
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: tools/browser/site_scoped_youtube_guard/acceptance/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci --ignore-scripts
+      - run: npx playwright-core install --with-deps chromium
+      - name: Existing rule and installer tests
+        working-directory: .
+        run: python -m unittest discover -s tests -v
+      - name: Actual browser requests and separate hypothetical probes
+        run: npm test
+      - name: Retain evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-guard-chrome-evidence
+          path: tools/browser/site_scoped_youtube_guard/acceptance/artifacts/
+          if-no-files-found: warn
+          retention-days: 30

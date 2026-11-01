@@ -105,9 +105,11 @@ top-level site context from YouTube iframe initiators. A basic
 
 Tests: from the repository root run
 `python -m unittest discover -s tests -v`.
-These are rule-generation contract tests only; Chrome behavior needs separate
-browser tests. With Chrome 145+, `chrome.declarativeNetRequest.testMatchOutcome`
-can help test `topUrl`, but it does not replace actual playback testing.
+The Python tests cover generation and installer contracts. For actual browser
+network enforcement against controlled HTTPS fixtures, run the
+[browser acceptance harness](acceptance/README.md). Its hypothetical
+`testMatchOutcome` probes are reported separately from network outcomes; neither
+level replaces real YouTube playback or managed-device testing.
 
 ## Administrator enforcement and threat model
 
