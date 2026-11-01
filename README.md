@@ -48,6 +48,7 @@ provides a complete draft learner/workbook/teacher material family.
 | [resources/](resources/README.md) | Reviewed resource register and source records |
 | [assessments/](assessments/README.md) | Assessment designs, rubrics, and completion criteria |
 | [planning/](planning/README.md) | Weekly plans and curriculum review decisions |
+| [tools/](tools/archive_source.py) | Source-archiving crawler and its tests |
 | [templates/](templates/README.md) | Reusable briefs, course plans, and teaching documents |
 | [docs/curriculum-model.md](docs/curriculum-model.md) | Identifiers, prerequisites, outcomes, and readiness rules |
 | [docs/trivium-quadrivium.md](docs/trivium-quadrivium.md) | The seven arts and their application in lessons |
