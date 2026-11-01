@@ -25,6 +25,7 @@ jobs:
     timeout-minutes: 5
     outputs:
       suites: ${{ steps.impact.outputs.suites }}
+      mode: ${{ steps.impact.outputs.mode }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -84,6 +85,7 @@ jobs:
       - name: Execute only selected suites
         env:
           SELECTED_SUITES: ${{ needs.plan.outputs.suites }}
+          SELECTED_MODE: ${{ needs.plan.outputs.mode }}
         run: python ci/run_selected.py
 
   required:
