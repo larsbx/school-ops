@@ -10,10 +10,14 @@ POLICY = load_policy()
 
 
 class ImpactPlanningTests(unittest.TestCase):
-    def test_documentation_only_never_selects_all(self):
+    def test_documentation_changes_select_repository_link_validation(self):
         decision = plan(POLICY, ["docs/guide.md", "README.md"])
-        self.assertEqual(decision["mode"], "documentation-only")
-        self.assertEqual(decision["suites"], [])
+        self.assertEqual(decision["mode"], "targeted")
+        self.assertEqual(decision["suites"], ["teaching"])
+
+    def test_documentation_with_unknown_path_falls_back_to_full(self):
+        decision = plan(POLICY, ["README.md", "unknown.new"])
+        self.assertEqual(decision["mode"], "full")
 
     def test_bank_change_includes_downstream_teaching(self):
         decision = plan(POLICY, ["exercise_bank/generator.py"])
@@ -66,6 +70,20 @@ class ImpactPlanningTests(unittest.TestCase):
             target.write_text('{"version":99}', encoding="utf-8")
             with self.assertRaises(ValueError):
                 load_policy(target)
+
+    def test_new_unregistered_test_is_rejected_by_policy_validation(self):
+        import json
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "ci").mkdir()
+            (root / "tests").mkdir()
+            (root / "tests" / "test_future_module.py").write_text(
+                "import unittest\n", encoding="utf-8"
+            )
+            config = root / "ci" / "policy.json"
+            config.write_text(json.dumps(POLICY), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "unregistered test modules"):
+                load_policy(config)
 
     def test_dependency_cycle_fails_instead_of_skipping(self):
         import json
