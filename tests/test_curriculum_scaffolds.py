@@ -1,4 +1,4 @@
-"""Ensure the proposed K–12 matrix stays navigable and planning-only."""
+"""Validate the K–12 planning matrix, references and source-review guards."""
 import re
 import unittest
 from pathlib import Path
@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "curriculum" / "scaffolds"
 GRADES = ("k", *map(str, range(1, 13)))
-SUBJECTS = ("mathematics", "geometry", "astronomy", "language", "reasoning", "natural-science", "history-geography",)
+SUBJECTS = ("mathematics", "geometry", "astronomy", "language", "reasoning", "natural-science", "history-geography", "islamic-studies",)
 
 
 class CurriculumScaffoldTests(unittest.TestCase):
@@ -34,6 +34,20 @@ class CurriculumScaffoldTests(unittest.TestCase):
                 linked = (file.parent / target.split("#")[0]).resolve()
                 with self.subTest(file=file.name, target=target):
                     self.assertTrue(linked.is_file(), f"broken link in {file}: {target}")
+
+    def test_islamic_studies_source_and_scope_guards(self):
+        guide = (BASE / "islamic-studies-guide.md").read_text(encoding="utf-8")
+        for term in ("Qur'an", "hadith", "fiqh", "isnād", "matn", "not yet verified",
+                     "private faith", "qualified"):
+            self.assertIn(term, guide)
+        for grade in GRADES:
+            plan = (BASE / f"grade-{grade}" / "islamic-studies.md").read_text(encoding="utf-8")
+            overview = (BASE / f"grade-{grade}" / "README.md").read_text(encoding="utf-8")
+            with self.subTest(grade=grade):
+                self.assertIn("Islamic studies", plan)
+                self.assertIn("[Open plan](islamic-studies.md)", overview)
+                self.assertIn("Do not grade private faith", plan)
+                self.assertIn("islamic-studies-guide.md", plan)
 
     def test_existing_grade_two_course_retained(self):
         body = (BASE / "grade-2" / "mathematics.md").read_text(encoding="utf-8")

@@ -1,8 +1,8 @@
 # Grade 6 — class planning map
 
-**Status: proposal only.** This is a grade-level index, not a class roster, a confirmed timetable, seven adopted courses, or evidence of learner readiness.
+**Status: proposal only.** This is a grade-level index, not a class roster, a confirmed timetable, eight adopted courses, or evidence of learner readiness.
 
-The [Trivium and selected Quadrivium arts](../../../docs/trivium-quadrivium.md) govern all proposed work. Music is excluded.
+The [Trivium and selected Quadrivium arts](../../../docs/trivium-quadrivium.md) govern all proposed work. Music is excluded. Islamic studies is included as a separately named subject track, with [source and pedagogy requirements](../islamic-studies-guide.md).
 
 | Subject | Subject-specific scaffold |
 | --- | --- |
@@ -13,6 +13,7 @@ The [Trivium and selected Quadrivium arts](../../../docs/trivium-quadrivium.md) 
 | Logic and reasoning | [Open plan](reasoning.md) |
 | Natural science | [Open plan](natural-science.md) |
 | History and geography | [Open plan](history-geography.md) |
+| Islamic studies | [Open plan](islamic-studies.md) |
 
 ## Before adoption
 
