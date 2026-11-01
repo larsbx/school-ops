@@ -27,3 +27,7 @@ and reasoning studies when those courses are selected.
 Only the first arithmetic unit currently has lesson records. Connections named
 above are planned work, not complete subject courses. Refer to the
 [teaching model](../docs/trivium-quadrivium.md) when developing them.
+
+## K–12 provisional coverage map
+
+The [grade × subject planning matrix](scaffolds/README.md) proposes grade-specific investigations, entry checks and performance tasks. This does not adopt new subjects, register courses, assert learner prerequisites or revise the existing Grade 2 mathematics sequence.

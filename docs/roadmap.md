@@ -38,3 +38,7 @@ A reviewed unit may be planned while the unfinished course remains draft.
 Review pacing, sources, and evidence after each planned week and each unit.
 Recurring review settings are managed separately; this roadmap establishes no new schedule
 and reports no learner results.
+
+## K–12 grade × subject planning (proposed)
+
+The [13-grade, seven-subject planning map](../curriculum/scaffolds/README.md) is an authoring scaffold, not completion of issue #11's prerequisite evidence audit. Grade 2 mathematics remains the teaching priority. New course IDs, delivery schedules, materials and course scope need separate review.

@@ -110,3 +110,7 @@ navigation. This is **not deployed**, has no real approved hostname yet, and
 requires independently enforced Chrome/device management before it is tamper-resistant.
 The wizard can prepare a signed-release handoff and Chrome policy, but does not
 publish a signed CRX or silently change enterprise management settings.
+
+## Proposed K–12 class and subject scaffolds
+
+Browse the [13 class overviews and 91 grade/subject planning files](curriculum/scaffolds/README.md). They are **not** 91 courses or ready lessons. Each proposes starting evidence, investigation topics and an assessment task, and preserves Grade 2 mathematics as the authoritative authored course.
