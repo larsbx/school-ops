@@ -12,6 +12,3 @@ Thumbs.db
 # Python runtime artifacts
 __pycache__/
 *.py[cod]
-
-# Local unsigned native wizard artifacts
-/native-wizard-output/
