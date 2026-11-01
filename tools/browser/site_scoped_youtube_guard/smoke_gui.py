@@ -29,7 +29,7 @@ def main():
         assert app.index == 3, "Missing deployment -> review transition"
         summary = app.review.get("1.0", "end")
         assert "portal.school.example" in summary
-        assert "Stand-alone YouTube" not in summary or "BLOCKED" in summary
+        assert "Standalone YouTube: always BLOCKED" in summary
         assert "NOT GENERATED" in summary, "Unpublished extension must not have policy"
 
         with TemporaryDirectory(prefix="schoolops-gui-smoke-") as temp:
