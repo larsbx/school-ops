@@ -32,7 +32,7 @@ plus `SHA256SUMS.txt`, `build-report.json` and `native-smoke.json`. The
 SHA-256 digest and precise source commit are recorded; build outputs need not
 be bit-for-bit identical across separate native runner environments.
 
-Every build runs a packaged `--self-test`: it loads its bundled Manifest V3
+The Linux CI job also runs a real four-step Tkinter UI smoke test under Xvfb.\nThis exercises review and draft export with no actual Chrome installation.\nEvery native build runs a packaged `--self-test`: it loads its bundled Manifest V3
 manifest, compiles example access rules and exports a *draft* package without
 creating a managed policy. A passing smoke test **does not** demonstrate
 interactive UI success, Chrome playback, enterprise enforcement, signed binary
