@@ -56,12 +56,13 @@ def load_policy(path: Path = POLICY) -> dict:
     if not isinstance(policy["full_on"], list) or not isinstance(policy["ignore"], list):
         raise ValueError("full_on and ignore must be lists")
     # A newly added test must never silently disappear from both targeted and
-    # scheduled exhaustive runs. Enforce complete test-module registration.
+    # scheduled exhaustive runs. Enforce complete test-module registration,
+    # including recursively discovered tests under nested packages.
     root = path.resolve().parent.parent
     discovered = {
         p.relative_to(root).as_posix()
         for directory in ("tests", "tools")
-        for p in (root / directory).glob("test*.py")
+        for p in (root / directory).rglob("test*.py")
         if p.is_file()
     }
     registered = {
