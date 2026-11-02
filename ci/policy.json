@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "full_on": [
+    "ci/**",
+    ".github/**",
+    "AGENTS.md",
+    ".gitattributes",
+    ".gitignore"
+  ],
+  "ignore": [],
+  "components": {
+    "curriculum": {
+      "paths": [
+        "curriculum/**",
+        "planning/**",
+        "tests/test_curriculum_scaffolds.py"
+      ],
+      "depends_on": []
+    },
+    "bank": {
+      "paths": [
+        "bank/**",
+        "assessments/**",
+        "exercise_bank/**",
+        "tests/test_bank.py"
+      ],
+      "depends_on": [
+        "curriculum"
+      ]
+    },
+    "teaching": {
+      "paths": [
+        "templates/**",
+        "resources/**",
+        "tools/build_print_pack.py",
+        "tools/verify_print_pack.py",
+        "tools/requirements-print.txt",
+        "tests/test_teaching_pack.py",
+        "tests/test_islamic_studies_prototype.py"
+      ],
+      "depends_on": [
+        "bank",
+        "curriculum",
+        "documentation"
+      ]
+    },
+    "archive": {
+      "paths": [
+        "tools/archive_source.py",
+        "tools/test_archive_source.py"
+      ],
+      "depends_on": []
+    },
+    "guard": {
+      "paths": [
+        "tools/browser/site_scoped_youtube_guard/build_rules.py",
+        "tools/browser/site_scoped_youtube_guard/manifest.json",
+        "tools/browser/site_scoped_youtube_guard/acceptance/**",
+        "tests/test_site_scoped_youtube_guard.py"
+      ],
+      "depends_on": []
+    },
+    "installer": {
+      "paths": [
+        "tools/browser/site_scoped_youtube_guard/installer_core.py",
+        "tools/browser/site_scoped_youtube_guard/wizard.py",
+        "tests/test_youtube_guard_installer.py"
+      ],
+      "depends_on": [
+        "guard"
+      ]
+    },
+    "native": {
+      "paths": [
+        "tools/browser/site_scoped_youtube_guard/package_native.py",
+        "tools/browser/site_scoped_youtube_guard/smoke_gui.py",
+        "tests/test_native_youtube_wizard.py"
+      ],
+      "depends_on": [
+        "installer"
+      ]
+    },
+    "documentation": {
+      "paths": [
+        "README.md",
+        "CONTRIBUTING.md",
+        "docs/**"
+      ],
+      "depends_on": []
+    }
+  },
+  "suites": {
+    "curriculum": {
+      "components": [
+        "curriculum"
+      ],
+      "directory": "tests",
+      "pattern": "test_curriculum_scaffolds.py"
+    },
+    "bank": {
+      "components": [
+        "bank"
+      ],
+      "directory": "tests",
+      "pattern": "test_bank.py"
+    },
+    "teaching": {
+      "components": [
+        "teaching"
+      ],
+      "directory": "tests",
+      "pattern": "test_teaching_pack.py"
+    },
+    "archive": {
+      "components": [
+        "archive"
+      ],
+      "directory": "tools",
+      "pattern": "test_archive_source.py"
+    },
+    "guard": {
+      "components": [
+        "guard"
+      ],
+      "directory": "tests",
+      "pattern": "test_site_scoped_youtube_guard.py"
+    },
+    "installer": {
+      "components": [
+        "installer"
+      ],
+      "directory": "tests",
+      "pattern": "test_youtube_guard_installer.py"
+    },
+    "native": {
+      "components": [
+        "native"
+      ],
+      "directory": "tests",
+      "pattern": "test_native_youtube_wizard.py"
+    },
+    "islamic-prototype": {
+      "components": [
+        "teaching"
+      ],
+      "directory": "tests",
+      "pattern": "test_islamic_studies_prototype.py"
+    }
+  }
+}
