@@ -1,7 +1,7 @@
 # Grade 3 — Islamic studies
 
 - **Record kind:** grade-and-subject **planning scaffold**; not a registered course, unit, lesson, assessment or timetable
-- **Status:** expanded proposal for review; **not teaching-ready**, with no learner mastery or classroom delivery asserted
+- **Status:** expanded proposal for review; **not ready / not teaching-ready**, with no learner mastery or classroom delivery asserted
 - **Audience:** intended Grade 3 learners, contingent on actual entry checks, language and accessibility needs
 - **Formal course/outcome/unit/lesson/assessment/resource IDs:** **unassigned** pending an approved scope
 - **Time, dates, texts, language/translation, materials, access and qualified reviewers:** **unresolved**
@@ -33,7 +33,7 @@
 | `G3-IS-P5` | Connect historical accounts to places and sources without inventing dates, routes or map distances. | Make a two-place, four-event annotated timeline/map from teacher-reviewed evidence. |
 | `G3-IS-P6` | Present a respectful, checkable historical or textual explanation with a citation, a reason and a source limitation. | Give one correct claim, a traceable source, a reason and an explicitly labeled uncertainty via an accessible response mode. |
 
-## Prerequisite readiness — proposed entry diagnostic
+## Proposed entry evidence and prerequisite readiness — entry diagnostic
 
 The Grade 2 prototype's `IS2-P..` labels do **not** establish a learner's prerequisites: they are unregistered and no student evidence is available. Administer a separately authored, source-checked **entry check** before deciding pace. Teacher may read instructions aloud and allow oral, drawing or assistive-communication responses; Arabic fluency and writing speed are not prerequisites.
 
@@ -46,7 +46,7 @@ The Grade 2 prototype's `IS2-P..` labels do **not** establish a learner's prereq
 
 **Progression rule:** check and remediate each unmet skill separately; no overall score substitutes for E1–E4. E1 gates source inquiry, E2 gates chronology, E3 gates source interpretation, E4 supplies a valid response mode in every episode. Prerequisite evidence and accommodations for specific children belong in private systems only. These are **candidate thresholds**, not a finalized readiness instrument.
 
-## Proposed learning progression (not authored lessons)
+## Proposed sequence and learning progression (not authored lessons)
 
 Six episodes are *sequencing hypotheses*, **not** six approved lessons or an agreed session count. Each includes all three Trivium arts and a proposed check; choose actual task duration, text, translation and materials after review.
 
@@ -71,7 +71,7 @@ Use an episode-level formative check and an additional targeted remediation sess
 - **Astronomy (optional later):** compare actual lunar observations with calendar conventions, if a separately sourced mathematical inquiry is authored; a Hijrah date does not itself demonstrate astronomy.
 - **Music:** excluded, including musical/rhythmic memorization activities. Islamic studies does not become a new Quadrivium art.
 
-## Culminating task — proposed assessment design, not ready
+## Proposed culminating performance — assessment design, not ready
 
 From a **qualified-reviewer-approved** source packet, four referenced event cards, a verified Makkah–Madinah place map and labeled vocabulary cards, ask the learner to:
 
@@ -96,13 +96,13 @@ Use an oral, written, illustrated or assistive format; source cards remain avail
 
 - **Source selection:** for Qur'an give the sūrah/āyah and identify exact Arabic/translation/tafsīr edition; for hadith give collection and report/edition identifiers and evidence for *any* claimed authenticity grade. Attribute historical claims to their actual source, and mark uncertainty. Do not confuse a later sīrah narrative with a Qur'anic statement.
 - **Fiqh and viewpoint:** have qualified scholars review religious descriptions; name a school/scholar when a juristic position is invoked, note documented differences respectfully, and do not treat this investigation as a fatwa.
-- **Learner dignity:** teach the material without grading religious sincerity, compulsory prayer, home routines, recitation or family adherence. Do not assume all learners are Muslim.
+- **Learner dignity:** **Do not grade private faith**, religious sincerity, compulsory prayer, home routines, recitation or family adherence. Do not assume all learners are Muslim.
 - **Access:** inspect language needs, large print and assistive options; allow comparable oral/visual responses. Identify translation/access and age suitability before class use.
 - **Feedback:** demonstrate source labeling, use guided comparison, then independent explanation; remediate attribution before fluency or presentation polish. Preserve uncertain claims rather than filling gaps with invented facts.
 - **Materials/rights:** keep third-party materials by reference unless permission to copy is verified, and retain a source/review ledger. Store student-specific results and accommodations privately.
 - **Cross-disciplinary honesty:** maps, timelines and calendars are possible connections, not proof that arithmetic, geometry or astronomy outcomes were taught.
 
-## Acceptance and promotion checks (all open)
+## Gates before course registration — acceptance and promotion checks (all open)
 
 - [ ] Confirm non-duplication and scope across existing Grade 2 mathematics, Grade 2 Islamic studies prototype and Grade 4 Islamic studies proposals.
 - [ ] Approve learner audience, actual entry diagnostic, skill-specific prerequisites/remediation and fair assessment targets; no assumed mastery.
