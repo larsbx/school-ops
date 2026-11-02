@@ -75,6 +75,10 @@ def pillar_evidence_errors(lesson, course, final):
         errors.append("independent source evidence is required as well as matches")
     if "Cover the worked matching strip, Card H summary and teacher keys" not in task:
         errors.append("assessment must hide supplied pairings")
+    if "For Task 3, cover Card H's summary, the worked matching strip and all teacher keys" not in final:
+        errors.append("unit Task 3 must also hide supplied pairings")
+    if "Independently supply all five matches" not in task3:
+        errors.append("unit Task 3 needs all five independent responses")
     return errors
 
 
@@ -160,6 +164,11 @@ class IslamicStudiesPrototypeTests(unittest.TestCase):
             with self.subTest(mutation=mutations.index(broken)):
                 self.assertTrue(pillar_evidence_errors(broken, course, final))
         self.assertTrue(pillar_evidence_errors(lesson, course, final.replace("4/5", "3/5")))
+        self.assertTrue(pillar_evidence_errors(lesson, course, final.replace(
+            "For Task 3, cover Card H's summary, the worked matching strip and all teacher keys",
+            "Keep all source cards available")))
+        self.assertTrue(pillar_evidence_errors(lesson, course, final.replace(
+            "Independently supply all five matches", "Supply two matches")))
 
     def test_no_formal_reserved_identifiers(self):
         for file in COURSE.rglob("*.md"):

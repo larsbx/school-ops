@@ -2,7 +2,7 @@
 
 - Status: **draft assessment prototype; formal ID unassigned**
 - Purpose: check local outcomes **IS2-P01–IS2-P04**, not religious devotion
-- Proposed conditions: **20 minutes**, individual, source cards available with labels; teacher may read all questions and source cards aloud, but may not give answers
+- Proposed conditions: **20 minutes**, individual. Cards Q and S are available for their tasks. For Task 3, cover Card H's summary, the worked matching strip and all teacher keys; provide only Card H's source label and the unpaired terms/descriptions below. Teacher may read the permitted materials and questions aloud, but may not give answers or pairing hints.
 - Materials: [source cards and matching strip](../units/sources-pillars-character/teacher-pack.md), paper, pencil
 - Authorization/review: pending; **not classroom-ready**
 
@@ -12,7 +12,7 @@
 
 **Task 2 — Locate (P01).** A friend wants to look up Card Q and Card H. Write or tell the friend the chapter and verse for Q and the collection and report number for H. Do not copy any scripture words.
 
-**Task 3 — Match (P02).** Pair each of these terms with one description: *shahādah, ṣalāh, zakāh, ṣawm of Ramadan, ḥajj*. Descriptions: (A) pilgrimage to Makkah; (B) testimony of faith; (C) obligatory charitable giving; (D) fasting in Ramadan; (E) prescribed prayer. Then name the report collection and number from which the teacher's list is adapted.
+**Task 3 — Match (P02).** Independently supply all five matches, without the worked strip, Card H summary or keys. Pair each of these terms with one description: *shahādah, ṣalāh, zakāh, ṣawm of Ramadan, ḥajj*. Descriptions: (A) pilgrimage to Makkah; (B) testimony of faith; (C) obligatory charitable giving; (D) fasting in Ramadan; (E) prescribed prayer. Then name the report collection and number from which the teacher's list is adapted. Missing responses mean insufficient evidence; arrange a fresh complete independent check rather than using supported practice.
 
 **Task 4 — Explain Card Q (P03).** State one idea from the teacher summary of Qur'an 49:13 about different peoples or groups. Answer: "Are the sentences on Card Q an exact quotation of the Qur'an, or a teacher's summary?" Explain your evidence.
 
