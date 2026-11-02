@@ -38,3 +38,8 @@
   opening a pull request. Documentation-only changes do not require a new test suite.
 - Use GitHub issues and pull requests for curriculum work. Do not assign people
   or notify external recipients unless the user asks.
+- For autonomous curriculum authoring, follow
+  `docs/autonomous-curriculum-authoring.md`: inspect open PRs before drafting,
+  add actual prerequisite/outcome/evidence work rather than boilerplate,
+  run/check applicable CI, and hand off review to the curriculum owner.
+  Never auto-merge, assign readiness, or claim human scholarly sign-off.
