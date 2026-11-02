@@ -85,6 +85,20 @@ class ImpactPlanningTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "unregistered test modules"):
                 load_policy(config)
 
+    def test_new_nested_test_module_is_rejected_by_policy_validation(self):
+        import json
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "ci").mkdir()
+            (root / "tests" / "feature").mkdir(parents=True)
+            (root / "tests" / "feature" / "test_future_module.py").write_text(
+                "import unittest\n", encoding="utf-8"
+            )
+            config = root / "ci" / "policy.json"
+            config.write_text(json.dumps(POLICY), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "unregistered test modules"):
+                load_policy(config)
+
     def test_dependency_cycle_fails_instead_of_skipping(self):
         import json
         with tempfile.TemporaryDirectory() as tmp:
