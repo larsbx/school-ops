@@ -44,3 +44,7 @@ and reports no learner results.
 The [13-grade, eight-subject planning map](../curriculum/scaffolds/README.md) is an authoring scaffold, not completion of issue #11's prerequisite evidence audit. Grade 2 mathematics remains the teaching priority. New course IDs, delivery schedules, materials and course scope need separate review.
 
 Islamic studies is included as an eighth proposed subject in every K–12 grade map. Its [source and teaching guide](../curriculum/scaffolds/islamic-studies-guide.md) records review gates for translations, narrations, hadith authentication and juristic differences. This does not alter the priority to complete existing Grade 2 mathematics instruction.
+
+### Islamic studies first teaching-unit authoring
+
+The [unregistered Grade 2 Islamic studies prototype](../curriculum/islamic-studies/grade-2-prototype/README.md) provides four draft source-literacy/pillar/character lessons, a teacher pack and original assessment tasks/keys. Next: qualified religious-source and pedagogical review, agreed scope and teaching time, approved translations/access, independent test validation and course/assessment registration after review. Do not confuse this authoring milestone with classroom readiness or learner achievement.
