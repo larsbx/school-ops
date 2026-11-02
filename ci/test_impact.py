@@ -13,7 +13,12 @@ class ImpactPlanningTests(unittest.TestCase):
     def test_documentation_changes_select_repository_link_validation(self):
         decision = plan(POLICY, ["docs/guide.md", "README.md"])
         self.assertEqual(decision["mode"], "targeted")
-        self.assertEqual(decision["suites"], ["teaching"])
+        self.assertEqual(decision["suites"], ["islamic-prototype", "teaching"])
+
+    def test_prototype_acceptance_module_selects_teaching_checks(self):
+        decision = plan(POLICY, ["tests/test_islamic_studies_prototype.py"])
+        self.assertEqual(decision["mode"], "targeted")
+        self.assertEqual(decision["suites"], ["islamic-prototype", "teaching"])
 
     def test_documentation_with_unknown_path_falls_back_to_full(self):
         decision = plan(POLICY, ["README.md", "unknown.new"])
@@ -21,11 +26,11 @@ class ImpactPlanningTests(unittest.TestCase):
 
     def test_bank_change_includes_downstream_teaching(self):
         decision = plan(POLICY, ["exercise_bank/generator.py"])
-        self.assertEqual(decision["suites"], ["bank", "teaching"])
+        self.assertEqual(decision["suites"], ["bank", "islamic-prototype", "teaching"])
 
     def test_curriculum_change_includes_dependents_transitively(self):
         decision = plan(POLICY, ["curriculum/scaffolds/islamic_studies.md"])
-        self.assertEqual(decision["suites"], ["bank", "curriculum", "teaching"])
+        self.assertEqual(decision["suites"], ["bank", "curriculum", "islamic-prototype", "teaching"])
 
     def test_installer_change_includes_native(self):
         decision = plan(POLICY, ["tools/browser/site_scoped_youtube_guard/installer_core.py"])

@@ -26,3 +26,7 @@ this index. Record proposed work in a curriculum proposal issue.
 The [K–12 class × subject scaffold](scaffolds/README.md) contains 13 class maps and 104 **proposed** grade-specific subject briefs. These are not registered course records or teaching-ready material. Grade 2 mathematics above remains the only currently registered course.
 
 [Islamic studies](scaffolds/islamic-studies-guide.md) is included across all 13 grade-planning maps, but its source selections, teaching approach, course scopes and reviews are still pending.
+
+## Islamic studies teaching authoring pilot
+
+An [unregistered Grade 2 Islamic studies course prototype](islamic-studies/grade-2-prototype/README.md) contains original four-lesson teaching materials, source cards and actual draft assessments with keys. It is **not** a registered course or a teaching-ready resource; the existing course register above remains unchanged pending scope agreement and qualified source review.

@@ -36,13 +36,18 @@ coverage. An incorrectly *mapped* path is a policy defect, so changes to that
 policy cause a full run and should be reviewed along with nightly full-run
 results. This is not a proof that all regressions are discoverable.
 
+The Grade 2 Islamic studies prototype acceptance module is registered as the
+`islamic-prototype` suite under teaching. It runs whenever teaching is affected,
+including changes to its shared Markdown validation helper. These are static
+authoring checks; they do not approve sources or teaching readiness.
+
 ## Example selections
 
 | Change | Selected suites |
 | --- | --- |
-| `README.md` or `docs/guide.md` | teaching (repository Markdown links) |
-| `exercise_bank/generator.py` | bank, teaching |
-| `curriculum/scaffolds/new.md` | curriculum, bank, teaching |
+| `README.md` or `docs/guide.md` | islamic-prototype, teaching (repository Markdown links) |
+| `exercise_bank/generator.py` | bank, islamic-prototype, teaching |
+| `curriculum/scaffolds/new.md` | bank, curriculum, islamic-prototype, teaching |
 | `tools/browser/site_scoped_youtube_guard/build_rules.py` | guard, installer, native |
 | `ci/policy.json` or `.github/workflows/*.yml` | all |
 | unrecognized new file | all |

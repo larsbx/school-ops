@@ -40,3 +40,7 @@ These investigations are planning hypotheses, not assertions about learner prere
 Agree the learner audience and check entry skills; select the teaching approach and qualified scholarly reviewers; verify cited texts, hadith authenticity claims and juristic differences; agree accessibility, materials and teaching time. Only then assign course and outcome IDs and author real units, lessons and assessments for review under the [curriculum model](../../../docs/curriculum-model.md). Store individual learner records privately.
 
 [Grade 2 class overview](README.md) · [K–12 subject index](../README.md) · [Islamic studies guide](../islamic-studies-guide.md)
+
+## Authored Grade 2 teaching pilot
+
+A [worked Grade 2 Islamic studies course prototype](../../islamic-studies/grade-2-prototype/README.md) now develops the source-and-pillar investigation into four draft lessons and independently scored assessment tasks. This remains **unregistered and not ready** and does not confer formal course/outcome IDs on the scaffold. Its wider sīrah sequence still needs sourced lessons.

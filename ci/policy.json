@@ -35,7 +35,8 @@
         "tools/build_print_pack.py",
         "tools/verify_print_pack.py",
         "tools/requirements-print.txt",
-        "tests/test_teaching_pack.py"
+        "tests/test_teaching_pack.py",
+        "tests/test_islamic_studies_prototype.py"
       ],
       "depends_on": [
         "bank",
@@ -137,6 +138,13 @@
       ],
       "directory": "tests",
       "pattern": "test_native_youtube_wizard.py"
+    },
+    "islamic-prototype": {
+      "components": [
+        "teaching"
+      ],
+      "directory": "tests",
+      "pattern": "test_islamic_studies_prototype.py"
     }
   }
 }
