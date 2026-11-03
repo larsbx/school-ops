@@ -16,8 +16,7 @@ Name difference and missing part. Test subtraction by reconstructing the whole. 
 
 1. Model (6 min): Build 14 counters, mark 9 and separate them. Count 5 left. Check 9 + 5 = 14.
 2. Guided completion (7 min): Separate 6 from 12. Complete the reconstruction equation. **Key:** 6 remain; 6 + 6 = 12.
-3. Independent (8 min): distribute only the relevant part of the [learner copy](../learner-practice.md). Find 16 − 7. Draw both parts and write the inverse check. **Key:** 9; 7 + 9 = 16. Both parts reconstruct the original 16.
-4. Exit (4 min, flexible): Find the missing part of 15 when one part is 8. Show why it is correct. **Key:** 7; 8 + 7 = 15. The parts together are exactly the whole.
+3. Independent and exit (12 min, flexible): use a new [generated learner session](../learner-practice.md) with activity `difference` and the taught limit. Use its matching teacher key for feedback and select a fresh session for reassessment.
 
 ## Evidence and response
 

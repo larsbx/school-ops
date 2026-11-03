@@ -16,8 +16,7 @@ Name the counted unit and the unknown. Distinguish a change in one collection fr
 
 1. Model (6 min): A box holds 8 pencils; add 5. Join two groups: 13 pencils. Contrast with two rows of 8 and 5 pencils: the unmatched 3 show how many more, with neither row changed.
 2. Guided completion (7 min): There are 12 beads; 4 are removed. Model what changes and name the unit. **Key:** 8 beads remain; cross out 4 of 12.
-3. Independent (8 min): distribute only the relevant part of the [learner copy](../learner-practice.md). One tray has 11 shells and another has 6. How many more are on the first tray? Show matching rows and explain. **Key:** 5 shells; match six pairs across rows, leaving five unmatched on the first.
-4. Exit (4 min, flexible): A jar has 7 buttons and gets 6 more. How many now? Explain what your model joins. **Key:** 13 buttons; join the original 7 and the added 6.
+3. Independent and exit (12 min, flexible): use a new [generated learner session](../learner-practice.md) with activity `stories` and the taught limit. Use its matching teacher key for feedback and select a fresh session for reassessment.
 
 ## Evidence and response
 

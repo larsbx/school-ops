@@ -1,23 +1,19 @@
-# Unit 2 practice — learner copy
+# Generate Unit 2 learner practice
 
-Draft. Use counters or drawings and tell or show your reason. Directions can be read aloud. Work without a timer.
+Draft. From the repository root, start a new session in a new private directory:
 
-## Parts and wholes
+```sh
+python -m exercise_bank.unit2 new /tmp/unit2-first --activity composition --limit 20
+python -m exercise_bank.unit2 resume /tmp/unit2-first
+```
 
-- 01P: Split 13 counters into 8 and another part. Show a model and explain the missing part.
-- 01E: Split 10 into two different pairs of parts; explain why both totals agree.
+Choose the taught limit (10 or 20) and activity: entry, composition, difference, stories,
+parity or check. Use a new directory for each new session. A fresh random seed
+resamples the form; individual items can recur. Resume reads the saved session
+and restores its exact prompts. It does not store learner responses or progress;
+retain any working paper privately. Existing directories are never overwritten.
 
-## Difference and inverse checks
-
-- 02P: Find 16 − 7. Draw both parts and write the inverse check.
-- 02E: Find the missing part of 15 when one part is 8. Show why it is correct.
-
-## Choose a calculation for a story
-
-- 03P: One tray has 11 shells and another has 6. How many more are on the first tray? Show matching rows and explain.
-- 03E: A jar has 7 buttons and gets 6 more. How many now? Explain what your model joins.
-
-## Pairing and parity
-
-- 04P: Pair 18 counters. Rearrange the pairs and explain why the classification stays the same.
-- 04E: Classify 17 by pairing and tell a partner why it differs from 18.
+Distribute only the generated learner sheet. Keep the teacher key and session
+manifest private. Use `resume DIRECTORY --teacher` to recover the matching key.
+Worked teaching demonstrations in the lesson plans are examples, not the session
+question bank. Review generated forms for suitability and prior exposure before use.

@@ -22,7 +22,8 @@
         "bank/**",
         "assessments/**",
         "exercise_bank/**",
-        "tests/test_bank.py"
+        "tests/test_bank.py",
+        "tests/test_unit2_sessions.py"
       ],
       "depends_on": [
         "curriculum"
@@ -145,6 +146,13 @@
       ],
       "directory": "tests",
       "pattern": "test_islamic_studies_prototype.py"
+    },
+    "unit2-sessions": {
+      "components": [
+        "bank"
+      ],
+      "directory": "tests",
+      "pattern": "test_unit2_sessions.py"
     }
   }
 }

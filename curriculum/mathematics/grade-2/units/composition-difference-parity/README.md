@@ -12,9 +12,14 @@ Use identical counters, blank paper and pencil. Name units and symbols (grammar)
 
 ## Entry and route choice
 
-Ask the learner to count 9 counters, pointing once to each and naming the counted unit. Then compare rows of 6 and 8 counters and explain which has more. Check the prior place-value evidence for composing a ten from ten ones. If absent, ask the learner to bundle 10 counters and explain that one bundle still represents ten singles.
-
-Key: 9 single counters; 8 > 6, with two unmatched in the longer row; one ten equals ten ones. Supply counters, read aloud, and accept oral, drawn, pointed or scribed responses without answer cues. If counting or comparing is insecure, practice with rows of 3 and 5 (5 > 3 by two) and fresh examples up to 10 before retrying. Teach 4 + 3 = 7, 7 − 4 = 3 and pairing 6 versus 7 in the smaller range; use fresh 5 + 2, 8 − 3 and pairing 8 versus 9 (keys 7, 5, four pairs versus four pairs and one). Keep evidence from the smaller range separate; if composing a ten is insecure, revisit Unit 1 before extending past 10.
+Run the [session generator](learner-practice.md) with `--activity entry --limit 10`.
+Observe one-to-one counting, comparison with a reason, and composing a ten from
+ten ones. Use the generated key. Supply counters and retain read-aloud, oral,
+drawn, pointed or scribed responses without answer cues. If counting or comparison
+is insecure, model and practice smaller rows before retrying with a fresh entry
+session. Use the lesson activities with `--limit 10` as the smaller-range review
+route; keep that evidence separate. If composing a ten is insecure, revisit
+Unit 1 before extending past 10.
 
 ## Sequence
 
