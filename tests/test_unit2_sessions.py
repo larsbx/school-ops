@@ -41,3 +41,23 @@ class Unit2Sessions(unittest.TestCase):
             form['items'][0]['key'] = 'altered'
             p.write_text(json.dumps(form))
             self.assertNotEqual(cli('resume', a).returncode, 0)
+
+    def test_work_saves_and_continues_without_resampling(self):
+        def cli(*args, **kwargs):
+            return subprocess.run([sys.executable, '-m', 'exercise_bank.unit2', *map(str, args)],
+                                  text=True, capture_output=True, check=True, **kwargs)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp)/'private-session'
+            cli('new', path, '--activity', 'difference', '--limit', 10)
+            manifest = (path/'session.json').read_bytes()
+            self.assertIn('Paused', cli('work', path, input='First model\n\n').stdout)
+            saved = json.loads((path/'progress.json').read_text())
+            self.assertEqual(saved['responses'], {'U2-01': 'First model'})
+            continued = cli('work', path, input='Second model\n').stdout
+            self.assertNotIn('U2-01:', continued)
+            self.assertIn('U2-02:', continued)
+            self.assertIn('2/2', continued)
+            self.assertEqual((path/'session.json').read_bytes(), manifest)
+            self.assertNotIn('First model', cli('resume', path).stdout)
+            saved = json.loads((path/'progress.json').read_text())
+            self.assertEqual(saved['responses'], {'U2-01': 'First model', 'U2-02': 'Second model'})

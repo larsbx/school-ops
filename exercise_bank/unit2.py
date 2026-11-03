@@ -1,7 +1,9 @@
 """Unit 2 local sessions: generate fresh forms or resume a saved form."""
 import argparse
 import json
+import os
 import secrets
+import tempfile
 from pathlib import Path
 
 from .core import Sampler, canonical, seal
@@ -86,6 +88,47 @@ def render(form, teacher=False):
     return '\n'.join(lines)
 
 
+def work(directory):
+    """Continue at the first unanswered item, saving each response locally."""
+    form = load_session(directory)
+    path = directory/'progress.json'
+    ids = {item['id'] for item in form['items']}
+    try:
+        saved = json.loads(path.read_text(encoding='utf-8'))
+    except FileNotFoundError:
+        saved = {'form_id': form['form_id'], 'responses': {}}
+    if not isinstance(saved, dict) or saved.get('form_id') != form['form_id']:
+        raise ValueError('progress belongs to a different form')
+    responses = saved.get('responses')
+    if not isinstance(responses, dict) or any(
+        k not in ids or not isinstance(v, str) or not v.strip()
+        for k, v in responses.items()
+    ):
+        raise ValueError('invalid saved responses')
+    for item in form['items']:
+        item_id = item['id']
+        if item_id in responses:
+            continue
+        print(f"{item_id}: {item['question']}")
+        try:
+            response = input('Response (blank to pause): ').strip()
+        except EOFError:
+            response = ''
+        if not response:
+            print('Paused. Earlier responses are saved.')
+            return
+        responses[item_id] = response
+        with tempfile.NamedTemporaryFile(dir=directory, delete=False) as tmp:
+            temp = Path(tmp.name)
+            try:
+                tmp.write(canonical(saved).encode('utf-8'))
+                tmp.close()
+                os.replace(temp, path)
+            finally:
+                temp.unlink(missing_ok=True)
+    print(f"Finished: {len(responses)}/{len(ids)} responses saved for teacher review.")
+
+
 def main():
     parser = argparse.ArgumentParser(__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
@@ -96,8 +139,13 @@ def main():
     resume = sub.add_parser('resume')
     resume.add_argument('directory', type=Path)
     resume.add_argument('--teacher', action='store_true', help='display the key instead of the learner sheet')
+    interactive = sub.add_parser('work', help='answer or continue a private session')
+    interactive.add_argument('directory', type=Path)
     args = parser.parse_args()
     try:
+        if args.command == 'work':
+            work(args.directory)
+            return
         if args.command == 'resume':
             print(render(load_session(args.directory), args.teacher), end='')
             return
