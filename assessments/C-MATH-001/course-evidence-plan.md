@@ -5,10 +5,10 @@
 - Intended learners: 2nd grade
 - Status: draft
 - Purpose: plan evidence for outcomes 005–013 within the chosen classical arts
-- Tasks, timings, and teacher keys: not yet authored
+- Tasks and keys: [Unit 2 draft check](composition-difference-parity-check.md) samples 005, 006 and the pairing portion of 013; other later-unit tasks remain planned
 - Readiness review: pending; draft introduced in merged [PR #1](https://github.com/larsbx/school-ops/pull/1)
 
-This is an authoring backlog, not an assessment that can yet be administered.
+This is an authoring backlog. The linked Unit 2 check is a separate draft assessment design.
 All evidence includes accurate names or representations, a reason, and an
 explanation to another person. Criteria are local proposals to refine in context.
 
