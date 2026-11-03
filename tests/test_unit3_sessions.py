@@ -26,7 +26,8 @@ class Unit3Sessions(unittest.TestCase):
                             self.assertEqual(item["groups"] * item["each"] + item["leftover"],
                                              item["total"])
                             self.assertLessEqual(item["total"], limit)
-                            self.assertIn("O-MATH-001-013", render(form, True))
+                            self.assertIn("Entry prerequisite" if activity == "entry" else
+                                          "O-MATH-001-013", render(form, True))
         seed = "0" * 32
         self.assertEqual(generate("check", 24, seed), generate("check", 24, seed))
         self.assertNotEqual(generate("check", 24, seed)["items"],

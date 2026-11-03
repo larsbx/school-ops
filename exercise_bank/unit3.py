@@ -92,7 +92,9 @@ def render(form, teacher=False):
     for item in form["items"]:
         lines += [f"## {item['id']}", "", item["question"], ""]
         if teacher:
-            lines += [f"Component: O-MATH-001-013 ({item['component']})", "", "Key: " + item["key"], ""]
+            component = (f"Entry prerequisite ({item['component']})" if form["activity"] == "entry"
+                         else f"O-MATH-001-013 ({item['component']})")
+            lines += [f"Component: {component}", "", "Key: " + item["key"], ""]
         else:
             lines += ["Response: __________________________________________", ""]
     return "\n".join(lines)
