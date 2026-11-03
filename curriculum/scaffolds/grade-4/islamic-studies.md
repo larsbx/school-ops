@@ -84,6 +84,17 @@ Use a fresh fictional Ramadan drive notice that requires step-free access and al
 - Before release, a qualified reviewer must verify the exact passage locator, Arabic text, translation attribution and permissions, fiqh boundaries and age suitability. A curriculum reviewer must check the entry probes, accessibility, item/key agreement and available teaching time. Rehearse the rubric using one complete response and one response missing each objective. Each omission must be detected independently.
 - Future digital forms should generate fresh fictional scenarios and teacher keys from the stated constraints, with both options and the correct response position varying. A resumed session must replay its saved form and key. These are acceptance criteria for later tooling.
 
+### Draft session generator
+
+The [Python prototype](generate_ramadan_practice.py) generates fictional learner cards and a separate teacher key. From the repository root, run:
+
+```sh
+python curriculum/scaffolds/grade-4/generate_ramadan_practice.py new --output /tmp/grade4-session
+python curriculum/scaffolds/grade-4/generate_ramadan_practice.py resume --output /tmp/grade4-session
+```
+
+Choose a fresh private directory for each new session. Resume verifies the saved files byte for byte without rewriting them. Share only the learner sheet. The manifest holds the private seed. The finite scenario pool can produce the same scenario and option order in separate sessions. Qualified source review and classroom approval still apply.
+
 ### Parallel form for reassessment
 
 Use this fictional form as a teacher rehearsal and as a blueprint for later generated forms. Use the same reviewed source card and access supports as in the first form. Give feedback on the first attempt before administering a fresh form independently.
