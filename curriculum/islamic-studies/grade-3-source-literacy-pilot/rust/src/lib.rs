@@ -105,7 +105,10 @@ fn claim_descriptions() -> [(&'static str, &'static str); 4] {
         ("fictional_quote", "Quotation from a fictional diary"),
         ("teacher_comment", "Teacher explanation"),
         ("cautious_inference", "Qualified learner inference"),
-        ("unsupported_claim", "Unsupported historical/authenticity claim"),
+        (
+            "unsupported_claim",
+            "Unsupported historical/authenticity claim",
+        ),
     ]
 }
 
@@ -121,8 +124,8 @@ pub fn build(session_id: &str) -> Result<Form> {
         return Err(error("expected 32 lowercase hex digits for private session nonce").into());
     }
     let seed = sha256(format!("{VERSION}:{session_id}").as_bytes());
-    let public_tag = hex(&sha256(format!("public:{VERSION}:{session_id}").as_bytes()))[..12]
-        .to_uppercase();
+    let public_tag =
+        hex(&sha256(format!("public:{VERSION}:{session_id}").as_bytes()))[..12].to_uppercase();
     let mut rng = ChaCha20Rng::from_seed(seed);
 
     let name = choice(&mut rng, NAMES);
@@ -349,7 +352,9 @@ fn refuse_git_checkout(output: &Path) -> Result<()> {
     let mut current = fs::canonicalize(parent)?;
     loop {
         if current.join(".git").exists() {
-            return Err(error("refusing to store private session keys inside a Git checkout").into());
+            return Err(
+                error("refusing to store private session keys inside a Git checkout").into(),
+            );
         }
         if !current.pop() {
             break;
@@ -395,7 +400,10 @@ pub fn resume_session(output: &Path) -> Result<Manifest> {
     let manifest_bytes = read_regular_file(&output.join("manifest.json"))?;
     let manifest: Manifest = serde_json::from_slice(&manifest_bytes)?;
     if manifest.payload.schema != 2 || manifest.payload.version != VERSION {
-        return Err(error("unsupported session schema/version; Python v1 uses its original reader").into());
+        return Err(error(
+            "unsupported session schema/version; Python v1 uses its original reader",
+        )
+        .into());
     }
     let expected = build(&manifest.payload.session_id)?;
     if manifest != expected.manifest || manifest_bytes != canonical(&expected.manifest)? {
