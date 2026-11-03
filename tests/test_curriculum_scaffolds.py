@@ -82,7 +82,7 @@ class CurriculumScaffoldTests(unittest.TestCase):
         for lesson in (root / "lessons").glob("*.md"):
             body = lesson.read_text(encoding="utf-8")
             self.assertIn("## Trivium", body)
-            mins = re.findall(r"^\\| (?!\\*\\*Total)[^|]+ \\| [^|]+ \\| (\\d+) \\|$", body, re.M)
+            mins = [int(parts[-2].strip()) for row in body.splitlines() if row.startswith("| ") and (parts := row.split("|")) and parts[-2].strip().isdigit()]
             self.assertEqual(25, sum(map(int, mins)))
 
 if __name__ == "__main__":
