@@ -116,3 +116,7 @@ Use an oral, written, illustrated or assistive format; source cards remain avail
 - [ ] Record qualified review, decisions and supporting PR before registration, scheduling or any classroom-ready claim.
 
 [Grade 3 class overview](README.md) · [K–12 subject index](../README.md) · [Islamic studies guide](../islamic-studies-guide.md)
+
+## Authored first two episodes (draft pilot)
+
+The [Grade 3 source-literacy teaching pilot](../../islamic-studies/grade-3-source-literacy-pilot/README.md) now has two actual draft lessons, an entry diagnostic, original learner cards and independently keyed P1/P2 unit tasks. **This is not a registered or teaching-ready course**, does not assume Grade 2 mastery, and does not complete proposed episodes 3–6 or issue #31's qualified scholarly/source acceptance.

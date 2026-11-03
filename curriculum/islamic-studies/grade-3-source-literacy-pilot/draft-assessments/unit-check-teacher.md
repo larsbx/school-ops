@@ -11,7 +11,7 @@
 
 **Task 2:** A = Qur'an sūrah **49**, āyah **13**; D = **Sahih al-Bukhari, report 8** (Book 2 is optional). **B** is the explicit no-translator/no-English-wording metadata record. A and D also have no copied text; do not infer source wording from them.
 
-**Task 3:** T1 = verbatim words only from an **invented diary**; T2 = **teacher explanation**; T3 = **qualified student inference**; T4 = **unsupported historical/autenticity claim**. Nothing in D reports a Hijrah date or route, nor proves its chain's reliability.
+**Task 3:** T1 = verbatim words only from an **invented diary**; T2 = **teacher explanation**; T3 = **qualified student inference**; T4 = **unsupported historical/authenticity claim**. Nothing in D reports a Hijrah date or route, nor proves its chain's reliability.
 
 **Task 4:** Example: "D gives a report collection and number; it does not show the Prophet's migration date or an independent authenticity study; B names no translator, edition or English words, so I cannot quote one." Equivalent evidence-backed answers accepted.
 

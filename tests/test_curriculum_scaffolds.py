@@ -55,5 +55,35 @@ class CurriculumScaffoldTests(unittest.TestCase):
         self.assertIn("seven-unit progression", body)
 
 
+
+    def test_grade3_islamic_source_literacy_pilot_integrity(self):
+        from test_islamic_studies_prototype import local_link_errors
+        root = ROOT / "curriculum" / "islamic-studies" / "grade-3-source-literacy-pilot"
+        self.assertTrue(root.is_dir())
+        doc = (root / "README.md").read_text(encoding="utf-8")
+        self.assertIn("not ready", doc)
+        self.assertIn("unassigned", doc)
+        self.assertIn("G3-IS-P1", doc)
+        self.assertIn("G3-IS-P2", doc)
+        self.assertEqual(2, len(list((root / "lessons").glob("*.md"))))
+        check = (root / "draft-assessments" / "unit-check-learner.md").read_text(encoding="utf-8")
+        key = (root / "draft-assessments" / "unit-check-teacher.md").read_text(encoding="utf-8")
+        for number in (1, 2, 3, 4, 5):
+            self.assertIn(f"**Task {number}", check)
+        self.assertIn("4/5", key)
+        self.assertIn("3/4", key)
+        self.assertIn("T4", key)
+        self.assertIn("Card B", key)
+        for path in root.rglob("*.md"):
+            with self.subTest(path=path.name):
+                self.assertEqual([], local_link_errors(path))
+                body = path.read_text(encoding="utf-8")
+                self.assertNotRegex(body, r"(?:C|U|L|O|A)-ISLM-[0-9]{3}")
+        for lesson in (root / "lessons").glob("*.md"):
+            body = lesson.read_text(encoding="utf-8")
+            self.assertIn("## Trivium", body)
+            mins = re.findall(r"^\\| (?!\\*\\*Total)[^|]+ \\| [^|]+ \\| (\\d+) \\|$", body, re.M)
+            self.assertEqual(25, sum(map(int, mins)))
+
 if __name__ == "__main__":
     unittest.main()
