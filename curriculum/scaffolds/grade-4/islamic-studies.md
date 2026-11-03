@@ -39,6 +39,10 @@ These investigations are planning hypotheses, not assertions about learner prere
 
 **Status.** Proposed sequence with original, fictional rehearsal prompts and draft scoring criteria. Actual religious source material, teaching approval, and course and outcome IDs are pending. The [K–12 matrix](../README.md) includes Islamic studies in every grade. The [course index](../../README.md) distinguishes the registered Grade 2 mathematics draft from the unregistered Islamic studies pilots. Grade 2 introduces the five pillars and names fasting. The [Grade 3 pilot](../../islamic-studies/grade-3-source-literacy-pilot/README.md) teaches source classification and claim checking. This investigation uses those skills to weigh evidence and explain a community decision.
 
+### Candidate source and teaching boundary
+
+Use [Qur’an 2:185](https://quran.com/2/185) as the candidate locator for qualified review. The draft reading question asks how the verse connects Ramadan with revelation and fasting, and which circumstances it explicitly mentions when discussing fasting. Expected evidence after review includes the connection to revelation and the references to illness and travel. The teacher should distinguish that textual observation from a ruling about an individual and from the local event rules. Select the Arabic edition and attributed translation during review. Keep the source card as a locator until the wording, access and reuse are approved.
+
 ### Entry and progression rules
 
 Use three untimed prompts with a new, neutral library example. Read aloud or supply a printed copy and accept pointing, speech or writing.
@@ -55,7 +59,7 @@ Start guided work after R1 and R2 are demonstrated. R3 may be taught alongside g
 
 | Local label | Observable objective |
 | --- | --- |
-| L1 | Distinguish an attributed religious source or its labeled translation, a local notice and a learner inference. Explain one limit of what each can establish. |
+| L1 | Distinguish an attributed religious source or its labeled translation, a local notice and a learner inference. Identify a claim supported by the reviewed religious source and explain one limit of what each card can establish. |
 | L2 | Compare two fictional Ramadan event plans against two stated access or privacy constraints. Point to the evidence and identify a claim the evidence cannot settle. |
 | L3 | Recommend or revise a plan in a short explanation with a claim, relevant evidence and a reason. Identify a decision that belongs with a qualified adult. |
 
@@ -71,9 +75,9 @@ Present the unit as Islamic Studies grounded in the Trivium. The school-wide Qua
 
 ### Independent evidence and acceptance
 
-Use a fresh fictional Ramadan drive notice that requires step-free access and allows learners to contribute privately. Option A uses a step-free room and a public sign-up. Option B uses a step-free room and private sign-up. Include the reviewed source card and an invented learner claim that the event notice settles who must fast. Ask learners to label the cards, compare both options, recommend a plan and explain where to take an individual fasting question.
+Use a fresh fictional Ramadan drive notice that requires step-free access and allows learners to contribute privately. Option A uses a step-free room and a public sign-up. Option B uses a step-free room and private sign-up. Include the reviewed source card and an invented learner claim that the event notice settles who must fast. Ask learners to label the cards, state one idea supported by the reviewed reading, compare both options, recommend a plan and explain where to take an individual fasting question.
 
-- **L1:** Correctly label all three cards and state one valid limit for each. The religious source is evidence for its reviewed teaching context. The notice sets local logistics. The learner claim requires support.
+- **L1:** Correctly label all three cards and state one valid limit for each. The learner identifies one relevant idea grounded in the approved reading, such as the connection between Ramadan and revelation, and explains that the verse card supplies no local event logistics. The notice sets local logistics. The learner claim requires support.
 - **L2:** Explain that both plans meet the access rule and only B meets the privacy rule. Identify the individual fasting claim as unsupported by the notice.
 - **L3:** Recommend B, or propose a feasible revision of A that satisfies both constraints. Cite a relevant notice detail, connect it to the recommendation and identify a qualified adult for a private follow-up.
 - Use no speed threshold. Require evidence for each objective separately. Record outcomes privately, give targeted feedback and use a fresh equivalent prompt for reassessment.
