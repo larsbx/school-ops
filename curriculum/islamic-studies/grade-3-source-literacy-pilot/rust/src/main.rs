@@ -16,9 +16,16 @@ fn run() -> Result<()> {
     let (verb, manifest) = if args[0] == "new" {
         ("New draft form created", new_session(output)?)
     } else {
-        ("Saved draft form verified, not rewritten", resume_session(output)?)
+        (
+            "Saved draft form verified, not rewritten",
+            resume_session(output)?,
+        )
     };
-    println!("{verb}\nPublic form hash: {}\nOutput directory: {}", manifest.form_id, output.display());
+    println!(
+        "{verb}\nPublic form hash: {}\nOutput directory: {}",
+        manifest.form_id,
+        output.display()
+    );
     println!("Teacher key and manifest are private; distribute learner.md only.");
     Ok(())
 }
