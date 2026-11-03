@@ -6,7 +6,6 @@ use rand::{rngs::OsRng, seq::SliceRandom, RngCore, SeedableRng};
 use rand_chacha::ChaCha20Rng;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
-use std::collections::BTreeSet;
 use std::error::Error;
 use std::fs::{self, OpenOptions};
 use std::io::{self, Write};
@@ -393,6 +392,7 @@ pub fn resume_session(output: &Path) -> Result<Manifest> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::BTreeSet;
 
     #[test]
     fn sha256_known_answer_and_canonical_json() {
