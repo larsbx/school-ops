@@ -339,6 +339,25 @@ fn write_private(path: &Path, bytes: &[u8]) -> io::Result<()> {
     file.sync_all()
 }
 
+fn refuse_git_checkout(output: &Path) -> Result<()> {
+    // Resolve the parent before writing: symlinked parents pointing into a
+    // tracked repository must not leak the private answer key into Git.
+    let parent = output
+        .parent()
+        .filter(|p| !p.as_os_str().is_empty())
+        .unwrap_or_else(|| Path::new("."));
+    let mut current = fs::canonicalize(parent)?;
+    loop {
+        if current.join(".git").exists() {
+            return Err(error("refusing to store private session keys inside a Git checkout").into());
+        }
+        if !current.pop() {
+            break;
+        }
+    }
+    Ok(())
+}
+
 /// Random new-session nonce never accepted through the learner-facing CLI.
 pub fn new_session(output: &Path) -> Result<Manifest> {
     let mut bytes = [0u8; 16];
@@ -349,6 +368,7 @@ pub fn new_session(output: &Path) -> Result<Manifest> {
 /// Deterministic seam for tests; caller must secure the nonce and output path.
 pub fn create_session(output: &Path, session_id: &str) -> Result<Manifest> {
     let form = build(session_id)?;
+    refuse_git_checkout(output)?;
     // No overwrites: a failed write may leave an incomplete directory, which
     // resume must reject; never silently reuse/replace an old session.
     create_private_dir(output)?;
@@ -400,10 +420,8 @@ mod tests {
             hex(&sha256(b"abc")),
             "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
         );
-        assert_eq!(
-            canonical(&serde_json::json!({"b": 1, "a": "ā"})).unwrap(),
-            b"{\"a\":\"\xc4\x81\",\"b\":1}\n"
-        );
+        let actual = canonical(&serde_json::json!({"b": 1, "a": "ā"})).unwrap();
+        assert_eq!(actual.as_slice(), b"{\"a\":\"\xc4\x81\",\"b\":1}\n");
     }
 
     #[test]
@@ -449,6 +467,13 @@ mod tests {
         fs::write(output.join("manifest.json"), b"{}").unwrap();
         assert!(resume_session(&output).is_err());
         fs::remove_dir_all(output).unwrap();
+    }
+
+    #[test]
+    fn reject_private_output_inside_repository_checkout() {
+        let output = Path::new(env!("CARGO_MANIFEST_DIR")).join(".private-test-must-not-exist");
+        assert!(create_session(&output, &"3".repeat(32)).is_err());
+        assert!(!output.exists());
     }
 
     #[test]
