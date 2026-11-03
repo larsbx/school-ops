@@ -27,6 +27,8 @@ This directory holds reusable assessment designs.
 | A-MATH-001-02 | C-MATH-001 | [Place-value check](C-MATH-001/place-value-check.md): PV2/PV3 with optional PVX | draft |
 | A-MATH-001-03 | C-MATH-001 | [Later-unit evidence plan](C-MATH-001/course-evidence-plan.md) | draft; tasks not authored |
 | A-MATH-001-04 | C-MATH-001 | [Tens/ones cycle review](C-MATH-001/tens-and-ones-cycle-review.md): formative component of outcome 001 only | draft |
+| A-MATH-001-05 | C-MATH-001 | [Composition/difference/parity check](C-MATH-001/composition-difference-parity-check.md): 005, 006 and pairing part of 013 | draft |
+| A-MATH-001-06 (proposed) | C-MATH-001 | [Unit 3 learner check](C-MATH-001/equal-groups-sharing-learner.md) / [teacher key](C-MATH-001/equal-groups-sharing-teacher.md): grouping, sharing, doubling and halving within 013 | draft; not approved |
 
 ## Reproducible local forms
 

@@ -5,7 +5,7 @@
 - Intended learners: 2nd grade
 - Status: draft
 - Purpose: plan evidence for outcomes 005–013 within the chosen classical arts
-- Tasks and keys: [Unit 2 draft check](composition-difference-parity-check.md) samples 005, 006 and the pairing portion of 013; other later-unit tasks remain planned
+- Tasks and keys: [Unit 2 draft check](composition-difference-parity-check.md) samples 005, 006 and the pairing portion of 013; [Unit 3 complete draft teacher key](equal-groups-sharing-teacher.md) samples grouping, sharing, doubling and halving within 013. Other later-unit tasks remain planned
 - Readiness review: pending; draft introduced in merged [PR #1](https://github.com/larsbx/school-ops/pull/1)
 
 This is an authoring backlog. The linked Unit 2 check is a separate draft assessment design.
@@ -22,7 +22,7 @@ explanation to another person. Criteria are local proposals to refine in context
 | O-MATH-001-010 | Keep dated observations of an accessible sky feature and compare intervals | Distinguish actual observations, missing observations, and calendar labels; reason about a possible cycle |
 | O-MATH-001-011 | Make a table or diagram from counts or observations | Accurate representation; explanation separates recorded data from prediction |
 | O-MATH-001-012 | Construct a shape or whole from equal parts | Correct attributes and equal amounts; justify how parts form the whole |
-| O-MATH-001-013 | Pair, group, share, double, or halve a collection | Correct relationship, explicit unit, and a reason showing preservation or change |
+| O-MATH-001-013 | [Unit 2 pairing/parity](composition-difference-parity-check.md) plus [Unit 3 grouping, sharing, doubling, halving](equal-groups-sharing-teacher.md) | Review each component independently: disjoint model, correct units/total, inverse or counterexample, and clear reason; **neither unit alone certifies the whole outcome** |
 
 Before a unit is ready, author tasks and keys, identify the primary art, verify
 resources, set task-specific criteria, and record support, materials, and time.

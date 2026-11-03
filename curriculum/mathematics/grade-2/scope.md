@@ -41,8 +41,7 @@ Astronomy connects
 number and measurement to observed sky cycles. Modern everyday problems and
 representations support these studies.
 
-The course outline is not a claim that all units are ready. Only the first study
-has draft lessons and tasks. Refine ranges, examples, and duration after entry work.
+The course outline is not a claim that all units are ready. The first three arithmetic units now have draft lessons and tasks (Unit 3: equal groups and sharing); the remaining units are outlines. Refine ranges, examples, and duration after entry work.
 
 ## Open preparation choices
 

@@ -153,6 +153,14 @@
       ],
       "directory": "tests",
       "pattern": "test_unit2_sessions.py"
+    },
+    "unit3-authored": {
+      "components": [
+        "curriculum",
+        "bank"
+      ],
+      "directory": "tests",
+      "pattern": "test_unit3_authored.py"
     }
   }
 }

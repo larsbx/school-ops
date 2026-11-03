@@ -43,4 +43,4 @@ Show double **8** with two equal collections. Give the total and explain why the
 ### P8 — Halve
 Share **18** counters between **2** equal boxes. State the count in one half and check by putting the two halves together.
 
-**Teacher note (not for distribution):** use a fresh arrangement/number when checking independence after guided practice. Answers and review thresholds are maintained in the separate teacher record.
+After guided practice, show your reasoning for a **new** arrangement chosen by your teacher. Explain how every counter is accounted for.
