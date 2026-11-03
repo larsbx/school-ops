@@ -27,7 +27,18 @@ Recheck each unmet skill separately: a total entry score is **not** a substitute
 3. [Double and halve](lessons/03-double-halve.md): construct equal halves for even collections, treat odd leftovers as *not* a whole-number equal split.
 4. [Critique and transfer](lessons/04-critique.md): explain a correct claim, identify a faulty grouping argument, complete an independent check.
 
-The [original guided practice](practice-learner.md) is separate from the [complete teacher key](practice-teacher.md). Follow with a **fresh, independent, untimed** [learner unit check](../../../../../assessments/C-MATH-001/equal-groups-sharing-learner.md) and [teacher check/rubric](../../../../../assessments/C-MATH-001/equal-groups-sharing-teacher.md); the six fixed draft items are **not reusable as unseen independent evidence after exposure**. A future regenerated bank needs its own versioned session, comparison, and independent answer audit.
+The [original guided practice](practice-learner.md) is separate from the [complete teacher key](practice-teacher.md). For **new independent sessions** generate a fresh [unit-3 exercise-bank form](../../../../../exercise_bank/unit3.py), after reviewing taught range, task variation and suitability:
+
+```sh
+python -m exercise_bank.unit3 new /private/unit3-check-001 --activity check --limit 24
+python -m exercise_bank.unit3 resume /private/unit3-check-001
+python -m exercise_bank.unit3 resume /private/unit3-check-001 --teacher
+python -m exercise_bank.unit3 work /private/unit3-check-001
+```
+
+Choose `--limit 12` for the smaller route and `--activity entry|groups|sharing|double|check` for targeted fresh practice. **Every `new` must use a new private directory** and OS-random seed; `resume` verifies and returns exactly the saved form (and `work` continues saved responses). Distribute **only** `learner.md`, keep `teacher.md`, `session.json` and optional `progress.json` private, and never commit session data. Generated prompts and correct answers vary by seed within the taught range, but distinct seeds may still yield equivalent questions; check actual learner exposure rather than assuming uniqueness. Saved-session continuity does not resample. The generator is draft software, not automated grading or approval.
+
+The original fixed [learner check exemplars](../../../../../assessments/C-MATH-001/equal-groups-sharing-learner.md) and [complete teacher key and criterion rubric](../../../../../assessments/C-MATH-001/equal-groups-sharing-teacher.md) supply an independently auditable source contract. **Do not reuse those exposed fixed examples as unseen assessment**; prefer a generated and reviewed check for each new session. The numerical/adapted-route validity of new generated variants still needs human review before teaching.
 
 ## Decisions, progress and acceptance boundaries
 

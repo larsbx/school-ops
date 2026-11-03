@@ -4,7 +4,7 @@
 - **Purpose:** independently sample **O-MATH-001-013** equal-group formation, equal sharing, doubling and halving. Unit 2's pairing/parity component remains a separate prerequisite and required evidence. This form **alone does not establish the whole outcome**.
 - **Conditions:** provide only the [learner form](equal-groups-sharing-learner.md); untimed. Optional 15–20-minute planning estimate (not a limit). Allow counters/tactile objects, read-aloud, drawings, spoken, signed, AAC, pointing or adult transcription *without solution cues*; permit breaks. No calculator required.
 - **Range:** up to 24; individually check unit entry skills E1–E3 before the relevant lessons. If only 0–12 is secure, provide that review route **before** this 0–24 check.
-- **Originality/freshness:** school-ops original prompts; fixed and **exposed after use**. For later independent evidence author a new equivalent form and check a separate key. A different random seed alone does not guarantee uniqueness.
+- **Originality/freshness:** these six school-ops original prompts are **fixed reference exemplars**, exposed after use. For each new independent attempt use the [versioned Unit 3 generator](../../exercise_bank/unit3.py) with a private new session and automatically derived matching teacher key; the generated form still requires a teacher suitability/exposure review. Different seeds do not guarantee unique items.
 
 ## Independently auditable arithmetic ledger
 

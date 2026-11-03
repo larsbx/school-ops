@@ -1,6 +1,6 @@
 # Unit 3 — equal groups and sharing: independent learner check
 
-**Draft learner form · proposed A-MATH-001-06 · O-MATH-001-013 components only.** These six original tasks are not copied from a provider. Do this **untimed**, with a separate sitting or breaks if needed. Use up to 24 counters, blank paper/boxes or tactile equivalents. Responses may be spoken, drawn, pointed, signed or via AAC; an adult may read or scribe without suggesting an answer. Give a model, a number **with units**, and a reason. Questions concern *whole objects*.
+**Draft learner reference exemplar · proposed A-MATH-001-06 · O-MATH-001-013 components only.** These six original tasks are not copied from a provider. They are fixed examples; for each new assessment session the teacher should prepare a separate reviewed form, not reuse exposed prompts. Do this **untimed**, with a separate sitting or breaks if needed. Use up to 24 counters, blank paper/boxes or tactile equivalents. Responses may be spoken, drawn, pointed, signed or via AAC; an adult may read or scribe without suggesting an answer. Give a model, a number **with units**, and a reason. Questions concern *whole objects*.
 
 ### U3-01 — Equal groups
 Make **4 equal groups with 5 counters in each**. Draw or arrange the groups. How many groups, counters in each group, and counters **in all**? Explain why none is counted twice.

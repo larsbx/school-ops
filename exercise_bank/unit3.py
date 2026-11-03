@@ -100,7 +100,7 @@ def render(form, teacher=False):
 
 def load_session(directory):
     form = json.loads((directory / "session.json").read_text(encoding="utf-8"))
-    if (form.get("version") != VERSION or
+    if not isinstance(form, dict) or (form.get("version") != VERSION or
         form != generate(form["activity"], form["limit"], form["seed"])):
         raise ValueError("unsupported or altered Unit 3 session")
     for filename, teacher in (("learner.md", False), ("teacher.md", True)):
