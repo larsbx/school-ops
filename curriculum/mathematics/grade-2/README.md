@@ -75,7 +75,7 @@ not learner results. Many later-unit tasks still need authoring.
 | O-MATH-001-010 | Compare dated sky observations and intervals; distinguish an observed cycle from a calendar convention | Astronomy | [Later-unit plan](../../../assessments/C-MATH-001/course-evidence-plan.md) |
 | O-MATH-001-011 | Organize counts or observations in tables and diagrams, and distinguish an observed pattern from a prediction | Astronomy and arithmetic | [Later-unit plan](../../../assessments/C-MATH-001/course-evidence-plan.md) |
 | O-MATH-001-012 | Build and describe shapes, equal-square arrangements, and equal shares; justify the relation between part and whole | Geometry | [Later-unit plan](../../../assessments/C-MATH-001/course-evidence-plan.md) |
-| O-MATH-001-013 | Investigate parity, equal groups, equal sharing, doubling, and halving with concrete quantities | Arithmetic; preparation for proportion | [Later-unit plan](../../../assessments/C-MATH-001/course-evidence-plan.md) |
+| O-MATH-001-013 | Investigate parity, equal groups, equal sharing, doubling, and halving with concrete quantities | Arithmetic; preparation for proportion | [Unit 2 parity/pairing](../../../assessments/C-MATH-001/composition-difference-parity-check.md) + [Unit 3 equal groups/sharing/double/halve](../../../assessments/C-MATH-001/equal-groups-sharing-teacher.md); independently review every component |
 
 ## Proposed unit progression
 
