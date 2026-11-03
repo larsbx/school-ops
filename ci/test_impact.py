@@ -26,11 +26,11 @@ class ImpactPlanningTests(unittest.TestCase):
 
     def test_bank_change_includes_downstream_teaching(self):
         decision = plan(POLICY, ["exercise_bank/generator.py"])
-        self.assertEqual(decision["suites"], ["bank", "islamic-prototype", "teaching"])
+        self.assertEqual(decision["suites"], ["bank", "islamic-prototype", "teaching", "unit3-authored"])
 
     def test_curriculum_change_includes_dependents_transitively(self):
         decision = plan(POLICY, ["curriculum/scaffolds/islamic_studies.md"])
-        self.assertEqual(decision["suites"], ["bank", "curriculum", "islamic-prototype", "teaching"])
+        self.assertEqual(decision["suites"], ["bank", "curriculum", "islamic-prototype", "teaching", "unit3-authored"])
 
     def test_installer_change_includes_native(self):
         decision = plan(POLICY, ["tools/browser/site_scoped_youtube_guard/installer_core.py"])
