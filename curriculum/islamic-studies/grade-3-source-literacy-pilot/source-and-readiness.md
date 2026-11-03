@@ -13,7 +13,7 @@ Grade 3 **P3/P5 chronology and maps**, **P4 worship/fiqh terminology**, and **P6
 
 ## Automated draft-practice capability (not teaching approval)
 
-The [local generator](generate_practice.py) now generates new neutral metadata/classification forms with a fresh nonpersonal random session ID and a separated teacher key, while `resume` verifies existing saved artifacts without rewriting them. Its [variation contract](practice-variation.md) details commands, private custody and limitations. Generated questions **do not quote primary religious sources** and cannot be used to infer learner mastery. Qualified teacher/scholar approval, access control for private sessions and demonstrated task validity are still missing.
+The [Rust v2 generator](rust/README.md) is proposed for new neutral metadata/classification sessions with an OS-random **private session nonce**, separate teacher key, and exact read-only form verification. [Python v1](generate_practice.py) remains the archival reader for its incompatible older schema. Rust v2 does not expose the private nonce on learner forms; the existing Python v1 format did, so do not treat that historical key separation as a security guarantee. Their [variation and compatibility contract](practice-variation.md) details commands, private custody and limitations. Generated questions **do not quote primary religious sources** and cannot be used to infer learner mastery. Qualified teacher/scholar approval, access control for private sessions and demonstrated task validity are still missing.
 
 ## Human review gates (all unresolved)
 
