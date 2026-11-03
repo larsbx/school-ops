@@ -27,14 +27,21 @@ impl Drop for TestDir {
 fn new_session_keeps_private_seed_out_of_learner_surface() {
     let dir = TestDir::new();
     let session_id = "a".repeat(32);
-    let manifest = create_session(&dir.0, &session_id).expect("create a distinct test session");
+    let manifest =
+        create_session(&dir.0, &session_id).expect("create a distinct test session");
     let learner = fs::read_to_string(dir.0.join("learner.md")).unwrap();
     let teacher = fs::read_to_string(dir.0.join("teacher.md")).unwrap();
-    assert!(!learner.contains(&session_id), "private replay nonce leaked to learner sheet");
+    assert!(
+        !learner.contains(&session_id),
+        "private replay nonce leaked to learner sheet"
+    );
     assert!(!learner.contains("## Task 1: record classifications"));
     assert!(teacher.contains(&session_id));
     assert!(teacher.contains("## Task 1: record classifications"));
-    assert_eq!(manifest, resume_session(&dir.0).expect("unchanged saved form validates"));
+    assert_eq!(
+        manifest,
+        resume_session(&dir.0).expect("unchanged saved form validates")
+    );
     let built = build(&session_id).expect("deterministic private reconstruction");
     assert_eq!(learner, built.learner);
     assert_eq!(teacher, built.teacher);
@@ -83,7 +90,11 @@ fn private_permissions_and_symlinked_key_are_rejected() {
     let mode_dir = fs::metadata(&dir.0).unwrap().permissions().mode() & 0o777;
     assert_eq!(mode_dir, 0o700);
     for filename in ["learner.md", "teacher.md", "manifest.json"] {
-        let mode = fs::metadata(dir.0.join(filename)).unwrap().permissions().mode() & 0o777;
+        let mode = fs::metadata(dir.0.join(filename))
+            .unwrap()
+            .permissions()
+            .mode()
+            & 0o777;
         assert_eq!(mode, 0o600, "insecure mode for {filename}");
     }
     let original = fs::read(dir.0.join("teacher.md")).unwrap();
