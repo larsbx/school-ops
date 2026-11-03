@@ -79,13 +79,13 @@ not learner results. Later-unit tasks still need authoring.
 
 ## Proposed unit progression
 
-Only unit 1 has lesson records. Unit IDs 2–7 are reserved for this outline.
+Units 1 and 2 have draft lesson records. Unit IDs 3–7 are reserved for this outline.
 Outcome numbers abbreviate `O-MATH-001-NNN`.
 
 | Unit ID | Study | Prerequisites | Outcomes | State |
 | --- | --- | --- | --- | --- |
 | U-MATH-001-01 | [Units, number, and place value](units/place-value/README.md) | Entry work on counting, names, and tens/ones | 001–004 | Six lessons drafted |
-| U-MATH-001-02 | Composition, difference, and parity | Counting units; 001 and 004 | 005–006; introduce 013 | Outline |
+| U-MATH-001-02 | [Composition, difference, and parity](units/composition-difference-parity/README.md) | Counting units; 001 and 004 | 005–006; pairing component of 013 | Four lessons drafted |
 | U-MATH-001-03 | Equal groups, sharing, and numerical relationships | 001, 005 | 013; extend 007 | Outline |
 | U-MATH-001-04 | Geometry: form, magnitude, and measurement | 004, 005; equal-group work from 013 | 008–009, 012 | Outline |
 | U-MATH-001-05 | Astronomy: observations, intervals, and cycles | 002, 008 | 010–011 | Outline |
@@ -123,4 +123,4 @@ Use the [PV2/PV3 pack](units/place-value/teaching-pack/README.md) for route-spec
 scripts, learner materials, keys, printable copies and bank administration.
 The [dated audit](../../../docs/reviews/2026-10-27-place-value-pack.md) distinguishes
 complete first-unit authoring from local entry, materials, access and scheduling
-decisions. Later units remain outlines; this does not promote the course to ready.
+decisions. Units 3–7 remain outlines; this does not promote the course to ready.
