@@ -17,4 +17,4 @@
 
 **Task 5 (formative communication, P1/P2):** Explain one classification to a peer using "the label says / I infer / I cannot yet know". Task 5 informs feedback but cannot replace missing evidence in Tasks 1–4.
 
-These are **authored exemplar tasks**, not automatically re-generated forms. Fresh sessions require the separate [variation contract](../practice-variation.md). Responses are private; only generic teacher model evidence is in Git.
+These are **authored exemplar tasks**, not automatically re-generated forms. Fresh practice sessions can use the [draft generator and its saved-session contract](../practice-variation.md); this review exemplar itself remains unchanged. Responses are private; only generic teacher model evidence is in Git.

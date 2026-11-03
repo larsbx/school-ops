@@ -85,5 +85,43 @@ class CurriculumScaffoldTests(unittest.TestCase):
             mins = [int(parts[-2].strip()) for row in body.splitlines() if row.startswith("| ") and (parts := row.split("|")) and parts[-2].strip().isdigit()]
             self.assertEqual(25, sum(map(int, mins)))
 
+
+    def test_grade3_new_practice_sessions_and_replay(self):
+        from importlib.util import module_from_spec, spec_from_file_location
+        from tempfile import TemporaryDirectory
+        path = (ROOT / "curriculum" / "islamic-studies" /
+                "grade-3-source-literacy-pilot" / "generate_practice.py")
+        spec = spec_from_file_location("islamic_grade3_practice", path)
+        self.assertIsNotNone(spec)
+        module = module_from_spec(spec)
+        spec.loader.exec_module(module)
+        first = module.build("0" * 32)
+        self.assertEqual(first, module.build("0" * 32))
+        second = module.build("1" * 32)
+        self.assertNotEqual(first[0], second[0])
+        self.assertNotEqual(first[2]["form_id"], second[2]["form_id"])
+        self.assertEqual(set(module.KINDS), {card["kind"] for card in first[2]["records"]})
+        self.assertEqual(set(module.CLAIMS), {card["kind"] for card in first[2]["claims"]})
+        self.assertEqual(5, len(first[2]["records"]))
+        self.assertEqual(4, len(first[2]["claims"]))
+        self.assertNotIn("## Task 1: record classifications", first[0])
+        self.assertIn("## Task 1: record classifications", first[1])
+        with self.assertRaises(ValueError):
+            module.build("learner-name")
+        with TemporaryDirectory() as directory:
+            target = Path(directory) / "form"
+            manifest = module.new_session(target, "0" * 32)
+            self.assertEqual(manifest, module.resume_session(target))
+            before = [(target / name).read_bytes()
+                      for name in ("learner.md", "teacher.md", "manifest.json")]
+            module.resume_session(target)
+            self.assertEqual(before, [(target / name).read_bytes()
+                                      for name in ("learner.md", "teacher.md", "manifest.json")])
+            with self.assertRaises(FileExistsError):
+                module.new_session(target, "1" * 32)
+            (target / "learner.md").write_text("tampered", encoding="utf-8")
+            with self.assertRaises(ValueError):
+                module.resume_session(target)
+
 if __name__ == "__main__":
     unittest.main()

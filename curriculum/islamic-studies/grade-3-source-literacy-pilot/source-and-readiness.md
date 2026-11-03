@@ -11,6 +11,10 @@
 
 Grade 3 **P3/P5 chronology and maps**, **P4 worship/fiqh terminology**, and **P6 integrated historical synthesis** are only outlined in the [Grade 3 scaffold](../../scaffolds/grade-3/islamic-studies.md). No fabricated dates, routes, sīrah reports or fatwas enter this unit.
 
+## Automated draft-practice capability (not teaching approval)
+
+The [local generator](generate_practice.py) now generates new neutral metadata/classification forms with a fresh nonpersonal random session ID and a separated teacher key, while `resume` verifies existing saved artifacts without rewriting them. Its [variation contract](practice-variation.md) details commands, private custody and limitations. Generated questions **do not quote primary religious sources** and cannot be used to infer learner mastery. Qualified teacher/scholar approval, access control for private sessions and demonstrated task validity are still missing.
+
 ## Human review gates (all unresolved)
 
 - [ ] Curriculum owner agrees Grade 3 course boundary, prerequisite thresholds, languages, resources and timetable; no inferred Grade 2 mastery.
