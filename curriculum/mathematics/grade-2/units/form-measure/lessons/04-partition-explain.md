@@ -14,8 +14,8 @@
 1. **Retrieve (3 min):** verify 3 rows of 4 = 12 *equal-size square units*; learners may count individually rather than multiply.
 2. **Model (7 min):** separate the 3×4 grid after column 2: each side 3 rows × 2 columns, **6 square units**. Explain equality in counted same-size unit squares.
 3. **Refute (5 min):** split the grid after column 1: left 3 squares, right 9; it is two pieces but *not* two equal-area shares. Ask for a reason accessible to a partner.
-4. **Fade (5 min):** without the worked split, learner shows a second partition using two rows of six tiles each and explains the equal-square count. It need not have the same outline as the model; all unit squares must be alike.
-5. **Independent exit (5 min):** [L4-X1](../practice-learner.md#lesson-exits-l1x1l4x1) with separate [teacher key](../practice-teacher.md#lesson-exit-keys).
+4. **Fade (5 min):** without the worked split, learner finds a second partition *of the original 3×4 grid*: take all four squares in the top row plus the left two in the middle row as one 6-square part; the remaining two middle-row squares and four bottom-row squares form the other 6-square part. Request an explanation of why the differently outlined parts have equal square counts.
+5. **Independent exit (5 min):** [L4-X1](../practice-learner.md#lesson-exits) with separate [teacher key](../practice-teacher.md#lesson-exit-keys).
 
 ## Feedback
 
