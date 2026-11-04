@@ -15,7 +15,7 @@
 2. **Model (6 min):** build two rows of three squares and one row of six squares. Cover every location with one same-size square, no overlap; in each count 6 squares. The shapes differ; their occupied unit-square counts do not. Do not assume this proves equal perimeter or area under unlike tile sizes.
 3. **Guided reasoning (6 min):** learner builds three rows of two squares and counts 2+2+2=6. Ask whether “three rows” means “three squares”; correct with explicit units.
 4. **Fade + partner retell (5 min):** hide model; learner communicates a different arrangement with its exact tile count. Partner reconstructs from the description; compare and revise.
-5. **Independent exit (5 min):** [L1-X1](../practice-learner.md#lesson-exits-l1x1l4x1) without showing the answer; teacher checks [L1 key](../practice-teacher.md#lesson-exit-keys). Record independent vs supported privately.
+5. **Independent exit (5 min):** [L1-X1](../practice-learner.md#lesson-exits) without showing the answer; teacher checks [L1 key](../practice-teacher.md#lesson-exit-keys). Record independent vs supported privately.
 
 ## Feedback
 
