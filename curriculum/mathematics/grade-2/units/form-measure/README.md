@@ -12,7 +12,7 @@ This is **Unit 4 within the existing mathematics course**, not a separate Grade 
 
 ## Entry, accessibility and prerequisite route
 
-Administer [E1–E4 learner prompts](practice-learner.md#entry-e1e4) with the separately stored [key and feedback](practice-teacher.md#entry-key-e1e4). Keep performance for each condition separately; no averaged score substitutes for missing components.
+Administer [E1–E4 learner prompts](practice-learner.md#entry) with the separately stored [key and feedback](practice-teacher.md#entry-key). Keep performance for each condition separately; no averaged score substitutes for missing components.
 
 | Condition | Observable gate (candidate, unvalidated) | If not demonstrated |
 | --- | --- | --- |
