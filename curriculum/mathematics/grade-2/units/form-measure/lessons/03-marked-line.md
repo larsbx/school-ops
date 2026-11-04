@@ -15,7 +15,7 @@
 2. **Model (6 min):** start at 4, take five forward *intervals* and arrive 9: 4→5→6→7→8→9. Mark each gap, not each label.
 3. **Test (5 min):** start at 9, take six backward intervals to 3. Present the incorrect claim “count the starting tick as step one, so end at 4”; request counterexample by tracing gaps.
 4. **Fade / partner reconstruction (5 min):** give “start 2, move forward 6, then backward 3”; partner traces to 5 with equally spaced unit steps.
-5. **Independent exit (5 min):** [L3-X1](../practice-learner.md#lesson-exits-l1x1l4x1) on a fresh line; check route and reasoning with [teacher key](../practice-teacher.md#lesson-exit-keys).
+5. **Independent exit (5 min):** [L3-X1](../practice-learner.md#lesson-exits) on a fresh line; check route and reasoning with [teacher key](../practice-teacher.md#lesson-exit-keys).
 
 ## Feedback
 
