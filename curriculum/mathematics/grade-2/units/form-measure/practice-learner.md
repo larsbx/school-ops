@@ -5,7 +5,7 @@
 - Show the model and explain *how* you know; a pointer, speech, diagram, raised-grid response or an adult recording your own response is acceptable.
 - **These original examples are public authoring material; a new, unexposed equivalent is needed for an independent progress decision.** No time limit.
 
-## Entry E1–E4
+## Entry
 
 **E1. Count and compare.** Lay out 8 equal counters and count them once each. Next to them lay out 6. Which group has more? Show matched pairs to explain why.
 
@@ -33,7 +33,7 @@
 
 **G8 (L4).** In a 3-row, 4-column grid of equal squares, partition after column 1. Count squares on both sides. Is any two-part split necessarily equal? Give a counterexample.
 
-## Lesson exits L1-X1–L4-X1
+## Lesson exits
 
 **L1-X1 (O012 — forms).** Compare an arrangement of **4 rows of 2 equal square tiles** with **1 row of 8** same-size tiles. Give each count, say whether the outlines are the same, and prove or disprove “different outlines imply different square counts.”
 
