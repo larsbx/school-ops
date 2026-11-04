@@ -163,6 +163,8 @@ class CurriculumScaffoldTests(unittest.TestCase):
             rows[number] = row.group()
         self.assertNotIn("## Independent worked keys", learner)
         self.assertNotIn("| G4-01 |", learner)
+        self.assertNotIn("practice-teacher.md", practice_learner)
+        self.assertNotIn("form-measure-teacher.md", learner)
         self.assertIn("not assigned a new assessment ID", learner)
 
         # Recompute independent quantities rather than trusting the prose alone.
