@@ -3,7 +3,7 @@
 - [Unit](README.md) · [learner prompts](practice-learner.md) · [reference assessment key](../../../../../assessments/C-MATH-001/form-measure-teacher.md).
 - This page contains worked solutions, **not** learner data. Use manipulatives of equal size; do not infer objective mastery from rehearsal or supported responses. For an independent check, use unseen equivalent forms and store individual evidence privately.
 
-## Entry key E1–E4
+## Entry key
 
 | Prompt | Complete model response and reason | Decision / remediation |
 | --- | --- | --- |
