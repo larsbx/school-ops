@@ -15,7 +15,7 @@
 2. **Demonstrate (7 min):** align 12 single rods from the left endpoint; record **12 short units**. Replace with six double-length rods laid end-to-end; record **6 double units**. The *same* strip remains unchanged.
 3. **Check a false claim (5 min):** teacher places 5 double rods with a 2-short-unit gap. Ask if saying “5 double units long” is valid. Learner identifies gap and restores the sixth rod.
 4. **Fade (5 min):** cover an 8-short-unit strip in fours of the double unit; learner describes “8 short units = 4 double units” with no algorithmic formula required.
-5. **Independent exit (5 min):** [L2-X1](../practice-learner.md#lesson-exits-l1x1l4x1); check named unit, no gaps and reason using [teacher key](../practice-teacher.md#lesson-exit-keys).
+5. **Independent exit (5 min):** [L2-X1](../practice-learner.md#lesson-exits); check named unit, no gaps and reason using [teacher key](../practice-teacher.md#lesson-exit-keys).
 
 ## Feedback
 
