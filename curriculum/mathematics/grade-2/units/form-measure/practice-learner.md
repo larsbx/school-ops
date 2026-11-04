@@ -43,4 +43,4 @@
 
 **L4-X1 (O012 — equal partitions).** A tiled whole has **2 rows and 6 columns** of identical squares. A divider after column 2 gives two pieces. Are these equal square shares? Move the divider if necessary to make *two equal square shares*; state both counts and justify your claim.
 
-Learner sheet deliberately omits teacher answers and scoring. Do not expose the [teacher-only guide](practice-teacher.md) during administration.
+Learner sheet deliberately omits teacher answers, scoring and key links. The teacher retains the key separately; do not distribute it with this sheet.
