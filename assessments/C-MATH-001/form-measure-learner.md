@@ -6,7 +6,7 @@
 - **Prerequisites:** Unit 4 E1–E4 conditions and actual instruction, including verified Unit 3 grouping (the Unit 3 draft does not by itself establish readiness).
 - **Materials/conditions:** identical square tiles, 1-short-unit and 2-short-unit rods, equally spaced 0–12 number line, blank grid/drawing board. No calculator or numerical conversion table required; oral/tactile/drawn/pointed/recorded-by-scribe responses allowed with **no answer cues**.
 - **Timing:** untimed for conceptual evidence; optional separate timed fluency practice is not this assessment.
-- **Teacher-only answers:** stored in [separate key](form-measure-teacher.md). **Do not distribute the key with this learner sheet.**
+- **Teacher-only answers:** held separately by the teacher; no key or key link is included in this learner handout.
 
 Each response must include the answer **and a reason or demonstration**. “Row × column” is an optional way to count, not a prerequisite formula: counting each identical square is equally valid. All rectangles and grids described below are filled with **identically sized unit squares**, with no gaps or overlaps.
 
