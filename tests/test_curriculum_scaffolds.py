@@ -158,7 +158,7 @@ class CurriculumScaffoldTests(unittest.TestCase):
         for number in range(1, 9):
             item = f"G4-{number:02d}"
             self.assertEqual(1, learner.count(f"**{item}."))
-            row = re.search(rf"^\\| {item} \\|[^\\n]*$", teacher, re.M)
+            row = re.search(rf"^\| {item} \|[^\n]*$", teacher, re.M)
             self.assertIsNotNone(row, f"missing teacher key row for {item}")
             rows[number] = row.group()
         self.assertNotIn("## Independent worked keys", learner)
@@ -179,7 +179,7 @@ class CurriculumScaffoldTests(unittest.TestCase):
         for number, answers in expected.items():
             for answer in answers:
                 with self.subTest(item=number, answer=answer):
-                    self.assertRegex(rows[number], rf"\\b{answer}\\b")
+                    self.assertRegex(rows[number], rf"\b{answer}\b")
 
         # All internal Markdown references in this coherent draft must resolve.
         documents = [
@@ -192,7 +192,7 @@ class CurriculumScaffoldTests(unittest.TestCase):
         ]
         for path in documents:
             body = path.read_text(encoding="utf-8")
-            for dest in re.findall(r"\\]\\(([^)]+)\\)", body):
+            for dest in re.findall(r"\]\(([^)]+)\)", body):
                 if dest.startswith(("https:", "http:", "mailto:")):
                     continue
                 relative, sep, anchor = dest.partition("#")
@@ -204,7 +204,7 @@ class CurriculumScaffoldTests(unittest.TestCase):
                             r"^#{1,6} +(.+)$", target.read_text(encoding="utf-8"), re.M
                         )
                         slugs = {
-                            re.sub(r"[^\\w -]", "", heading.lower()).replace(" ", "-")
+                            re.sub(r"[^\w -]", "", heading.lower()).replace(" ", "-")
                             for heading in headings
                         }
                         self.assertIn(anchor, slugs, f"missing anchor {dest} in {target}")
