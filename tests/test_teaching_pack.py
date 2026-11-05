@@ -154,8 +154,7 @@ class TeachingPackTests(unittest.TestCase):
             self.assertNotRegex(page, r'\]\([^)]*(?:teacher|README\.md)')
             self.assertNotIn('## Fully worked reference answers', page)
 
-        rows = re.findall(r'^\| May (?:5|6|9|13|16) \|.*
-, learner, re.M)
+        rows = re.findall(r'^\| May (?:5|6|9|13|16) \|[^\n]*', learner, re.M)
         self.assertEqual(5, len(rows))
         self.assertEqual(4, sum('clear view' in row for row in rows))
         self.assertEqual(1, sum('blocked by cloud' in row for row in rows))
