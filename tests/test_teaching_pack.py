@@ -113,10 +113,9 @@ class TeachingPackTests(unittest.TestCase):
 
 
     def test_grade_two_sky_record_authoring_contract(self):
-        """Check original Unit 5 prompts, separated keys, dates, and lesson coverage.
+        """Original Unit 5 prompts, separate keys, dated counts and lessons.
 
-        Structural and fixed-arithmetic verification does not approve genuine
-        observational provenance or pedagogical / classroom readiness.
+        Structural checks do not approve genuine observational provenance.
         """
         from datetime import date
         unit = ROOT / 'curriculum/mathematics/grade-2/units/sky-records'
@@ -135,27 +134,27 @@ class TeachingPackTests(unittest.TestCase):
                 for art in ('grammar', 'logic', 'rhetoric'):
                     self.assertIn(art, body.lower())
                 minutes = [int(n) for n in re.findall(
-                    r'^\\| [^|]+ \\| (\\d+) \\|', body, re.M)]
+                    r'^\| [^|]+ \| (\d+) \|', body, re.M)]
                 self.assertEqual(25, sum(minutes), lesson.name)
 
         for number in range(1, 10):
             tag = f'S5-{number:02}'
             self.assertEqual(1, learner.count(f'**{tag} ('))
             self.assertEqual(1, len(re.findall(
-                rf'^\\| {tag} \\|', teacher, re.M)))
+                rf'^\| {tag} \|', teacher, re.M)))
         for prefix, count in (('P', 6), ('X', 4)):
             for number in range(1, count + 1):
                 tag = f'{prefix}{number}'
                 self.assertEqual(1, practice.count(f'**{tag} ('))
                 self.assertEqual(1, len(re.findall(
-                    rf'^\\| {tag} \\|', guide, re.M)))
+                    rf'^\| {tag} \|', guide, re.M)))
 
-        # The learner-only pages must never link to keys or teacher index.
+        # Learner-only materials must not navigate to key or teacher index.
         for page in (practice, learner, observation):
-            self.assertNotRegex(page, r'\\]\\([^)]*(?:teacher|README\\.md)')
+            self.assertNotRegex(page, r'\]\([^)]*(?:teacher|README\.md)')
             self.assertNotIn('## Fully worked reference answers', page)
 
-        rows = re.findall(r'^\\| May (?:5|6|9|13|16) \\|.*
+        rows = re.findall(r'^\| May (?:5|6|9|13|16) \|.*
 , learner, re.M)
         self.assertEqual(5, len(rows))
         self.assertEqual(4, sum('clear view' in row for row in rows))
