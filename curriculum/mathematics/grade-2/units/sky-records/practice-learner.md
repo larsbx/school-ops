@@ -1,6 +1,6 @@
 # Sky records — learner practice and entry (DRAFT; no answers)
 
-This is an original practice sheet in [Unit 5](README.md). Names and dates below are **fictional classroom examples**, **not** actual historical Moon or sky data. Use oral, tactile, drawn, written or scribed responses with the same reasoning goal. The teacher keeps the [answers](teacher-guide.md) separately; this learner-facing page is not the independent transfer assessment.
+This is an original practice sheet in [Unit 5](README.md). Names and dates below are **fictional classroom examples**, **not** actual historical Moon or sky data. Use oral, tactile, drawn, written or scribed responses with the same reasoning goal. The teacher holds the answer key separately; no key or link to a key is included here. This learner-facing page is not the independent transfer assessment.
 
 ## Entry E1–E4
 
