@@ -10,7 +10,7 @@
 
 ## Existing Grade 2 mathematics bridge (not a second geometry course)
 
-The already-reserved [U-MATH-001-04 geometry-and-measurement draft](../../mathematics/grade-2/units/form-measure/README.md) is a **unit within C-MATH-001**, with authored (but not approved) lessons, independent reference prompts and a separately distributed teacher key for O-MATH-001-008, 009 and 012. It is distinct from this still-unassigned *standalone geometry* planning scope. Its Unit 3 grouping prerequisite, accessibility, material choices, assessment exposure and thresholds remain under review; it creates no separate geometry course ID or teaching-readiness claim.
+The already-reserved [U-MATH-001-04 geometry-and-measurement draft](../../mathematics/grade-2/units/form-measure/README.md) is a **unit within the existing Grade 2 mathematics course**, with authored (but not approved) lessons, independent reference prompts and a separately distributed teacher key for O-MATH-001-008, 009 and 012. It is distinct from this still-unassigned *standalone geometry* planning scope. Its Unit 3 grouping prerequisite, accessibility, material choices, assessment exposure and thresholds remain under review; it creates no separate geometry course ID or teaching-readiness claim.
 
 ## Proposed entry evidence
 
