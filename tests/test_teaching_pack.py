@@ -112,4 +112,64 @@ class TeachingPackTests(unittest.TestCase):
         self.assertGreaterEqual(checked,25)
 
 
+    def test_grade_two_sky_record_authoring_contract(self):
+        """Check original Unit 5 prompts, separated keys, dates, and lesson coverage.
+
+        Structural and fixed-arithmetic verification does not approve genuine
+        observational provenance or pedagogical / classroom readiness.
+        """
+        from datetime import date
+        unit = ROOT / 'curriculum/mathematics/grade-2/units/sky-records'
+        practice = (unit / 'practice-learner.md').read_text()
+        guide = (unit / 'teacher-guide.md').read_text()
+        observation = (unit / 'observation-template.md').read_text()
+        learner = (ROOT / 'assessments/C-MATH-001/sky-records-learner.md').read_text()
+        teacher = (ROOT / 'assessments/C-MATH-001/sky-records-teacher.md').read_text()
+
+        lessons = sorted((unit / 'lessons').glob('*.md'))
+        self.assertEqual(4, len(lessons))
+        for lesson in lessons:
+            with self.subTest(lesson=lesson.name):
+                body = lesson.read_text()
+                self.assertIn('DRAFT', body)
+                for art in ('grammar', 'logic', 'rhetoric'):
+                    self.assertIn(art, body.lower())
+                minutes = [int(n) for n in re.findall(
+                    r'^\\| [^|]+ \\| (\\d+) \\|', body, re.M)]
+                self.assertEqual(25, sum(minutes), lesson.name)
+
+        for number in range(1, 10):
+            tag = f'S5-{number:02}'
+            self.assertEqual(1, learner.count(f'**{tag} ('))
+            self.assertEqual(1, len(re.findall(
+                rf'^\\| {tag} \\|', teacher, re.M)))
+        for prefix, count in (('P', 6), ('X', 4)):
+            for number in range(1, count + 1):
+                tag = f'{prefix}{number}'
+                self.assertEqual(1, practice.count(f'**{tag} ('))
+                self.assertEqual(1, len(re.findall(
+                    rf'^\\| {tag} \\|', guide, re.M)))
+
+        # The learner-only pages must never link to keys or teacher index.
+        for page in (practice, learner, observation):
+            self.assertNotRegex(page, r'\\]\\([^)]*(?:teacher|README\\.md)')
+            self.assertNotIn('## Fully worked reference answers', page)
+
+        rows = re.findall(r'^\\| May (?:5|6|9|13|16) \\|.*
+, learner, re.M)
+        self.assertEqual(5, len(rows))
+        self.assertEqual(4, sum('clear view' in row for row in rows))
+        self.assertEqual(1, sum('blocked by cloud' in row for row in rows))
+        self.assertEqual(3, sum('yes, seen' in row for row in rows))
+        self.assertEqual(1, sum('no, not seen' in row for row in rows))
+        self.assertEqual(1, sum('not checked' in row for row in rows))
+        self.assertEqual(4, (date(2026, 5, 9) - date(2026, 5, 5)).days)
+        self.assertEqual(7, (date(2026, 5, 13) - date(2026, 5, 6)).days)
+        self.assertEqual(11, (date(2026, 5, 16) - date(2026, 5, 5)).days)
+        self.assertIn('NOT MET', guide)
+        self.assertIn('unassessed', teacher.lower())
+        self.assertIn('FICTIONAL TRAINING DATA', learner)
+        self.assertIn('Never look directly at the Sun', observation)
+
+
 if __name__=='__main__': unittest.main()
