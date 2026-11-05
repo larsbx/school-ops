@@ -3,7 +3,7 @@
 - **Existing reserved unit:** U-MATH-001-04 in [C-MATH-001](../../README.md); **status: draft, not teaching-ready**.
 - **Audience:** learners for whom the entry evidence is demonstrated; “Grade 2” is not evidence of mastery.
 - **Primary art:** geometry, using arithmetic for counting units; grammar, logic and rhetoric occur in every lesson. Music is excluded.
-- **Outcome targets:** [O-MATH-001-008, 009, 012](../../README.md#course-outcomes). This unit reviews 004, 005, and the *equal-group component* of 013; it does **not** certify O013 or whole-course mastery.
+- **Outcome targets:** [O-MATH-001-008, O-MATH-001-009, O-MATH-001-012](../../README.md#course-outcomes). This unit reviews 004, 005, and the *equal-group component* of 013; it does **not** certify O013 or whole-course mastery.
 - **Dependencies:** existing Unit 1 comparison and Unit 2 composition/difference; equal-square grouping from Unit 3 must be checked **when its draft is reviewed and taught**. [Unit 3 PR #39](https://github.com/larsbx/school-ops/pull/39) is not presumed merged, approved or completed.
 - **Provisional time:** four teaching episodes of roughly 25 minutes each, plus flexible entry and unit evidence; actual calendar, session length and materials require owner approval.
 - **Number and measure boundary:** whole counts 0–20, equal-size square tiles, 1-unit and 2-unit length rods, straight marked lines 0–12. Do not infer multiplication algorithms, area formulae, fractional notation, real-world unit conversions or an astronomical investigation.
