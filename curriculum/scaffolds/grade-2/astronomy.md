@@ -36,7 +36,7 @@ The ordering and difficulty are proposals, not grade-based prerequisite claims. 
 
 ## Existing Grade 2 mathematics astronomy strand (different record type)
 
-The existing **draft** [C-MATH-001 Unit 5 sky-records pilot](../../mathematics/grade-2/units/sky-records/README.md) now contains four authored lesson drafts, an entry check, learner practice, a blank **real-observation** template and separate reference assessment/key for **existing course outcomes O-MATH-001-010 and 011**. This does **not** register an independent Grade 2 astronomy course, supply authentic lunar records, establish classroom readiness or replace this scaffold's unselected standalone scope. The synthetic May/March datasets are exercises, **not** historical astronomical observations. Genuine sourced sky-record evidence, safety/access and teacher review remain blocked; [course model](../../../docs/curriculum-model.md) applies.
+The existing **draft** [Grade 2 mathematics Unit 5 sky-records pilot](../../mathematics/grade-2/units/sky-records/README.md) now contains four authored lesson drafts, an entry check, learner practice, a blank **real-observation** template and separate reference assessment/key for **existing course outcomes O-MATH-001-010 and 011**. This does **not** register an independent Grade 2 astronomy course, supply authentic lunar records, establish classroom readiness or replace this scaffold's unselected standalone scope. The synthetic May/March datasets are exercises, **not** historical astronomical observations. Genuine sourced sky-record evidence, safety/access and teacher review remain blocked; [course model](../../../docs/curriculum-model.md) applies.
 
 ## Gates before course registration
 
