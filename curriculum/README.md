@@ -8,7 +8,7 @@ reviewed teaching material.
 | --- | --- | --- | --- | --- | --- |
 | C-MATH-001 | Mathematics | Second-grade mathematics | 2nd grade | draft | [Course](mathematics/grade-2/README.md) |
 
-The Grade 2 mathematics course includes the draft [place-value unit](mathematics/grade-2/units/place-value/README.md) and [composition, difference, and parity unit](mathematics/grade-2/units/composition-difference-parity/README.md).
+The Grade 2 mathematics course includes the draft [place-value unit](mathematics/grade-2/units/place-value/README.md), [composition, difference, and parity unit](mathematics/grade-2/units/composition-difference-parity/README.md), and [equal-groups/sharing unit](mathematics/grade-2/units/equal-groups-sharing/README.md). None are marked teaching-ready.
 
 ## Add a course
 
