@@ -123,5 +123,94 @@ class CurriculumScaffoldTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 module.resume_session(target)
 
+    def test_grade_two_unit_four_authored_geometry_and_keys(self):
+        """Unit 4 draft has full lessons, distinct learner/key sheets and exact math."""
+        unit = ROOT / "curriculum/mathematics/grade-2/units/form-measure"
+        assessment = ROOT / "assessments/C-MATH-001"
+        lesson_dir = unit / "lessons"
+        lesson_files = sorted(lesson_dir.glob("*.md"))
+        self.assertEqual(
+            ["01-form-tiles.md", "02-magnitude-units.md",
+             "03-marked-line.md", "04-partition-explain.md"],
+            [f.name for f in lesson_files],
+        )
+        record = (unit / "README.md").read_text(encoding="utf-8")
+        self.assertIn("U-MATH-001-04", record)
+        self.assertIn("not teaching-ready", record)
+        for outcome in ("O-MATH-001-008", "O-MATH-001-009", "O-MATH-001-012"):
+            self.assertIn(outcome, record)
+        for path in lesson_files:
+            body = path.read_text(encoding="utf-8")
+            for required in ("Grammar:", "Logic:", "Rhetoric:", "Observable goal:",
+                             "Independent exit", "status: draft"):
+                with self.subTest(path=path.name, required=required):
+                    self.assertIn(required, body)
+
+        practice_learner = (unit / "practice-learner.md").read_text(encoding="utf-8")
+        practice_teacher = (unit / "practice-teacher.md").read_text(encoding="utf-8")
+        learner = (assessment / "form-measure-learner.md").read_text(encoding="utf-8")
+        teacher = (assessment / "form-measure-teacher.md").read_text(encoding="utf-8")
+        for prefix in ("E1", "E2", "E3", "E4", "G1", "G2", "G3", "G4",
+                       "G5", "G6", "G7", "G8", "L1-X1", "L2-X1", "L3-X1", "L4-X1"):
+            self.assertIn(prefix, practice_learner)
+            self.assertIn(prefix, practice_teacher)
+        rows = {}
+        for number in range(1, 9):
+            item = f"G4-{number:02d}"
+            self.assertEqual(1, learner.count(f"**{item}."))
+            row = re.search(rf"^\| {item} \|[^\n]*$", teacher, re.M)
+            self.assertIsNotNone(row, f"missing teacher key row for {item}")
+            rows[number] = row.group()
+        self.assertNotIn("## Independent worked keys", learner)
+        self.assertNotIn("| G4-01 |", learner)
+        self.assertNotIn("practice-teacher.md", practice_learner)
+        self.assertNotIn("form-measure-teacher.md", learner)
+        self.assertIn("not assigned a new assessment ID", learner)
+
+        # Recompute independent quantities rather than trusting the prose alone.
+        expected = {
+            1: (3 * 3, 1 * 9),
+            2: (2 * 2, 1 * 4),
+            3: (14, 14 // 2),
+            4: (12 - 5 * 2, 12 // 2),
+            5: (2 + 7 - 3,),
+            6: (11 - 3,),
+            7: (4 * 4, 4 * 2),
+            8: (2 * 3, 2 * 4, 7),
+        }
+        for number, answers in expected.items():
+            for answer in answers:
+                with self.subTest(item=number, answer=answer):
+                    self.assertRegex(rows[number], rf"\b{answer}\b")
+
+        # All internal Markdown references in this coherent draft must resolve.
+        documents = [
+            unit / "README.md", unit / "practice-learner.md",
+            unit / "practice-teacher.md", *lesson_files,
+            assessment / "form-measure-learner.md",
+            assessment / "form-measure-teacher.md",
+            ROOT / "curriculum/scaffolds/grade-2/geometry.md",
+            ROOT / "curriculum/mathematics/grade-2/course-design.md",
+        ]
+        for path in documents:
+            body = path.read_text(encoding="utf-8")
+            for dest in re.findall(r"\]\(([^)]+)\)", body):
+                if dest.startswith(("https:", "http:", "mailto:")):
+                    continue
+                relative, sep, anchor = dest.partition("#")
+                target = (path.parent / relative).resolve() if relative else path.resolve()
+                with self.subTest(file=path.name, dest=dest):
+                    self.assertTrue(target.is_file(), f"missing {dest} from {path}")
+                    if sep and target.is_file() and target.suffix == ".md":
+                        headings = re.findall(
+                            r"^#{1,6} +(.+)$", target.read_text(encoding="utf-8"), re.M
+                        )
+                        slugs = {
+                            re.sub(r"[^\w -]", "", heading.lower()).replace(" ", "-")
+                            for heading in headings
+                        }
+                        self.assertIn(anchor, slugs, f"missing anchor {dest} in {target}")
+
+
 if __name__ == "__main__":
     unittest.main()
