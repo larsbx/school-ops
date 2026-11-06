@@ -1,6 +1,6 @@
 # Unit 6 — learner practice and entry sheet
 
-**Draft original questions** for the existing `U-MATH-001-06`. The teacher-only [answer sheet](practice-teacher.md) must be distributed separately. **These are fixed instructional examples, not unseen future tests.** Speak, draw, point, sign or use AAC; read-aloud/scribing without supplying operations or reasons is allowed. Where a number line is requested, spacing must represent **equal units**. Tell what the quantities count. Use counters and base-ten rods when helpful. No timer.
+**Draft original questions** for the existing `U-MATH-001-06`. A separate teacher-only answer sheet exists and must not accompany learner exports. **These are fixed instructional examples, not unseen future tests.** Speak, draw, point, sign or use AAC; read-aloud/scribing without supplying operations or reasons is allowed. Where a number line is requested, spacing must represent **equal units**. Tell what the quantities count. Use counters and base-ten rods when helpful. No timer.
 
 ## Prerequisite entry check (learner)
 
