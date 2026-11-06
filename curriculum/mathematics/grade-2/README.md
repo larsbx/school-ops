@@ -79,7 +79,7 @@ not learner results. Many later-unit tasks still need authoring.
 
 ## Proposed unit progression
 
-Units 1–3 have draft lesson records. Unit IDs 4–7 remain reserved for the outline; Unit 3 uses the previously reserved U-MATH-001-03.
+Units 1–3 and 6 have draft teaching records. Units 4 and 5 remain outlines on main pending their separate authoring PR reviews; Unit 7 is still an outline. Unit 6 uses the existing reserved U-MATH-001-06, without adding a new course or outcome.
 Outcome numbers abbreviate `O-MATH-001-NNN`.
 
 | Unit ID | Study | Prerequisites | Outcomes | State |
@@ -89,7 +89,7 @@ Outcome numbers abbreviate `O-MATH-001-NNN`.
 | U-MATH-001-03 | [Equal groups, sharing, and numerical relationships](units/equal-groups-sharing/README.md) | 001, 005 (checked) | 013: grouping, sharing, doubling and halving; **007 not yet assessed** | Four draft lessons and separate original untimed check |
 | U-MATH-001-04 | Geometry: form, magnitude, and measurement | 004, 005; equal-group work from 013 | 008–009, 012 | Outline |
 | U-MATH-001-05 | Astronomy: observations, intervals, and cycles | 002, 008 | 010–011 | Outline |
-| U-MATH-001-06 | Applications: calculations, measures, graphs, and practical choices | 005, 006, 008, 009, 011 | Extend 006–007, 009, 011 | Outline |
+| U-MATH-001-06 | [Applications: calculations, measures, count tables and practical choices](units/practical-applications/README.md) | 005, 006, 008, 009, 011 (each checked; 008/011 may still be pending prior teaching) | Extend 006–007, 009, count/table portion of 011 | Four draft lessons, entry checks and separate reference keys; not ready |
 | U-MATH-001-07 | Synthesis: demonstrate and explain a connected investigation | Relevant earlier outcome evidence | Revisit 001–013 | Outline |
 
 Use practical applications and review throughout. The applications unit brings
@@ -123,4 +123,4 @@ Use the [PV2/PV3 pack](units/place-value/teaching-pack/README.md) for route-spec
 scripts, learner materials, keys, printable copies and bank administration.
 The [dated audit](../../../docs/reviews/2026-10-27-place-value-pack.md) distinguishes
 complete first-unit authoring from local entry, materials, access and scheduling
-decisions. Unit 3 now has four draft lessons and a separate original untimed check; Units 4–7 remain outlines. This does not promote the course or any unit to ready.
+decisions. Unit 3 has four draft lessons and an original check; Unit 6 has four draft practical-application lessons with distinct learner and teacher exemplars. Units 4–5 remain mainline outlines while separate authoring PRs await review, and Unit 7 remains an outline. This does not promote the course or any unit to ready.
