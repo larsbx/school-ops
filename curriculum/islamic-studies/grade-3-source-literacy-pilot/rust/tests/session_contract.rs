@@ -27,8 +27,7 @@ impl Drop for TestDir {
 fn new_session_keeps_private_seed_out_of_learner_surface() {
     let dir = TestDir::new();
     let session_id = "a".repeat(32);
-    let manifest =
-        create_session(&dir.0, &session_id).expect("create a distinct test session");
+    let manifest = create_session(&dir.0, &session_id).expect("create a distinct test session");
     let learner = fs::read_to_string(dir.0.join("learner.md")).unwrap();
     let teacher = fs::read_to_string(dir.0.join("teacher.md")).unwrap();
     assert!(
@@ -66,8 +65,15 @@ fn malformed_or_modified_session_is_rejected_without_rewriting() {
         let mut bytes = fs::read(&path).unwrap();
         bytes.extend_from_slice(b"\nmodified after issue\n");
         fs::write(&path, &bytes).unwrap();
-        assert!(resume_session(&dir.0).is_err(), "accepted modified {victim}");
-        assert_eq!(fs::read(path).unwrap(), bytes, "resume rewrote modified {victim}");
+        assert!(
+            resume_session(&dir.0).is_err(),
+            "accepted modified {victim}"
+        );
+        assert_eq!(
+            fs::read(path).unwrap(),
+            bytes,
+            "resume rewrote modified {victim}"
+        );
     }
 }
 
@@ -103,5 +109,8 @@ fn private_permissions_and_symlinked_key_are_rejected() {
     let copy = dir.0.join("teacher-copy.md");
     fs::write(&copy, original).unwrap();
     symlink(&copy, &key).unwrap();
-    assert!(resume_session(&dir.0).is_err(), "accepted symlinked private key");
+    assert!(
+        resume_session(&dir.0).is_err(),
+        "accepted symlinked private key"
+    );
 }
