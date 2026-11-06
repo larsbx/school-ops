@@ -1,6 +1,6 @@
 # Unit 6 — practical applications: learner reference check
 
-**Draft, fixed and intentionally exposed reference exemplar** for existing `U-MATH-001-06` / `C-MATH-001`. This is not a newly assigned assessment ID or a fresh form. Do **not** circulate the [teacher key](applications-teacher.md) with this learner copy or treat reuse as an unseen assessment. Original school-ops wording. Suitable only after the independently checked 0–199 route and teacher review.
+**Draft, fixed and intentionally exposed reference exemplar** for existing `U-MATH-001-06` / `C-MATH-001`. This is not a newly assigned assessment ID or a fresh form. Do **not** circulate the separate teacher-only key with this learner copy or treat reuse as an unseen assessment. Original school-ops wording. Suitable only after the independently checked 0–199 route and teacher review.
 
 **Administration proposed, not approved:** untimed with breaks; optional planning allowance 20–30 minutes (not a time limit). Blank paper and hundreds/tens/ones or tactile objects; equal-unit number-line marks, read-aloud, scribed/oral/signed/AAC/pointing responses without mathematical prompts. Provide each answer with its **counted unit** and a drawing, model or reason. The examples describe fictional objects/counts, not observed data or genuine purchases.
 
