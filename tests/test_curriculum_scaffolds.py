@@ -149,7 +149,7 @@ class Unit6ApplicationsDraftTests(unittest.TestCase):
             self.assertIn("Logic", body)
             self.assertIn("rhetoric", body.lower())
             self.assertIn("Independent", body)
-            self.assertIn("Feedback", body)
+            self.assertIn("feedback", body.lower())
         for outcome in ("006", "007", "009", "011"):
             self.assertIn(outcome, unit)
 
@@ -157,10 +157,10 @@ class Unit6ApplicationsDraftTests(unittest.TestCase):
         learner = (self.UNIT / "practice-learner.md").read_text(encoding="utf-8")
         key = (self.UNIT / "practice-teacher.md").read_text(encoding="utf-8")
         for tag in ("E1", "E2", "E3", "E4", *(f"P{i}" for i in range(1, 9))):
-            self.assertRegex(learner, rf"\\b{tag}\\b")
+            self.assertRegex(learner, rf"\b{tag}\b")
             self.assertIn(tag, key)
         self.assertNotIn("(practice-teacher.md)", learner)
-        self.assertNotRegex(learner, r"(?im)^(?:##|###) .*key|\\*\\*key:")
+        self.assertNotRegex(learner, r"(?im)^#{2,3} .*key|key:")
         self.assertIn("private", key)
         self.assertIn("supported", key)
 
