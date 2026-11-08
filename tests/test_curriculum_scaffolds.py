@@ -123,5 +123,74 @@ class CurriculumScaffoldTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 module.resume_session(target)
 
+class RamadanPracticeTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from importlib.util import module_from_spec, spec_from_file_location
+
+        path = BASE / "grade-4" / "generate_ramadan_practice.py"
+        spec = spec_from_file_location("grade4_ramadan_practice", path)
+        cls.practice = module_from_spec(spec)
+        spec.loader.exec_module(cls.practice)
+
+    def test_generated_keys_agree_with_learner_plans(self):
+        variants = set()
+        for index in range(128):
+            seed = f"{index:032x}"
+            artifacts = self.practice.build(seed)
+            learner = artifacts["learner.md"].decode("utf-8")
+            teacher = artifacts["teacher.md"].decode("utf-8")
+            with self.subTest(seed=seed):
+                self.assertNotIn(seed, learner)
+                self.assertNotIn("L3: Accept plan", learner)
+                plans = re.findall(r"^Plan ([AB]): (.+)$", learner, re.MULTILINE)
+                self.assertEqual(["A", "B"], [label for label, _ in plans])
+                valid = []
+                for label, description in plans:
+                    access = "step-free entrance" in description
+                    privacy = "anonymous drop box" in description
+                    self.assertIn(
+                        f"L2 plan {label}: access {'met' if access else 'unmet'}, "
+                        f"privacy {'met' if privacy else 'unmet'}.",
+                        teacher,
+                    )
+                    if access and privacy:
+                        valid.append(label)
+                    else:
+                        self.assertNotEqual(access, privacy)
+                        failed_rule = "privacy" if access else "access"
+                self.assertEqual(1, len(valid))
+                self.assertIn(f"L3: Accept plan {valid[0]} or a feasible revision", teacher)
+                variants.add((valid[0], failed_rule))
+        self.assertEqual(
+            {(label, rule) for label in "AB" for rule in ("access", "privacy")},
+            variants,
+        )
+
+    def test_resume_preserves_bytes_and_rejects_each_altered_artifact(self):
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory() as directory:
+            target = Path(directory) / "session"
+            other = Path(directory) / "other"
+            self.practice.new_session(target)
+            self.practice.new_session(other)
+            original = {path.name: path.read_bytes() for path in target.iterdir()}
+            self.assertNotEqual(original["manifest.json"], (other / "manifest.json").read_bytes())
+            self.practice.resume_session(target)
+            with self.assertRaises(FileExistsError):
+                self.practice.new_session(target)
+            self.assertEqual(original, {path.name: path.read_bytes() for path in target.iterdir()})
+            for name, data in original.items():
+                with self.subTest(artifact=name):
+                    path = target / name
+                    path.write_bytes(data + b" ")
+                    with self.assertRaises(ValueError):
+                        self.practice.resume_session(target)
+                    self.assertEqual(data + b" ", path.read_bytes())
+                    path.write_bytes(data)
+            self.practice.resume_session(target)
+
+
 if __name__ == "__main__":
     unittest.main()
