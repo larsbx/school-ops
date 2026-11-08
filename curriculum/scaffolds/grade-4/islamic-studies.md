@@ -84,6 +84,36 @@ Use a fresh fictional Ramadan drive notice that requires step-free access and al
 - Before release, a qualified reviewer must verify the exact passage locator, Arabic text, translation attribution and permissions, fiqh boundaries and age suitability. A curriculum reviewer must check the entry probes, accessibility, item/key agreement and available teaching time. Rehearse the rubric using one complete response and one response missing each objective. Each omission must be detected independently.
 - Future digital forms should generate fresh fictional scenarios and teacher keys from the stated constraints, with both options and the correct response position varying. A resumed session must replay its saved form and key. These are acceptance criteria for later tooling.
 
+### Draft session generator
+
+The [Python prototype](generate_ramadan_practice.py) generates fictional learner cards and a separate teacher key. From the repository root, run:
+
+```sh
+python curriculum/scaffolds/grade-4/generate_ramadan_practice.py new --output /tmp/grade4-session
+python curriculum/scaffolds/grade-4/generate_ramadan_practice.py resume --output /tmp/grade4-session
+```
+
+Choose a fresh private directory for each new session. Resume verifies the saved files byte for byte without rewriting them. Share only the learner sheet. The manifest holds the private seed. The finite scenario pool can produce the same scenario and option order in separate sessions. Qualified source review and classroom approval still apply.
+
+### Parallel form for reassessment
+
+Use this fictional form as a teacher rehearsal and as a blueprint for later generated forms. Use the same reviewed source card and access supports as in the first form. Give feedback on the first attempt before administering a fresh form independently.
+
+**Learner cards.** A Ramadan book drive notice requires a step-free drop-off and says donor names must stay private. Plan A sets out an anonymous drop box at the step-free entrance. Plan B sets out an anonymous drop box on a floor reachable only by stairs. A learner writes, “The book drive notice tells us which pupils must fast.” The teacher supplies the approved reading card separately.
+
+**Prompt.** Name what kind of evidence each card supplies and one limit of each. State one idea supported by the reading. Compare both plans against both notice rules. Say whether the learner's claim is supported. Recommend a plan or revision, explain your reason using the notice, and say where you could take an individual fasting question privately.
+
+**Teacher key.** Apply the same L1 criteria as on the first form. For L2, both plans protect donor names and only A meets the access rule. The notice supplies no evidence about who must fast. For L3, accept A or a feasible revision that moves B to a step-free location while retaining anonymity. Require a relevant notice detail, an explanation that connects it to the recommendation, and a private referral to a qualified religious educator for the religious question.
+
+| Rehearsal response | Expected scoring |
+| --- | --- |
+| Complete response with correct source labels, limits and a grounded reading idea, both comparisons, the unsupported claim, and a justified recommendation with private referral | L1, L2 and L3 demonstrated |
+| Complete except for the idea supported by the reading | L1 evidence missing |
+| Complete except for comparing one of the two options against the access rule | L2 evidence missing |
+| Complete except for the private referral | L3 evidence missing |
+
+Both forms require the same evidence and use the same supports. The unmet requirement switches from privacy to access, and the compliant option switches from B to A. For generated forms, derive the key from each plan's access and privacy properties and require exactly one compliant option. Preserve an accepted revision as a separate response path under L3. Save the form and its derived key together for exact session replay.
+
 ## Gates before course registration
 
 Agree the learner audience and check entry skills; select the teaching approach and qualified scholarly reviewers; verify cited texts, hadith authenticity claims and juristic differences; agree accessibility, materials and teaching time. Only then assign course and outcome IDs and author real units, lessons and assessments for review under the [curriculum model](../../../docs/curriculum-model.md). Store individual learner records privately.
