@@ -28,44 +28,38 @@ jobs:
         os: [ubuntu-24.04, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy
       - name: Compile and exercise the source-safe draft generator
-        run: cargo test --manifest-path curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/Cargo.toml --all-targets
-      - name: Print deterministic dependency resolution for review
-        if: matrix.os == 'ubuntu-24.04'
-        shell: bash
-        run: |
-          echo '---BEGIN REVIEWED CARGO LOCKFILE---'
-          cat curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/Cargo.lock
-          echo '---END REVIEWED CARGO LOCKFILE---'
+        run: cargo test --locked --manifest-path curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/Cargo.toml --all-targets
+      - name: Build the locked release binary
+        run: cargo build --locked --release --manifest-path curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/Cargo.toml
       - name: Rust formatting
-        if: matrix.os == 'ubuntu-24.04'
         run: cargo fmt --manifest-path curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/Cargo.toml --all -- --check
       - name: Rust lint and type checks
-        if: matrix.os == 'ubuntu-24.04'
-        run: cargo clippy --manifest-path curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/Cargo.toml --all-targets -- -D warnings
-      - name: End-to-end new and read-only resume (Ubuntu)
-        if: matrix.os == 'ubuntu-24.04'
+        run: cargo clippy --locked --manifest-path curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/Cargo.toml --all-targets -- -D warnings
+      - name: End-to-end new and read-only resume
         shell: bash
         run: |
           set -euo pipefail
           manifest=curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/Cargo.toml
           output="$RUNNER_TEMP/g3-is-rust-session"
-          cargo run --quiet --manifest-path "$manifest" -- new --output "$output"
+          cargo run --locked --release --quiet --manifest-path "$manifest" -- new --output "$output"
           test -s "$output/learner.md"
           test -s "$output/teacher.md"
           test -s "$output/manifest.json"
-          before="$(sha256sum "$output/learner.md" "$output/teacher.md" "$output/manifest.json")"
-          cargo run --quiet --manifest-path "$manifest" -- resume --output "$output"
-          test "$before" = "$(sha256sum "$output/learner.md" "$output/teacher.md" "$output/manifest.json")"
-          if cargo run --quiet --manifest-path "$manifest" -- new --output "$output"; then
+          before="$(git hash-object --no-filters "$output/learner.md" "$output/teacher.md" "$output/manifest.json")"
+          cargo run --locked --release --quiet --manifest-path "$manifest" -- resume --output "$output"
+          test "$before" = "$(git hash-object --no-filters "$output/learner.md" "$output/teacher.md" "$output/manifest.json")"
+          if cargo run --locked --release --quiet --manifest-path "$manifest" -- new --output "$output"; then
             echo "ERROR: new form overwrote existing output" >&2
             exit 1
           fi
           printf 'tampered\n' >> "$output/learner.md"
-          if cargo run --quiet --manifest-path "$manifest" -- resume --output "$output"; then
+          if cargo run --locked --release --quiet --manifest-path "$manifest" -- resume --output "$output"; then
             echo "ERROR: tampering was not rejected" >&2
             exit 1
           fi
