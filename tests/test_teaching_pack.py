@@ -145,7 +145,7 @@ class TeachingPackTests(unittest.TestCase):
         for prefix, count in (('P', 6), ('X', 4)):
             for number in range(1, count + 1):
                 tag = f'{prefix}{number}'
-                self.assertEqual(1, practice.count(f'**{tag} ('))
+                self.assertEqual(1, len(re.findall(rf'\*\*{tag}(?: \(|\.)', practice)))
                 self.assertEqual(1, len(re.findall(
                     rf'^\| {tag} \|', guide, re.M)))
 
