@@ -10,4 +10,4 @@
 
 **E4 — equal partitions.** Draw, arrange or describe an **8-cell rectangle** with **four equally sized parts**. How many cells in each part? Explain why making parts with 1, 2, 2 and 3 cells would not satisfy the instruction.
 
-Do not include religious examples, private household details or individual responses in public repository changes. The adult uses a [private teacher key](entry-teacher.md), not linked from this learner sheet.
+Do not include religious examples, private household details or individual responses in public repository changes. The adult retains a private teacher key separately. This learner sheet provides neither model answers nor a link to that key.
