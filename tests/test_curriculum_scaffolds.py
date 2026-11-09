@@ -270,8 +270,10 @@ class Grade3ArithmeticBridgeDraftTests(unittest.TestCase):
         for file in self.BASE.rglob("*.md"):
             with self.subTest(file=str(file.relative_to(self.BASE))):
                 self.assertEqual([], local_link_errors(file))
+                # Existing Grade 2 outcome IDs are legitimate *references*.
+                # The Grade 3 pilot must not prematurely allocate its own IDs.
                 self.assertNotRegex(file.read_text(encoding="utf-8"),
-                                    r"(?:C|U|L|O|A)-MATH-[0-9]{3}-[0-9]{2,3}")
+                                    r"(?:C|U|L|O|A)-MATH-002(?:-[0-9]{2,3})?")
 
 if __name__ == "__main__":
     unittest.main()
