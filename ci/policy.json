@@ -13,7 +13,8 @@
       "paths": [
         "curriculum/**",
         "planning/**",
-        "tests/test_curriculum_scaffolds.py"
+        "tests/test_curriculum_scaffolds.py",
+        "tests/test_grade3_reasoning.py"
       ],
       "depends_on": []
     },
@@ -23,7 +24,8 @@
         "assessments/**",
         "exercise_bank/**",
         "tests/test_bank.py",
-        "tests/test_unit2_sessions.py"
+        "tests/test_unit2_sessions.py",
+        "tests/test_unit3_sessions.py"
       ],
       "depends_on": [
         "curriculum"
@@ -153,6 +155,28 @@
       ],
       "directory": "tests",
       "pattern": "test_unit2_sessions.py"
+    },
+    "unit3-authored": {
+      "components": [
+        "curriculum",
+        "bank"
+      ],
+      "directory": "tests",
+      "pattern": "test_unit3_authored.py"
+    },
+    "unit3-sessions": {
+      "components": [
+        "bank"
+      ],
+      "directory": "tests",
+      "pattern": "test_unit3_sessions.py"
+    },
+    "reasoning-grade3": {
+      "components": [
+        "curriculum"
+      ],
+      "directory": "tests",
+      "pattern": "test_grade3_reasoning.py"
     }
   }
 }
