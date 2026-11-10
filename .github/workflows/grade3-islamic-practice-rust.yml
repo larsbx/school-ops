@@ -1,0 +1,65 @@
+name: Grade 3 Islamic practice (Rust)
+
+# Advisory change-scoped acceptance; do not configure this path-filtered check as
+# a required status: GitHub can leave skipped checks pending on unrelated PRs.
+on:
+  pull_request:
+    paths:
+      - 'curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/**'
+      - '.github/workflows/grade3-islamic-practice-rust.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/**'
+      - '.github/workflows/grade3-islamic-practice-rust.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rust-practice:
+    name: Rust practice / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - name: Compile and exercise the source-safe draft generator
+        run: cargo test --locked --manifest-path curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/Cargo.toml --all-targets
+      - name: Build the locked release binary
+        run: cargo build --locked --release --manifest-path curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/Cargo.toml
+      - name: Rust formatting
+        run: cargo fmt --manifest-path curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/Cargo.toml --all -- --check
+      - name: Rust lint and type checks
+        run: cargo clippy --locked --manifest-path curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/Cargo.toml --all-targets -- -D warnings
+      - name: End-to-end new and read-only resume
+        shell: bash
+        run: |
+          set -euo pipefail
+          manifest=curriculum/islamic-studies/grade-3-source-literacy-pilot/rust/Cargo.toml
+          output="$RUNNER_TEMP/g3-is-rust-session"
+          cargo run --locked --release --quiet --manifest-path "$manifest" -- new --output "$output"
+          test -s "$output/learner.md"
+          test -s "$output/teacher.md"
+          test -s "$output/manifest.json"
+          before="$(git hash-object --no-filters "$output/learner.md" "$output/teacher.md" "$output/manifest.json")"
+          cargo run --locked --release --quiet --manifest-path "$manifest" -- resume --output "$output"
+          test "$before" = "$(git hash-object --no-filters "$output/learner.md" "$output/teacher.md" "$output/manifest.json")"
+          if cargo run --locked --release --quiet --manifest-path "$manifest" -- new --output "$output"; then
+            echo "ERROR: new form overwrote existing output" >&2
+            exit 1
+          fi
+          printf 'tampered\n' >> "$output/learner.md"
+          if cargo run --locked --release --quiet --manifest-path "$manifest" -- resume --output "$output"; then
+            echo "ERROR: tampering was not rejected" >&2
+            exit 1
+          fi

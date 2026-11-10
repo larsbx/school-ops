@@ -123,5 +123,157 @@ class CurriculumScaffoldTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 module.resume_session(target)
 
+class RamadanPracticeTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from importlib.util import module_from_spec, spec_from_file_location
+
+        path = BASE / "grade-4" / "generate_ramadan_practice.py"
+        spec = spec_from_file_location("grade4_ramadan_practice", path)
+        cls.practice = module_from_spec(spec)
+        spec.loader.exec_module(cls.practice)
+
+    def test_generated_keys_agree_with_learner_plans(self):
+        variants = set()
+        for index in range(128):
+            seed = f"{index:032x}"
+            artifacts = self.practice.build(seed)
+            learner = artifacts["learner.md"].decode("utf-8")
+            teacher = artifacts["teacher.md"].decode("utf-8")
+            with self.subTest(seed=seed):
+                self.assertNotIn(seed, learner)
+                self.assertNotIn("L3: Accept plan", learner)
+                plans = re.findall(r"^Plan ([AB]): (.+)$", learner, re.MULTILINE)
+                self.assertEqual(["A", "B"], [label for label, _ in plans])
+                valid = []
+                for label, description in plans:
+                    access = "step-free entrance" in description
+                    privacy = "anonymous drop box" in description
+                    self.assertIn(
+                        f"L2 plan {label}: access {'met' if access else 'unmet'}, "
+                        f"privacy {'met' if privacy else 'unmet'}.",
+                        teacher,
+                    )
+                    if access and privacy:
+                        valid.append(label)
+                    else:
+                        self.assertNotEqual(access, privacy)
+                        failed_rule = "privacy" if access else "access"
+                self.assertEqual(1, len(valid))
+                self.assertIn(f"L3: Accept plan {valid[0]} or a feasible revision", teacher)
+                variants.add((valid[0], failed_rule))
+        self.assertEqual(
+            {(label, rule) for label in "AB" for rule in ("access", "privacy")},
+            variants,
+        )
+
+    def test_resume_preserves_bytes_and_rejects_each_altered_artifact(self):
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory() as directory:
+            target = Path(directory) / "session"
+            other = Path(directory) / "other"
+            self.practice.new_session(target)
+            self.practice.new_session(other)
+            original = {path.name: path.read_bytes() for path in target.iterdir()}
+            self.assertNotEqual(original["manifest.json"], (other / "manifest.json").read_bytes())
+            self.practice.resume_session(target)
+            with self.assertRaises(FileExistsError):
+                self.practice.new_session(target)
+            self.assertEqual(original, {path.name: path.read_bytes() for path in target.iterdir()})
+            for name, data in original.items():
+                with self.subTest(artifact=name):
+                    path = target / name
+                    path.write_bytes(data + b" ")
+                    with self.assertRaises(ValueError):
+                        self.practice.resume_session(target)
+                    self.assertEqual(data + b" ", path.read_bytes())
+                    path.write_bytes(data)
+            self.practice.resume_session(target)
+
+
+
+
+class Grade3ArithmeticBridgeDraftTests(unittest.TestCase):
+    """Check the original unregistered Grade 3 pilot without claiming pedagogy."""
+
+    BASE = ROOT / "curriculum/mathematics/grade-3-bridge-pilot"
+
+    def test_scope_status_and_separate_reference_keys(self):
+        course_index = (ROOT / "curriculum/README.md").read_text(encoding="utf-8")
+        bridge = (self.BASE / "README.md").read_text(encoding="utf-8")
+        scaffold = (BASE / "grade-3/mathematics.md").read_text(encoding="utf-8")
+        self.assertNotIn("grade-3-bridge-pilot", course_index)  # still unregistered
+        self.assertIn("not ready", bridge)
+        self.assertIn("unassigned", bridge)
+        self.assertIn("unregistered", scaffold)
+        self.assertIn("grade-3-bridge-pilot/README.md", scaffold)
+        self.assertIn("Music is excluded", bridge)
+        self.assertIn("qualified religious-source", bridge)
+        for target in ("G3M-P1", "G3M-P2", "G3M-P3"):
+            self.assertIn(target, bridge)
+        learner = (self.BASE / "draft-assessments/reference-learner.md").read_text(encoding="utf-8")
+        teacher = (self.BASE / "draft-assessments/reference-teacher.md").read_text(encoding="utf-8")
+        for i in range(1, 10):
+            self.assertEqual(1, learner.count(f"**S{i}.**"))
+            self.assertEqual(1, teacher.count(f"| S{i} |"))
+        self.assertNotRegex(learner, r"\]\([^)]*(?:teacher|README\.md)")
+        self.assertNotIn("## Provisional criteria", learner)
+        self.assertIn("fixed, publicly exposed", learner)
+        self.assertIn("not ready", teacher)
+        for i in range(1, 5):
+            self.assertIn(f"**E{i} ", (self.BASE / "entry-learner.md").read_text(encoding="utf-8"))
+            self.assertIn(f"| E{i} |", (self.BASE / "entry-teacher.md").read_text(encoding="utf-8"))
+
+    def test_three_trivium_lessons_with_25_minute_authoring_blocks(self):
+        lessons = sorted((self.BASE / "lessons").glob("*.md"))
+        self.assertEqual(["01-four-place-number.md", "02-arrays-and-parts.md",
+                          "03-equal-parts.md"], [p.name for p in lessons])
+        for i, path in enumerate(lessons, 1):
+            body = path.read_text(encoding="utf-8")
+            self.assertIn("DRAFT", body)
+            self.assertIn("Grammar", body)
+            self.assertIn("Logic", body)
+            self.assertIn("Rhetoric", body)
+            self.assertIn(f"X{i}", body)
+            mins = [int(n) for n in re.findall(r"^\| [^|]+ \| (\d+) \|$", body, re.M)]
+            self.assertEqual(25, sum(mins), path.name)
+        teacher = (self.BASE / "draft-assessments/reference-teacher.md").read_text(encoding="utf-8")
+        for i in range(1, 4):
+            self.assertIn(f"X{i}", teacher)
+
+    def test_exposed_arithmetic_and_local_markdown_references(self):
+        from test_islamic_studies_prototype import local_link_errors
+        teacher = (self.BASE / "draft-assessments/reference-teacher.md").read_text(encoding="utf-8")
+        expected = {
+            "S1": (5006, 5 * 1000 + 0 * 100 + 0 * 10 + 6),
+            "S2": (2480, 2804),
+            "S3": (3099, 3909),
+            "S4": (4 * 8, 4 * 3 + 4 * 5),
+            "S5": (6 * 3, 6 * 1 + 6 * 2),
+            "S6": (4 * (2 + 3), 4 * 2 + 4 * 3),
+            "S7": (12 // 2, 12 // 4),
+            "S8": (4 * 4 // 4, 4),
+            "S9": (8 // 2, 8 // 4),
+        }
+        for tag, (left, right) in expected.items():
+            with self.subTest(tag=tag):
+                if tag in ("S2", "S3", "S7", "S9"):
+                    self.assertGreater(right, left if tag in ("S2", "S3") else 0)
+                else:
+                    self.assertEqual(left, right)
+                self.assertIn(f"| {tag} |", teacher)
+        for expected_token in ("5,006", "2,480 < 2,804", "3,099 < 3,909",
+                               "12 + 20 = 32", "6 + 12 = 18", "8 + 12 = 20",
+                               "6 squares", "4 squares", "4 squares > 2 squares"):
+            self.assertIn(expected_token, teacher)
+        for file in self.BASE.rglob("*.md"):
+            with self.subTest(file=str(file.relative_to(self.BASE))):
+                self.assertEqual([], local_link_errors(file))
+                # Existing Grade 2 outcome IDs are legitimate *references*.
+                # The Grade 3 pilot must not prematurely allocate its own IDs.
+                self.assertNotRegex(file.read_text(encoding="utf-8"),
+                                    r"(?:C|U|L|O|A)-MATH-002(?:-[0-9]{2,3})?")
+
 if __name__ == "__main__":
     unittest.main()

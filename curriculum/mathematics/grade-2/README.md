@@ -59,7 +59,7 @@ begin in the first unit.
 ## Course outcomes
 
 Outcome IDs are defined here once. The evidence plans include proposed criteria,
-not learner results. Later-unit tasks still need authoring.
+not learner results. Many later-unit tasks still need authoring.
 
 | Outcome ID | Mathematical goal | Art | Evidence design |
 | --- | --- | --- | --- |
@@ -75,18 +75,18 @@ not learner results. Later-unit tasks still need authoring.
 | O-MATH-001-010 | Compare dated sky observations and intervals; distinguish an observed cycle from a calendar convention | Astronomy | [Later-unit plan](../../../assessments/C-MATH-001/course-evidence-plan.md) |
 | O-MATH-001-011 | Organize counts or observations in tables and diagrams, and distinguish an observed pattern from a prediction | Astronomy and arithmetic | [Later-unit plan](../../../assessments/C-MATH-001/course-evidence-plan.md) |
 | O-MATH-001-012 | Build and describe shapes, equal-square arrangements, and equal shares; justify the relation between part and whole | Geometry | [Later-unit plan](../../../assessments/C-MATH-001/course-evidence-plan.md) |
-| O-MATH-001-013 | Investigate parity, equal groups, equal sharing, doubling, and halving with concrete quantities | Arithmetic; preparation for proportion | [Later-unit plan](../../../assessments/C-MATH-001/course-evidence-plan.md) |
+| O-MATH-001-013 | Investigate parity, equal groups, equal sharing, doubling, and halving with concrete quantities | Arithmetic; preparation for proportion | [Unit 2 parity/pairing](../../../assessments/C-MATH-001/composition-difference-parity-check.md) + [Unit 3 equal groups/sharing/double/halve](../../../assessments/C-MATH-001/equal-groups-sharing-teacher.md); independently review every component |
 
 ## Proposed unit progression
 
-Units 1 and 2 have draft lesson records. Unit IDs 3–7 are reserved for this outline.
+Units 1–3 have draft lesson records. Unit IDs 4–7 remain reserved for the outline; Unit 3 uses the previously reserved U-MATH-001-03.
 Outcome numbers abbreviate `O-MATH-001-NNN`.
 
 | Unit ID | Study | Prerequisites | Outcomes | State |
 | --- | --- | --- | --- | --- |
 | U-MATH-001-01 | [Units, number, and place value](units/place-value/README.md) | Entry work on counting, names, and tens/ones | 001–004 | Six lessons drafted |
 | U-MATH-001-02 | [Composition, difference, and parity](units/composition-difference-parity/README.md) | Counting units; 001 and 004 | 005–006; pairing component of 013 | Four lessons drafted |
-| U-MATH-001-03 | Equal groups, sharing, and numerical relationships | 001, 005 | 013; extend 007 | Outline |
+| U-MATH-001-03 | [Equal groups, sharing, and numerical relationships](units/equal-groups-sharing/README.md) | 001, 005 (checked) | 013: grouping, sharing, doubling and halving; **007 not yet assessed** | Four draft lessons and separate original untimed check |
 | U-MATH-001-04 | Geometry: form, magnitude, and measurement | 004, 005; equal-group work from 013 | 008–009, 012 | Outline |
 | U-MATH-001-05 | Astronomy: observations, intervals, and cycles | 002, 008 | 010–011 | Outline |
 | U-MATH-001-06 | Applications: calculations, measures, graphs, and practical choices | 005, 006, 008, 009, 011 | Extend 006–007, 009, 011 | Outline |
@@ -123,4 +123,4 @@ Use the [PV2/PV3 pack](units/place-value/teaching-pack/README.md) for route-spec
 scripts, learner materials, keys, printable copies and bank administration.
 The [dated audit](../../../docs/reviews/2026-10-27-place-value-pack.md) distinguishes
 complete first-unit authoring from local entry, materials, access and scheduling
-decisions. Units 3–7 remain outlines; this does not promote the course to ready.
+decisions. Unit 3 now has four draft lessons and a separate original untimed check; Units 4–7 remain outlines. This does not promote the course or any unit to ready.
