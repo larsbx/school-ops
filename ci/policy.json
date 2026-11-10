@@ -13,7 +13,8 @@
       "paths": [
         "curriculum/**",
         "planning/**",
-        "tests/test_curriculum_scaffolds.py"
+        "tests/test_curriculum_scaffolds.py",
+        "tests/test_grade3_reasoning.py"
       ],
       "depends_on": []
     },
@@ -169,6 +170,13 @@
       ],
       "directory": "tests",
       "pattern": "test_unit3_sessions.py"
+    },
+    "reasoning-grade3": {
+      "components": [
+        "curriculum"
+      ],
+      "directory": "tests",
+      "pattern": "test_grade3_reasoning.py"
     }
   }
 }
