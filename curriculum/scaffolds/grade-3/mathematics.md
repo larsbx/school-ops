@@ -2,7 +2,7 @@
 
 - Record kind: **planning scaffold**, not a course, unit, lesson or assessment
 - Course ID and outcome IDs: **unassigned**; do not reserve before scope approval
-- Teaching status: **not ready**; no lesson or assessment is claimed as authored
+- Teaching status: **not ready**; this planning record registers no lessons or assessments; a separate **unregistered authored draft pilot** is linked below
 - Intended audience: Grade 3 (skills must be checked)
 - Primary study: Arithmetic
 - Session length, frequency, dates and access: **not selected**
@@ -22,11 +22,15 @@ Ask the learner to demonstrate **explain equal groups and sharing** from a prior
 
 The ordering and difficulty are proposals, not grade-based prerequisite claims. Real outcomes, prerequisite dependencies, tasks and success criteria must be authored after checking entry work.
 
+## Authored but unregistered arithmetic bridge (November 9, 2026)
+
+The [Grade 3 arithmetic bridge prototype](../../mathematics/grade-3-bridge-pilot/README.md) now contains **three original 25-minute draft lessons**, a [four-task entry check](../../mathematics/grade-3-bridge-pilot/entry-learner.md) with [teacher key](../../mathematics/grade-3-bridge-pilot/entry-teacher.md), and a [nine-task exposed reference form](../../mathematics/grade-3-bridge-pilot/draft-assessments/reference-learner.md) with [complete separate teacher key](../../mathematics/grade-3-bridge-pilot/draft-assessments/reference-teacher.md). It develops thousands including zero places, split arrays and same-whole equal partitions. The pilot's local labels `G3M-P1`–`G3M-P3` **are not canonical IDs**, a registered course or teaching-ready work; no learner results are claimed. This authoring deliberately does not duplicate the existing Grade 2 course or unregistered Islamic studies prototypes.
+
 ## Proposed culminating performance
 
 **Candidate task:** Use an array and an equal-share diagram to defend a count.
 
-**Assessment gap:** Specify actual tasks, administration conditions, supports, teacher key or model responses, and threshold criteria. Proposed dimensions: accurate representation and naming; justified reason or counterexample; and an explanation another learner could check. These are **not** assessment results.
+**Assessment gap:** The separate pilot now supplies authored *fixed public exemplars*, response conditions and keys; an independently administered fresh form, reviewer-approved criteria, delivery decisions and evidence of actual prerequisites are **still missing**. Proposed dimensions: accurate representation and naming; justified reason or counterexample; and an explanation another learner could check. These are **not** assessment results.
 
 ## Trivium in this subject
 
