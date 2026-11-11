@@ -15,6 +15,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+import zipfile
 
 ROOT = Path(__file__).resolve().parent
 APP = "SchoolOps-YouTube-Guard-Setup"
@@ -33,10 +34,11 @@ def build_command(python, scratch, system=None):
     system = platform.system() if system is None else system
     if system not in SUPPORTED:
         raise ValueError(f"Unsupported native packaging platform: {system}")
-    flags = ["--onedir"] if system == "Darwin" else ["--onefile"]
     return [
         str(python), "-m", "PyInstaller", "--noconfirm", "--clean", "--windowed",
-        *flags, "--name", APP,
+        # Policy actions can be explicitly elevated. One-file extraction to a
+        # temporary directory must not become a privileged executable source.
+        "--onedir", "--name", APP,
         "--distpath", str(scratch / "dist"),
         "--workpath", str(scratch / "work"),
         "--specpath", str(scratch / "spec"),
@@ -49,11 +51,11 @@ def packaged_executable(scratch, system=None):
     system = platform.system() if system is None else system
     dist = scratch / "dist"
     if system == "Windows":
-        return dist / (APP + ".exe")
+        return dist / APP / (APP + ".exe")
     if system == "Darwin":
         return dist / (APP + ".app") / "Contents" / "MacOS" / APP
     if system == "Linux":
-        return dist / APP
+        return dist / APP / APP
     raise ValueError("Unsupported platform")
 
 
@@ -87,12 +89,16 @@ def package(output):
         out = scratch / "output"
         out.mkdir()
         if system == "Windows":
-            archive = out / (APP + "-windows-unsigned.exe")
-            shutil.copy2(executable, archive)
+            archive = out / (APP + "-windows-unsigned.zip")
+            source = scratch / "dist" / APP
+            with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as zipped:
+                for item in sorted(source.rglob("*")):
+                    if item.is_file():
+                        zipped.write(item, item.relative_to(source.parent).as_posix())
         else:
             archive = out / (APP + "-" + SUPPORTED[system] + "-unsigned.tar.gz")
             source = (scratch / "dist" / (APP + ".app") if system == "Darwin"
-                      else executable)
+                      else scratch / "dist" / APP)
             with tarfile.open(archive, "w:gz") as tar:
                 tar.add(source, arcname=source.name)
 
@@ -131,6 +137,17 @@ def package(output):
         )
         (out / "SHA256SUMS.txt").write_text(
             metadata["archiveSha256"] + "  " + archive.name + "\n", encoding="utf-8"
+        )
+        (out / "START_HERE.txt").write_text(
+            "SchoolOps Chrome Setup — unsigned candidate\n\n"
+            "Extract the complete archive; keep the app and its support files together.\n"
+            "Launch SchoolOps-YouTube-Guard-Setup (the .exe on Windows or .app on macOS).\n"
+            "Prepare your websites, publish the generated extension.zip, then reopen\n"
+            "that bundle's setup.json to create and apply the enterprise policy.\n"
+            "The setup app requests administrator access only for an explicit policy action.\n"
+            "Chrome installation and website behavior require on-device checks.\n"
+            "Use your approved software-distribution process; do not bypass OS security prompts.\n",
+            encoding="utf-8",
         )
         os.rename(out, output)
     finally:
