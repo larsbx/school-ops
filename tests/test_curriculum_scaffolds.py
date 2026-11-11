@@ -123,6 +123,51 @@ class CurriculumScaffoldTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 module.resume_session(target)
 
+
+    def test_grade3_geometry_exposed_reference_math_and_links(self):
+        """Check supplied tile-count and edge-count controls and link custody."""
+        pilot = ROOT / "curriculum" / "geometry" / "grade-3-tiling-pilot"
+        examples = (
+            (("###", "###"), 6, 10),
+            (("####",), 4, 10),
+            (("##.", "###"), 5, 10),
+            (("######",), 6, 14),
+            (("###", "###", "###"), 9, 12),
+        )
+        for rows, area, boundary in examples:
+            filled = {(x, y) for y, row in enumerate(rows) for x, value in enumerate(row) if value == "#"}
+            perimeter = sum(
+                (x + dx, y + dy) not in filled
+                for x, y in filled
+                for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))
+            )
+            with self.subTest(rows=rows):
+                self.assertEqual(area, len(filled))
+                self.assertEqual(boundary, perimeter)
+        key = (pilot / "draft-assessments" / "reference-teacher.md").read_text(encoding="utf-8")
+        for label in ("R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10"):
+            self.assertIn(label, key)
+        for token in ("6 square units", "4 square units", "5 square units", "9 square units",
+                      "10 length units", "12 length units", "14 length units", "6 length units"):
+            self.assertIn(token, key)
+        for file in pilot.rglob("*.md"):
+            body = file.read_text(encoding="utf-8")
+            with self.subTest(file=file.relative_to(ROOT)):
+                self.assertNotRegex(body, r"(?:C|U|L|O|A)-GEO-[0-9]{3}")
+                for dest in re.findall(r"\\]\\(([^)]+)\\)", body):
+                    if dest.startswith(("https:", "http:", "mailto:", "#")):
+                        continue
+                    target = (file.parent / dest.split("#", 1)[0]).resolve()
+                    self.assertTrue(target.is_file(), f"bad pilot link: {file} -> {dest}")
+        for file in ("entry-learner.md", "guided-learner.md",
+                     "draft-assessments/reference-learner.md"):
+            learner = (pilot / file).read_text(encoding="utf-8")
+            self.assertNotIn("entry-teacher.md", learner)
+            self.assertNotIn("guided-teacher.md", learner)
+            self.assertNotIn("reference-teacher.md", learner)
+        self.assertIn("grade-3-tiling-pilot/README.md",
+                      (BASE / "grade-3" / "geometry.md").read_text(encoding="utf-8"))
+
 class RamadanPracticeTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
