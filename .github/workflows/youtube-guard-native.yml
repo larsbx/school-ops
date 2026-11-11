@@ -33,7 +33,13 @@ jobs:
         os: [windows-2025, macos-15, ubuntu-24.04]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
+    env:
+      # The repository and generated fixtures use UTF-8 on every platform.
+      PYTHONUTF8: '1'
     steps:
+      - name: Preserve committed fixture bytes on checkout
+        # Hash checks must see Git's LF bytes, including on Windows runners.
+        run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}

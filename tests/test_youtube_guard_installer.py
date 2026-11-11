@@ -293,10 +293,13 @@ class InstallerCoreTests(unittest.TestCase):
                     target.symlink_to(reference, target_is_directory=True)
                 except (OSError, NotImplementedError) as exc:
                     self.skipTest(f"Directory symlinks unavailable on this runner: {exc}")
+                # Windows readlink() may expose the extended-length \\?\ prefix.
+                # Assert the stored link is unchanged, including dangling links.
+                original_link = target.readlink()
                 with self.subTest(reference=reference), self.assertRaises(FileExistsError):
                     core.export_bundle(settings(), target)
                 self.assertTrue(target.is_symlink())
-                self.assertEqual(target.readlink(), reference)
+                self.assertEqual(target.readlink(), original_link)
             self.assertEqual(marker.read_bytes(), b"existing user content")
             self.assertEqual(set(unrelated.iterdir()), {marker})
             self.assertFalse(missing.exists())

@@ -3,6 +3,7 @@ import argparse
 import json
 import os
 import secrets
+import sys
 import tempfile
 from pathlib import Path
 
@@ -147,7 +148,8 @@ def main():
             work(args.directory)
             return
         if args.command == 'resume':
-            print(render(load_session(args.directory), args.teacher), end='')
+            # Match saved UTF-8/LF sheets even when stdout uses Windows text mode.
+            sys.stdout.buffer.write(render(load_session(args.directory), args.teacher).encode('utf-8'))
             return
         form = generate(args.activity, args.limit, secrets.token_hex(16))
         args.directory.mkdir(mode=0o700, exist_ok=False)
