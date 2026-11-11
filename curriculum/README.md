@@ -34,3 +34,7 @@ The [K–12 class × subject scaffold](scaffolds/README.md) contains 13 class ma
 An [unregistered Grade 2 Islamic studies course prototype](islamic-studies/grade-2-prototype/README.md) contains original four-lesson teaching materials, source cards and actual draft assessments with keys. It is **not** a registered course or a teaching-ready resource; the existing course register above remains unchanged pending scope agreement and qualified source review.
 
 A separate [unregistered Grade 3 Islamic studies source-literacy pilot](islamic-studies/grade-3-source-literacy-pilot/README.md) now authors the first two scaffold episodes (P1/P2) with original source metadata, lessons, a neutral entry check and independently keyed draft unit tasks. **No new canonical course has been registered** and qualified religious/age/translation reviews remain open.
+
+## Factorio practice pilot
+
+The [draft From ore to plate pilot](pilots/factorio/README.md) uses the Learning Lab mod for one-to-one counting and process vocabulary. Its offline receipt can be inspected locally for staff practice review.
