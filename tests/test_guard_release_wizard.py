@@ -74,6 +74,24 @@ class ReleaseWizardTests(unittest.TestCase):
             frozen = wizard.release_command("verify", folder)
             self.assertEqual(frozen[1:], ["--release", "verify", str(folder)])
 
+    def test_windows_copied_command_is_literal_powershell_with_call_operator(self):
+        arguments = [
+            r"C:\Program Files\SchoolOps & Tools\Setup's app.exe", "--release", "--report",
+            r"C:\School & Work\$(Get-Item secrets)\report's file.json", "sign",
+            r"C:\O'Brien school\release & files", "--key",
+            r"C:\Keys & records\signer's $(Do-Not-Run).pem",
+        ]
+        expected = (
+            r"& 'C:\Program Files\SchoolOps & Tools\Setup''s app.exe' '--release' '--report' "
+            r"'C:\School & Work\$(Get-Item secrets)\report''s file.json' 'sign' "
+            r"'C:\O''Brien school\release & files' '--key' "
+            r"'C:\Keys & records\signer''s $(Do-Not-Run).pem'"
+        )
+        with patch.object(wizard.platform, "system", return_value="Windows"), \
+                patch.object(wizard.subprocess, "list2cmdline", side_effect=AssertionError(
+                    "Process argv encoding is not PowerShell quoting")):
+            self.assertEqual(wizard.display_command(arguments), expected)
+
     def test_identity_edits_clear_observation_and_store_attestation(self):
         self.app._publication_identity_changed()
         self.app.confirmed.set.assert_called_once_with(False)
@@ -158,7 +176,7 @@ class ReleaseWizardTests(unittest.TestCase):
         messages.put((True, original.with_name("verified-output")))
         self.app._poll_release()
         self.app.load_setup.assert_not_called()
-        self.assertIn(str(original), self.app.release_status.properties["text"])
+        self.assertIn(str(original.resolve()), self.app.release_status.properties["text"])
         self.assertIn("not changed", self.app.release_status.properties["text"])
 
     def test_success_reopens_verified_deployment_without_installing_policy(self):
@@ -186,6 +204,16 @@ class ReleaseWizardTests(unittest.TestCase):
         self.assertEqual(self.app.release_path, output)
         self.app.copy_text.assert_called_once_with(wizard.display_command(wizard.release_command(
             "--report", report, "sign", output, "--key", "SIGNING_KEY.pem")))
+
+    def test_windows_preparation_labels_the_copied_command_as_powershell(self):
+        messages = self.pending(kind="prepare")
+        messages.put((True, self.app.bundle_path.with_name("release folder")))
+        with patch.object(wizard.platform, "system", return_value="Windows"), \
+                patch.object(wizard.messagebox, "showinfo") as info:
+            self.app._poll_release()
+        self.assertIn("PowerShell command copied", info.call_args.args[0])
+        self.assertIn("PowerShell signing command:", info.call_args.args[1])
+        self.assertTrue(self.app.copy_text.call_args.args[0].startswith("& '"))
 
 
 if __name__ == "__main__":

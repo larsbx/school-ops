@@ -26,10 +26,14 @@ import release_core as release
 
 
 def run_openssl(*args):
+    # Fixtures must not inherit the runner's certificate extension sections or
+    # OPENSSL_CONF override. Certificate requests receive our explicit profile.
+    environment = dict(os.environ, OPENSSL_CONF=os.devnull)
     result = subprocess.run(["openssl", *map(str, args)], stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE, check=False, timeout=30)
+                            stderr=subprocess.PIPE, input=b"", env=environment,
+                            check=False, timeout=30)
     if result.returncode:
-        raise RuntimeError("Disposable OpenSSL fixture generation failed")
+        raise RuntimeError(f"Disposable OpenSSL fixture {args[0]} failed")
     return result.stdout
 
 
@@ -106,6 +110,7 @@ class ReleaseTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.keys_temp = tempfile.TemporaryDirectory(prefix="schoolops-disposable-keys-")
+        cls.addClassCleanup(cls.keys_temp.cleanup)
         cls.keys = Path(cls.keys_temp.name)
         for name in ("signer", "other", "ca", "server"):
             run_openssl("genpkey", "-algorithm", "RSA", "-pkeyopt", "rsa_keygen_bits:2048",
@@ -113,25 +118,46 @@ class ReleaseTests(unittest.TestCase):
         for name in ("signer", "other"):
             run_openssl("pkey", "-in", cls.keys / f"{name}.pem", "-pubout",
                         "-out", cls.keys / f"{name}.pub")
+        # OpenSSL 3.2+ supplies key identifiers automatically; older versions
+        # and runner configs differ. Specify the complete CA and server profile
+        # so certificate-chain validity never depends on those defaults.
+        profile = cls.keys / "tls.cnf"
+        profile.write_bytes(b"[req]\n"
+                            b"prompt = no\n"
+                            b"distinguished_name = ca_name\n"
+                            b"default_md = sha256\n"
+                            b"[ca_name]\n"
+                            b"CN = SchoolOps disposable test CA\n"
+                            b"[ca_extensions]\n"
+                            b"basicConstraints = critical,CA:TRUE,pathlen:0\n"
+                            b"keyUsage = critical,keyCertSign,cRLSign\n"
+                            b"subjectKeyIdentifier = hash\n"
+                            b"authorityKeyIdentifier = keyid:always,issuer\n"
+                            b"[server_extensions]\n"
+                            b"basicConstraints = critical,CA:FALSE\n"
+                            b"keyUsage = critical,digitalSignature,keyEncipherment\n"
+                            b"extendedKeyUsage = serverAuth\n"
+                            b"subjectAltName = DNS:releases.school.test\n"
+                            b"subjectKeyIdentifier = hash\n"
+                            b"authorityKeyIdentifier = keyid:always,issuer\n")
         run_openssl("req", "-x509", "-new", "-key", cls.keys / "ca.pem", "-days", "1",
-                    "-subj", "/CN=SchoolOps disposable test CA", "-out", cls.keys / "ca.crt",
-                    "-addext", "basicConstraints=critical,CA:TRUE",
-                    "-addext", "keyUsage=critical,keyCertSign,cRLSign")
-        run_openssl("req", "-new", "-key", cls.keys / "server.pem", "-subj",
-                    "/CN=releases.school.test", "-out", cls.keys / "server.csr")
-        (cls.keys / "tls.ext").write_bytes(b"subjectAltName=DNS:releases.school.test\n"
-                                            b"basicConstraints=critical,CA:FALSE\n"
-                                            b"keyUsage=critical,digitalSignature,keyEncipherment\n"
-                                            b"extendedKeyUsage=serverAuth\n")
+                    "-sha256", "-set_serial", "1", "-config", profile,
+                    "-extensions", "ca_extensions", "-out", cls.keys / "ca.crt")
+        run_openssl("req", "-new", "-key", cls.keys / "server.pem", "-sha256",
+                    "-config", profile, "-subj", "/CN=releases.school.test",
+                    "-out", cls.keys / "server.csr")
         run_openssl("x509", "-req", "-in", cls.keys / "server.csr", "-CA", cls.keys / "ca.crt",
-                    "-CAkey", cls.keys / "ca.pem", "-CAcreateserial", "-days", "1",
-                    "-extfile", cls.keys / "tls.ext", "-out", cls.keys / "server.crt")
+                    "-CAkey", cls.keys / "ca.pem", "-set_serial", "2", "-days", "1", "-sha256",
+                    "-extfile", profile, "-extensions", "server_extensions",
+                    "-out", cls.keys / "server.crt")
+        # Fail once at setup with the certificate operation identified, rather
+        # than making every HTTPS acceptance case fail on an unusable fixture.
+        # This is deliberately stricter than runtimes without strict defaults.
+        run_openssl("verify", "-x509_strict", "-purpose", "sslserver", "-verify_hostname",
+                    "releases.school.test", "-CAfile", cls.keys / "ca.crt", "-no-CApath",
+                    cls.keys / "server.crt")
         cls.public = crx3.public_key_bytes(cls.keys / "signer.pub")
         cls.eid = crx3.extension_id(cls.public)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.keys_temp.cleanup()
 
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix="schoolops-release-test-")

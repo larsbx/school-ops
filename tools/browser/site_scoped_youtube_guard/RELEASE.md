@@ -36,6 +36,11 @@ are never used as the expected fingerprint.
 - Source use needs Python 3.11+ and OpenSSL 3 on the signing/verification
   workstation. Native bundles include Python; OpenSSL remains an external
   workstation dependency, checked when the release operation runs.
+  On macOS with Homebrew OpenSSL 3 installed, prepend
+  `$(brew --prefix openssl@3)/bin` to `PATH` before launching the source or native
+  command. Confirm `openssl version` reports OpenSSL 3; the system or Python
+  toolchain can otherwise select another OpenSSL installation. Hosted macOS
+  acceptance explicitly selects Homebrew OpenSSL 3 and checks the major version.
 - Supported signing keys are RSA 2048–8192-bit public SubjectPublicKeyInfo keys.
   Public keys may be PEM or DER. The local signer uses an unencrypted local PEM
   through an explicitly supplied path; it does not collect passwords or copy

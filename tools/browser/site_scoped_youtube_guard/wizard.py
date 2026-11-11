@@ -29,8 +29,11 @@ def release_command(*arguments):
 
 
 def display_command(arguments):
-    return (subprocess.list2cmdline(arguments) if platform.system() == "Windows"
-            else shlex.join(arguments))
+    if platform.system() == "Windows":
+        # The copied command is pasted into PowerShell. Its call operator and
+        # single-quoted literals differ from Windows process-argv encoding.
+        return "& " + " ".join("'" + str(argument).replace("'", "''") + "'" for argument in arguments)
+    return shlex.join(arguments)
 
 
 class ReleasePreparationDialog(simpledialog.Dialog):
@@ -415,8 +418,9 @@ class GuardWizard(tk.Tk):
             self.release_status.configure(text="Local release prepared: " + str(result)
                 + "\nSign separately, review the publication plan, then use Verify HTTPS & export.")
             self.copy_text(command)
-            messagebox.showinfo("Release prepared; signing command copied",
-                "Release folder:\n" + str(result) + "\n\nSigning command:\n" + command
+            shell_label = "PowerShell" if platform.system() == "Windows" else "Terminal"
+            messagebox.showinfo("Release prepared; " + shell_label + " command copied",
+                "Release folder:\n" + str(result) + "\n\n" + shell_label + " signing command:\n" + command
                 + "\n\nRead the command result in:\n" + str(report)
                 + "\n\nReplace SIGNING_KEY.pem with your approved signing key location in a terminal. "
                 "The GUI does not collect private keys. Review the release publication plan before "

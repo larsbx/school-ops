@@ -44,8 +44,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Select OpenSSL 3 on macOS
+        if: runner.os == 'macOS'
+        run: |
+          set -euo pipefail
+          openssl_prefix="$(brew --prefix openssl@3)"
+          test -x "$openssl_prefix/bin/openssl"
+          echo "$openssl_prefix/bin" >> "$GITHUB_PATH"
       - name: Require actual OpenSSL signing and certificate support
-        run: openssl version
+        run: |
+          openssl version
+          python -c 'import subprocess; assert subprocess.check_output(["openssl", "version"], text=True).startswith("OpenSSL 3."), "OpenSSL 3 is required"'
       - name: Real disposable signing, HTTPS, interruption and wizard contracts
         run: |
           set -euo pipefail
