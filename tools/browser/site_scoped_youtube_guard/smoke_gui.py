@@ -4,8 +4,12 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 import json
+import subprocess
+import time
+from types import SimpleNamespace
 
 from wizard import GuardWizard
+import release_core
 
 
 def main():
@@ -71,9 +75,64 @@ def main():
             assert not app.prepared_digest and not app.extension_id.get()
             assert str(app.sites.cget("state")) == "normal"
             assert app.version.get() == "0.1.1"
+
+            # Exercise the separate self-hosted flow with a real disposable public
+            # key and signing contract. No private key is passed to the GUI and
+            # the .example endpoints below are never contacted.
+            app.channel.set("self_hosted")
+            app._channel_changed()
+            app.advance()
+            app.advance()
+            app.advance()
+            hosted = Path(temp) / "hosted-prepared"
+            app.output.set(str(hosted))
+            app.advance()
+            app.load_setup(hosted)
+            assert app.index == 2
+            assert str(app.id_entry.cget("state")) == "disabled"
+            assert str(app.confirmation.cget("state")) == "disabled"
+            assert str(app.channel_control.cget("state")) == "disabled"
+            assert str(app.prepare_release_button.cget("state")) == "normal"
+            assert str(app.verify_release_button.cget("state")) == "normal"
+            private = Path(temp) / "disposable-fixture.key"
+            public = Path(temp) / "disposable-fixture.pub"
+            subprocess.run(["openssl", "genpkey", "-algorithm", "RSA", "-pkeyopt", "rsa_keygen_bits:2048",
+                            "-out", str(private)], check=True, capture_output=True, timeout=30)
+            subprocess.run(["openssl", "pkey", "-in", str(private), "-pubout", "-out", str(public)],
+                           check=True, capture_output=True, timeout=30)
+            release = Path(temp) / "hosted-release"
+            options = {"public_key": str(public), "expected_id": release_core.public_key_id(public),
+                       "expected_version": "0.1.1", "update_url": "https://updates.school.example/update.xml",
+                       "crx_url": "https://updates.school.example/guard-0.1.1.crx",
+                       "previous_release": None, "initial_release": True}
+            with patch("wizard.ReleasePreparationDialog", return_value=SimpleNamespace(result=options)), \
+                    patch("wizard.filedialog.asksaveasfilename", return_value=str(release)), \
+                    patch("wizard.messagebox.showinfo") as prepared_message, \
+                    patch("wizard.messagebox.showerror") as failure, \
+                    patch("wizard.change_local_policy") as policy, \
+                    patch.object(app, "copy_text") as copied:
+                app.prepare_self_hosted_release()
+                assert app.release_operation is not None
+                assert str(app.open_button.cget("state")) == "disabled"
+                deadline = time.monotonic() + 30
+                while app.release_operation is not None and time.monotonic() < deadline:
+                    app.update()
+                    time.sleep(0.01)
+                assert app.release_operation is None, "Public-key release preparation did not finish"
+                failure.assert_not_called()
+                policy.assert_not_called()
+                prepared_message.assert_called_once()
+                copied.assert_called_once()
+                assert "--report" in copied.call_args.args[0]
+            assert app.release_path == release
+            assert release_core.load_release(release)["extension_id"] == options["expected_id"]
+            assert not (hosted / "deployment/linux-managed-policy.json").exists()
+            assert not (release / "extension.crx").exists(), "Preparation must not sign by itself"
+            assert str(app.channel_control.cget("state")) == "disabled"
     finally:
         app.destroy()
-    print("Tkinter GUI smoke passed: prepare, resume frozen ZIP, attest publication, export, reopen and new version.")
+    print("Tkinter GUI smoke passed: Web Store prepare/resume/export; self-hosted locked controls, "
+          "disposable public-key release preparation and asynchronous recovery.")
     print("No policy, Chrome extension or device restriction was installed.")
 
 

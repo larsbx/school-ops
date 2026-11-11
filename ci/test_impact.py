@@ -40,11 +40,11 @@ class ImpactPlanningTests(unittest.TestCase):
 
     def test_installer_change_includes_native(self):
         decision = plan(POLICY, ["tools/browser/site_scoped_youtube_guard/installer_core.py"])
-        self.assertEqual(decision["suites"], ["installer", "native", "platform-policy"])
+        self.assertEqual(decision["suites"], ["installer", "native", "platform-policy", "release", "release-wizard"])
 
     def test_browser_rule_change_includes_installer_and_native(self):
         decision = plan(POLICY, ["tools/browser/site_scoped_youtube_guard/build_rules.py"])
-        self.assertEqual(decision["suites"], ["guard", "installer", "native", "platform-policy"])
+        self.assertEqual(decision["suites"], ["guard", "installer", "native", "platform-policy", "release", "release-wizard"])
 
     def test_unmapped_path_runs_every_suite(self):
         decision = plan(POLICY, ["tools/browser/new_feature.py"])

@@ -35,6 +35,16 @@ jobs:
       - name: Existing rule and installer tests
         working-directory: .
         run: python -m unittest discover -s tests -v
+      - name: Disposable Chromium CRX packer interoperability
+        run: |
+          node - <<'JS'
+          const { spawnSync } = require('node:child_process');
+          const { chromium } = require('playwright-core');
+          const result = spawnSync('python', ['check_crx_interop.py',
+            '--chromium', chromium.executablePath(), '--no-sandbox',
+            '--report', 'artifacts/crx-interop.json'], { stdio: 'inherit' });
+          process.exit(result.status ?? 1);
+          JS
       - name: Actual browser requests and separate hypothetical probes
         run: npm test
       - name: Retain evidence even on failure
