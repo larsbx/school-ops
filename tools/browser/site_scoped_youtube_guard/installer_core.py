@@ -209,7 +209,7 @@ def deployment_notes(checked):
         "Bundle checks, policy application, installed extension and browser behavior are separate results.", "",
         "## Remove this local policy", "",
         "Reopen this same deployment bundle and choose Remove local policy. Windows/Linux removal requires "
-        "the installer's protected receipt and an unchanged matching policy. Other Chrome settings are "
+        "the installer's machine-level ownership receipt and an unchanged matching policy. Other Chrome settings are "
         "preserved. If policy was applied through GPO/MDM/Admin Console, remove it there instead. "
         "Removal changes the force-install policy; check Chrome separately for extension removal.", "",
         "## References", "",
