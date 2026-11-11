@@ -154,7 +154,7 @@ class CurriculumScaffoldTests(unittest.TestCase):
             body = file.read_text(encoding="utf-8")
             with self.subTest(file=file.relative_to(ROOT)):
                 self.assertNotRegex(body, r"(?:C|U|L|O|A)-GEO-[0-9]{3}")
-                for dest in re.findall(r"\\]\\(([^)]+)\\)", body):
+                for dest in re.findall(r"\]\(([^)]+)\)", body):
                     if dest.startswith(("https:", "http:", "mailto:", "#")):
                         continue
                     target = (file.parent / dest.split("#", 1)[0]).resolve()
