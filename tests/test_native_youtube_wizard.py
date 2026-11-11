@@ -5,6 +5,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[1] / "tools/browser/site_scoped_youtube_guard"
 sys.path.insert(0, str(ROOT))
@@ -45,8 +46,8 @@ class NativeWizardTests(unittest.TestCase):
                     self.assertIn("manifest.json", args[index + 1])
                     self.assertTrue(args[-1].endswith("wizard.py"))
                     self.assertNotIn("--uac-admin", args)
-                    self.assertEqual("--onedir" in args, system == "Darwin")
-                    self.assertEqual("--onefile" in args, system != "Darwin")
+                    self.assertIn("--onedir", args)
+                    self.assertNotIn("--onefile", args)
                     program = native.packaged_executable(scratch, system)
                     self.assertIn(native.APP, str(program))
             with self.assertRaises(ValueError):
@@ -69,6 +70,152 @@ class NativeWizardTests(unittest.TestCase):
             folder.mkdir()
             with self.assertRaises(FileExistsError):
                 native.package(folder)
+
+
+class FakeControl:
+    def __init__(self, state="normal"):
+        self.properties = {"state": state}
+
+    def cget(self, name):
+        return self.properties[name]
+
+    def configure(self, **values):
+        self.properties.update(values)
+
+
+@unittest.skipIf(wizard is None, "Optional tkinter GUI libraries not installed")
+class NativeWizardPolicyLifecycleTests(unittest.TestCase):
+    """Exercise real lifecycle methods without a display or privileged process."""
+
+    def setUp(self):
+        methods = ("load_setup", "open_setup", "new_configuration", "resume_publication",
+                   "request_close", "previous", "advance", "browse", "install_policy",
+                   "_lock_policy_controls", "_restore_policy_controls", "_poll_policy")
+        harness = type("HeadlessWizard", (), {name: getattr(wizard.GuardWizard, name) for name in methods})
+        self.app = harness()
+        self.app.index = 4
+        self.app.bundle_path = (Path(tempfile.gettempdir()) / "schoolops-lifecycle-test-bundle").resolve()
+        self.app.policy_process = None
+        self.app.policy_operation = None
+        self.app._policy_control_states = []
+        self.control_names = ("open_button", "new_button", "prev", "next", "exit_button",
+                              "apply_button", "remove_button", "publish_button")
+        for name in self.control_names:
+            setattr(self.app, name, FakeControl("disabled" if name == "publish_button" else "normal"))
+        self.app.policy_status = FakeControl()
+        self.app.install_summary = Mock()
+        self.app._install_review = Mock()
+        self.app.after = Mock()
+        self.app.destroy = Mock()
+
+    def pending(self, returncode=None, out="", err=""):
+        process = Mock()
+        process.poll.return_value = returncode
+        process.returncode = returncode
+        process.communicate.return_value = (out, err)
+        self.app.policy_process = process
+        self.app.policy_operation = {"bundle": self.app.bundle_path, "remove": False}
+        self.app._lock_policy_controls()
+        return process
+
+    def assert_navigation_restored(self):
+        for name in ("open_button", "new_button", "prev", "next", "exit_button"):
+            self.assertEqual(getattr(self.app, name).cget("state"), "normal", name)
+        self.assertIsNone(self.app.policy_process)
+        self.assertIsNone(self.app.policy_operation)
+
+    def test_pending_policy_guards_navigation_new_open_and_close(self):
+        process = self.pending()
+        original = self.app.bundle_path
+        with (patch.object(wizard.filedialog, "askopenfilename") as ask_open,
+              patch.object(wizard.filedialog, "askdirectory") as ask_directory,
+              patch.object(wizard, "load_bundle") as load,
+              patch.object(wizard.messagebox, "showinfo") as close_message):
+            self.app.open_setup()
+            self.app.load_setup("another/setup.json")
+            self.app.new_configuration()
+            self.app.resume_publication()
+            self.app.previous()
+            self.app.advance()
+            self.app.browse()
+            self.app.request_close()
+            ask_open.assert_not_called()
+            ask_directory.assert_not_called()
+            load.assert_not_called()
+            close_message.assert_called_once()
+        self.assertEqual(self.app.bundle_path, original)
+        self.assertEqual(self.app.index, 4)
+        self.app.destroy.assert_not_called()
+        process.terminate.assert_not_called()
+        for name in self.control_names:
+            self.assertEqual(getattr(self.app, name).cget("state"), "disabled", name)
+
+    def test_launch_captures_the_bundle_and_locks_controls(self):
+        process = Mock()
+        with (patch.object(wizard, "verify_policy_bundle"),
+              patch.object(wizard.platform, "system", return_value="Linux"),
+              patch.object(wizard.os, "geteuid", return_value=0, create=True),
+              patch.object(wizard.subprocess, "Popen", return_value=process) as launch):
+            self.app.install_policy()
+        self.assertEqual(self.app.policy_operation, {"bundle": self.app.bundle_path, "remove": False})
+        self.assertIs(self.app.policy_process, process)
+        self.assertEqual(launch.call_args.kwargs["env"]["PYINSTALLER_RESET_ENVIRONMENT"], "1")
+        self.app.after.assert_called_once_with(250, self.app._poll_policy)
+        for name in self.control_names:
+            self.assertEqual(getattr(self.app, name).cget("state"), "disabled", name)
+
+    def test_pending_poll_does_not_release_navigation(self):
+        process = self.pending()
+        self.app._poll_policy()
+        process.communicate.assert_not_called()
+        self.assertIs(self.app.policy_process, process)
+        self.app.after.assert_called_once_with(250, self.app._poll_policy)
+        self.assertEqual(self.app.exit_button.cget("state"), "disabled")
+
+    def test_success_is_preserved_when_saved_bundle_disappears(self):
+        original = self.app.bundle_path
+        self.pending(0, "Local policy written. Chrome has not been verified.\n")
+        self.app._install_review.side_effect = FileNotFoundError("saved bundle was removed")
+        with patch.object(wizard.messagebox, "showerror") as show_error:
+            self.app._poll_policy()
+            show_error.assert_not_called()
+        self.assert_navigation_restored()
+        message = self.app.policy_status.properties["text"]
+        self.assertIn(str(original), message)
+        self.assertIn("Local policy written.", message)
+        self.assertIn("could not recheck", message)
+        self.assertEqual(self.app.apply_button.cget("state"), "disabled")
+        self.assertEqual(self.app.remove_button.cget("state"), "disabled")
+        self.app.request_close()
+        self.app.destroy.assert_called_once()
+
+    def test_completed_result_stays_bound_to_original_bundle(self):
+        original = self.app.bundle_path
+        self.pending(0, "Matching local policy is already configured.\n")
+        # Defense in depth if external/programmatic state changes bypass UI guards.
+        other = original.with_name("another-bundle")
+        self.app.bundle_path = other
+        self.app._poll_policy()
+        self.assert_navigation_restored()
+        self.assertEqual(self.app.bundle_path, other)
+        self.app._install_review.assert_not_called()
+        message = self.app.policy_status.properties["text"]
+        self.assertIn(str(original), message)
+        self.assertIn("currently selected bundle was not changed", message)
+
+    def test_failed_action_restores_controls_and_reports_its_bundle(self):
+        original = self.app.bundle_path
+        self.pending(1, err="Administrator action cancelled")
+        self.app.policy_operation["remove"] = True
+        with patch.object(wizard.messagebox, "showerror") as show_error:
+            self.app._poll_policy()
+            show_error.assert_called_once()
+            self.assertIn(str(original), show_error.call_args.args[1])
+            self.assertIn("Remove policy", show_error.call_args.args[1])
+        self.assert_navigation_restored()
+        self.assertIn("cancelled", self.app.policy_status.properties["text"])
+        self.assertEqual(self.app.apply_button.cget("state"), "normal")
+        self.assertEqual(self.app.publish_button.cget("state"), "disabled")
 
 
 if __name__ == "__main__":

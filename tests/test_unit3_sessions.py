@@ -1,12 +1,14 @@
 """Reproducibility, saved continuation, separation and arithmetic invariants."""
+import io
 import json
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
-from exercise_bank.unit3 import ACTIVITIES, generate, render
+from exercise_bank.unit3 import ACTIVITIES, generate, main, render
 
 class Unit3Sessions(unittest.TestCase):
     def test_all_activity_families_and_routes(self):
@@ -76,6 +78,27 @@ class Unit3Sessions(unittest.TestCase):
             self.assertNotIn("U3-01:", complete.stdout)
             self.assertEqual((directory / "session.json").read_bytes(), original)
             self.assertEqual(len(json.loads((directory / "progress.json").read_text())["responses"]), 6)
+
+    def test_resume_preserves_utf8_lf_under_windows_text_stdout(self):
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp) / "session"
+            subprocess.run([sys.executable, "-m", "exercise_bank.unit3", "new",
+                            str(directory), "--limit", "24"], check=True, capture_output=True)
+            for teacher in (False, True):
+                with self.subTest(teacher=teacher), io.BytesIO() as output, \
+                        io.TextIOWrapper(output, encoding="cp1252", newline="\r\n") as stream:
+                    # Exercise real encoding/newline translation, not a mock write method.
+                    stream.write("—\n")
+                    stream.flush()
+                    self.assertEqual(output.getvalue(), b"\x97\r\n")
+                    output.seek(0)
+                    output.truncate()
+                    argv = ["unit3", "resume", str(directory)] + (["--teacher"] if teacher else [])
+                    with patch.object(sys, "argv", argv), patch.object(sys, "stdout", stream):
+                        main()
+                    stream.flush()
+                    expected = directory / ("teacher.md" if teacher else "learner.md")
+                    self.assertEqual(output.getvalue(), expected.read_bytes())
 
 if __name__ == "__main__":
     unittest.main()

@@ -67,7 +67,9 @@
       "paths": [
         "tools/browser/site_scoped_youtube_guard/installer_core.py",
         "tools/browser/site_scoped_youtube_guard/wizard.py",
-        "tests/test_youtube_guard_installer.py"
+        "tests/test_youtube_guard_installer.py",
+        "tools/browser/site_scoped_youtube_guard/platform_policy.py",
+        "tests/test_guard_platform_policy.py"
       ],
       "depends_on": [
         "guard"
@@ -177,6 +179,13 @@
       ],
       "directory": "tests",
       "pattern": "test_grade3_reasoning.py"
+    },
+    "platform-policy": {
+      "components": [
+        "installer"
+      ],
+      "directory": "tests",
+      "pattern": "test_guard_platform_policy.py"
     }
   }
 }
