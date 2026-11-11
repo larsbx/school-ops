@@ -6,7 +6,7 @@ local web-root, after approval of its exact plan. Verification performs anonymou
 read-only HTTPS requests. Neither operation applies policy or enrolls a device.
 """
 import argparse
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from datetime import datetime, timezone
 import hashlib
 import io
@@ -16,6 +16,7 @@ from pathlib import Path
 import re
 import shutil
 import ssl
+import stat
 import sys
 import tempfile
 import time
@@ -262,32 +263,68 @@ def _fsync_dir(path):
             os.close(fd)
 
 
-def _atomic_file(path, data, *, immutable):
+def _distribution_mode(existing):
+    """Retain safe read permissions, including a group-only web-server setup."""
+    if existing and existing.st_mode & 0o044:
+        return stat.S_IMODE(existing.st_mode) & 0o644
+    return 0o644
+
+
+def _check_existing_file(path, data, *, distributed):
+    if not distributed:
+        if _read(path) != data:
+            raise ValueError("Immutable publication path contains different bytes")
+        return
+    flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK
+    with os.fdopen(os.open(path, flags), "rb") as stream:
+        existing = os.fstat(stream.fileno())
+        if not stat.S_ISREG(existing.st_mode):
+            raise ValueError("Expected a regular local file")
+        if stream.read(len(data) + 1) != data:
+            raise ValueError("Immutable publication path contains different bytes")
+        mode = _distribution_mode(existing)
+        if stat.S_IMODE(existing.st_mode) != mode:
+            os.fchmod(stream.fileno(), mode)
+            os.fsync(stream.fileno())
+
+
+def _atomic_file(path, data, *, immutable, public=False):
     """Durable replacement or exclusive atomic insertion, never partial bytes."""
     path = Path(path)
     if path.is_symlink():
         raise ValueError("Refusing a symlink publication target")
+    distributed = public and os.name == "posix"
     if immutable and path.exists():
-        if _read(path) != data:
-            raise ValueError("Immutable publication path contains different bytes")
+        _check_existing_file(path, data, distributed=distributed)
         return
-    fd, temporary = tempfile.mkstemp(prefix=".schoolops-part-", dir=path.parent)
-    try:
-        with os.fdopen(fd, "wb") as stream:
-            stream.write(data)
-            stream.flush()
-            os.fsync(stream.fileno())
-        if immutable:
-            try:
-                os.link(temporary, path)
-            except FileExistsError:
-                if _read(path) != data:
-                    raise ValueError("Immutable publication path contains different bytes")
-        else:
-            os.replace(temporary, path)
-        _fsync_dir(path.parent)
-    finally:
-        Path(temporary).unlink(missing_ok=True)
+    existing = path.stat() if distributed and not immutable and path.exists() else None
+    # Keep staged bytes behind a private directory even after setting their final
+    # mode, so an interruption before insertion cannot expose a temporary file.
+    staging = (tempfile.TemporaryDirectory(prefix=".schoolops-part-", dir=path.parent)
+               if distributed else nullcontext(path.parent))
+    with staging as directory:
+        fd, temporary = tempfile.mkstemp(prefix=".schoolops-part-", dir=directory)
+        try:
+            with os.fdopen(fd, "wb") as stream:
+                stream.write(data)
+                stream.flush()
+                if distributed:
+                    mode = _distribution_mode(existing)
+                    if existing and mode & 0o040 and not mode & 0o004:
+                        if os.fstat(stream.fileno()).st_gid != existing.st_gid:
+                            os.fchown(stream.fileno(), -1, existing.st_gid)
+                    os.fchmod(stream.fileno(), mode)
+                os.fsync(stream.fileno())
+            if immutable:
+                try:
+                    os.link(temporary, path)
+                except FileExistsError:
+                    _check_existing_file(path, data, distributed=distributed)
+            else:
+                os.replace(temporary, path)
+            _fsync_dir(path.parent)
+        finally:
+            Path(temporary).unlink(missing_ok=True)
 
 
 @contextmanager
@@ -417,13 +454,16 @@ def stage_release(release, web_root, *, approve_plan_sha256):
         _, plan, _archive, _public, _signed_, crx, xml = snapshot
         package = _web_path(root, plan["crx_url"], create=True)
         manifest = _web_path(root, plan["update_url"], create=True)
-        _atomic_file(package, crx, immutable=True)
+        _atomic_file(package, crx, immutable=True, public=True)
         # Recheck the predecessor immediately before committing the manifest.
         actual = _hash(_read(manifest, MAX_MANIFEST_BYTES)) if manifest.exists() else None
         if actual != approved["expected_manifest_sha256"]:
             raise ValueError("Manifest changed during staging; new package remains inactive")
-        if actual != _hash(xml):
-            _atomic_file(manifest, xml, immutable=False)
+        if actual == _hash(xml):
+            if os.name == "posix":
+                _check_existing_file(manifest, xml, distributed=True)
+        else:
+            _atomic_file(manifest, xml, immutable=False, public=True)
     return {"release_id": plan["release_id"], "staged": True, "remote_verified": False,
             "policy_applied": False, "managed_device_enforcement": False}
 

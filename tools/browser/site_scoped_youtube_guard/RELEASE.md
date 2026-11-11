@@ -169,6 +169,15 @@ directory while staging cannot change the approved files or destinations.
 Staging copies only the CRX and update XML, never signing inputs, keys, saved
 setup files or operator receipts.
 
+On POSIX, new distribution files default to mode `0644`. Manifest replacement
+preserves existing read permissions and group ownership for group-only access,
+and strips execute bits and group/other write permissions. A retry repairs
+matching owner-only files left by earlier staging runs. Set up the web-root and
+URL parent directories so the server account can traverse them and only the
+publisher can write to them. Public files are prepared inside private temporary
+directories. The release lock and signed working copies retain their private
+permissions.
+
 | Interruption point | State and recovery |
 | --- | --- |
 | Before package insertion | The previous manifest remains active; rebuild the plan and retry. |

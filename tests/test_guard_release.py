@@ -9,6 +9,7 @@ from pathlib import Path
 import shutil
 import socket
 import ssl
+import stat
 import struct
 import subprocess
 import sys
@@ -348,6 +349,93 @@ class ReleaseTests(unittest.TestCase):
         self.assertEqual(files, {"updates.xml", "packages/guard-1.2.3.crx", ".schoolops-release.lock"})
         self.stage(path)
 
+    @unittest.skipUnless(os.name == "posix", "POSIX publication permissions")
+    def test_posix_distribution_permissions_and_recovery(self):
+        reader = None
+        if os.geteuid() == 0:
+            import pwd
+            reader = pwd.getpwnam("nobody")
+
+        def check_public(target, source, mode):
+            self.assertEqual(stat.S_IMODE(target.stat().st_mode), mode)
+            self.assertEqual(target.read_bytes(), source.read_bytes())
+            if reader is not None:
+                subprocess.run(
+                    [sys.executable, "-c", reader_probe, str(target),
+                     hashlib.sha256(source.read_bytes()).hexdigest()],
+                    user=reader.pw_uid, group=reader.pw_gid, extra_groups=[],
+                    check=True, timeout=15,
+                )
+
+        reader_probe = """import hashlib, os, sys
+from pathlib import Path
+target = Path(sys.argv[1])
+assert os.getuid() != target.stat().st_uid
+assert hashlib.sha256(target.read_bytes()).hexdigest() == sys.argv[2]
+for action in (lambda: target.open("r+b"), target.unlink):
+    try:
+        action()
+    except PermissionError:
+        pass
+    else:
+        raise AssertionError(f"reader could modify {target}")
+"""
+        self.root.chmod(0o755)
+        self.web.chmod(0o755)
+        (self.web / "packages").mkdir()
+        (self.web / "packages").chmod(0o755)
+        manifest = self.web / "updates.xml"
+        prior = self.signed("prior", version="1")
+        package = self.web / "packages/guard-1.crx"
+        old_umask = os.umask(0o077)
+        try:
+            self.stage(prior)
+            check_public(package, prior / "extension.crx", 0o644)
+            check_public(manifest, prior / "update.xml", 0o644)
+            for control in (self.web / ".schoolops-release.lock",
+                            prior / "extension.crx", prior / "update.xml", prior / "signed.json"):
+                self.assertEqual(stat.S_IMODE(control.stat().st_mode), 0o600)
+
+            # Repair already-published bytes from the old implementation.
+            package.chmod(0o600)
+            manifest.chmod(0o600)
+            self.stage(prior)
+            check_public(package, prior / "extension.crx", 0o644)
+            check_public(manifest, prior / "update.xml", 0o644)
+
+            manifest.chmod(0o444)
+            successor = self.signed("next", version="2", previous=prior)
+            next_package = self.web / "packages/guard-2.crx"
+
+            def interrupt(staged, target):
+                self.assertEqual(target, manifest)
+                self.assertEqual(stat.S_IMODE(Path(staged).parent.stat().st_mode), 0o700)
+                raise OSError("interrupted manifest replacement")
+
+            with patch.object(release.os, "replace", side_effect=interrupt):
+                with self.assertRaisesRegex(OSError, "interrupted manifest replacement"):
+                    self.stage(successor)
+            check_public(next_package, successor / "extension.crx", 0o644)
+            check_public(manifest, prior / "update.xml", 0o444)
+            self.stage(successor)
+            committed = manifest.stat().st_ino
+            self.stage(successor)
+            self.assertEqual(manifest.stat().st_ino, committed)
+            check_public(manifest, successor / "update.xml", 0o444)
+            check_public(next_package, successor / "extension.crx", 0o644)
+
+            # Preserve group-only serving without granting world access.
+            if reader is not None:
+                os.chown(manifest, -1, reader.pw_gid)
+            manifest.chmod(0o640)
+            final = self.signed("final", version="3", previous=successor)
+            self.stage(final)
+            check_public(manifest, final / "update.xml", 0o640)
+            if reader is not None:
+                self.assertEqual(manifest.stat().st_gid, reader.pw_gid)
+        finally:
+            os.umask(old_umask)
+
     def test_staging_uses_the_exact_approved_snapshot_despite_source_replacement(self):
         bundle = self.bundle()
         path = self.signed("approved", bundle=bundle)
@@ -376,10 +464,10 @@ class ReleaseTests(unittest.TestCase):
         new = self.signed("new", version="2", previous=prior)
         original = release._atomic_file
 
-        def interrupt(path, data, *, immutable):
+        def interrupt(path, data, *, immutable, public=False):
             if not immutable:
                 raise OSError("simulated interruption before manifest commit")
-            return original(path, data, immutable=immutable)
+            return original(path, data, immutable=immutable, public=public)
 
         with patch.object(release, "_atomic_file", side_effect=interrupt):
             with self.assertRaisesRegex(OSError, "interruption"):
@@ -395,8 +483,8 @@ class ReleaseTests(unittest.TestCase):
         path = self.signed()
         original = release._atomic_file
 
-        def after_commit(target, data, *, immutable):
-            original(target, data, immutable=immutable)
+        def after_commit(target, data, *, immutable, public=False):
+            original(target, data, immutable=immutable, public=public)
             if not immutable:
                 raise OSError("receipt lost after commit")
 
@@ -411,8 +499,8 @@ class ReleaseTests(unittest.TestCase):
 sys.path.insert(0, sys.argv[1])
 import release_core as r
 original = r._atomic_file
-def interrupted(path, data, *, immutable):
-    original(path, data, immutable=immutable)
+def interrupted(path, data, *, immutable, public=False):
+    original(path, data, immutable=immutable, public=public)
     if immutable:
         os._exit(23)
 r._atomic_file = interrupted
@@ -430,10 +518,10 @@ r.stage_release(sys.argv[2], sys.argv[3], approve_plan_sha256=p['approval_sha256
         path = self.prepared()
         original = release._atomic_file
 
-        def interrupt(target, data, *, immutable):
+        def interrupt(target, data, *, immutable, public=False):
             if target.name == "signed.json":
                 raise OSError("signing receipt interrupted")
-            return original(target, data, immutable=immutable)
+            return original(target, data, immutable=immutable, public=public)
 
         with patch.object(release, "_atomic_file", side_effect=interrupt), self.assertRaises(OSError):
             release.sign_release(path, self.keys / "signer.pem")
