@@ -1,0 +1,6 @@
+name = "schoolopsRelease"
+version = "1.0.0"
+defaultTargets = ["Release"]
+
+[[lean_lib]]
+name = "Release"

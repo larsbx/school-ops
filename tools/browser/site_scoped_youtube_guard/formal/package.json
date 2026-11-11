@@ -1,0 +1,9 @@
+{
+  "name": "schoolops-guard-release-model",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pinned executable model checker for the CRX release handoff",
+  "devDependencies": {
+    "@informalsystems/quint": "0.33.1"
+  }
+}

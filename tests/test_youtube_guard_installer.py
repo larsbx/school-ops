@@ -40,6 +40,40 @@ def published_settings(**overrides):
     return cfg
 
 
+def observed_self_hosted_settings(**overrides):
+    """Synthetic structural receipt only; real HTTPS acceptance lives separately."""
+    cfg = published_settings(channel="self_hosted",
+        update_url="https://updates.school.org/extensions/updates.xml", **overrides)
+    checked = core.validate_settings(cfg)
+    cfg["publication_receipt"] = {
+        "schema": 1, "scope": "downloaded_release_bytes", "release_id": "1" * 64,
+        "extension_id": checked["extension_id"], "extension_version": checked["extension_version"],
+        "extension_zip_sha256": checked["published_extension_sha256"],
+        "update_url": checked["update_url"],
+        "crx_url": "https://updates.school.org/extensions/guard-0.1.0.crx",
+        "crx_sha256": "2" * 64, "manifest_sha256": "3" * 64, "public_key_sha256": "4" * 64,
+        "observed_at_utc": "2026-11-11T12:00:00Z", "managed_device_enforcement": False,
+        "policy_applied": False,
+        "verification": {name: True for name in ("identity_ok", "version_ok", "zip_ok", "crx_ok",
+                                                "signature_ok", "tls_ok", "manifest_ok", "download_ok")},
+    }
+    return cfg
+
+
+def write_legacy_self_hosted_bundle(destination):
+    """Reconstruct the previous format to exercise compatibility, without policy IO."""
+    checked = core.validate_settings(published_settings(channel="self_hosted",
+        update_url="https://updates.school.org/extensions/updates.xml"))
+    files = core.bundle_files(checked, allow_legacy_self_hosted=True)
+    for relative, data in files.items():
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(data)
+    sums = {name: hashlib.sha256(data).hexdigest() for name, data in files.items()}
+    (destination / "SHA256SUMS.json").write_bytes(core.pretty_json(sums).encode("utf-8"))
+    return destination
+
+
 def rehash_file(bundle, relative):
     """Simulate corruption that also rewrites the transport checksum inventory."""
     inventory = bundle / "SHA256SUMS.json"
@@ -234,14 +268,83 @@ class InstallerCoreTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             url = "https://updates.school.org/extensions/updates.xml"
             target = Path(td) / "selfhost"
-            core.export_bundle(published_settings(channel="self_hosted", update_url=url,
-                                                  target_os="windows"), target)
+            cfg = observed_self_hosted_settings(target_os="windows")
+            core.export_bundle(cfg, target)
             policy = json.loads((target / "deployment/extension-settings-value.json").read_text())
             self.assertEqual(policy[TEST_ID]["update_url"], url)
             self.assertIs(policy[TEST_ID]["override_update_url"], True)
             self.assertIn("Active Directory", (target / "deployment/README.md").read_text())
             self.assertNotIn("ACTUAL_32_CHARACTER_EXTENSION_ID",
                              (target / "deployment/README.md").read_text())
+            _, resumed = core.load_bundle(target)
+            self.assertEqual(resumed["publication_receipt"], cfg["publication_receipt"])
+            self.assertEqual(json.loads((target / "deployment/publication-receipt.json").read_bytes()),
+                             cfg["publication_receipt"])
+            core.verify_policy_bundle(target)
+
+    def test_self_hosted_operator_attestation_cannot_export_new_policy(self):
+        with tempfile.TemporaryDirectory() as td:
+            target = Path(td) / "new-selfhost"
+            with self.assertRaisesRegex(ValueError, "HTTPS release verification"):
+                core.export_bundle(published_settings(channel="self_hosted",
+                    update_url="https://updates.school.org/extensions/updates.xml"), target)
+            self.assertFalse(target.exists())
+
+    def test_legacy_self_hosted_bundle_reopens_and_removes_without_new_installation(self):
+        with tempfile.TemporaryDirectory() as td:
+            target = write_legacy_self_hosted_bundle(Path(td) / "legacy")
+            root, resumed = core.load_bundle(target)
+            self.assertEqual(root, target.resolve())
+            self.assertNotIn("publication_receipt", resumed)
+            policy = (target / "deployment/linux-managed-policy.json").read_bytes()
+            with patch.object(core.platform, "system", return_value="Linux"), \
+                    patch.object(core.platform_policy, "apply_linux_policy_content") as apply, \
+                    patch.object(core.platform_policy, "remove_linux_policy_content",
+                                 return_value="removed") as remove:
+                with self.assertRaisesRegex(ValueError, "HTTPS release verification"):
+                    core.change_local_policy(target)
+                apply.assert_not_called()
+                self.assertEqual(core.change_local_policy(target, remove=True), "removed")
+                remove.assert_called_once_with(policy)
+            with self.assertRaisesRegex(ValueError, "HTTPS release verification"):
+                core.export_bundle(resumed, Path(td) / "copied")
+
+    def test_receipt_binding_and_scope_changes_fail_before_export(self):
+        changes = (
+            {"extension_id": "p" * 32}, {"extension_version": "9.9"},
+            {"extension_zip_sha256": "0" * 64},
+            {"update_url": "https://another.school.org/updates.xml"},
+            {"crx_url": "https://another.school.org/guard.crx"},
+            {"scope": "managed_installation"}, {"managed_device_enforcement": True},
+            {"policy_applied": True}, {"observed_at_utc": "yesterday"},
+            {"schema": True}, {"crx_sha256": "unknown"},
+            {"unexpected": "field"},
+        )
+        with tempfile.TemporaryDirectory() as td:
+            for index, changeset in enumerate(changes):
+                cfg = observed_self_hosted_settings()
+                cfg["publication_receipt"].update(changeset)
+                target = Path(td) / f"rejected-{index}"
+                with self.subTest(changes=changeset), self.assertRaises(ValueError):
+                    core.export_bundle(cfg, target)
+                self.assertFalse(target.exists())
+            for name in observed_self_hosted_settings()["publication_receipt"]["verification"]:
+                cfg = observed_self_hosted_settings()
+                cfg["publication_receipt"]["verification"][name] = 1
+                with self.subTest(check=name), self.assertRaisesRegex(ValueError, "every release"):
+                    core.validate_settings(cfg)
+
+    def test_rehashed_saved_receipt_must_match_saved_setup_observation(self):
+        with tempfile.TemporaryDirectory() as td:
+            target = Path(td) / "selfhost"
+            core.export_bundle(observed_self_hosted_settings(), target)
+            receipt_path = target / "deployment/publication-receipt.json"
+            receipt = json.loads(receipt_path.read_bytes())
+            receipt["crx_sha256"] = "f" * 64
+            receipt_path.write_bytes(core.pretty_json(receipt).encode("utf-8"))
+            rehash_file(target, "deployment/publication-receipt.json")
+            with self.assertRaisesRegex(ValueError, "inconsistent"):
+                core.load_bundle(target)
 
     def test_draft_self_hosted_without_url(self):
         with tempfile.TemporaryDirectory() as td:

@@ -6,6 +6,10 @@ on:
       - 'tools/browser/site_scoped_youtube_guard/wizard.py'
       - 'tools/browser/site_scoped_youtube_guard/installer_core.py'
       - 'tools/browser/site_scoped_youtube_guard/platform_policy.py'
+      - 'tools/browser/site_scoped_youtube_guard/crx3.py'
+      - 'tools/browser/site_scoped_youtube_guard/release_core.py'
+      - 'tests/test_guard_release.py'
+      - 'tests/test_guard_release_wizard.py'
       - 'tests/test_guard_platform_policy.py'
       - 'tools/browser/site_scoped_youtube_guard/build_rules.py'
       - 'tools/browser/site_scoped_youtube_guard/package_native.py'
@@ -46,6 +50,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Select OpenSSL 3 on macOS
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          set -euo pipefail
+          openssl_prefix="$(brew --prefix openssl@3)"
+          test -x "$openssl_prefix/bin/openssl"
+          echo "$openssl_prefix/bin" >> "$GITHUB_PATH"
+      - name: Require actual OpenSSL signing and certificate support
+        shell: bash
+        run: |
+          openssl version
+          python -c 'import subprocess; assert subprocess.check_output(["openssl", "version"], text=True).startswith("OpenSSL 3."), "OpenSSL 3 is required"'
       - name: Install pinned native packager
         run: python -m pip install --disable-pip-version-check "pyinstaller==6.22.3"
       - name: Validate Python contracts

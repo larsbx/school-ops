@@ -76,15 +76,21 @@ The ZIP has `manifest.json` at its root. Complete the publication process and
 obtain the extension's actual 32-character ID. The Store update source is
 `https://clients2.google.com/service/update2/crx`.
 
-For a managed self-hosted route, sign/package the exact `extension/` contents and
-publish the CRX and its HTTPS update-manifest XML. Keep the signing key: subsequent
-versions must retain the same extension ID. The update manifest must identify the
-correct ID, version and CRX URL. Chrome update requests cannot rely on the
-operator's signed-in browser cookies. See Google's
-[self-hosting instructions](https://developer.chrome.com/docs/extensions/how-to/distribute/host-on-linux).
+For the managed self-hosted route, reopen the prepared self-hosted setup and
+choose **Prepare self-hosted release…**. Supply a public RSA key, the pinned
+extension ID and version, HTTPS update/package URLs, and the previous signed
+release (or explicit first release). The app freezes a deterministic signing
+contract around the unchanged ZIP. Use the copied signing command or an approved
+external signer, then review and separately approve publication of the CRX and
+update XML. Choose **Verify HTTPS & export…** to check the anonymously downloaded
+bytes before creating a deployment.
 
-Neither the ZIP nor an unpacked extension is a signed, installable CRX. The setup
-app does not publish to the Store, sign an extension, or host an update service.
+The [self-hosted release guide](RELEASE.md) gives the exact commands, local
+publication-plan approval, interruption recovery, signer integration, version
+rules, TLS checks and verification boundary. OpenSSL 3 is required on the
+signing/verification workstation. Private keys stay outside the GUI and release
+artifacts. The app does not upload to the Store or a production host or create an
+update service. Neither a ZIP nor an unpacked directory is a signed CRX.
 
 ### 3. Reopen the prepared setup
 
@@ -93,14 +99,22 @@ folder, or use **Enter published ID…** while that bundle is still open. Keep t
 entire folder together: reopening verifies its inventory, checksums, generated
 rules and publication ZIP.
 
-The school websites, access rules and extension version are now locked to that
-package. Enter the real published ID and update source, confirm that you
-published **this exact prepared extension**, then export the deployment into a
-new folder. The publication and deployment ZIPs remain identical.
+The school websites, access rules, distribution channel and extension version
+are now locked to that package. For the **Web Store**, enter the real published
+ID, confirm that you published **this exact prepared extension**, and export to a
+new folder. Store confirmation remains an operator statement; it does not
+independently authenticate the Store package.
 
-The fingerprint prevents accidental configuration drift. The publication
-confirmation is the operator's statement; it does **not** prove that the remote
-Store or update server actually serves those bytes.
+For **self-hosting**, use **Verify HTTPS & export…** with the prepared signed
+release. The verifier checks the XML, TLS, CRX signature, public-key-derived ID,
+exact version and complete package/ZIP bytes. Manual confirmation cannot replace
+this new flow. Its timestamped receipt records downloaded bytes; it does not
+establish ongoing endpoint availability or managed-device enforcement. The
+publication and deployment ZIPs remain identical in both routes.
+
+Previously exported self-hosted bundles still reopen and permit removal of an
+unchanged policy owned by this installer. New self-hosted installation requires
+the verified release handoff.
 
 ### 4. Install the enterprise policy
 
@@ -174,7 +188,8 @@ Chrome afterward; removing local policy is not itself proof of extension removal
 | `SHA256SUMS.json` | SHA-256 inventory of generated files |
 | `deployment/linux-managed-policy.json` | Complete Linux policy; generated after publication confirmation |
 | `deployment/extension-settings-value.json` | Value to merge into an existing GPO/MDM `ExtensionSettings` policy |
-| `deployment/schoolops-chrome.mobileconfig` | Unsigned macOS management profile; generated after publication confirmation |
+| `deployment/schoolops-chrome.mobileconfig` | Unsigned macOS management profile; generated after publication confirmation/verification |
+| `deployment/publication-receipt.json` | Self-hosted HTTPS observation, also bound in `setup.json`; no device enforcement claim |
 
 The exporter never replaces an existing destination folder. Retain the original
 prepared and deployment bundles privately if their school hostnames or internal
@@ -204,6 +219,12 @@ Run the Python contracts from the repository root:
 ```sh
 python3 -m unittest discover -s tests -v
 ```
+
+The [self-hosted release workflow](../../../.github/workflows/youtube-guard-release.yml)
+runs disposable RSA signing, controlled HTTPS and interruption acceptance on all
+three desktop platforms. The [Lean/Quint layer](formal/README.md) separately
+checks its abstract state machine and complete Boolean admission projection;
+this does not prove the full Python/TLS/cryptographic runtime.
 
 The [native workflow](../../../.github/workflows/youtube-guard-native.yml) builds
 on Windows, macOS and Ubuntu. Its Linux UI smoke test exercises the graphical
