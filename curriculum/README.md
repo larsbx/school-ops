@@ -35,6 +35,8 @@ An [unregistered Grade 2 Islamic studies course prototype](islamic-studies/grade
 
 A separate [unregistered Grade 3 Islamic studies source-literacy pilot](islamic-studies/grade-3-source-literacy-pilot/README.md) now authors the first two scaffold episodes (P1/P2) with original source metadata, lessons, a neutral entry check and independently keyed draft unit tasks. **No new canonical course has been registered** and qualified religious/age/translation reviews remain open.
 
-## Factorio practice pilot
+## Factorio practice pilots
 
 The [draft From ore to plate pilot](pilots/factorio/README.md) uses the Learning Lab mod for one-to-one counting and process vocabulary. Its offline receipt can be inspected locally for staff practice review.
+
+The [draft Ratio Loading Bay pilot](pilots/factorio/ratio-loading-bay/README.md) practices equivalent ratios using shipment inventories. Both pilots use unsigned receipts for offline staff review.

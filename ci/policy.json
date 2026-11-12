@@ -105,6 +105,16 @@
       "depends_on": [
         "installer"
       ]
+    },
+    "factorio": {
+      "paths": [
+        "curriculum/pilots/factorio/**",
+        "tools/factorio_practice.py",
+        "tests/test_factorio_practice.py"
+      ],
+      "depends_on": [
+        "curriculum"
+      ]
     }
   },
   "suites": {
@@ -213,6 +223,13 @@
       ],
       "directory": "tests",
       "pattern": "test_guard_release_wizard.py"
+    },
+    "factorio-practice": {
+      "components": [
+        "factorio"
+      ],
+      "directory": "tests",
+      "pattern": "test_factorio_practice.py"
     }
   }
 }
