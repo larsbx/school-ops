@@ -318,7 +318,7 @@ class Grade3AstronomyShadowDraftTests(unittest.TestCase):
             body = lesson.read_text(encoding="utf-8")
             for word in ("DRAFT", "Grammar", "Logic", "Rhetoric"):
                 self.assertIn(word, body)
-            minutes = [int(t) for t in re.findall(r"^\\| [^|]+ \\| (\\d+) \\|$", body, re.M)]
+            minutes = [int(t) for t in re.findall(r"^\| [^|]+ \| (\d+) \|$", body, re.M)]
             self.assertEqual(25, sum(minutes), lesson.name)
 
     def test_unregistered_links_and_source_boundary(self):
@@ -334,7 +334,7 @@ class Grade3AstronomyShadowDraftTests(unittest.TestCase):
             body = file.read_text(encoding="utf-8")
             with self.subTest(file=file.name):
                 self.assertNotRegex(body, r"(?:C|U|L|O|A)-AST-[0-9]{3}")
-                for dest in re.findall(r"\\]\\(([^)]+)\\)", body):
+                for dest in re.findall(r"\]\(([^)]+)\)", body):
                     if dest.startswith(("https:", "http:", "mailto:", "#")):
                         continue
                     target = (file.parent / urllib.parse.unquote(dest.split("#", 1)[0])).resolve()
