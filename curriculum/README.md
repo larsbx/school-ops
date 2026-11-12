@@ -38,3 +38,7 @@ A separate [unregistered Grade 3 Islamic studies source-literacy pilot](islamic-
 ## Factorio practice pilot
 
 The [draft From ore to plate pilot](pilots/factorio/README.md) uses the Learning Lab mod for one-to-one counting and process vocabulary. Its offline receipt can be inspected locally for staff practice review.
+
+## Grade 3 astronomy authoring pilot (unregistered)
+
+The [original Grade 3 shadow-record literacy pilot](astronomy/grade-3-shadow-records-pilot/README.md) adds actual draft prerequisite checks, four Trivium episodes, eight guided worked tasks, ten fixed public reference exemplars and a separate teacher key. Its logs are **fictional**, and it does **not** supply a real astronomical observation, registered course ID, secure assessment or teaching-ready record. This proposal is independent of the Grade 2 astronomy Unit 5 PR #41. The [Grade 3 astronomy planning scaffold](scaffolds/grade-3/astronomy.md) identifies owner review gates.

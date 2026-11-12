@@ -2,7 +2,7 @@
 
 - Record kind: **planning scaffold**, not a course, unit, lesson or assessment
 - Course ID and outcome IDs: **unassigned**; do not reserve before scope approval
-- Teaching status: **not ready**; no lesson or assessment is claimed as authored
+- Teaching status: **not ready**; no registered lesson or assessment; a separate draft unregistered authoring pilot is linked below
 - Intended audience: Grade 3 (skills must be checked)
 - Primary study: Astronomy
 - Session length, frequency, dates and access: **not selected**
@@ -21,6 +21,12 @@ Ask the learner to demonstrate **identify repeating patterns** from a prior plan
 | 3 | Graph observations over weeks | Show an example and representation, test a claim, and explain the reasoning with appropriate terms. |
 
 The ordering and difficulty are proposals, not grade-based prerequisite claims. Real outcomes, prerequisite dependencies, tasks and success criteria must be authored after checking entry work.
+
+## Authored but unregistered Grade 3 shadow-record pilot (2026-11-12)
+
+The separate [shadow measurement and evidence pilot](../../astronomy/grade-3-shadow-records-pilot/README.md) authors four **draft** Trivium episodes (fixed stake protocol, three-time table, scaled graph with missing records, bounded scientific claims), [four entry tasks](../../astronomy/grade-3-shadow-records-pilot/entry-learner.md) with a [remediation key](../../astronomy/grade-3-shadow-records-pilot/entry-teacher.md), [eight guided tasks](../../astronomy/grade-3-shadow-records-pilot/guided-learner.md) with a [separate teacher key](../../astronomy/grade-3-shadow-records-pilot/guided-teacher.md) and [ten fixed public reference tasks](../../astronomy/grade-3-shadow-records-pilot/draft-assessments/reference-learner.md) with [complete separate key and candidate rubric](../../astronomy/grade-3-shadow-records-pilot/draft-assessments/reference-teacher.md). **G3-AST-P1–P4 are local, noncanonical labels**; no registered course or teaching-ready assessment is claimed. All numerical logs are fictional. It is **not** a repeat of Grade 2 astronomy Unit 5 in open [PR #41](https://github.com/larsbx/school-ops/pull/41); it does not assume that work or actual sky records are complete.
+
+**Remaining assessment gap:** approved independent observational provenance, scientifically sound apparatus/observation access and safety, an unseen independent form and owner-approved thresholds. A draft record literacy form cannot establish observational astronomy mastery.
 
 ## Proposed culminating performance
 
