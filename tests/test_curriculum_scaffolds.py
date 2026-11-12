@@ -168,6 +168,52 @@ class CurriculumScaffoldTests(unittest.TestCase):
         self.assertIn("grade-3-tiling-pilot/README.md",
                       (BASE / "grade-3" / "geometry.md").read_text(encoding="utf-8"))
 
+
+    def test_grade3_geometry_transfer_clinic_cases_and_key_separation(self):
+        """Replay all new physical boundary cases, and guard public learner/key separation."""
+        root = ROOT / "curriculum" / "geometry" / "grade-3-tiling-pilot"
+        learner = (root / "transfer-learner.md").read_text(encoding="utf-8")
+        key = (root / "transfer-teacher.md").read_text(encoding="utf-8")
+        readme = (root / "README.md").read_text(encoding="utf-8")
+        self.assertIn("transfer-learner.md", readme)
+        self.assertIn("transfer-teacher.md", readme)
+        self.assertIn("not an adopted timetable", readme)
+        self.assertNotIn("transfer-teacher.md", learner)
+        self.assertNotIn("reference-teacher.md", learner)
+        self.assertIn("not a secure assessment", learner)
+        for n in range(1, 6):
+            with self.subTest(task=n):
+                self.assertIn(f"## T{n} ", learner)
+                self.assertIn(f"**T{n}**", key)
+        # The oracle counts each complete shared tile side twice when removing
+        # internal sides, including the inner boundary of the eight-tile ring.
+        examples = (
+            (("###", "#.#", "###"), 8, 16),
+            (("#.", ".#"), 2, 8),
+            (("##",), 2, 6),
+            (("###", "#..", "##."), 6, 14),
+            (("###", "###"), 6, 10),
+            (("##", "##", "##"), 6, 10),
+        )
+        for rows, expected_area, expected_boundary in examples:
+            cells = {(x, y) for y, row in enumerate(rows)
+                     for x, symbol in enumerate(row) if symbol == "#"}
+            boundary = sum((x + dx, y + dy) not in cells
+                           for x, y in cells
+                           for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+            with self.subTest(rows=rows):
+                self.assertEqual(expected_area, len(cells))
+                self.assertEqual(expected_boundary, boundary)
+        self.assertEqual(12 + 4, 16)  # outer plus inner ring exposed edges
+        self.assertEqual(4 * (2 * 2), 16)  # cm²: 4 tiles of 2cm by 2cm
+        self.assertEqual(4 * (1 * 1), 4)   # cm²: 4 tiles of 1cm by 1cm
+        for token in ("8 square units", "12 length units", "16 length units",
+                      "not side-connected", "6 length units", "14 length units",
+                      "4 cm²", "16 cm²", "8 cm", "16 cm",
+                      "not an adopted grade expectation"):
+            self.assertIn(token, key)
+        self.assertNotRegex(learner + key, r"(?:C|U|L|O|A)-GEO-[0-9]{3}")
+
 class RamadanPracticeTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
