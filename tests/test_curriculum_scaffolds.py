@@ -295,7 +295,7 @@ class Grade3AstronomyShadowDraftTests(unittest.TestCase):
         for i in range(1, 11):
             self.assertEqual(1, learner.count(f"**S{i}.**"))
             self.assertEqual(1, teacher.count(f"| S{i} |"))
-        for text in ("20 cm", "1 cm", "0,10,20,30,40", "unknown", "fictional"):
+        for text in ("20 cm", "1 cm", "0,10,20,30,40", "unknown", "hypothetical"):
             self.assertIn(text, teacher)
         self.assertNotIn("reference-teacher.md", learner)
         self.assertNotIn("guided-teacher.md", learner)
@@ -313,7 +313,7 @@ class Grade3AstronomyShadowDraftTests(unittest.TestCase):
             self.assertIn(f"**G{i}.", guided)
             self.assertIn(f"| G{i} |", answer)
         self.assertNotIn("guided-teacher.md", guided)
-        self.assertEqual(8, len(list(self.PILOT.glob("lessons/*.md"))) * 2)
+        self.assertEqual(4, len(list(self.PILOT.glob("lessons/*.md"))))
         for lesson in self.PILOT.glob("lessons/*.md"):
             body = lesson.read_text(encoding="utf-8")
             for word in ("DRAFT", "Grammar", "Logic", "Rhetoric"):
@@ -329,7 +329,7 @@ class Grade3AstronomyShadowDraftTests(unittest.TestCase):
         self.assertIn("G3-AST-P4", guide)
         self.assertIn("grade-3-shadow-records-pilot/README.md", scaffold)
         self.assertIn("grade-3-shadow-records-pilot/README.md", index)
-        self.assertNotIn("grade-3-shadow-records-pilot/README.md\") |", index)
+        self.assertNotIn("| C-AST-", index)
         for file in list(self.PILOT.rglob("*.md")) + [BASE / "grade-3/astronomy.md"]:
             body = file.read_text(encoding="utf-8")
             with self.subTest(file=file.name):
