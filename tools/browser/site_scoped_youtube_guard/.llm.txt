@@ -1,0 +1,849 @@
+# SchoolOps YouTube Guard — agent and development reference
+
+Scope: tools/browser/site_scoped_youtube_guard in larsbx/school-ops.
+Operator entry points: README.md, RELEASE.md, acceptance/README.md, formal/README.md.
+Paths in this reference are relative to the guard directory unless a command
+or section explicitly names its working directory.
+
+## Start with the relevant source
+
+- Rule generation: build_rules.py, config.json, manifest.json and rules.json.
+- Setup and immutable bundle inventory: wizard.py and installer_core.py.
+- Windows/Linux policy actions and macOS policy export: platform_policy.py and installer_core.py.
+- Self-hosted release and CRX3: release_core.py and crx3.py.
+- Native setup packaging and GUI smoke: package_native.py and smoke_gui.py.
+- Browser acceptance: acceptance/run.cjs and acceptance/check_crx_interop.py.
+- Abstract verification: formal/Release.lean, formal/Audit.lean, formal/release.qnt
+  and formal/verify.py.
+- CI definitions: ../../../.github/workflows/youtube-guard-browser.yml,
+  ../../../.github/workflows/youtube-guard-native.yml and
+  ../../../.github/workflows/youtube-guard-release.yml.
+
+For implementation, inspect current source, exact revision and workflow
+evidence. Keep browser fixture results, hypothetical DNR probes, native build
+results, signed-release observations, managed installation and live playback
+as distinct evidence. Use disposable keys and fixtures for development.
+Production signing, publication and policy application belong to their
+authorized operators. Verify the requested change through its relevant
+workflow. Preserve bundle compatibility, ownership checks and refusal paths.
+
+## Setup, platform policy, and native builds
+
+The setup app prepares the Chrome extension, keeps its website configuration
+attached to the exact publication package, and guides enterprise policy
+installation. The extension allows YouTube **embeds on approved top-level school
+websites** and blocks standalone YouTube navigation. It requires **Chrome 145+**.
+
+**Current status:** prototype; no published SchoolOps extension listing, signed
+production installer, real approved school hostname, or managed-device rollout
+is established here. The source configuration still uses the reserved
+`approved-site.invalid` placeholder. This is a device/browser utility, not a
+curriculum readiness record or a biz-kit authorization mechanism.
+
+### Start the setup app
+
+The [native build workflow](https://github.com/larsbx/school-ops/actions/workflows/youtube-guard-native.yml)
+creates **unsigned candidates** for Windows, macOS and Linux. Open a successful
+run for the revision you intend to use, then download its matching artifact:
+
+| Device | Artifact | Open after extraction |
+| --- | --- | --- |
+| Windows | `schoolops-youtube-guard-windows-2025-unsigned` | Extract `SchoolOps-YouTube-Guard-Setup-windows-unsigned.zip`, then open `SchoolOps-YouTube-Guard-Setup/SchoolOps-YouTube-Guard-Setup.exe` |
+| macOS | `schoolops-youtube-guard-macos-15-unsigned` | Extract the contained tarball and open `SchoolOps-YouTube-Guard-Setup.app` |
+| Linux | `schoolops-youtube-guard-ubuntu-24.04-unsigned` | Extract `SchoolOps-YouTube-Guard-Setup-linux-unsigned.tar.gz`, then run `SchoolOps-YouTube-Guard-Setup/SchoolOps-YouTube-Guard-Setup` |
+
+Keep the **whole extracted application directory**, including its `_internal`
+folder, together on Windows and Linux. Do not move or distribute the executable
+alone. macOS likewise needs the complete `.app` bundle.
+
+Check the source commit and architecture in `build-report.json`, and the file
+hash in `SHA256SUMS.txt`. These are CI artifacts with limited retention, not a
+permanent “latest installer” release channel. The native app includes Python;
+operators do not need to install Python separately.
+
+Unsigned candidates may be blocked by Windows SmartScreen or macOS Gatekeeper.
+Use an organization-approved, signed distribution before rollout; this setup does
+not recommend bypassing those controls. Preparation runs without administrator
+rights. Only an explicit local policy action requests elevation.
+
+For development from a repository checkout:
+
+```sh
+python3 tools/browser/site_scoped_youtube_guard/wizard.py
+```
+
+Windows also has [launch-wizard.cmd](launch-wizard.cmd); Linux/macOS have
+[launch-wizard.sh](launch-wizard.sh). The source version needs Python 3 and Tkinter
+(on some Linux distributions, the `python3-tk` package). Its setup flow needs no
+third-party Python packages.
+
+### Prepare → publish → install
+
+#### 1. Prepare the extension once
+
+In **School websites**, enter the actual school portal hostnames, one per line.
+Use hostnames such as `portal.example.org`, without a URL prefix or wildcard.
+A listed hostname includes its subdomains; YouTube cannot be an approved portal.
+
+In **Access rules**, choose:
+
+- **Blacklist:** allow ordinary websites except those explicitly blocked.
+- **Whitelist:** allow top-level navigation only to the school portals and the
+  additional allowed hostnames.
+
+Direct YouTube navigation stays blocked in either mode. On **Publication**, choose
+the intended device OS and distribution channel. Leave the published extension
+ID empty for this first preparation. Review the configuration and export to a
+**new folder**. The setup app then opens **Install & verify**, with links to the
+bundle folder and its `START_HERE.html` guide.
+
+#### 2. Publish that exact package
+
+For the Chrome Web Store route, upload `extension.zip` through your own
+[Chrome Web Store developer account](https://chrome.google.com/webstore/devconsole).
+The ZIP has `manifest.json` at its root. Complete the publication process and
+obtain the extension's actual 32-character ID. The Store update source is
+`https://clients2.google.com/service/update2/crx`.
+
+For the managed self-hosted route, reopen the prepared self-hosted setup and
+choose **Prepare self-hosted release…**. Supply a public RSA key, the pinned
+extension ID and version, HTTPS update/package URLs, and the previous signed
+release (or explicit first release). The app freezes a deterministic signing
+contract around the unchanged ZIP. Use the copied signing command or an approved
+external signer, then review and separately approve publication of the CRX and
+update XML. Choose **Verify HTTPS & export…** to check the anonymously downloaded
+bytes before creating a deployment.
+
+The [self-hosted release guide](RELEASE.md) gives the exact commands, local
+publication-plan approval, interruption recovery, signer integration, version
+rules, TLS checks and verification boundary. OpenSSL 3 is required on the
+signing/verification workstation. Private keys stay outside the GUI and release
+artifacts. The app does not upload to the Store or a production host or create an
+update service. Neither a ZIP nor an unpacked directory is a signed CRX.
+
+#### 3. Reopen the prepared setup
+
+Choose **Open prepared setup…** and select `setup.json` inside the prepared
+folder, or use **Enter published ID…** while that bundle is still open. Keep the
+entire folder together: reopening verifies its inventory, checksums, generated
+rules and publication ZIP.
+
+The school websites, access rules, distribution channel and extension version
+are now locked to that package. For the **Web Store**, enter the real published
+ID, confirm that you published **this exact prepared extension**, and export to a
+new folder. Store confirmation remains an operator statement; it does not
+independently authenticate the Store package.
+
+For **self-hosting**, use **Verify HTTPS & export…** with the prepared signed
+release. The verifier checks the XML, TLS, CRX signature, public-key-derived ID,
+exact version and complete package/ZIP bytes. Manual confirmation cannot replace
+this new flow. Its timestamped receipt records downloaded bytes; it does not
+establish ongoing endpoint availability or managed-device enforcement. The
+publication and deployment ZIPs remain identical in both routes.
+
+Previously exported self-hosted bundles still reopen and permit removal of an
+unchanged policy owned by this installer. New self-hosted installation requires
+the verified release handoff.
+
+#### 4. Install the enterprise policy
+
+Open the final deployment's `setup.json` on its target OS and follow the
+**Install & verify** page. For centrally managed devices, apply the supplied
+policy through the system that already owns Chrome policy.
+
+| Platform | Installation route | Existing policy handling |
+| --- | --- | --- |
+| Windows | Choose **Install policy (administrator)** and approve Windows UAC. The result appears in the administrator action's window. | Adds the SchoolOps entry to the 64-bit HKLM `ExtensionSettings` value while preserving wildcard and unrelated extension entries. A conflicting SchoolOps entry is refused. Use the authoritative GPO/cloud console when it controls that value. |
+| Linux, Google Chrome | Choose **Install policy (administrator)**. A desktop with `pkexec` shows its administrator prompt; otherwise the app copies a `sudo` command for a terminal. | Creates `/etc/opt/chrome/policies/managed/school-ops-youtube-guard.json`. It refuses another managed JSON file defining `ExtensionSettings`; merge through that policy's administrator instead. |
+| macOS | Deploy `deployment/schoolops-chrome.mobileconfig` through your MDM as a computer-level profile. | The exported profile is unsigned. If Chrome already has an `ExtensionSettings` payload, merge the supplied value into that profile instead of installing a competing profile. |
+| ChromeOS | In Google Admin, open **Devices → Chrome → Apps & extensions → Users & browsers**, select the intended organizational unit, add the extension by ID/update source, choose **Force install**, and save. | Configure the correct user/device scope in the existing Admin Console. The setup app does not enroll devices. |
+
+A repeated Windows/Linux installation of an identical policy is a no-op. Policy
+application records a machine-level ownership receipt only when this installer
+adds the policy.
+
+**Self-hosting prerequisites:** Windows requires Active Directory domain join,
+Azure AD join, or Chrome Enterprise Core enrollment. macOS requires MDM
+management, MCX domain membership, or Chrome Enterprise Core enrollment. A local
+registry write or locally opened profile does not establish that enrollment.
+These restrictions are specified in the
+[current Chromium force-install policy](https://chromium.googlesource.com/chromium/src/+/HEAD/components/policy/resources/templates/policy_definitions/Extensions/ExtensionInstallForcelist.yaml).
+Self-hosted exports include `override_update_url: true` so later extension
+updates continue to use the supplied policy update source.
+
+#### 5. Verify in Chrome
+
+Use the setup app's copy buttons to paste these addresses into Chrome:
+
+1. **`chrome://policy`:** click **Reload policies**, confirm `ExtensionSettings`
+   has **Status OK**, and check its extension ID and update source.
+2. **`chrome://extensions`:** confirm the expected ID and version, managed
+   installation status, and inability to disable/remove it as a standard user.
+3. Open the approved school portal and test a real embedded YouTube video.
+   Check that direct YouTube, “Watch on YouTube”/new-tab links, and YouTube embeds
+   on an unapproved website are blocked.
+4. Restart Chrome and repeat. Test the selected ordinary-site access rules too.
+
+The app distinguishes a verified bundle, a local policy action, Chrome
+installation, and website behavior. A successful export or policy write does not
+mark Chrome installation or playback as verified.
+
+### Updating or removing a deployment
+
+**Change website rules:** reopen the previous setup, choose **New configuration**,
+increase the extension version, and prepare/publish the new package under the
+same extension ID and signing key. Reopen that new package to finalize its
+policy. Rules are compiled into the extension's static ruleset; they are **not**
+runtime `storage.managed` settings. Existing devices obtain changed rules through
+the extension's publishing/update channel.
+
+**Remove local policy:** reopen the deployment bundle used for installation and
+choose **Remove local policy**. Windows/Linux removal requires the installer's
+machine-level ownership receipt and an unchanged matching policy. It preserves other entries
+and refuses to remove a pre-existing identical policy that this installer did
+not create. If an administrator changed the entry, resolve that change through
+its owner. Remove GPO/MDM/Admin Console policy in its management system. Check
+Chrome afterward; removing local policy is not itself proof of extension removal.
+
+### What is in a bundle?
+
+| Artifact | Purpose |
+| --- | --- |
+| `extension/` | Configured MV3 manifest, static rules and administrator configuration |
+| `extension.zip` | Deterministic publication ZIP of those exact extension files |
+| `setup.json` | Saved settings and the extension ZIP fingerprint; reopen in Setup |
+| `START_HERE.html` | Local, readable guide with the next action and verification steps |
+| `deployment/README.md` | Platform-specific installation and recovery guidance |
+| `SHA256SUMS.json` | SHA-256 inventory of generated files |
+| `deployment/linux-managed-policy.json` | Complete Linux policy; generated after publication confirmation |
+| `deployment/extension-settings-value.json` | Value to merge into an existing GPO/MDM `ExtensionSettings` policy |
+| `deployment/schoolops-chrome.mobileconfig` | Unsigned macOS management profile; generated after publication confirmation/verification |
+| `deployment/publication-receipt.json` | Self-hosted HTTPS observation, also bound in `setup.json`; no device enforcement claim |
+
+The exporter never replaces an existing destination folder. Retain the original
+prepared and deployment bundles privately if their school hostnames or internal
+policy details should not be public.
+
+### Development and acceptance
+
+For an unpacked development pilot, generate a bundle and use **Load unpacked** in
+`chrome://extensions` with its `extension/` folder. Such a developer installation
+is removable and does not establish enterprise enforcement.
+
+Chrome 145+ supplies the `excludedTopDomains` declarative-network-request
+condition used to distinguish the top-level school website from the YouTube
+iframe's initiator. The [browser acceptance harness](acceptance/README.md) checks
+network enforcement against controlled HTTPS fixtures. Its hypothetical DNR
+probes are reported separately. Neither result establishes real YouTube playback
+or managed-device enforcement.
+
+Windows assumes administrator-controlled HKLM policy and receipt keys. It
+rechecks values before writing, but does not transact across simultaneous policy
+writers or audit custom registry ACLs. Tests include disposable HKCU registry
+operations; actual HKLM deployment and Chrome enforcement remain untested. Linux
+checks root ownership, directory permissions and symlink-free policy ancestry.
+
+Run the Python contracts from the repository root:
+
+```sh
+python3 -m unittest discover -s tests -v
+```
+
+The [self-hosted release workflow](../../../.github/workflows/youtube-guard-release.yml)
+runs disposable RSA signing, controlled HTTPS and interruption acceptance on all
+three desktop platforms. The [Lean/Quint layer](formal/README.md) separately
+checks its abstract state machine and complete Boolean admission projection;
+this does not prove the full Python/TLS/cryptographic runtime.
+
+The [native workflow](../../../.github/workflows/youtube-guard-native.yml) builds
+on Windows, macOS and Ubuntu. Its Linux UI smoke test exercises the graphical
+flow under Xvfb. Each packaged `--self-test` verifies bundled data, draft export,
+resumption and policy-bundle generation without changing system policy or
+installing Chrome. Native build provenance and smoke results accompany each
+artifact. To build a native candidate on the matching OS:
+
+```sh
+python -m pip install "pyinstaller==6.22.3"
+python tools/browser/site_scoped_youtube_guard/package_native.py \
+  --output-dir native-wizard-output
+```
+
+Before rollout, establish the actual approved hostnames, exact signed/published
+extension, approved native-app distribution, real YouTube playback, and managed
+standard-user installation. Browser controls cannot by themselves restrict
+administrator access, alternate browsers/apps, proxies or unmanaged devices;
+cover those through device controls where required.
+
+#### Official references
+
+- [Chrome ExtensionSettings](https://support.google.com/chrome/a/answer/9867568)
+- [Linux policy deployment and conflicting policy files](https://support.google.com/chrome/a/answer/9027408)
+- [Automatically install Chrome apps and extensions](https://support.google.com/chrome/a/answer/6306504)
+- [Extension distribution](https://developer.chrome.com/docs/extensions/how-to/distribute)
+- [Chrome declarativeNetRequest API](https://developer.chrome.com/docs/extensions/reference/api/declarativeNetRequest)
+
+## Self-hosted release contract and procedures
+
+This workflow turns the wizard's **exact prepared ZIP** into a signed CRX3,
+prepares an HTTPS update manifest, and verifies downloaded publication bytes
+before exporting a self-hosted deployment bundle. It supports a local OpenSSL
+signer or an externally produced RSA signature. The Chrome Web Store route
+remains available in the [setup guide](README.md).
+
+The implementation and CI use disposable credentials and controlled HTTPS
+fixtures. No production key, actual school hostname, production extension,
+managed device or policy rollout is established by those checks.
+
+### Authority and observation boundaries
+
+Preparation needs only a **public** key. The GUI never requests a private key,
+publishes files, or enrolls a device. Its **Verify HTTPS & export** action makes
+anonymous read-only requests and exports local files. Applying policy remains a
+separate explicit administrator action with the existing operating-system
+protections.
+
+Before a production operation, separately approve the exact key/signing tool,
+extension ID, version, source ZIP hash, destination URLs and publication actions.
+Local staging has a concrete review/approval mechanism described below. Remote
+upload, production key access, device enrollment and enterprise-policy changes
+are not automated by this release workflow.
+
+An unsigned receipt records what the verifier observed. Its local shape and
+binding checks do not authenticate the person who created it. It is not a
+security token, proof of future availability, or proof of browser enforcement.
+To check an endpoint again, run the verifier again. Preserve the trusted prepared
+bundle and release directory; hashes supplied only by an untrusted remote server
+are never used as the expected fingerprint.
+
+### Requirements and supported profile
+
+- Source use needs Python 3.11+ and OpenSSL 3 on the signing/verification
+  workstation. Native bundles include Python; OpenSSL remains an external
+  workstation dependency, checked when the release operation runs.
+  On macOS with Homebrew OpenSSL 3 installed, prepend
+  `$(brew --prefix openssl@3)/bin` to `PATH` before launching the source or native
+  command. Confirm `openssl version` reports OpenSSL 3; the system or Python
+  toolchain can otherwise select another OpenSSL installation. Hosted macOS
+  acceptance explicitly selects Homebrew OpenSSL 3 and checks the major version.
+- Supported signing keys are RSA 2048–8192-bit public SubjectPublicKeyInfo keys.
+  Public keys may be PEM or DER. The local signer uses an unencrypted local PEM
+  through an explicitly supplied path; it does not collect passwords or copy
+  the key. Use the external-signature route for a protected signer/HSM.
+- The deliberately narrow CRX3 profile has one RSA/SHA-256 PKCS#1 v1.5 proof and
+  canonical protobuf encoding. It does not accept arbitrary third-party CRX
+  headers or claim a Chrome Web Store publisher signature.
+- Update XML and CRX URLs must be explicit HTTPS file URLs on the same origin,
+  without credentials, queries, fragments, redirects or path traversal. Use a
+  new CRX URL for each version. The update URL remains stable.
+- XML must be served as `application/xml` or `text/xml`; CRX must be served as
+  `application/x-chrome-extension`. Serve unencoded exact bytes, anonymously,
+  without cookies or authentication. The verifier does not inherit browser
+  sessions, proxy credentials or environment proxy configuration.
+- Downloads have size and time bounds. Normal TLS trust and hostname checking
+  are mandatory. `--ca-file` supplies an explicitly selected private/test CA
+  bundle; it does not disable certificate or hostname verification.
+
+### Wizard handoff
+
+1. Choose **self_hosted** before the initial bundle export. Prepare the school
+   websites, rules and version into a new folder. Reopen that `setup.json`.
+2. Choose **Prepare self-hosted release…**. Select the public key and pin the
+   expected extension ID, exact prepared version, update URL and package URL.
+   Select the previous signed release, or explicitly declare the first release.
+3. The app writes a new release directory and copies a signing command. A
+   separate authorized signer runs that command or supplies a detached signature.
+   The command writes a sibling JSON operation report, including failures, so
+   windowed native applications do not hide the result.
+4. Review the release and exact publication plan. After separate approval,
+   stage/upload the immutable CRX first and activate the update manifest last.
+5. Choose **Verify HTTPS & export…**, select the signed release, and choose a new
+   deployment directory. Verification downloads the manifest and CRX, compares
+   them with the prepared release, verifies the signature and embedded ZIP, and
+   fetches the manifest again to detect changes during the check.
+6. The app reopens the resulting deployment. Follow its existing policy and
+   on-device verification steps after separately approving those actions.
+
+The distribution channel, school configuration and extension version stay
+bound to the saved bundle. The target OS may change without rebuilding the ZIP.
+Long-running release operations run off the UI thread; navigation and policy
+actions remain locked to the original bundle until the operation finishes.
+
+New self-hosted exports and installation require a bound verification receipt.
+Old operator-attested self-hosted bundles still reopen and support removal of an
+unchanged policy owned by the installer. They need release verification before
+new installation. Existing Web Store confirmation behavior is preserved.
+
+### Command-line preparation and signing
+
+The following are **review examples**, using reserved `.example` URLs. They are
+not authorization to access a production key or publish to a real host. Run
+source commands from this directory, replacing paths with reviewed inputs.
+
+Derive the public-key ID, then compare it with the independently pinned identity
+for an existing deployment:
+
+```sh
+python release_core.py key-id approved-public-key.pem
+```
+
+Prepare the first release from a saved self-hosted wizard bundle:
+
+```sh
+python release_core.py prepare prepared/ release-0.1.1/ \
+  --public-key approved-public-key.pem \
+  --expected-id abcdefghijklmnopabcdefghijklmnop \
+  --expected-version 0.1.1 \
+  --update-url https://updates.school.example/guard/updates.xml \
+  --crx-url https://updates.school.example/guard/packages/guard-0.1.1.crx \
+  --initial-release
+```
+
+The example ID is illustrative and is refused unless it matches the actual
+public key. `--expected-version` must exactly match the frozen extension
+manifest. Preparation refuses a changed bundle, inconsistent ID, missing
+history declaration, or an existing output directory.
+
+After separately authorizing the signer/key operation:
+
+```sh
+python release_core.py --report release-0.1.1-signing-result.json \
+  sign release-0.1.1/ --key approved-signing-key.pem
+```
+
+For an external signer, have the approved signing tool sign the **exact**
+`signing-input.bin` with RSA PKCS#1 v1.5 and SHA-256, then import its detached
+signature:
+
+```sh
+python release_core.py assemble release-0.1.1/ --signature approved-signature.bin
+```
+
+The integration verifies the signature itself. A signer cannot supply trusted
+verification flags, substitute a key, rezip the archive, modify the version,
+change rules or add extension files. Repeating signing with the same inputs
+reuses identical output; conflicting existing bytes are refused.
+
+The native executable accepts the same commands after `--release`. A windowed
+native invocation must put `--report <sibling-file.json>` before the subcommand.
+Reports can replace previous SchoolOps operation reports; unrelated files and
+paths inside the prepared, release or staging directory are refused.
+
+### Reviewable publication and interrupted recovery
+
+The local staging adapter maps the URL paths beneath a selected existing
+web-root. It does not make HTTP PUTs, SSH connections, cloud-storage writes or
+other uploads. Keep this directory under one publisher's control.
+
+First show the exact paths, URLs, hashes, sizes, order and current predecessor:
+
+```sh
+python release_core.py plan-stage release-0.1.1/ reviewed-staging-root/
+```
+
+Only after reviewing and separately approving that output, pass its exact
+`approval_sha256`:
+
+```sh
+python release_core.py stage release-0.1.1/ reviewed-staging-root/ \
+  --approve-plan-sha256 APPROVED_PLAN_SHA256
+```
+
+The approval is bound to one verified in-memory snapshot. Replacing the release
+directory while staging cannot change the approved files or destinations.
+Staging copies only the CRX and update XML, never signing inputs, keys, saved
+setup files or operator receipts.
+
+On POSIX, new distribution files default to mode `0644`. Manifest replacement
+preserves existing read permissions and group ownership for group-only access,
+and strips execute bits and group/other write permissions. A retry repairs
+matching owner-only files left by earlier staging runs. Set up the web-root and
+URL parent directories so the server account can traverse them and only the
+publisher can write to them. Public files are prepared inside private temporary
+directories. The release lock and signed working copies retain their private
+permissions.
+
+| Interruption point | State and recovery |
+| --- | --- |
+| Before package insertion | The previous manifest remains active; rebuild the plan and retry. |
+| After package insertion, before manifest replacement | The complete immutable package may exist, but the previous manifest is still active. Retry checks the existing bytes before activating the new manifest. |
+| After manifest replacement, before reporting success | Rebuild the plan and retry. Identical package/manifest bytes are accepted idempotently; the HTTPS check is still required. |
+| During signing before `signed.json` | Staging refuses the incomplete release. Repeating the same signing operation validates existing output and writes the commit record last. |
+| Conflicting bytes or unexpected predecessor | Stop and inspect. The workflow does not overwrite an immutable package or silently reset release history. |
+
+Files are written through a temporary file, flushed, then inserted/replaced
+atomically on the same filesystem. Immutable insertion uses hard links, so the
+staging filesystem must support them. Directory flushes are performed on POSIX;
+power-loss durability on all storage devices is not proved. Process interruption
+recovery is tested, including an actual child-process termination.
+
+An OS advisory lock serializes cooperating publishers and is released when a
+process dies. It does not exclude unrelated writers that ignore the lock. The
+predecessor recheck and replacement are not a compare-and-swap transaction
+against such writers. Use one authorized publisher for this directory. An
+external hosting adapter must provide equivalent immutable-package and
+manifest-last behavior; that external adapter is not established by these tests.
+
+For remote publication, review the two `writes` entries with the operator who
+owns the hosting system and obtain separate approval for their upload. Upload
+the package first, confirm its completion, then activate the XML. Do not upload
+the entire private release directory. This repository contains no production
+hosting credentials or automatic production publishing workflow.
+
+### Verify and export
+
+```sh
+python release_core.py verify release-0.1.1/
+python release_core.py export-deployment prepared/ release-0.1.1/ deployment/ \
+  --target-os windows
+```
+
+Both operations make fresh anonymous HTTPS requests. Export performs its own
+check rather than accepting a previous report as a trusted verifier result.
+The manifest ID, version, URL, size and package hash must match the local
+release contract. The downloaded CRX must match the local signed CRX byte for
+byte. Its public key, signed ID and signature are checked, and its complete ZIP
+tail must equal the original prepared ZIP, which is recompiled from its saved
+configuration. XML declarations/DTD tricks, duplicate entries, unsupported
+headers, redirects, untrusted certificates and interrupted downloads fail.
+
+Matching first and second manifest observations detect changes seen during the
+check; they cannot exclude a change-and-change-back between requests. A receipt
+therefore states `scope: downloaded_release_bytes`, `policy_applied: false` and
+`managed_device_enforcement: false`.
+
+### Updating versions
+
+Prepare a new wizard configuration with a higher version, retain the same key
+and extension ID, use a new immutable CRX URL, and pass
+`--previous-release <previous-signed-release>` instead of `--initial-release`.
+The previous signed files are revalidated. Versions compare numerically after
+padding to four components: `1`, `1.0` and `1.0.0.0` are equal. Downgrades and
+numerically equal versions are refused, even when their text differs.
+
+The stable manifest must still match the supplied predecessor before staging a
+new release. Omitting known history by claiming a first release is an operator
+error; initial staging refuses an existing unrelated manifest rather than
+overwriting it. This is not a global release registry or protection against an
+administrator deliberately deleting history and the server's files.
+
+The prepared manifest is never rewritten to insert an `update_url`. This
+managed self-hosted route retains `ExtensionSettings.override_update_url: true`
+and the existing OS management prerequisites. The release mechanism does not
+establish unmanaged installation or relax the Windows/macOS management rules.
+
+### Artifact inventory
+
+| File | Meaning |
+| --- | --- |
+| `release.json` | Deterministic ID/version/ZIP/public-key/URL/predecessor contract and its hash |
+| `extension.zip` | The original wizard publication ZIP, unchanged |
+| `public-key.der` | Public RSA signing identity |
+| `signing-input.bin` | CRX3 context, signed ID and exact ZIP; input for the approved signer |
+| `extension.crx` | Deterministic, independently verified developer-signed CRX3 |
+| `update.xml` | Deterministic update manifest with exact ID, version, CRX URL, size and hash |
+| `signed.json` | Local commit record binding CRX and XML hashes; written last |
+| `.schoolops-release.lock` | Advisory-lock file, not a progress or success record |
+| Deployment `publication-receipt.json` | Timestamped, unsigned observation also bound in `setup.json`; not a policy or enforcement result |
+
+Private signing keys and TLS fixture keys never belong in these artifacts.
+Determinism applies to preparation, signing and XML for fixed inputs, not to the
+observation timestamp or freshly generated disposable test keys.
+
+### Automated acceptance and formal scope
+
+Run concrete acceptance from the repository root:
+
+```sh
+python -m unittest discover -s tests -p 'test_guard_release*.py' -v
+python tools/browser/site_scoped_youtube_guard/acceptance/check_crx_interop.py \
+  --chromium /path/to/chrome --report /tmp/schoolops-crx-interop.json
+```
+
+The [release workflow](../../../.github/workflows/youtube-guard-release.yml)
+runs real disposable signing and HTTPS acceptance on Windows, macOS and Linux,
+then runs the pinned Lean/Quint verification separately. The existing browser
+workflow checks the actual Chromium packer; native builds exercise the GUI and
+packaged modules. Test credentials are generated in temporary directories and
+are not uploaded as artifacts.
+
+Concrete tests cover wrong identities, wrong package/configuration hashes,
+unauthorized versions and numeric aliases, missing XML, failed/truncated
+downloads, TLS and hostname failures, redirects, changed manifests, signer
+substitution, malformed CRX, stale predecessors, conflicting immutable paths,
+approval substitution, concurrent cooperating publishers, and interrupted
+signing/publication recovery. The Chromium check independently compares actual
+packer bytes with the OpenSSL adapter's output.
+
+See the [formal verification boundary](formal/README.md) for the 44 registered
+Lean theorems, compiled axiom audit, exact finite Quint closure, negative
+controls, and the complete 256-case Python/Lean/Quint admission comparison.
+Those results establish an abstract state machine and the small Boolean
+admission projection. Cryptography, TLS, parsing, filesystem durability and the
+complete Python implementation remain separately tested trust boundaries.
+
+Passing release mechanics does not establish actual managed installation,
+standard-user enforcement, real YouTube playback, or production hosting.
+
+### Protocol references
+
+- [Chromium CRX creator](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/components/crx_file/crx_creator.cc)
+- [Chromium CRX verifier](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/components/crx_file/crx_verifier.cc)
+- [CRX3 protobuf schema](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/components/crx_file/crx3.proto)
+- [Extension ID derivation](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/components/crx_file/id_util.cc)
+- [Self-hosting and update XML](https://developer.chrome.com/docs/extensions/how-to/distribute/host-on-linux)
+- [Chrome version rules](https://developer.chrome.com/docs/extensions/reference/manifest/version)
+- [Chromium ExtensionSettings policy](https://chromium.googlesource.com/chromium/src/+/HEAD/components/policy/resources/templates/policy_definitions/Extensions/ExtensionSettings.yaml)
+
+Protocol references checked on 2026-11-11. Chromium's creator/verifier use
+`RSA_PKCS1_SHA256`; the RSA-PSS comment in the protobuf file does not describe the
+current implemented signing scheme.
+
+## Browser acceptance harness
+
+Run directory: acceptance/.
+
+This suite loads the **generated static MV3 rules in an actual Chrome/Chromium
+145+ engine**. It uses controlled HTTPS fixtures on loopback, including responses
+at YouTube-shaped URLs. These are **not real YouTube pages or playback results**.
+It never contacts YouTube, applies managed policy, or publishes an extension.
+
+### Reproduce
+
+Requires Node 20+, Python 3, OpenSSL and a system that can launch a browser and
+bind local sockets. From this directory:
+
+```sh
+npm ci --ignore-scripts
+npx playwright-core install --with-deps chromium
+npm test
+```
+
+The lockfile pins Playwright and its associated browser build. The `chromium`
+channel uses full Chromium in headless mode, rather than the headless shell.
+Alternatively set `CHROME_EXECUTABLE=/absolute/path/to/chrome` to a compatible
+Chromium/Chrome for Testing executable which supports unpacked side-loading.
+Retail Chrome/Edge releases can restrict the command-line extension flags.
+Use `GUARD_HEADED=1` for a visible browser (Linux CI needs Xvfb).
+`PYTHON` selects another Python executable.
+
+Use `GUARD_EVIDENCE_DIR=/new/empty/directory` to retain a new run. The default is
+`artifacts/`; output must be empty to prevent mixing executions. Startup errors,
+old browsers, absent extensions, mismatches and network timeouts exit nonzero.
+There is no successful skip when a browser is unavailable.
+`GUARD_NO_SANDBOX=1` is only for isolated disposable root-owned test containers;
+it does not demonstrate a secure device configuration.
+
+### Fixture isolation and assertions
+
+A temporary HTTPS server binds `127.0.0.1` on an ephemeral port. Chromium's host
+resolver maps fixture hostnames to loopback and its proxy is disabled. Its test
+certificate is accepted using `--ignore-certificate-errors`. HTTPS avoids HSTS
+upgrades of YouTube URLs interfering with the test. Every target has a unique
+path, responses disable caching, and no Playwright request routing is used.
+
+Each allowed request must return HTTP 200 with the fixture marker header and
+exactly one server hit. Each blocked request must emit
+`net::ERR_BLOCKED_BY_CLIENT` and have zero server hits. DNS failures, TLS failures,
+timeouts, HTTP errors and missing observations **do not count as blocks**.
+The same matrix first runs with **no extension**, requiring every target to
+succeed, then with blacklist and whitelist rules. This control detects fixture
+or browser failures which could otherwise resemble policy enforcement.
+
+Configurations are generated by the production `build_rules.build` function.
+The copied manifest has only a test public `key` added, and a `probe.html` page
+is added to the temporary extension. The manifest's permissions and static rule
+registration are unchanged. These additions let the harness locate the extension
+and assert that its static ruleset actually loaded. No service worker, extra
+permission, dynamic rule, or production configuration is installed. Service
+workers are disabled for controlled fixtures.
+
+| Coverage | Expected contract |
+| --- | --- |
+| Standalone YouTube, mobile, short and nocookie domains, subdomains, embed paths, trailing-dot hostname | Block in both modes |
+| Approved portal and its subdomain | Allow embeds |
+| Ordinary allowed website (`library.test`) | Allow navigation; deny YouTube embeds |
+| Approved domain nested inside unapproved top website | Deny YouTube; inner origin cannot confer approval |
+| Unapproved intermediary inside approved top website | Permit YouTube under the approved top context |
+| Already-created iframe navigated to YouTube | Same top-site rule |
+| User-clicked new-tab YouTube link | Block even from approved portal |
+| Portal suffix and near-name lookalikes | Cannot acquire embed approval |
+| Additional allowed/blocked sites and their subdomains | Apply selected top-level whitelist/blacklist mode |
+| Script/API, image, Google Video resource requests | Permit only under approved top context |
+
+Website filtering is deliberately **top-level** filtering: an ordinary website
+may still appear in an iframe under an approved page. The YouTube guard permits
+YouTube subframes/resources under approved top-level sites; it is not a path-level
+YouTube player allowlist. This suite tests that contract, not YouTube's own
+frame restrictions. It does not cover every resource type, worker, browser
+service, alternate URL syntax, or device-level bypass.
+
+### Evidence levels
+
+`report.json` records the browser and Playwright versions, OS, launch options,
+configuration, source commit/dirty status, generator/manifest/harness hashes,
+per-request outcomes and fixture server log. The exact configurations, rules and
+test manifests are saved beside it. The source hashes identify dirty local runs;
+CI provides a commit-addressed execution and downloadable artifact. Artifacts are
+retained by the dedicated workflow for 30 days; download them for longer retention.
+
+- `browserNetwork`: real browser requests to controlled fixtures, including
+  the no-extension control. This establishes the tested DNR network behavior.
+- `hypotheticalDnr`: separately labelled Chrome `testMatchOutcome` calls using
+  `topUrl`, including an intentionally different initiator. These check simulated
+  rule matching and extension loading; they are not network or playback evidence.
+- `realYouTubePlayback`: always `not_run` here. A fixture returning HTML or a
+  resource response does not establish player operation, codecs, authentication,
+  cookies, required external hosts, or "Watch on YouTube" behavior in a real player.
+
+### Remaining deployment acceptance
+
+1. Obtain the actual administrator-approved school hostnames, compile/review their
+   rules, and repeat browser checks with that configuration.
+2. On the actual portal in supported Chrome 145+, record browser version,
+   configuration hashes, video URL/ID and result of real embedded playback. Test
+   direct/new-tab links and embeds on an unapproved website separately. Record
+   player errors as failures or unresolved results, never as a fixture pass.
+3. Publish/sign the **exact reviewed build**, establish its real extension ID and
+   update URL, then verify the signed package/update chain. The test key is not
+   a signing credential or the published extension identity.
+4. Force-install that published extension through supported OS/MDM policy. On an
+   actual managed standard-user device, record `chrome://policy`, extension
+   version/status, inability to disable/remove it, behavior after restart/update,
+   and the browser matrix. Assess other browsers/apps through device controls.
+
+These steps are open acceptance gates. Unpacked local/CI testing establishes
+neither signed distribution nor managed-device tamper resistance.
+
+References: [Chrome DNR API](https://developer.chrome.com/docs/extensions/reference/api/declarativeNetRequest)
+and [Playwright extension testing](https://playwright.dev/docs/chrome-extensions).
+
+## Lean and Quint verification
+
+Run directory: formal/.
+
+This layer verifies the release admission rule and an abstract publication state
+machine. It runs without signing credentials, an HTTPS endpoint, administrator
+rights, or a managed device. Concrete CRX parsing, signatures, TLS downloads,
+wizard integration and interrupted file publication have separate Python
+acceptance tests.
+
+### Reproduce the checks
+
+Use the pinned toolchains: **Lean 4.19.0** from [lean-toolchain](formal/lean-toolchain)
+and **Quint 0.33.1** from the committed npm lockfile. Lean imports only `Std`;
+there is no mathlib download. The Quint runner uses its TypeScript evaluator,
+so this check does not require Apalache, Java, Docker, or the Quint Rust backend.
+
+From this directory:
+
+```sh
+npm ci --ignore-scripts --no-audit --no-fund
+python3 verify.py
+```
+
+`verify.py --lake /absolute/path/to/lake` supports a standalone Lean installation.
+`--output-dir` selects the directory for logs, negative-control traces and
+`verification.json`; the default `verification-output/` is ignored by Git.
+The runner checks tool versions, cleans the Lean build, rebuilds the current
+sources, audits the compiled theorem dependencies, and records the source hashes
+in its receipt. Its commands do not publish an extension or change policy.
+
+### What is established
+
+[Release.lean](formal/Release.lean) contains **44 registered theorem declarations**.
+The committed [obligation inventory](formal/proof-obligations.json) and
+[compiled axiom audit](formal/Audit.lean) must cover exactly the same declarations.
+The current proofs use only Lean's propositional extensionality axiom
+(`propext`); the runner rejects any additional axiom, a missing audit entry, or
+a proof placeholder.
+
+| Obligation | Established property |
+| --- | --- |
+| Publication admission | Every one of the eight required observations must succeed. Wrong identity, unauthorized version, changed ZIP, different CRX fingerprint, bad signature, unverified TLS, a missing manifest or a failed download refuses admission. |
+| Prior release | An update preserves the signing identity and update channel and strictly increases the abstract numeric version. Equal versions and rollbacks are refused. |
+| Binding | All traces preserve the expected ID, prepared archive fingerprint, signed package fingerprint, version and endpoints. |
+| Publication ordering | Signing verification precedes package staging; package staging precedes manifest activation. An invalid predecessor observation cannot activate a new manifest. |
+| Retries | Repeating signing verification, package staging, manifest activation, or an identical publication observation is idempotent. |
+| Interruption and recovery | Interruption prevents new activation or successful verification. Recovery preserves already staged content and requires a new observation before restoring current acceptance. |
+| Rechecking | A failed verification observation clears acceptance in the model; a previous successful observation cannot make a failed recheck pass. |
+| Authority boundary | No trace applies enterprise policy or establishes managed-device enforcement. |
+
+The all-trace theorem is proved by induction over an arbitrary list of model
+events. It is not restricted to the finite Quint examples.
+
+### Independent bounded model
+
+[release.qnt](formal/release.qnt) implements the transitions independently. Its supplied
+finite domain uses one update from abstract version 1 to version 2, the expected
+binding and six individual field substitutions, both truth values for signing,
+package and predecessor observations, and ten admission masks. These masks
+include success, no observations, and each single failed observation.
+
+The evaluator constructs the complete successor set and repeatedly expands it.
+It then checks **both** that the reached set is closed under every supplied
+transition and that every reached state satisfies the safety predicate. The
+current fixed point contains **81 states**. A closure failure fails the runner;
+the iteration count alone is never reported as exhaustive verification.
+
+Eight named executable scenarios cover successful publication, interruption
+before activation, interruption after a successful check, failed rechecking,
+invalid prior versions/identity/channel, retries, binding substitutions and the
+full guard truth table.
+
+Two deliberately unsafe transitions must produce actual invariant violations:
+
+- Activating a manifest before its package exists.
+- Accepting a publication while the manifest observation is false.
+
+The runner checks the resulting ITF witness states, not merely the checker's
+nonzero exit code. Three additional Lean controls require refusal of a false
+proposition, an injected axiom and a proof placeholder.
+
+### Runtime connection and limits
+
+The runtime's [`publication_admitted`](release_core.py) function uses exactly
+the eight named Boolean observations. The runner evaluates **all 256 Boolean
+assignments** in Python and Lean and compares them with Quint's complete accepted
+mask set. It also refuses 53 malformed Python inputs, including missing/extra
+fields and truthy values that are not the Boolean `True`. External callers
+supplying eight true flags do not establish any release evidence: the concrete
+verifier must compute the observations itself.
+
+This is a complete comparison for that small admission function. It is **not** a
+proof that Python's CRX parser, OpenSSL integration, URL parser, TLS stack,
+filesystem operations or wizard implement the entire state machine. The model
+uses abstract identifiers and hashes, trusts its signature/TLS/file observations,
+and represents validated Chrome version ordering by natural numbers. It does
+not prove cryptographic security, hash collision resistance, the numeric version
+encoding, operating-system durability, concurrent publisher coordination,
+Chrome installation, or ongoing remote availability.
+
+The initial-release branch represents an explicitly selected initial release;
+it is not permission to omit a known predecessor. The state model starts with a
+fixed candidate package fingerprint, so it describes publication once signing
+has produced that candidate. It does not prove deterministic cryptographic
+signing. A successful HTTPS observation is evidence about the bytes returned
+during that check, not a guarantee that the endpoint will keep serving them.
+Safety is established under the stated abstract observations; liveness and
+eventual successful publication are not claimed.
+
+## Historical local browser startup evidence
+
+Result: **environment-blocked startup; zero browser network cases and zero
+hypothetical DNR probes executed**. This is not evidence of rule correctness or
+of a production defect.
+
+The downloaded executable reports Google Chrome for Testing 151.0.7922.34.
+Playwright 1.62.1 launched it, but this execution host refused Chrome's profile
+socket operation (`process_singleton_posix.cc`, `Operation not permitted`). The
+complete report retains configuration/launch metadata and the startup error.
+The browser was not running far enough to report its version over CDP; the
+`executableVersion` field records the binary's `--version` output instead.
+
+The source commit is the parent checkout with uncommitted harness work. The
+report's harness SHA-256 identifies the actual script used in this attempt.
+The existing 36 Python tests and Node syntax check passed locally. Browser
+acceptance must be established by a compatible execution environment; queued
+GitHub Actions are not a passing result.
+
+Raw report: acceptance/evidence/2026-11-01-local/report.json.
