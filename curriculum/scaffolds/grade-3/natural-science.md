@@ -2,11 +2,15 @@
 
 - Record kind: **planning scaffold**, not a course, unit, lesson or assessment
 - Course ID and outcome IDs: **unassigned**; do not reserve before scope approval
-- Teaching status: **not ready**; no lesson or assessment is claimed as authored
+- Teaching status: **not ready**; habitat evidence pilot is authored but unregistered, not teaching-ready
 - Intended audience: Grade 3 (skills must be checked)
 - Primary study: Empirical inquiry
 - Session length, frequency, dates and access: **not selected**
 - Framework: Trivium and selected Quadrivium arts; music excluded
+
+## Authored draft habitat-evidence pilot (not registered)
+
+The [original Grade 3 habitat-evidence pilot](../../natural-science/grade-3-habitat-evidence-pilot/README.md) implements proposed investigation 1 using a **fictional model** (not field evidence), [actual E1–E4 entry tasks and R1–R10 exposed exemplars](../../natural-science/grade-3-habitat-evidence-pilot/learner.md), a [complete separate teacher key](../../natural-science/grade-3-habitat-evidence-pilot/teacher.md) and [four 25-minute Trivium-rich episode drafts](../../natural-science/grade-3-habitat-evidence-pilot/lessons.md). Draft local P1–P4 outcome labels are **not** stable IDs; no authentic ecosystem findings, secure test, learner evidence or teaching readiness are claimed. Heat transfer and erosion are still only planning ideas.
 
 ## Proposed entry evidence
 
@@ -24,9 +28,9 @@ The ordering and difficulty are proposals, not grade-based prerequisite claims. 
 
 ## Proposed culminating performance
 
-**Candidate task:** Explain a habitat interaction from evidence.
+**Candidate task:** Explain a habitat interaction **within the fictional model**, give a verified numerical sighting comparison with units, and explicitly state why synthetic data do **not** prove a real ecological cause. The actual public [R1–R10 prompts and teacher key](../../natural-science/grade-3-habitat-evidence-pilot/README.md) are drafting exemplars, not secure assessments.
 
-**Assessment gap:** Specify actual tasks, administration conditions, supports, teacher key or model responses, and threshold criteria. Proposed dimensions: accurate representation and naming; justified reason or counterexample; and an explanation another learner could check. These are **not** assessment results.
+**Assessment gap:** The new pilot supplies actual **public** reference prompts, full keys and proposed noncompensatory criteria, but no approved unseen assessment, teaching time, authentic scientific source or learner evidence. Author a fresh secure form and agree administration conditions, supports and threshold criteria. Proposed dimensions: accurate representation and naming; justified reason or counterexample; and an explanation another learner could check. These are **not** assessment results.
 
 ## Trivium in this subject
 
