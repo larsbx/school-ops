@@ -366,5 +366,61 @@ class Grade3ArithmeticBridgeDraftTests(unittest.TestCase):
                 self.assertNotRegex(file.read_text(encoding="utf-8"),
                                     r"(?:C|U|L|O|A)-MATH-002(?:-[0-9]{2,3})?")
 
+
+class Grade3LanguageEvidenceDraftTests(unittest.TestCase):
+    """Draft document and model-answer invariants; not teaching approval."""
+
+    PILOT = ROOT / "curriculum/language/grade-3-evidence-writing-pilot"
+
+    def test_entry_outcomes_and_no_ids(self):
+        pilot = (self.PILOT / "README.md").read_text(encoding="utf-8")
+        scaffold = (BASE / "grade-3/language.md").read_text(encoding="utf-8")
+        self.assertIn("not ready", pilot)
+        self.assertIn("unassigned", pilot)
+        self.assertIn("Music is excluded", pilot)
+        self.assertIn("Islamic studies", pilot)
+        self.assertIn("grade-3-evidence-writing-pilot/README.md", scaffold)
+        entry = (self.PILOT / "entry-learner.md").read_text(encoding="utf-8")
+        key = (self.PILOT / "entry-teacher.md").read_text(encoding="utf-8")
+        for i in range(1, 5):
+            self.assertIn(f"**E{i}.**", entry)
+            self.assertIn(f"| E{i} |", key)
+            self.assertIn(f"G3-LANG-P{i}", pilot)
+
+    def test_lessons_keys_and_exposed_reference(self):
+        lessons = (self.PILOT / "lessons.md").read_text(encoding="utf-8")
+        guide = (self.PILOT / "teacher-guide.md").read_text(encoding="utf-8")
+        for i in range(1, 5):
+            self.assertIn(f"Episode {i}", lessons)
+            self.assertIn(f"X{i}", lessons)
+            self.assertIn(f"**X{i}:**", guide)
+        self.assertEqual(4, lessons.count("| Rhetoric"))
+        for art in ("Grammar", "Logic", "Rhetoric"):
+            self.assertIn(art, lessons)
+        practice = (self.PILOT / "guided-learner.md").read_text(encoding="utf-8")
+        for i in range(1, 9):
+            self.assertEqual(1, practice.count(f"**G{i}.**"))
+            self.assertIn(f"| G{i} |", guide)
+        student = (self.PILOT / "draft-assessments/reference-learner.md").read_text(encoding="utf-8")
+        key = (self.PILOT / "draft-assessments/reference-teacher.md").read_text(encoding="utf-8")
+        for i in range(1, 11):
+            self.assertEqual(1, student.count(f"**S{i}.**"))
+            self.assertIn(f"| S{i} |", key)
+        self.assertNotIn("reference-teacher.md", student)
+        self.assertIn("9 − 12 = −3", key)
+        self.assertIn("11 − 10 = +1", key)
+
+    def test_source_lines_and_relative_links(self):
+        from test_islamic_studies_prototype import local_link_errors
+        packet = (self.PILOT / "source-packet.md").read_text(encoding="utf-8")
+        for letter, end in (("A", 6), ("B", 4)):
+            for i in range(1, end + 1):
+                self.assertEqual(1, packet.count(f"**{letter}{i}.**"))
+        for file in self.PILOT.rglob("*.md"):
+            with self.subTest(file=file.name):
+                self.assertEqual([], local_link_errors(file))
+                self.assertNotRegex(file.read_text(encoding="utf-8"),
+                                    r"(?:C|U|L|O|A)-LANG-[0-9]{3}")
+
 if __name__ == "__main__":
     unittest.main()
