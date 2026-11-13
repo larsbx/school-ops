@@ -1,0 +1,115 @@
+name: SchoolOps self-hosted CRX release verification
+
+on:
+  pull_request:
+    paths:
+      - 'tools/browser/site_scoped_youtube_guard/**'
+      - 'tests/test*guard*'
+      - 'tests/test_native_youtube_wizard.py'
+      - 'ci/**'
+      - '.github/workflows/youtube-guard-release.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/browser/site_scoped_youtube_guard/**'
+      - 'tests/test*guard*'
+      - '.github/workflows/youtube-guard-release.yml'
+  workflow_dispatch:
+
+# Disposable test keys only. This workflow cannot publish releases or write policy.
+permissions:
+  contents: read
+
+jobs:
+  release-contracts:
+    name: Disposable CRX and HTTPS acceptance (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025, macos-15]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 12
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHONUTF8: '1'
+    steps:
+      - name: Preserve prepared file bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Select OpenSSL 3 on macOS
+        if: runner.os == 'macOS'
+        run: |
+          set -euo pipefail
+          openssl_prefix="$(brew --prefix openssl@3)"
+          test -x "$openssl_prefix/bin/openssl"
+          echo "$openssl_prefix/bin" >> "$GITHUB_PATH"
+      - name: Require actual OpenSSL signing and certificate support
+        run: |
+          openssl version
+          python -c 'import subprocess; assert subprocess.check_output(["openssl", "version"], text=True).startswith("OpenSSL 3."), "OpenSSL 3 is required"'
+      - name: Real disposable signing, HTTPS, interruption and wizard contracts
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p 'test_guard_release*.py' -v 2>&1 | tee release-tests.log
+          python -m unittest discover -s tests -p 'test_youtube_guard_installer.py' -v 2>&1 | tee installer-tests.log
+      - name: Verify POSIX publication from a separate server account
+        if: runner.os == 'Linux'
+        run: |
+          set -euo pipefail
+          sudo -- "$(command -v python)" -m unittest discover -s tests -p test_guard_release.py \
+            -k test_posix_distribution_permissions_and_recovery -v 2>&1 | tee permissions-tests.log
+      - name: Retain acceptance logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: schoolops-crx-release-${{ matrix.os }}
+          path: '*-tests.log'
+          if-no-files-found: error
+          retention-days: 30
+
+  formal-release:
+    name: Lean and Quint release verification
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: tools/browser/site_scoped_youtube_guard/formal/package-lock.json
+      - name: Install pinned standalone Lean 4.19.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 https://github.com/leanprover/lean4/releases/download/v4.19.0/lean-4.19.0-linux.tar.zst --output "$RUNNER_TEMP/lean.tar.zst"
+          echo "6fe3ce97a58f44e2b3567d455b994eacec5bfe9ae7774f2a573444480ba813fe  $RUNNER_TEMP/lean.tar.zst" | sha256sum --check --strict
+          tar --zstd -xf "$RUNNER_TEMP/lean.tar.zst" -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/lean-4.19.0-linux/bin" >> "$GITHUB_PATH"
+      - name: Install locked Quint evaluator
+        working-directory: tools/browser/site_scoped_youtube_guard/formal
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Cold proof build, axiom audit, exhaustive model and negative controls
+        run: python tools/browser/site_scoped_youtube_guard/formal/verify.py
+      - name: Retain formal evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: schoolops-crx-release-formal
+          path: tools/browser/site_scoped_youtube_guard/formal/verification-output/
+          if-no-files-found: error
+          retention-days: 30

@@ -2,6 +2,7 @@
 import json
 import os
 from pathlib import Path
+import shutil
 import sys
 import tempfile
 import unittest
@@ -70,6 +71,38 @@ class NativeWizardTests(unittest.TestCase):
             folder.mkdir()
             with self.assertRaises(FileExistsError):
                 native.package(folder)
+
+    @unittest.skipIf(wizard is None, "Optional tkinter GUI libraries not installed")
+    @unittest.skipUnless(shutil.which("openssl"), "OpenSSL is required for release signing acceptance")
+    def test_release_smoke_harness_exercises_source_cli_and_removes_credentials(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            parent = Path(tmp) / "smoke workspace with spaces"
+            parent.mkdir()
+            report = native.release_cli_smoke([sys.executable, ROOT / "wizard.py"], work_parent=parent)
+            self.assertEqual(report["status"], "passed")
+            self.assertEqual(report["commands"], {"key-id": "passed", "prepare": "passed",
+                                                 "sign": "passed", "missing-key": "failed"})
+            self.assertEqual(len(report["extensionId"]), 32)
+            self.assertEqual(len(report["crxSha256"]), 64)
+            self.assertFalse(report["privateKeysRetained"])
+            self.assertFalse(report["policyApplied"])
+            self.assertFalse(report["remotePublication"])
+            self.assertEqual(list(parent.iterdir()), [], "Disposable signing credentials must be removed")
+
+    def test_native_release_success_requires_report_and_matching_exit_status(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            report = Path(tmp) / "operation.json"
+            with patch.object(native.subprocess, "run", return_value=Mock(returncode=0, stderr=b"")):
+                with self.assertRaisesRegex(RuntimeError, "no operation report"):
+                    native._release_cli_report(["unexecuted-native-fixture"], report, ["sign"])
+            for exit_code, status in ((1, "passed"), (0, "failed"), (0, "running")):
+                report.write_text(json.dumps({"schema": 1, "scope": "schoolops_release_operation",
+                                              "command": "sign", "status": status}), encoding="utf-8")
+                with self.subTest(exit_code=exit_code, status=status), \
+                        patch.object(native.subprocess, "run",
+                                     return_value=Mock(returncode=exit_code, stderr=b"")), \
+                        self.assertRaisesRegex(RuntimeError, "expected passed"):
+                    native._release_cli_report(["unexecuted-native-fixture"], report, ["sign"])
 
 
 class FakeControl:

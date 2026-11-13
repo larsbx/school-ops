@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Prepare, resume and apply a SchoolOps Chrome deployment.
 
-Publication is an operator attestation about the exact prepared ZIP. Neither a
-checksum nor a policy write proves remote publication or Chrome enforcement.
+Web Store publication uses an operator attestation. Self-hosted releases retain
+a bound observation of independently downloaded bytes. Neither establishes
+managed-device installation or continuing endpoint availability.
 """
 import argparse
+from datetime import datetime
 import hashlib
 from html import escape
 import io
@@ -90,13 +92,76 @@ def validate_settings(raw):
     if any(overlaps(d, yt) for d in cfg["allowed_embed_sites"] for yt in YOUTUBE_PAGE_DOMAINS):
         raise ValueError("YouTube itself cannot be an approved school site")
     source_manifest = read_json((ROOT / "manifest.json").read_bytes())
-    return {
+    checked = {
         "config": cfg, "rules": rules, "extension_id": extension_id,
         "channel": channel, "update_url": update_url, "target_os": target_os,
         "extension_version": validate_version(raw.get("extension_version", source_manifest["version"])),
         "published_extension_sha256": raw.get("published_extension_sha256", ""),
         "publication_confirmed": raw.get("publication_confirmed") is True,
     }
+    if "publication_receipt" in raw:
+        checked["publication_receipt"] = validate_publication_receipt(raw["publication_receipt"], checked)
+    return checked
+
+
+def validate_publication_receipt(receipt, checked):
+    """Check a saved observation's scope and binding, not its authenticity.
+
+    This local, unsigned record is produced by the HTTPS release verifier and
+    retained for review. It is not an authorization token or an enduring claim
+    about the server. Reverification requires release_core.verify_publication.
+    """
+    fields = {"schema", "scope", "release_id", "extension_id", "extension_version",
+              "extension_zip_sha256", "update_url", "crx_url", "crx_sha256",
+              "manifest_sha256", "public_key_sha256", "observed_at_utc",
+              "managed_device_enforcement", "policy_applied", "verification"}
+    if not isinstance(receipt, dict) or set(receipt) != fields:
+        raise ValueError("Self-hosted publication receipt has missing or unexpected fields")
+    if (type(receipt["schema"]) is not int or receipt["schema"] != 1 or
+            receipt["scope"] != "downloaded_release_bytes" or checked["channel"] != "self_hosted"):
+        raise ValueError("Unsupported self-hosted publication receipt scope")
+    for name in ("release_id", "extension_zip_sha256", "crx_sha256",
+                 "manifest_sha256", "public_key_sha256"):
+        value = receipt[name]
+        if not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value):
+            raise ValueError("Invalid publication receipt fingerprint: " + name)
+    for name in ("extension_id", "extension_version", "update_url"):
+        if receipt[name] != checked[name]:
+            raise ValueError("Publication receipt differs from prepared settings: " + name)
+    if receipt["extension_zip_sha256"] != extension_digest(checked):
+        raise ValueError("Publication receipt fingerprint differs from the prepared extension")
+    crx_url = receipt["crx_url"]
+    if not isinstance(crx_url, str):
+        raise ValueError("Publication receipt requires an HTTPS CRX URL")
+    parsed = urlsplit(crx_url)
+    source = urlsplit(checked["update_url"])
+    try:
+        same_origin = (parsed.hostname, parsed.port or 443) == (source.hostname, source.port or 443)
+    except ValueError as exc:
+        raise ValueError("Publication receipt contains an invalid HTTPS port") from exc
+    if (parsed.scheme != "https" or not parsed.hostname or parsed.username is not None or
+            parsed.password is not None or source.username is not None or source.password is not None or
+            parsed.query or parsed.fragment or any(ord(c) < 33 for c in crx_url) or
+            not parsed.path or parsed.path == "/" or not same_origin):
+        raise ValueError("Publication receipt CRX URL must use the update manifest's HTTPS origin")
+    if receipt["managed_device_enforcement"] is not False or receipt["policy_applied"] is not False:
+        raise ValueError("Publication receipt cannot claim device enforcement or policy application")
+    verification = receipt["verification"]
+    checks = {"identity_ok", "version_ok", "zip_ok", "crx_ok", "signature_ok", "tls_ok",
+              "manifest_ok", "download_ok"}
+    if (not isinstance(verification, dict) or set(verification) != checks or
+            any(value is not True for value in verification.values())):
+        raise ValueError("Publication receipt requires every release verification check")
+    observed = receipt["observed_at_utc"]
+    try:
+        if (not isinstance(observed, str) or not re.fullmatch(
+                r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,6})?Z", observed)):
+            raise ValueError("not a UTC timestamp")
+        datetime.fromisoformat(observed.removesuffix("Z") + "+00:00")
+    except ValueError as exc:
+        raise ValueError("Publication receipt requires a UTC observation timestamp") from exc
+    # Detach callers' mutable dictionaries from the validated settings.
+    return read_json(pretty_json(receipt))
 
 
 def extension_files(checked):
@@ -127,7 +192,7 @@ def extension_digest(checked):
     return hashlib.sha256(extension_zip(extension_files(checked))).hexdigest()
 
 
-def publication_ready(checked):
+def publication_ready(checked, *, allow_legacy_self_hosted=False):
     if not checked["extension_id"]:
         raise ValueError("Cannot issue force-install policy before publication provides an extension ID")
     if not checked["publication_confirmed"]:
@@ -135,28 +200,53 @@ def publication_ready(checked):
     if checked["published_extension_sha256"] != extension_digest(checked):
         raise ValueError("Published extension fingerprint differs: reopen the prepared setup.json; "
                          "changed websites or version require a new publication")
+    if checked["channel"] == "self_hosted":
+        receipt = checked.get("publication_receipt")
+        if receipt is None and not allow_legacy_self_hosted:
+            raise ValueError("Self-hosted publication requires HTTPS release verification; "
+                             "use Verify HTTPS & export or the release verifier")
+        if receipt is not None:
+            validate_publication_receipt(receipt, checked)
 
 
-def policy_document(checked):
-    publication_ready(checked)
+def policy_document(checked, *, allow_legacy_self_hosted=False):
+    publication_ready(checked, allow_legacy_self_hosted=allow_legacy_self_hosted)
     entry = {"installation_mode": "force_installed", "update_url": checked["update_url"]}
     if checked["channel"] == "self_hosted":
         entry["override_update_url"] = True
     return {"ExtensionSettings": {checked["extension_id"]: entry}}
 
 
-def extension_settings_value(checked):
-    return policy_document(checked)["ExtensionSettings"]
+def extension_settings_value(checked, *, allow_legacy_self_hosted=False):
+    return policy_document(checked, allow_legacy_self_hosted=allow_legacy_self_hosted)["ExtensionSettings"]
 
 
 def flat_settings(checked):
-    return {**checked["config"], **{key: checked[key] for key in (
+    settings = {**checked["config"], **{key: checked[key] for key in (
         "extension_id", "channel", "update_url", "target_os", "extension_version",
         "published_extension_sha256", "publication_confirmed")}}
+    if "publication_receipt" in checked:
+        settings["publication_receipt"] = checked["publication_receipt"]
+    return settings
 
 
 def deployment_notes(checked):
     published = bool(checked["extension_id"])
+    self_hosted = checked["channel"] == "self_hosted"
+    publication_steps = (
+        "Reopen the prepared setup.json in the Setup app and choose Prepare self-hosted release. "
+        "Supply a public RSA key, pinned extension ID, exact version, HTTPS manifest/CRX URLs and "
+        "the previous release (or explicit first-release declaration). Sign using the release CLI "
+        "or an approved external signing tool; private keys never enter the GUI or release files. "
+        "Review the intended publication actions before separately approved production upload. "
+        "Use Verify HTTPS & export after publication; it downloads and checks the manifest and CRX "
+        "against this exact prepared ZIP before producing a policy bundle."
+        if self_hosted else
+        "Upload extension.zip to your Chrome Web Store developer account. Reopen setup.json in the "
+        "Setup app, enter the published ID, confirm that you published this exact configuration, "
+        "and export to a new folder. The ZIP fingerprint prevents accidental configuration drift; "
+        "the Store publication confirmation remains the operator's statement."
+    )
     platform_notes = {
         "linux": "Open this bundle in the Setup app and choose Install policy (administrator). "
                  "Linux needs pkexec for the graphical elevation prompt, or run the displayed sudo command. "
@@ -175,7 +265,9 @@ def deployment_notes(checked):
     }
     return "\n".join([
         "# SchoolOps Chrome setup", "", "Status: NOT INSTALLED.",
-        ("POLICY READY: publication is operator-confirmed, not remotely verified." if published else
+        ("POLICY READY: exact HTTPS release bytes were observed; see publication-receipt.json." if
+         checked.get("publication_receipt") else
+         "POLICY READY: publication is operator-confirmed, not remotely verified." if published else
          "PUBLISHING PENDING: no extension ID; no install policy was created."), "",
         "Target platform: " + checked["target_os"],
         "Extension version: " + checked["extension_version"],
@@ -186,12 +278,10 @@ def deployment_notes(checked):
         "Approved embedding hosts: " + ", ".join(checked["config"]["allowed_embed_sites"]),
         "Browsing mode: " + checked["config"]["mode"], "",
         "## 1. Prepare and publish once", "",
-        "Upload extension.zip to your Chrome Web Store developer account, or sign the exact extension/ "
-        "contents for your managed self-hosted channel. Preserve the signing key and extension ID. "
-        "The ZIP is an upload package, not an installable signed CRX. No Store listing is created here.",
-        "Reopen setup.json in the Setup app, enter the published ID/update URL, confirm that you published "
-        "this exact configuration, and export to a new folder. The ZIP fingerprint prevents accidental "
-        "configuration drift; it does not authenticate the remote publisher.",
+        publication_steps,
+        "Preserve the signing key and extension ID. The ZIP is an upload package, not an installable "
+        "signed CRX. No Store listing is created here. A saved publication receipt records a past "
+        "download observation; it does not authenticate local records or guarantee future server content.",
         "For later website changes, choose New configuration, increase the version, publish the new build "
         "under the same extension ID/signing key, and prepare a new deployment. Existing devices update "
         "through the chosen publishing channel. Static website settings are not storage.managed policies.", "",
@@ -225,12 +315,17 @@ def start_page(checked):
     status = "Ready to apply policy" if published else "Ready to publish your extension"
     action = ("Reopen setup.json in the SchoolOps Setup app and choose Install policy. "
               "For macOS or ChromeOS, follow the managed deployment instructions below." if published else
+              "Reopen setup.json in the SchoolOps Setup app, choose Prepare self-hosted release, "
+              "sign and publish through your approved process, then choose Verify HTTPS & export."
+              if checked["channel"] == "self_hosted" else
               "Publish extension.zip using your Chrome Web Store developer account or managed "
               "self-hosted channel. Then reopen setup.json and enter the published extension ID.")
     policy_links = ("<li><a href='deployment/extension-settings-value.json'>ExtensionSettings for GPO/MDM</a></li>"
                     "<li><a href='deployment/linux-managed-policy.json'>Linux managed policy</a></li>"
                     "<li><a href='deployment/schoolops-chrome.mobileconfig'>macOS management profile</a></li>"
                     if published else "")
+    if checked.get("publication_receipt"):
+        policy_links += "<li><a href='deployment/publication-receipt.json'>Observed release verification</a></li>"
     return f'''<!doctype html>
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SchoolOps · Chrome setup</title>
@@ -255,12 +350,12 @@ Extension ID: <code>{escape(checked['extension_id'] or 'Awaiting publication')}<
 </html>'''
 
 
-def bundle_files(checked):
+def bundle_files(checked, *, allow_legacy_self_hosted=False):
     files = extension_files(checked)
     archive = extension_zip(files)
     digest = hashlib.sha256(archive).hexdigest()
     if checked["extension_id"]:
-        publication_ready(checked)
+        publication_ready(checked, allow_legacy_self_hosted=allow_legacy_self_hosted)
     setup = {"schema": 1, "extension_zip_sha256": digest, "settings": flat_settings(checked)}
     files.update({
         "extension.zip": archive,
@@ -269,12 +364,17 @@ def bundle_files(checked):
         "deployment/README.md": deployment_notes(checked).encode("utf-8"),
     })
     if checked["extension_id"]:
-        policy = pretty_json(policy_document(checked)).encode("utf-8")
+        policy = pretty_json(policy_document(checked,
+            allow_legacy_self_hosted=allow_legacy_self_hosted)).encode("utf-8")
         files.update({
             "deployment/linux-managed-policy.json": policy,
-            "deployment/extension-settings-value.json": pretty_json(extension_settings_value(checked)).encode("utf-8"),
+            "deployment/extension-settings-value.json": pretty_json(extension_settings_value(checked,
+                allow_legacy_self_hosted=allow_legacy_self_hosted)).encode("utf-8"),
             "deployment/schoolops-chrome.mobileconfig": platform_policy.macos_profile(policy),
         })
+        if "publication_receipt" in checked:
+            files["deployment/publication-receipt.json"] = pretty_json(
+                checked["publication_receipt"]).encode("utf-8")
     return files
 
 
@@ -317,7 +417,7 @@ def _verified_bundle(bundle):
     hashes = read_json((root / "SHA256SUMS.json").read_bytes())
     allowed = EXTENSION_PATHS | {"extension.zip", "setup.json", "START_HERE.html", "deployment/README.md",
                                 "deployment/linux-managed-policy.json", "deployment/extension-settings-value.json",
-                                "deployment/schoolops-chrome.mobileconfig"}
+                                "deployment/schoolops-chrome.mobileconfig", "deployment/publication-receipt.json"}
     if not isinstance(hashes, dict) or not set(hashes).issubset(allowed) or "setup.json" not in hashes:
         raise ValueError("Bundle files or checksum inventory are missing or unexpected")
     snapshot = {}
@@ -335,7 +435,9 @@ def _verified_bundle(bundle):
     checked = validate_settings(setup.get("settings"))
     if setup.get("extension_zip_sha256") != extension_digest(checked):
         raise ValueError("Saved extension fingerprint differs from the configured extension")
-    expected = bundle_files(checked)
+    # Old self-hosted exports remain readable, including owned-policy removal.
+    # Fresh export and installation still require the new observation receipt.
+    expected = bundle_files(checked, allow_legacy_self_hosted=True)
     if set(snapshot) != set(expected):
         raise ValueError("Bundle files or checksum inventory are missing or unexpected")
     # Explanatory text is covered by transport hashes, not by the current app's
@@ -357,10 +459,11 @@ def load_bundle(bundle):
     return root, settings
 
 
-def verify_policy_bundle(bundle):
+def verify_policy_bundle(bundle, *, allow_legacy_self_hosted=False):
     _root, checked, snapshot = _verified_bundle(bundle)
     if not checked["extension_id"]:
         raise ValueError("Publishing pending: this bundle does not contain an install policy")
+    publication_ready(checked, allow_legacy_self_hosted=allow_legacy_self_hosted)
     return snapshot["deployment/linux-managed-policy.json"]
 
 
@@ -373,7 +476,7 @@ def apply_linux_policy(bundle, target=LINUX_MANAGED_PATH):
 
 
 def change_local_policy(bundle, remove=False):
-    content = verify_policy_bundle(bundle)
+    content = verify_policy_bundle(bundle, allow_legacy_self_hosted=remove)
     system = platform.system()
     if system == "Windows":
         action = (platform_policy.remove_windows_policy_content if remove else

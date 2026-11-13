@@ -82,7 +82,8 @@
         "tests/test_native_youtube_wizard.py"
       ],
       "depends_on": [
-        "installer"
+        "installer",
+        "release"
       ]
     },
     "documentation": {
@@ -101,6 +102,18 @@
       ],
       "depends_on": [
         "curriculum"
+      ]
+    },
+    "release": {
+      "paths": [
+        "tools/browser/site_scoped_youtube_guard/crx3.py",
+        "tools/browser/site_scoped_youtube_guard/release_core.py",
+        "tools/browser/site_scoped_youtube_guard/formal/**",
+        "tests/test_guard_release.py",
+        "tests/test_guard_release_wizard.py"
+      ],
+      "depends_on": [
+        "installer"
       ]
     }
   },
@@ -197,12 +210,26 @@
       "directory": "tests",
       "pattern": "test_guard_platform_policy.py"
     },
+    "release": {
+      "components": [
+        "release"
+      ],
+      "directory": "tests",
+      "pattern": "test_guard_release.py"
+    },
     "factorio-practice": {
       "components": [
         "factorio"
       ],
       "directory": "tests",
       "pattern": "test_factorio_practice.py"
+    },
+    "release-wizard": {
+      "components": [
+        "release"
+      ],
+      "directory": "tests",
+      "pattern": "test_guard_release_wizard.py"
     }
   }
 }
