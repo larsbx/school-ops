@@ -366,5 +366,73 @@ class Grade3ArithmeticBridgeDraftTests(unittest.TestCase):
                 self.assertNotRegex(file.read_text(encoding="utf-8"),
                                     r"(?:C|U|L|O|A)-MATH-002(?:-[0-9]{2,3})?")
 
+
+class Grade3AstronomyShadowDraftTests(unittest.TestCase):
+    """Purely structural/arithmetic controls, not scientific or classroom approval."""
+
+    PILOT = ROOT / "curriculum/astronomy/grade-3-shadow-records-pilot"
+
+    def test_original_reference_readings_and_key_coverage(self):
+        learner = (self.PILOT / "draft-assessments/reference-learner.md").read_text(encoding="utf-8")
+        teacher = (self.PILOT / "draft-assessments/reference-teacher.md").read_text(encoding="utf-8")
+        rows = {"A": (34, 14, 28), "B": (33, None, 26), "C": (36, 15, 30)}
+        self.assertEqual(20, max(rows["A"]) - min(rows["A"]))
+        self.assertEqual(20, rows["A"][0] - rows["A"][1])
+        self.assertEqual(1, rows["A"][0] - rows["B"][0])
+        self.assertIsNone(rows["B"][1])
+        for day in ("A", "C"):
+            self.assertLess(rows[day][1], min(rows[day][0], rows[day][2]))
+        self.assertEqual((3, 3), (11-8, 14-11))
+        for i in range(1, 11):
+            self.assertEqual(1, learner.count(f"**S{i}.**"))
+            self.assertEqual(1, teacher.count(f"| S{i} |"))
+        for text in ("20 cm", "1 cm", "0,10,20,30,40", "unknown", "hypothetical"):
+            self.assertIn(text, teacher)
+        self.assertNotIn("reference-teacher.md", learner)
+        self.assertNotIn("guided-teacher.md", learner)
+
+    def test_four_entry_gates_eight_guides_and_lesson_exits(self):
+        entries = (self.PILOT / "entry-learner.md").read_text(encoding="utf-8")
+        key = (self.PILOT / "entry-teacher.md").read_text(encoding="utf-8")
+        guided = (self.PILOT / "guided-learner.md").read_text(encoding="utf-8")
+        answer = (self.PILOT / "guided-teacher.md").read_text(encoding="utf-8")
+        for i in range(1, 5):
+            self.assertIn(f"**E{i} ", entries)
+            self.assertIn(f"| E{i} |", key)
+            self.assertIn(f"| X{i} |", answer)
+        for i in range(1, 9):
+            self.assertIn(f"**G{i}.", guided)
+            self.assertIn(f"| G{i} |", answer)
+        self.assertNotIn("guided-teacher.md", guided)
+        self.assertEqual(4, len(list(self.PILOT.glob("lessons/*.md"))))
+        for lesson in self.PILOT.glob("lessons/*.md"):
+            body = lesson.read_text(encoding="utf-8")
+            for word in ("DRAFT", "Grammar", "Logic", "Rhetoric"):
+                self.assertIn(word, body)
+            minutes = [int(t) for t in re.findall(r"^\| [^|]+ \| (\d+) \|$", body, re.M)]
+            self.assertEqual(25, sum(minutes), lesson.name)
+
+    def test_unregistered_links_and_source_boundary(self):
+        import urllib.parse
+        guide = (self.PILOT / "README.md").read_text(encoding="utf-8")
+        scaffold = (BASE / "grade-3/astronomy.md").read_text(encoding="utf-8")
+        index = (ROOT / "curriculum/README.md").read_text(encoding="utf-8")
+        self.assertIn("G3-AST-P4", guide)
+        self.assertIn("grade-3-shadow-records-pilot/README.md", scaffold)
+        self.assertIn("grade-3-shadow-records-pilot/README.md", index)
+        self.assertNotIn("| C-AST-", index)
+        for file in list(self.PILOT.rglob("*.md")) + [BASE / "grade-3/astronomy.md"]:
+            body = file.read_text(encoding="utf-8")
+            with self.subTest(file=file.name):
+                self.assertNotRegex(body, r"(?:C|U|L|O|A)-AST-[0-9]{3}")
+                for dest in re.findall(r"\]\(([^)]+)\)", body):
+                    if dest.startswith(("https:", "http:", "mailto:", "#")):
+                        continue
+                    target = (file.parent / urllib.parse.unquote(dest.split("#", 1)[0])).resolve()
+                    self.assertTrue(target.is_file(), f"broken link: {file} -> {dest}")
+        self.assertIn("qualified", guide)
+        self.assertIn("Music excluded", guide)
+        self.assertIn("fictional", guide)
+
 if __name__ == "__main__":
     unittest.main()
