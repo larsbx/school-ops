@@ -1,14 +1,26 @@
 """Source contracts for the authored pack; no learner results or provider calls."""
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
+import tempfile
 import unittest
 from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]
 PACK = ROOT/'curriculum/mathematics/grade-2/units/place-value/teaching-pack'
 LINK = re.compile(r'\[[^\]]*\]\(([^)]+)\)')
+
+
+def repository_markdown(root):
+    """Find authored Markdown without descending into Git or npm dependencies."""
+    for directory, subdirectories, filenames in os.walk(root):
+        subdirectories[:] = sorted(name for name in subdirectories
+                                   if name not in {'.git', 'node_modules'})
+        for name in sorted(filenames):
+            if name.endswith('.md'):
+                yield Path(directory) / name
 
 
 def anchors(path):
@@ -24,8 +36,7 @@ def anchors(path):
 
 class TeachingPackTests(unittest.TestCase):
     def test_all_repository_relative_links_and_anchors(self):
-        for file in ROOT.rglob('*.md'):
-            if '.git' in file.parts: continue
+        for file in repository_markdown(ROOT):
             for target in LINK.findall(file.read_text()):
                 if re.match(r'\w+://|mailto:', target): continue
                 path, _, anchor = unquote(target).partition('#')
@@ -34,6 +45,29 @@ class TeachingPackTests(unittest.TestCase):
                     self.assertTrue(resolved.exists())
                     if anchor and resolved.suffix == '.md':
                         self.assertIn(anchor, anchors(resolved))
+
+    def test_repository_scan_keeps_authored_docs_next_to_dependencies(self):
+        authored = {
+            'README.md',
+            '.github/README.md',
+            'docs/guide.md',
+            'docs/node_modules-guide.md',
+            'tools/acceptance/README.md',
+            'tools/acceptance/node_modules_notes/README.md',
+        }
+        excluded = {
+            '.git/README.md',
+            'node_modules/package/README.md',
+            'tools/acceptance/node_modules/playwright-core/lib/tools/skills/SKILL.md',
+        }
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for relative in authored | excluded:
+                path = root / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('[example](missing-example.yml)\n', encoding='utf-8')
+            self.assertEqual({path.relative_to(root).as_posix()
+                              for path in repository_markdown(root)}, authored)
 
     def test_learner_navigation_cannot_reach_keys(self):
         starts = [PACK/'learner/README.md', *PACK.glob('learner/*.md'),

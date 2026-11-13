@@ -16,3 +16,4 @@ __pycache__/
 # Browser acceptance dependencies and execution evidence
 /tools/browser/site_scoped_youtube_guard/acceptance/node_modules/
 /tools/browser/site_scoped_youtube_guard/acceptance/artifacts/
+/tools/browser/site_scoped_youtube_guard/acceptance/crx-interop-artifacts/

@@ -123,6 +123,97 @@ class CurriculumScaffoldTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 module.resume_session(target)
 
+
+    def test_grade3_geometry_exposed_reference_math_and_links(self):
+        """Check supplied tile-count and edge-count controls and link custody."""
+        pilot = ROOT / "curriculum" / "geometry" / "grade-3-tiling-pilot"
+        examples = (
+            (("###", "###"), 6, 10),
+            (("####",), 4, 10),
+            (("##.", "###"), 5, 10),
+            (("######",), 6, 14),
+            (("###", "###", "###"), 9, 12),
+        )
+        for rows, area, boundary in examples:
+            filled = {(x, y) for y, row in enumerate(rows) for x, value in enumerate(row) if value == "#"}
+            perimeter = sum(
+                (x + dx, y + dy) not in filled
+                for x, y in filled
+                for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))
+            )
+            with self.subTest(rows=rows):
+                self.assertEqual(area, len(filled))
+                self.assertEqual(boundary, perimeter)
+        key = (pilot / "draft-assessments" / "reference-teacher.md").read_text(encoding="utf-8")
+        for label in ("R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10"):
+            self.assertIn(label, key)
+        for token in ("6 square units", "4 square units", "5 square units", "9 square units",
+                      "10 length units", "12 length units", "14 length units", "6 length units"):
+            self.assertIn(token, key)
+        for file in pilot.rglob("*.md"):
+            body = file.read_text(encoding="utf-8")
+            with self.subTest(file=file.relative_to(ROOT)):
+                self.assertNotRegex(body, r"(?:C|U|L|O|A)-GEO-[0-9]{3}")
+                for dest in re.findall(r"\]\(([^)]+)\)", body):
+                    if dest.startswith(("https:", "http:", "mailto:", "#")):
+                        continue
+                    target = (file.parent / dest.split("#", 1)[0]).resolve()
+                    self.assertTrue(target.is_file(), f"bad pilot link: {file} -> {dest}")
+        for file in ("entry-learner.md", "guided-learner.md",
+                     "draft-assessments/reference-learner.md"):
+            learner = (pilot / file).read_text(encoding="utf-8")
+            self.assertNotIn("entry-teacher.md", learner)
+            self.assertNotIn("guided-teacher.md", learner)
+            self.assertNotIn("reference-teacher.md", learner)
+        self.assertIn("grade-3-tiling-pilot/README.md",
+                      (BASE / "grade-3" / "geometry.md").read_text(encoding="utf-8"))
+
+
+    def test_grade3_geometry_transfer_clinic_cases_and_key_separation(self):
+        """Replay all new physical boundary cases, and guard public learner/key separation."""
+        root = ROOT / "curriculum" / "geometry" / "grade-3-tiling-pilot"
+        learner = (root / "transfer-learner.md").read_text(encoding="utf-8")
+        key = (root / "transfer-teacher.md").read_text(encoding="utf-8")
+        readme = (root / "README.md").read_text(encoding="utf-8")
+        self.assertIn("transfer-learner.md", readme)
+        self.assertIn("transfer-teacher.md", readme)
+        self.assertIn("not an adopted timetable", readme)
+        self.assertNotIn("transfer-teacher.md", learner)
+        self.assertNotIn("reference-teacher.md", learner)
+        self.assertIn("not a secure assessment", learner)
+        for n in range(1, 6):
+            with self.subTest(task=n):
+                self.assertIn(f"## T{n} ", learner)
+                self.assertIn(f"**T{n}**", key)
+        # The oracle counts each complete shared tile side twice when removing
+        # internal sides, including the inner boundary of the eight-tile ring.
+        examples = (
+            (("###", "#.#", "###"), 8, 16),
+            (("#.", ".#"), 2, 8),
+            (("##",), 2, 6),
+            (("###", "#..", "##."), 6, 14),
+            (("###", "###"), 6, 10),
+            (("##", "##", "##"), 6, 10),
+        )
+        for rows, expected_area, expected_boundary in examples:
+            cells = {(x, y) for y, row in enumerate(rows)
+                     for x, symbol in enumerate(row) if symbol == "#"}
+            boundary = sum((x + dx, y + dy) not in cells
+                           for x, y in cells
+                           for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+            with self.subTest(rows=rows):
+                self.assertEqual(expected_area, len(cells))
+                self.assertEqual(expected_boundary, boundary)
+        self.assertEqual(12 + 4, 16)  # outer plus inner ring exposed edges
+        self.assertEqual(4 * (2 * 2), 16)  # cm²: 4 tiles of 2cm by 2cm
+        self.assertEqual(4 * (1 * 1), 4)   # cm²: 4 tiles of 1cm by 1cm
+        for token in ("8 square units", "12 length units", "16 length units",
+                      "not side-connected", "6 length units", "14 length units",
+                      "4 cm²", "16 cm²", "8 cm", "16 cm",
+                      "not an adopted grade expectation"):
+            self.assertIn(token, key)
+        self.assertNotRegex(learner + key, r"(?:C|U|L|O|A)-GEO-[0-9]{3}")
+
 class RamadanPracticeTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -275,6 +366,62 @@ class Grade3ArithmeticBridgeDraftTests(unittest.TestCase):
                 self.assertNotRegex(file.read_text(encoding="utf-8"),
                                     r"(?:C|U|L|O|A)-MATH-002(?:-[0-9]{2,3})?")
 
+
+class Grade3LanguageEvidenceDraftTests(unittest.TestCase):
+    """Draft document and model-answer invariants; not teaching approval."""
+
+    PILOT = ROOT / "curriculum/language/grade-3-evidence-writing-pilot"
+
+    def test_entry_outcomes_and_no_ids(self):
+        pilot = (self.PILOT / "README.md").read_text(encoding="utf-8")
+        scaffold = (BASE / "grade-3/language.md").read_text(encoding="utf-8")
+        self.assertIn("not ready", pilot)
+        self.assertIn("unassigned", pilot)
+        self.assertIn("Music is excluded", pilot)
+        self.assertIn("Islamic studies", pilot)
+        self.assertIn("grade-3-evidence-writing-pilot/README.md", scaffold)
+        entry = (self.PILOT / "entry-learner.md").read_text(encoding="utf-8")
+        key = (self.PILOT / "entry-teacher.md").read_text(encoding="utf-8")
+        for i in range(1, 5):
+            self.assertIn(f"**E{i}.**", entry)
+            self.assertIn(f"| E{i} |", key)
+            self.assertIn(f"G3-LANG-P{i}", pilot)
+
+    def test_lessons_keys_and_exposed_reference(self):
+        lessons = (self.PILOT / "lessons.md").read_text(encoding="utf-8")
+        guide = (self.PILOT / "teacher-guide.md").read_text(encoding="utf-8")
+        for i in range(1, 5):
+            self.assertIn(f"Episode {i}", lessons)
+            self.assertIn(f"X{i}", lessons)
+            self.assertIn(f"**X{i}:**", guide)
+        self.assertEqual(4, lessons.count("| Rhetoric"))
+        for art in ("Grammar", "Logic", "Rhetoric"):
+            self.assertIn(art, lessons)
+        practice = (self.PILOT / "guided-learner.md").read_text(encoding="utf-8")
+        for i in range(1, 9):
+            self.assertEqual(1, practice.count(f"**G{i}.**"))
+            self.assertIn(f"| G{i} |", guide)
+        student = (self.PILOT / "draft-assessments/reference-learner.md").read_text(encoding="utf-8")
+        key = (self.PILOT / "draft-assessments/reference-teacher.md").read_text(encoding="utf-8")
+        for i in range(1, 11):
+            self.assertEqual(1, student.count(f"**S{i}.**"))
+            self.assertIn(f"| S{i} |", key)
+        self.assertNotIn("reference-teacher.md", student)
+        self.assertIn("9 − 12 = −3", key)
+        self.assertIn("11 − 10 = +1", key)
+
+    def test_source_lines_and_relative_links(self):
+        from test_islamic_studies_prototype import local_link_errors
+        packet = (self.PILOT / "source-packet.md").read_text(encoding="utf-8")
+        for letter, end in (("A", 6), ("B", 4)):
+            for i in range(1, end + 1):
+                self.assertEqual(1, packet.count(f"**{letter}{i}.**"))
+        for file in self.PILOT.rglob("*.md"):
+            with self.subTest(file=file.name):
+                self.assertEqual([], local_link_errors(file))
+                self.assertNotRegex(file.read_text(encoding="utf-8"),
+                                    r"(?:C|U|L|O|A)-LANG-[0-9]{3}")
+
 class Unit6ApplicationsDraftTests(unittest.TestCase):
     """Original Unit 6 authorship contracts; arithmetic is checked independently.
 
@@ -345,6 +492,7 @@ class Unit6ApplicationsDraftTests(unittest.TestCase):
         self.assertIn("Human-only gates", unit)
         self.assertIn("not ready", key)
         self.assertIn("no learner responses", (self.UNIT / "lessons/01-collections.md").read_text(encoding="utf-8").lower())
+
 
 
 

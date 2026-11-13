@@ -12,7 +12,7 @@
 
 **Guided (6 min).** “A shelf had **104 books**. **38** were taken. How many remain?” Count on 38→40 (+2), 40→100 (+60), 100→104 (+4): **66 books**. Check 38 + 66 = 104. Ask whether a jump from 40 to 100 is 6 units or 60 units; it is 60.
 
-**Rhetoric / independent exit (7 min).** [P2](../practice-learner.md#p2--number-line-reconstruction): start at 70, move forward 25, back 13. **Key 82** after intermediate 95; explain why the final count is below 95 but above 70. The learner marks 70, 95, 82 on a uniform conceptual scale or uses an equal-step tactile model.
+**Rhetoric / Independent exit (7 min).** [P2](../practice-learner.md#p2--number-line-reconstruction): start at 70, move forward 25, back 13. **Key 82** after intermediate 95; explain why the final count is below 95 but above 70. The learner marks 70, 95, 82 on a uniform conceptual scale or uses an equal-step tactile model.
 
 ## Feedback/recheck
 
