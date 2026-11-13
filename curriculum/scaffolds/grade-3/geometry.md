@@ -2,7 +2,7 @@
 
 - Record kind: **planning scaffold**, not a course, unit, lesson or assessment
 - Course ID and outcome IDs: **unassigned**; do not reserve before scope approval
-- Teaching status: **not ready**; no lesson or assessment is claimed as authored
+- Teaching status: **not ready**; no registered geometry lesson or assessment; separate authored but unregistered draft pilot linked below
 - Intended audience: Grade 3 (skills must be checked)
 - Primary study: Geometry
 - Session length, frequency, dates and access: **not selected**
@@ -22,11 +22,15 @@ Ask the learner to demonstrate **explain equal shares** from a prior planning bi
 
 The ordering and difficulty are proposals, not grade-based prerequisite claims. Real outcomes, prerequisite dependencies, tasks and success criteria must be authored after checking entry work.
 
+## Authored but unregistered Grade 3 geometry pilot (November 11, 2026)
+
+The [boundary, tiling and angle pilot](../../geometry/grade-3-tiling-pilot/README.md) supplies four actual **draft** Trivium-rich geometric teaching episodes, [four entry checks](../../geometry/grade-3-tiling-pilot/entry-learner.md) with [remediation/key](../../geometry/grade-3-tiling-pilot/entry-teacher.md), [seven guided prompts](../../geometry/grade-3-tiling-pilot/guided-learner.md) with a [complete separate teacher key](../../geometry/grade-3-tiling-pilot/guided-teacher.md), and [ten exposed reference tasks](../../geometry/grade-3-tiling-pilot/draft-assessments/reference-learner.md) with a [separate key and rubric](../../geometry/grade-3-tiling-pilot/draft-assessments/reference-teacher.md). All labels **G3-GEO-P1–P4** are local; no stable IDs or course registration. The separate Grade 2 geometry work in open PR #40 is **not assumed complete**. Fixed exposed forms are not independently secure.
+
 ## Proposed culminating performance
 
 **Candidate task:** Tile a figure and distinguish its area from perimeter.
 
-**Assessment gap:** Specify actual tasks, administration conditions, supports, teacher key or model responses, and threshold criteria. Proposed dimensions: accurate representation and naming; justified reason or counterexample; and an explanation another learner could check. These are **not** assessment results.
+**Assessment gap:** The separate pilot supplies fixed original tasks, suggested conditions/supports, keys and candidate criteria; **fresh unseen assessment, approved thresholds and administration, scope and key review** remain unfulfilled. Proposed dimensions: accurate representation and naming; justified reason or counterexample; and an explanation another learner could check. These are **not** assessment results.
 
 ## Trivium in this subject
 
