@@ -1,11 +1,13 @@
+import io
 import json
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
-from exercise_bank.unit2 import ACTIVITIES, generate, render
+from exercise_bank.unit2 import ACTIVITIES, generate, main, render
 
 
 class Unit2Sessions(unittest.TestCase):
@@ -61,3 +63,24 @@ class Unit2Sessions(unittest.TestCase):
             self.assertNotIn('First model', cli('resume', path).stdout)
             saved = json.loads((path/'progress.json').read_text())
             self.assertEqual(saved['responses'], {'U2-01': 'First model', 'U2-02': 'Second model'})
+
+    def test_resume_preserves_utf8_lf_under_windows_text_stdout(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp) / 'session'
+            subprocess.run([sys.executable, '-m', 'exercise_bank.unit2', 'new',
+                            str(directory), '--limit', '20'], check=True, capture_output=True)
+            for teacher in (False, True):
+                with self.subTest(teacher=teacher), io.BytesIO() as output, \
+                        io.TextIOWrapper(output, encoding='cp1252', newline='\r\n') as stream:
+                    # Exercise real encoding/newline translation, not a mock write method.
+                    stream.write('—\n')
+                    stream.flush()
+                    self.assertEqual(output.getvalue(), b'\x97\r\n')
+                    output.seek(0)
+                    output.truncate()
+                    argv = ['unit2', 'resume', str(directory)] + (['--teacher'] if teacher else [])
+                    with patch.object(sys, 'argv', argv), patch.object(sys, 'stdout', stream):
+                        main()
+                    stream.flush()
+                    expected = directory / ('teacher.md' if teacher else 'learner.md')
+                    self.assertEqual(output.getvalue(), expected.read_bytes())

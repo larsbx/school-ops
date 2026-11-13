@@ -102,14 +102,19 @@ editions, with record-specific authoring/readiness findings. The course stays dr
 
 ## Managed browser access control (prototype)
 
-The [site-scoped YouTube guard](tools/browser/site_scoped_youtube_guard/README.md)
-includes a [graphical setup wizard](tools/browser/site_scoped_youtube_guard/wizard.py),
-an MV3 Chrome 145+ extension and testable rule generator that allow
-YouTube embeds on an approved school portal while blocking standalone YouTube
-navigation. This is **not deployed**, has no real approved hostname yet, and
-requires independently enforced Chrome/device management before it is tamper-resistant.
-The wizard can prepare a signed-release handoff and Chrome policy, but does not
-publish a signed CRX or silently change enterprise management settings.
+The [SchoolOps Chrome setup guide](tools/browser/site_scoped_youtube_guard/README.md)
+walks through preparing the site-scoped YouTube extension, publishing its exact
+ZIP, reopening the saved setup, and installing the enterprise policy. The
+[graphical setup app](tools/browser/site_scoped_youtube_guard/wizard.py) supports
+explicit administrator policy actions on Windows/Linux, a macOS management
+profile, and ChromeOS Admin Console guidance. It preserves the prepared website
+configuration and separates policy application from verification in Chrome.
+
+The MV3 Chrome 145+ extension allows YouTube embeds on approved school portals
+while blocking standalone YouTube navigation. This remains **not deployed**:
+there is no established published extension, signed production installer or real
+approved school hostname yet. The setup app does not publish an extension or
+enroll devices; those steps and managed-device playback checks remain necessary.
 
 ## Proposed K–12 class and subject scaffolds
 

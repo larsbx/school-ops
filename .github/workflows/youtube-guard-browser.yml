@@ -22,6 +22,9 @@ jobs:
         working-directory: tools/browser/site_scoped_youtube_guard/acceptance
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -35,6 +38,16 @@ jobs:
       - name: Existing rule and installer tests
         working-directory: .
         run: python -m unittest discover -s tests -v
+      - name: Disposable Chromium CRX packer interoperability
+        run: |
+          node - <<'JS'
+          const { spawnSync } = require('node:child_process');
+          const { chromium } = require('playwright-core');
+          const result = spawnSync('python', ['check_crx_interop.py',
+            '--chromium', chromium.executablePath(), '--no-sandbox',
+            '--report', 'crx-interop-artifacts/crx-interop.json'], { stdio: 'inherit' });
+          process.exit(result.status ?? 1);
+          JS
       - name: Actual browser requests and separate hypothetical probes
         run: npm test
       - name: Retain evidence even on failure
@@ -42,6 +55,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: youtube-guard-chrome-evidence
-          path: tools/browser/site_scoped_youtube_guard/acceptance/artifacts/
+          path: |
+            tools/browser/site_scoped_youtube_guard/acceptance/artifacts/
+            tools/browser/site_scoped_youtube_guard/acceptance/crx-interop-artifacts/
           if-no-files-found: warn
           retention-days: 30

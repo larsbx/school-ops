@@ -1,0 +1,10 @@
+{
+  "status": "draft",
+  "resource_id": "R-FACTORIO-001",
+  "expected_receipt": {
+    "schema": "schoolops.factorio.practice.v1",
+    "activity_id": "L-FACTORIO-SMELTING-01",
+    "mod_version": "0.2.0",
+    "result": "completed"
+  }
+}

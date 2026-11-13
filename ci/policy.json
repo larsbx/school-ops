@@ -67,7 +67,9 @@
       "paths": [
         "tools/browser/site_scoped_youtube_guard/installer_core.py",
         "tools/browser/site_scoped_youtube_guard/wizard.py",
-        "tests/test_youtube_guard_installer.py"
+        "tests/test_youtube_guard_installer.py",
+        "tools/browser/site_scoped_youtube_guard/platform_policy.py",
+        "tests/test_guard_platform_policy.py"
       ],
       "depends_on": [
         "guard"
@@ -80,7 +82,8 @@
         "tests/test_native_youtube_wizard.py"
       ],
       "depends_on": [
-        "installer"
+        "installer",
+        "release"
       ]
     },
     "documentation": {
@@ -90,6 +93,28 @@
         "docs/**"
       ],
       "depends_on": []
+    },
+    "factorio": {
+      "paths": [
+        "curriculum/pilots/factorio/**",
+        "tools/factorio_practice.py",
+        "tests/test_factorio_practice.py"
+      ],
+      "depends_on": [
+        "curriculum"
+      ]
+    },
+    "release": {
+      "paths": [
+        "tools/browser/site_scoped_youtube_guard/crx3.py",
+        "tools/browser/site_scoped_youtube_guard/release_core.py",
+        "tools/browser/site_scoped_youtube_guard/formal/**",
+        "tests/test_guard_release.py",
+        "tests/test_guard_release_wizard.py"
+      ],
+      "depends_on": [
+        "installer"
+      ]
     }
   },
   "suites": {
@@ -177,6 +202,34 @@
       ],
       "directory": "tests",
       "pattern": "test_grade3_reasoning.py"
+    },
+    "platform-policy": {
+      "components": [
+        "installer"
+      ],
+      "directory": "tests",
+      "pattern": "test_guard_platform_policy.py"
+    },
+    "release": {
+      "components": [
+        "release"
+      ],
+      "directory": "tests",
+      "pattern": "test_guard_release.py"
+    },
+    "factorio-practice": {
+      "components": [
+        "factorio"
+      ],
+      "directory": "tests",
+      "pattern": "test_factorio_practice.py"
+    },
+    "release-wizard": {
+      "components": [
+        "release"
+      ],
+      "directory": "tests",
+      "pattern": "test_guard_release_wizard.py"
     }
   }
 }

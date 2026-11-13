@@ -30,7 +30,7 @@ class ImpactPlanningTests(unittest.TestCase):
 
     def test_curriculum_change_includes_dependents_transitively(self):
         decision = plan(POLICY, ["curriculum/scaffolds/islamic_studies.md"])
-        self.assertEqual(decision["suites"], ["bank", "curriculum", "islamic-prototype", "reasoning-grade3", "teaching", "unit2-sessions", "unit3-authored", "unit3-sessions"])
+        self.assertEqual(decision["suites"], ["bank", "curriculum", "factorio-practice", "islamic-prototype", "reasoning-grade3", "teaching", "unit2-sessions", "unit3-authored", "unit3-sessions"])
 
     def test_unit3_sessions_change_includes_curriculum_contract_and_bank_tests(self):
         decision = plan(POLICY, ["exercise_bank/unit3.py"])
@@ -38,13 +38,23 @@ class ImpactPlanningTests(unittest.TestCase):
         self.assertIn("unit3-authored", decision["suites"])
         self.assertIn("unit3-sessions", decision["suites"])
 
+    def test_factorio_practice_is_registered_and_scoped(self):
+        self.assertEqual(
+            plan(POLICY, ["tools/factorio_practice.py"])["suites"],
+            ["factorio-practice"],
+        )
+        self.assertIn(
+            "factorio-practice",
+            plan(POLICY, ["curriculum/scaffolds/grade-3/geometry.md"])["suites"],
+        )
+
     def test_installer_change_includes_native(self):
         decision = plan(POLICY, ["tools/browser/site_scoped_youtube_guard/installer_core.py"])
-        self.assertEqual(decision["suites"], ["installer", "native"])
+        self.assertEqual(decision["suites"], ["installer", "native", "platform-policy", "release", "release-wizard"])
 
     def test_browser_rule_change_includes_installer_and_native(self):
         decision = plan(POLICY, ["tools/browser/site_scoped_youtube_guard/build_rules.py"])
-        self.assertEqual(decision["suites"], ["guard", "installer", "native"])
+        self.assertEqual(decision["suites"], ["guard", "installer", "native", "platform-policy", "release", "release-wizard"])
 
     def test_unmapped_path_runs_every_suite(self):
         decision = plan(POLICY, ["tools/browser/new_feature.py"])
