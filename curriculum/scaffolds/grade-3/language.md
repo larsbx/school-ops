@@ -16,10 +16,10 @@ Do not assume a prior Grade 2 paragraph skill was taught. Use [E1–E4 original 
 
 | Order | Investigation | Actual authored draft outcome and material |
 | --- | --- | --- |
-| 1 | Study word parts and meaning | G3-LANG-P1: explain word form **and** context. [Episode 1](../../language/grade-3-evidence-writing-pilot/lessons.md#episode-1--what-does-a-word-mean-here-g3-lang-p1-e1e2) |
-| 2 | Organize explanations | G3-LANG-P2: order evidence and distinguish a request from verification. [Episode 2](../../language/grade-3-evidence-writing-pilot/lessons.md#episode-2--reasoned-event-order-g3-lang-p2-e2) |
-| 3 | Support a claim with textual detail | G3-LANG-P3: cite counterevidence and net-change limits. [Episode 3](../../language/grade-3-evidence-writing-pilot/lessons.md#episode-3--warrant-and-numerical-countermodel-g3-lang-p3-e3-plus-quantity-check) |
-| 4 | Revise for an audience | G3-LANG-P4: bounded three-sentence attributed explanation. [Episode 4](../../language/grade-3-evidence-writing-pilot/lessons.md#episode-4--audience-quotation-and-bounded-revision-g3-lang-p4-e3e4) |
+| 1 | Study word parts and meaning | G3-LANG-P1: explain word form **and** context. [Episode 1](../../language/grade-3-evidence-writing-pilot/lessons.md) |
+| 2 | Organize explanations | G3-LANG-P2: order evidence and distinguish a request from verification. [Episode 2](../../language/grade-3-evidence-writing-pilot/lessons.md) |
+| 3 | Support a claim with textual detail | G3-LANG-P3: cite counterevidence and net-change limits. [Episode 3](../../language/grade-3-evidence-writing-pilot/lessons.md) |
+| 4 | Revise for an audience | G3-LANG-P4: bounded three-sentence attributed explanation. [Episode 4](../../language/grade-3-evidence-writing-pilot/lessons.md) |
 
 An [unregistered Grade 3 language authored pilot](../../language/grade-3-evidence-writing-pilot/README.md) supplies newly invented text, four full Trivium teaching sequences, eight [guided learner tasks](../../language/grade-3-evidence-writing-pilot/guided-learner.md) with [teacher key](../../language/grade-3-evidence-writing-pilot/teacher-guide.md), and ten [exposed reference items](../../language/grade-3-evidence-writing-pilot/draft-assessments/reference-learner.md) with [separate keyed rubrics](../../language/grade-3-evidence-writing-pilot/draft-assessments/reference-teacher.md). These are **draft authoring**, not taught lessons, registered outcomes, secure assessments or mastery.
 
