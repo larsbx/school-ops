@@ -1,7 +1,7 @@
 {
   "schema": "schoolops.factorio.integration-lock.v1",
   "repository": "larsbx/factorio-mods",
-  "revision": "ae4550208164b53e122487371bd46b7b3d6c0f50",
+  "revision": "d39cc6ca0e8fd1bd9f16313492558f98fb020ea4",
   "source_status": "pinned",
   "factorio_version": "2.0.77",
   "factorio_archive_sha256": "c4efc11529f74d37c96933e291e0db73fd9f5aa4738913d9301b24680b3e947f",
@@ -27,8 +27,8 @@
     "tests/learning_lab_reload.py": "f309657c52103bd8ffebb5774e1a26c1433964b79efb354f9920f2af3554cbe1",
     "tests/ratio-loading-bay-test.lua": "ef345416da63af4d98cefed5d15f6f8bcddbeec9a72fa6ac08256670c9e136e5",
     "tests/ratio_reload.lua": "afdb37cd0d66e1ac70e4a813c6cd99f86cff6a0b87faaf494c31726569ac0998",
-    "tests/test_learning_lab_tooling.py": "1cd4d20f680395d855caf67bdb797fd7ca67001fcf61b7b33110b9e4358999d3",
-    "tools/factorio_runtime.py": "9fea3a0cd9d74f41ec37d136c98d937db33c8a907ba30ae2dad08ff4fe7863a4",
+    "tests/test_learning_lab_tooling.py": "46585e1671bc4c3fd2d6e4d03a8ab0efa6a40b86474c5b5ed39c235bc4e30ed2",
+    "tools/factorio_runtime.py": "4da1ba36a97d83674f76205611f8b0a59ad2d18b8ab9d6d1228c3be0d8ca1c25",
     "tools/verify_learning_lab.py": "6bf47db0252a6e80054e64f66f1aa65e9e7533a5dfbee3ac422e19b38b7475d3"
   }
 }
