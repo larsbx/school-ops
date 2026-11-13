@@ -27,7 +27,8 @@ def inspect_receipt(path):
     for directory in REGISTERED_ACTIVITIES:
         catalog = REPO_ROOT / directory / "activity.json"
         activity = json.loads(catalog.read_text(encoding="utf-8"))
-        if receipt == activity["expected_receipt"]:
+        supported = [activity["expected_receipt"], *activity.get("additional_expected_receipts", [])]
+        if any(receipt == expected for expected in supported):
             return {
                 "schoolops_record": (directory / "README.md").as_posix(),
                 "resource_id": activity["resource_id"],

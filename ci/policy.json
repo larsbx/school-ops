@@ -94,6 +94,18 @@
       ],
       "depends_on": []
     },
+    "factorio": {
+      "paths": [
+        "curriculum/pilots/factorio/**",
+        "tools/factorio_practice.py",
+        "tests/test_factorio_practice.py",
+        "tools/verify_factorio_integration.py",
+        "tools/factorio_integration.lock.json"
+      ],
+      "depends_on": [
+        "curriculum"
+      ]
+    },
     "release": {
       "paths": [
         "tools/browser/site_scoped_youtube_guard/crx3.py",
@@ -104,16 +116,6 @@
       ],
       "depends_on": [
         "installer"
-      ]
-    },
-    "factorio": {
-      "paths": [
-        "curriculum/pilots/factorio/**",
-        "tools/factorio_practice.py",
-        "tests/test_factorio_practice.py"
-      ],
-      "depends_on": [
-        "curriculum"
       ]
     }
   },
@@ -217,19 +219,19 @@
       "directory": "tests",
       "pattern": "test_guard_release.py"
     },
-    "release-wizard": {
-      "components": [
-        "release"
-      ],
-      "directory": "tests",
-      "pattern": "test_guard_release_wizard.py"
-    },
     "factorio-practice": {
       "components": [
         "factorio"
       ],
       "directory": "tests",
       "pattern": "test_factorio_practice.py"
+    },
+    "release-wizard": {
+      "components": [
+        "release"
+      ],
+      "directory": "tests",
+      "pattern": "test_guard_release_wizard.py"
     }
   }
 }

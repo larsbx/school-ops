@@ -1,0 +1,11 @@
+{
+  "schema": "schoolops.factorio.integration-lock.v1",
+  "repository": "larsbx/factorio-mods",
+  "revision": null,
+  "source_status": "pending_publication_unverified",
+  "factorio_version": "2.0.77",
+  "factorio_archive_sha256": "c4efc11529f74d37c96933e291e0db73fd9f5aa4738913d9301b24680b3e947f",
+  "mod_version": "0.3.0",
+  "producer_schema": "schoolops.factorio.acceptance.v1",
+  "source_hashes": {}
+}

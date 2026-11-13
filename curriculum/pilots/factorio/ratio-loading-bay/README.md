@@ -40,5 +40,10 @@ accessibility and classroom suitability is pending. Keep private teaching
 observations in the school's authorized workflow. Inspection creates no
 identity link, assignment, learner record, grade or mastery outcome.
 
-The [smelting pilot](../README.md) remains registered at `0.2.0`. Smelting
-exports produced by Learning Lab `0.3.0` are outside the registered contract.
+The [smelting pilot](../README.md) accepts its legacy `0.2.0` and current `0.3.0`
+receipts. The current smelting mapping was added after inspecting the exact
+receipt exported by the actual engine's disposable save/reload acceptance.
+Ratio Loading Bay accepts exactly `0.3.0`; other versions remain unsupported.
+
+The [automated compatibility workflow](../../../../docs/factorio-automation.md)
+repeats runtime and receipt checks and prepares a review package.
