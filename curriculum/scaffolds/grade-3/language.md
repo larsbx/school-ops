@@ -2,40 +2,41 @@
 
 - Record kind: **planning scaffold**, not a course, unit, lesson or assessment
 - Course ID and outcome IDs: **unassigned**; do not reserve before scope approval
-- Teaching status: **not ready**; no lesson or assessment is claimed as authored
+- Teaching status: **not ready**; linked authored pilot is also draft/unregistered
 - Intended audience: Grade 3 (skills must be checked)
-- Primary study: Grammar and rhetoric
+- Primary study: Grammar, logic and rhetoric in language and composition
 - Session length, frequency, dates and access: **not selected**
 - Framework: Trivium and selected Quadrivium arts; music excluded
 
 ## Proposed entry evidence
 
-Ask the learner to demonstrate **describe an observation in a paragraph** from a prior planning bin, using an example and explanation. Do not assume it was taught.
+Do not assume a prior Grade 2 paragraph skill was taught. Use [E1–E4 original entry prompts](../../language/grade-3-evidence-writing-pilot/entry-learner.md) with [separate teacher solutions, mini-remediation and rechecks](../../language/grade-3-evidence-writing-pilot/entry-teacher.md). These check actor/action, event order, source detail and bounded paraphrase, not silent assumptions of reading fluency.
 
-## Proposed sequence (not authored units)
+## Proposed sequence (not registered units)
 
-| Order | Investigation | Observable demonstration to develop |
+| Order | Investigation | Actual authored draft outcome and material |
 | --- | --- | --- |
-| 1 | Study word parts and meaning | Show an example and representation, test a claim, and explain the reasoning with appropriate terms. |
-| 2 | Organize explanations | Show an example and representation, test a claim, and explain the reasoning with appropriate terms. |
-| 3 | Support a claim with textual detail | Show an example and representation, test a claim, and explain the reasoning with appropriate terms. |
+| 1 | Study word parts and meaning | G3-LANG-P1: explain word form **and** context. [Episode 1](../../language/grade-3-evidence-writing-pilot/lessons.md#episode-1--what-does-a-word-mean-here-g3-lang-p1-e1e2) |
+| 2 | Organize explanations | G3-LANG-P2: order evidence and distinguish a request from verification. [Episode 2](../../language/grade-3-evidence-writing-pilot/lessons.md#episode-2--reasoned-event-order-g3-lang-p2-e2) |
+| 3 | Support a claim with textual detail | G3-LANG-P3: cite counterevidence and net-change limits. [Episode 3](../../language/grade-3-evidence-writing-pilot/lessons.md#episode-3--warrant-and-numerical-countermodel-g3-lang-p3-e3-plus-quantity-check) |
+| 4 | Revise for an audience | G3-LANG-P4: bounded three-sentence attributed explanation. [Episode 4](../../language/grade-3-evidence-writing-pilot/lessons.md#episode-4--audience-quotation-and-bounded-revision-g3-lang-p4-e3e4) |
 
-The ordering and difficulty are proposals, not grade-based prerequisite claims. Real outcomes, prerequisite dependencies, tasks and success criteria must be authored after checking entry work.
+An [unregistered Grade 3 language authored pilot](../../language/grade-3-evidence-writing-pilot/README.md) supplies newly invented text, four full Trivium teaching sequences, eight [guided learner tasks](../../language/grade-3-evidence-writing-pilot/guided-learner.md) with [teacher key](../../language/grade-3-evidence-writing-pilot/teacher-guide.md), and ten [exposed reference items](../../language/grade-3-evidence-writing-pilot/draft-assessments/reference-learner.md) with [separate keyed rubrics](../../language/grade-3-evidence-writing-pilot/draft-assessments/reference-teacher.md). These are **draft authoring**, not taught lessons, registered outcomes, secure assessments or mastery.
 
 ## Proposed culminating performance
 
-**Candidate task:** Defend a claim about a text with quoted details.
-
-**Assessment gap:** Specify actual tasks, administration conditions, supports, teacher key or model responses, and threshold criteria. Proposed dimensions: accurate representation and naming; justified reason or counterexample; and an explanation another learner could check. These are **not** assessment results.
+**Candidate task:** Defend or refute a claim about fictional text A or B with exact labeled evidence, then revise a too-strong statement for an absent reader. Reference S1–S10 have actual teacher models and **proposed** noncompensatory rubrics. The real assessment must be an approved unseen form under locally reviewed conditions.
 
 ## Trivium in this subject
 
-- **Grammar:** use sentences, vocabulary and source terminology precisely.
-- **Logic:** investigate interpretation and textual evidence.
-- **Rhetoric:** communicate clear speaking and writing.
+- **Grammar:** word parts, sentence functions, attribution, paraphrase and quotation.
+- **Logic:** sequence, text-to-claim warrants, counterexamples and cautious inferences.
+- **Rhetoric:** an intelligible explanation to another reader in an accessible response mode.
+
+Only real book-table arithmetic is counted as a Quadrivium application in this pilot; geometry and astronomy get no coverage claim. Music excluded. The [Islamic studies qualified-source guide](../islamic-studies-guide.md) continues to govern Qur'an/translation/hadith/fiqh work in the 13×8 matrix.
 
 ## Gates before course registration
 
-Agree subject scope, observed entry skills, the order and dependency of real units, course IDs, outcome IDs, assessment coverage, materials, time and calendar. Review those records under the [curriculum model](../../../docs/curriculum-model.md); keep all learner-specific records private. This scaffold does not itself establish a teaching-ready course.
+Agree scope, authentic entry skills, accessibility, culturally suitable fictional material, source custody, language and reading load, exact teacher keys, materials/time, unseen assessment design and proposed criteria. Assign stable IDs only after approval. Respect [curriculum-model readiness rules](../../../docs/curriculum-model.md) and private learner evidence. This scaffold remains **not ready**.
 
 [Grade 3 class overview](README.md) · [K–12 index](../README.md)
