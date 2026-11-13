@@ -422,5 +422,63 @@ class Grade3LanguageEvidenceDraftTests(unittest.TestCase):
                 self.assertNotRegex(file.read_text(encoding="utf-8"),
                                     r"(?:C|U|L|O|A)-LANG-[0-9]{3}")
 
+
+class Grade3HabitatEvidenceDraftTests(unittest.TestCase):
+    """Static contracts for the original synthetic science pilot, not pedagogy."""
+
+    PILOT = ROOT / "curriculum/natural-science/grade-3-habitat-evidence-pilot"
+
+    def test_synthetic_boundary_outcomes_and_separate_keys(self):
+        outline = (self.PILOT / "README.md").read_text(encoding="utf-8")
+        packet = (self.PILOT / "source-packet.md").read_text(encoding="utf-8")
+        learner = (self.PILOT / "learner.md").read_text(encoding="utf-8")
+        teacher = (self.PILOT / "teacher.md").read_text(encoding="utf-8")
+        scaffold = (BASE / "grade-3/natural-science.md").read_text(encoding="utf-8")
+        for required in ("not ready", "unregistered", "unassigned", "music"):
+            self.assertIn(required, outline.lower())
+        for outcome in ("P1", "P2", "P3", "P4"):
+            self.assertIn(outcome, outline)
+        self.assertIn("NOT FIELD OBSERVATIONS", packet)
+        self.assertIn("grade-3-habitat-evidence-pilot/README.md", scaffold)
+        self.assertNotIn("(teacher.md)", learner)
+        self.assertNotRegex(learner, r"(?im)^#{1,4} .*teacher.*key")
+        for kind, count in (("E", 4), ("G", 8), ("R", 10)):
+            for index in range(1, count + 1):
+                label = f"{kind}{index}"
+                self.assertIn(f"**{label}", learner)
+                self.assertIn(f"**{label}", teacher)
+
+    def test_four_trivium_episodes_and_arithmetic(self):
+        content = (self.PILOT / "lessons.md").read_text(encoding="utf-8")
+        teacher = (self.PILOT / "teacher.md").read_text(encoding="utf-8")
+        packet = (self.PILOT / "source-packet.md").read_text(encoding="utf-8")
+        self.assertEqual(4, len(re.findall(r"^## Episode [1-4] ", content, re.M)))
+        for block in re.split(r"(?=^## Episode [1-4] )", content, flags=re.M)[1:]:
+            self.assertIn("**Grammar:**", block)
+            self.assertIn("**Logic:**", block)
+            self.assertIn("**Rhetoric:**", block)
+            minutes = [int(n) for n in re.findall(r"^\|\s*(\d+)\s*\|", block, re.M)]
+            self.assertEqual(25, sum(minutes))
+        for i in range(1, 5):
+            self.assertIn(f"**X{i}", content)
+            self.assertIn(f"**X{i}", teacher)
+        self.assertEqual(6 - 4, 2)
+        self.assertEqual(6 + 4 + 5, 15)
+        self.assertEqual(6 - 3, 3)
+        for required in ("6−4=2", "6+4+5=15", "6−3=3", "5 minutes", "10 minutes"):
+            self.assertIn(required, teacher)
+        self.assertIn("5 | 6 | 2", packet)
+        self.assertIn("10 | 9 | 3", packet)
+        self.assertIn("No", teacher)
+
+    def test_pilot_local_links_and_no_premature_ids(self):
+        from test_islamic_studies_prototype import local_link_errors
+        for file in self.PILOT.rglob("*.md"):
+            with self.subTest(path=file.name):
+                self.assertEqual([], local_link_errors(file))
+                self.assertNotRegex(file.read_text(encoding="utf-8"),
+                                    r"(?:C|U|L|O|A)-SCI-[0-9]{3}")
+
+
 if __name__ == "__main__":
     unittest.main()
