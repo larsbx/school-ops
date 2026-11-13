@@ -35,6 +35,10 @@ An [unregistered Grade 2 Islamic studies course prototype](islamic-studies/grade
 
 A separate [unregistered Grade 3 Islamic studies source-literacy pilot](islamic-studies/grade-3-source-literacy-pilot/README.md) now authors the first two scaffold episodes (P1/P2) with original source metadata, lessons, a neutral entry check and independently keyed draft unit tasks. **No new canonical course has been registered** and qualified religious/age/translation reviews remain open.
 
+## Grade 3 geometry authoring pilot
+
+The [unregistered Grade 3 boundary/tiling/angle pilot](geometry/grade-3-tiling-pilot/README.md) contains four original geometry episodes, independent prerequisite checks, seven coached tasks with teacher key and ten **exposed** reference items with separate key and rubric. The [Grade 3 geometry planning entry](scaffolds/grade-3/geometry.md) remains **not ready**, and no stable IDs, course registration or learner results follow.
+
 ## Factorio practice pilot
 
 The [draft From ore to plate pilot](pilots/factorio/README.md) uses the Learning Lab mod for one-to-one counting and process vocabulary. Its offline receipt can be inspected locally for staff practice review.

@@ -94,6 +94,16 @@
       ],
       "depends_on": []
     },
+    "factorio": {
+      "paths": [
+        "curriculum/pilots/factorio/**",
+        "tools/factorio_practice.py",
+        "tests/test_factorio_practice.py"
+      ],
+      "depends_on": [
+        "curriculum"
+      ]
+    },
     "release": {
       "paths": [
         "tools/browser/site_scoped_youtube_guard/crx3.py",
@@ -206,6 +216,13 @@
       ],
       "directory": "tests",
       "pattern": "test_guard_release.py"
+    },
+    "factorio-practice": {
+      "components": [
+        "factorio"
+      ],
+      "directory": "tests",
+      "pattern": "test_factorio_practice.py"
     },
     "release-wizard": {
       "components": [
