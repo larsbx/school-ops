@@ -422,5 +422,79 @@ class Grade3LanguageEvidenceDraftTests(unittest.TestCase):
                 self.assertNotRegex(file.read_text(encoding="utf-8"),
                                     r"(?:C|U|L|O|A)-LANG-[0-9]{3}")
 
+class Unit6ApplicationsDraftTests(unittest.TestCase):
+    """Original Unit 6 authorship contracts; arithmetic is checked independently.
+
+    Structural tests do not approve lesson suitability, access or teaching readiness.
+    """
+
+    UNIT = ROOT / "curriculum/mathematics/grade-2/units/practical-applications"
+    ASS = ROOT / "assessments/C-MATH-001"
+
+    def test_existing_unit_authored_not_a_new_course(self):
+        course = (ROOT / "curriculum/mathematics/grade-2/README.md").read_text(encoding="utf-8")
+        unit = (self.UNIT / "README.md").read_text(encoding="utf-8")
+        self.assertIn("| U-MATH-001-06 | [Applications:", course)
+        self.assertIn("U-MATH-001-06", unit)
+        self.assertIn("draft, not teaching-ready", unit)
+        self.assertIn("Music excluded", unit)
+        lessons = sorted((self.UNIT / "lessons").glob("*.md"))
+        self.assertEqual(["01-collections.md", "02-journeys.md", "03-records.md", "04-choice.md"],
+                         [p.name for p in lessons])
+        for lesson in lessons:
+            body = lesson.read_text(encoding="utf-8")
+            self.assertIn("Status:", body)
+            self.assertIn("Grammar", body)
+            self.assertIn("Logic", body)
+            self.assertIn("rhetoric", body.lower())
+            self.assertIn("Independent", body)
+            self.assertIn("feedback", body.lower())
+        for outcome in ("006", "007", "009", "011"):
+            self.assertIn(outcome, unit)
+
+    def test_entry_gates_and_practice_keys_stay_separate(self):
+        learner = (self.UNIT / "practice-learner.md").read_text(encoding="utf-8")
+        key = (self.UNIT / "practice-teacher.md").read_text(encoding="utf-8")
+        for tag in ("E1", "E2", "E3", "E4", *(f"P{i}" for i in range(1, 9))):
+            self.assertRegex(learner, rf"\b{tag}\b")
+            self.assertIn(tag, key)
+        self.assertNotIn("(practice-teacher.md)", learner)
+        self.assertNotRegex(learner, r"(?im)^#{2,3} .*key|key:")
+        self.assertIn("private", key)
+        self.assertIn("supported", key)
+
+    def test_exposed_reference_check_and_independent_arithmetic(self):
+        learner = (self.ASS / "applications-learner.md").read_text(encoding="utf-8")
+        key = (self.ASS / "applications-teacher.md").read_text(encoding="utf-8")
+        for item in range(1, 7):
+            self.assertIn(f"U6-{item:02}", learner)
+            self.assertIn(f"U6-{item:02}", key)
+        self.assertNotIn("(applications-teacher.md)", learner)
+        self.assertIn("fixed", learner.lower())
+        self.assertIn("not assessed", key.lower())
+        self.assertIn(f"| U6-01 | 76 + 58 | **{76+58} counters**", key)
+        self.assertIn(f"| U6-02 | 143 − 67 | **{143-67} spaces**", key)
+        self.assertIn(f"| U6-03 | 96 − 48 | **{96-48} paper shapes**", key)
+        self.assertIn(f"| U6-04 | 70 + 25 − 13 | **{70+25} then {70+25-13}**", key)
+        self.assertIn(f"| U6-05 | 14, 9, 16 | **{14+9+16} stamps** total; **{16-9} stamps**", key)
+        a, b, needed = 3*9, 2*14, 26
+        self.assertIn(f"**A {a}, {a-needed} extra; B {b}, {b-needed} extras**", key)
+        self.assertEqual(75 + 28, 103)
+        self.assertEqual(118 - 49, 69)
+        self.assertEqual(4 * 7 - 25, 3)
+        self.assertEqual(3 * 9 - 25, 2)
+
+    def test_explicit_missing_observation_and_review_gates(self):
+        unit = (self.UNIT / "README.md").read_text(encoding="utf-8")
+        key = (self.ASS / "applications-teacher.md").read_text(encoding="utf-8")
+        self.assertIn("Actual observed astronomy components remain separately unassessed", unit)
+        self.assertIn("sky/actual observation components remain unassessed", key)
+        self.assertIn("Human-only gates", unit)
+        self.assertIn("not ready", key)
+        self.assertIn("no learner responses", (self.UNIT / "lessons/01-collections.md").read_text(encoding="utf-8").lower())
+
+
+
+
 if __name__ == "__main__":
     unittest.main()
