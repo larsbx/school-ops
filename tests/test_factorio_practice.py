@@ -196,6 +196,12 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
             self.assertEqual(record["inspection"]["material_status"], "draft")
 
     def test_candidate_supply_requires_engine_gates_and_exact_exported_bytes(self):
+        # These are fictional files in a local parser fixture, never engine proof.
+        for relative in integration.SUPPLY_SOURCE_PATHS:
+            source = self.checkout / relative
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_text("synthetic supply source fixture\n", encoding="utf-8")
+            self.report["source_hashes"][relative] = integration.sha256(source)
         payload = self.producer / "receipts/factory-supply-order.json"
         payload.write_text(json.dumps(SUPPLY), encoding="utf-8")
         self.report["artifacts"]["receipts"]["supply_unregistered"] = {
@@ -210,6 +216,18 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
         self.assertEqual(set(verified["receipts"]), {"smelting", "ratio", "supply_candidate"})
         self.assertEqual(verified["receipts"]["supply_candidate"]["inspection"]["evidence"],
                          "unverified_practice_completion_claim")
+        missing_source = "mods/learning-lab/supply_order.lua"
+        saved_digest = self.report["source_hashes"].pop(missing_source)
+        self.write_report()
+        with self.assertRaisesRegex(integration.IntegrationError, "lacks source-bound"):
+            self.validate()
+        self.report["source_hashes"][missing_source] = saved_digest
+        physical_source = self.checkout / missing_source
+        physical_source.write_text("tampered synthetic supply implementation\n", encoding="utf-8")
+        self.write_report()
+        with self.assertRaises(integration.IntegrationError):
+            self.validate()
+        physical_source.write_text("synthetic supply source fixture\n", encoding="utf-8")
         self.report["checks"]["supply_reload_complete"]["status"] = "not_run"
         self.write_report()
         with self.assertRaises(integration.IntegrationError):

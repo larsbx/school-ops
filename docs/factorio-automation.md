@@ -66,7 +66,7 @@ See [the technical contract](factorio-automation.llm.txt), the
 [Factory Supply Order](../curriculum/pilots/factorio/factory-supply-order/README.md)
 has its own original draft activity and exact offline receipt mapping. The
 existing pinned Factorio PR #7 producer does not create this receipt. The
-inspector's synthetic tests are **not** proof of actual game execution. If a
+inspector requires the exact, locally rehashed supply implementation and save/reload test sources; a legacy producer with invented green supply gates is refused. This source check is not runtime authentication. Its synthetic tests are **not** proof of actual game execution. If a
 producer supplies a candidate receipt, the integration verifier also requires
 the new actual-engine inventory, active/completed reload, and server receipt
 gates before classifying it as an unverified practice claim. It does not

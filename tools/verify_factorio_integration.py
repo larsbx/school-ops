@@ -30,6 +30,10 @@ REQUIRED_CHECKS = (
     "ratio_reload_complete", "gui_handler_model", "content_binding",
     "deterministic_package", "runtime",
 )
+SUPPLY_SOURCE_PATHS = frozenset({
+    "mods/learning-lab/supply_order.lua",
+    "tests/supply_reload.lua",
+})
 CORE_SOURCE_PATHS = {
     "mod.py", "tools/factorio_runtime.py", "tools/verify_learning_lab.py",
     "tests/learning-lab.lua", "tests/learning-lab-ui.lua",
@@ -230,6 +234,10 @@ def validate_producer(output, checkout, lock, identity, *, allow_local_source=Fa
     # The immutable lock still governs the original two-receipt baseline.
     candidate = artifacts["receipts"].get("supply_unregistered")
     if candidate is not None:
+        # A legacy producer with only baseline sources cannot self-declare
+        # supply acceptance by appending a four-field receipt and green gates.
+        require(SUPPLY_SOURCE_PATHS <= set(hashes),
+                "candidate supply receipt lacks source-bound supply implementation/tests")
         for name in ("real_engine_supply", "supply_reload_active",
                      "supply_reload_complete", "actual_supply_receipt"):
             gate = checks.get(name)
