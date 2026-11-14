@@ -79,6 +79,8 @@ Outcome numbers below abbreviate the existing O-MATH-001-NNN definitions.
 | M15 — Build and present | U-MATH-001-07 | Carry out the selected arithmetic/geometric/observational work | Give a reasoned demonstration and answer a partner's question | Selected earlier outcomes |
 | M16 — Revisit and transfer | U-MATH-001-07 | Revisit specific gaps using new keyed applications | Present a connected explanation and identify what remains unassessed | Revisit 001–013 only where actually checked |
 
+The M07–M08 content now has a separately reviewable [draft Unit 4 geometry/measurement authoring package](units/form-measure/README.md), including original lesson examples and fixed teacher-keyed reference assessments. This does **not** constitute a finished M07/M08 book-layout pack, classroom readiness, independent learner evidence, or approval of Unit 3 prerequisites.
+
 The [course prerequisite table](README.md#proposed-unit-progression) governs
 sequencing. A book module may need several lessons, review or split sittings.
 Sixteen modules do not specify sixteen weeks or equal teaching time.
