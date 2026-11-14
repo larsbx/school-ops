@@ -98,7 +98,9 @@
       "paths": [
         "curriculum/pilots/factorio/**",
         "tools/factorio_practice.py",
-        "tests/test_factorio_practice.py"
+        "tests/test_factorio_practice.py",
+        "tools/verify_factorio_integration.py",
+        "tools/factorio_integration.lock.json"
       ],
       "depends_on": [
         "curriculum"

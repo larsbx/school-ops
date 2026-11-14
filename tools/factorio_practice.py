@@ -3,7 +3,9 @@ import argparse
 import json
 from pathlib import Path
 
-CATALOG = Path(__file__).resolve().parents[1] / "curriculum/pilots/factorio/activity.json"
+PILOT_ROOT = Path("curriculum/pilots/factorio")
+REPO_ROOT = Path(__file__).resolve().parents[1]
+REGISTERED_ACTIVITIES = (PILOT_ROOT, PILOT_ROOT / "ratio-loading-bay")
 MAX_RECEIPT_BYTES = 1024
 
 
@@ -17,21 +19,24 @@ def unique_fields(pairs):
 
 
 def inspect_receipt(path):
-    activity = json.loads(CATALOG.read_text(encoding="utf-8"))
     with path.open("rb") as source:
         data = source.read(MAX_RECEIPT_BYTES + 1)
     if len(data) > MAX_RECEIPT_BYTES:
         raise ValueError("receipt is too large")
     receipt = json.loads(data.decode("utf-8"), object_pairs_hook=unique_fields)
-    if receipt != activity["expected_receipt"]:
-        raise ValueError("receipt does not match the supported activity, schema, version and completion claim")
-    return {
-        "schoolops_record": "curriculum/pilots/factorio/README.md",
-        "resource_id": activity["resource_id"],
-        "activity_id": receipt["activity_id"],
-        "material_status": activity["status"],
-        "evidence": "unverified_practice_completion_claim"
-    }
+    for directory in REGISTERED_ACTIVITIES:
+        catalog = REPO_ROOT / directory / "activity.json"
+        activity = json.loads(catalog.read_text(encoding="utf-8"))
+        supported = [activity["expected_receipt"], *activity.get("additional_expected_receipts", [])]
+        if any(receipt == expected for expected in supported):
+            return {
+                "schoolops_record": (directory / "README.md").as_posix(),
+                "resource_id": activity["resource_id"],
+                "activity_id": receipt["activity_id"],
+                "material_status": activity["status"],
+                "evidence": "unverified_practice_completion_claim"
+            }
+    raise ValueError("receipt does not match the supported activity, schema, version and completion claim")
 
 
 def main():
