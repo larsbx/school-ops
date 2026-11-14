@@ -5,7 +5,8 @@ from pathlib import Path
 
 PILOT_ROOT = Path("curriculum/pilots/factorio")
 REPO_ROOT = Path(__file__).resolve().parents[1]
-REGISTERED_ACTIVITIES = (PILOT_ROOT, PILOT_ROOT / "ratio-loading-bay")
+REGISTERED_ACTIVITIES = (PILOT_ROOT, PILOT_ROOT / "ratio-loading-bay",
+                         PILOT_ROOT / "factory-supply-order")
 MAX_RECEIPT_BYTES = 1024
 
 

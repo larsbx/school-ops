@@ -1,0 +1,10 @@
+{
+  "status": "draft",
+  "resource_id": "R-FACTORIO-003",
+  "expected_receipt": {
+    "schema": "schoolops.factorio.practice.v1",
+    "activity_id": "L-FACTORIO-SUPPLY-01",
+    "mod_version": "0.3.0",
+    "result": "completed"
+  }
+}
