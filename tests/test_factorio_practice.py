@@ -312,7 +312,16 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
     def test_missing_engine_or_failing_producer_is_nonzero_without_reading_receipts(self):
         output = self.root / "failed-run"
         failed = subprocess.CompletedProcess([], 1, b"synthetic-private-stdout", b"synthetic-private-stderr")
-        with mock.patch.object(integration.subprocess, "run", return_value=failed), \
+        real_run = subprocess.run
+
+        def fail_only_producer(command, **kwargs):
+            # Mock the game subprocess, not git rev-parse/status: those are
+            # independently checked before and after producer execution.
+            if len(command) > 1 and str(command[1]).endswith("verify_learning_lab.py"):
+                return failed
+            return real_run(command, **kwargs)
+
+        with mock.patch.object(integration.subprocess, "run", side_effect=fail_only_producer), \
              mock.patch.object(integration, "validate_producer") as validator:
             report = integration.run_integration(self.checkout, output, allow_local_source=True,
                                                  lock_path=self.lock_path)
