@@ -2,7 +2,7 @@
 
 - Record kind: **planning scaffold**, not a course, unit, lesson or assessment
 - Course ID and outcome IDs: **unassigned**; do not reserve before scope approval
-- Teaching status: **not ready**; no lesson or assessment is claimed as authored
+- Teaching status: **not ready**; no *standalone astronomy subject course* lesson or assessment is claimed as authored
 - Intended audience: Grade 2 (skills must be checked)
 - Primary study: Astronomy
 - Session length, frequency, dates and access: **not selected**
@@ -33,6 +33,10 @@ The ordering and difficulty are proposals, not grade-based prerequisite claims. 
 - **Grammar:** use sky objects, dates and measurement terms precisely.
 - **Logic:** investigate observations versus hypotheses.
 - **Rhetoric:** communicate an explained dated observation.
+
+## Existing Grade 2 mathematics astronomy strand (different record type)
+
+The existing **draft** [Grade 2 mathematics Unit 5 sky-records pilot](../../mathematics/grade-2/units/sky-records/README.md) now contains four authored lesson drafts, an entry check, learner practice, a blank **real-observation** template and separate reference assessment/key for **existing course outcomes O-MATH-001-010 and 011**. This does **not** register an independent Grade 2 astronomy course, supply authentic lunar records, establish classroom readiness or replace this scaffold's unselected standalone scope. The synthetic May/March datasets are exercises, **not** historical astronomical observations. Genuine sourced sky-record evidence, safety/access and teacher review remain blocked; [course model](../../../docs/curriculum-model.md) applies.
 
 ## Gates before course registration
 
