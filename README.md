@@ -100,21 +100,10 @@ The [complete draft first-unit teaching pack](curriculum/mathematics/grade-2/uni
 provides separate PV2/PV3 teaching routes, learner sheets, teacher keys and print
 editions, with record-specific authoring/readiness findings. The course stays draft.
 
-## Managed browser access control (prototype)
+## Set up managed Chrome access
 
-The [SchoolOps Chrome setup guide](tools/browser/site_scoped_youtube_guard/README.md)
-walks through preparing the site-scoped YouTube extension, publishing its exact
-ZIP, reopening the saved setup, and installing the enterprise policy. The
-[graphical setup app](tools/browser/site_scoped_youtube_guard/wizard.py) supports
-explicit administrator policy actions on Windows/Linux, a macOS management
-profile, and ChromeOS Admin Console guidance. It preserves the prepared website
-configuration and separates policy application from verification in Chrome.
-
-The MV3 Chrome 145+ extension allows YouTube embeds on approved school portals
-while blocking standalone YouTube navigation. This remains **not deployed**:
-there is no established published extension, signed production installer or real
-approved school hostname yet. The setup app does not publish an extension or
-enroll devices; those steps and managed-device playback checks remain necessary.
+Prepare, publish, install and verify the Chrome 145+ YouTube Guard. Production
+rollout is pending. [Chrome setup guide](tools/browser/site_scoped_youtube_guard/README.md)
 
 ## Proposed K–12 class and subject scaffolds
 
