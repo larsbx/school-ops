@@ -47,6 +47,7 @@ SCHOOL_SOURCE_PATHS = (
     "tools/factorio_integration.lock.json",
     "curriculum/pilots/factorio/activity.json",
     "curriculum/pilots/factorio/ratio-loading-bay/activity.json",
+    "curriculum/pilots/factorio/factory-supply-order/activity.json",
 )
 
 
@@ -224,6 +225,31 @@ def validate_producer(output, checkout, lock, identity, *, allow_local_source=Fa
         },
                 "SchoolOps receipt classification changed")
         inspected[name] = {"receipt_sha256": sha256(receipt), "inspection": result}
+    # Optional candidate receipt: never infer actual engine execution from a
+    # manually supplied four-field JSON or from catalog registration alone.
+    # The immutable lock still governs the original two-receipt baseline.
+    candidate = artifacts["receipts"].get("supply_unregistered")
+    if candidate is not None:
+        for name in ("real_engine_supply", "supply_reload_active",
+                     "supply_reload_complete", "actual_supply_receipt"):
+            gate = checks.get(name)
+            require(type(gate) is dict and gate.get("status") == "passed"
+                    and type(gate.get("evidence")) is str and bool(gate["evidence"]),
+                    "candidate supply engine gate did not pass: " + name)
+        supply = artifact_file(output, candidate, "receipts/factory-supply-order.json")
+        payload = bounded_json(supply, maximum=1024)
+        require(payload == {
+            "schema": "schoolops.factorio.practice.v1", "activity_id": "L-FACTORIO-SUPPLY-01",
+            "mod_version": lock["mod_version"], "result": "completed"
+        }, "candidate supply receipt differs from the supported exact payload")
+        result = inspect_receipt(supply)
+        require(result == {
+            "schoolops_record": "curriculum/pilots/factorio/factory-supply-order/README.md",
+            "resource_id": "R-FACTORIO-003",
+            "activity_id": "L-FACTORIO-SUPPLY-01",
+            "material_status": "draft", "evidence": "unverified_practice_completion_claim"
+        }, "candidate supply SchoolOps classification differs")
+        inspected["supply_candidate"] = {"receipt_sha256": sha256(supply), "inspection": result}
     package = artifact_file(output, artifacts.get("package"), "learning-lab_" + lock["mod_version"] + ".zip")
     return {"producer_report_sha256": sha256(output / "report.json"),
             "producer_source_hashes": hashes, "engine": engine,

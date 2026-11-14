@@ -60,3 +60,15 @@ The development flag is not used by the private hosted compatibility workflow.
 See [the technical contract](factorio-automation.llm.txt), the
 [smelting pilot](../curriculum/pilots/factorio/README.md), and the
 [Ratio Loading Bay pilot](../curriculum/pilots/factorio/ratio-loading-bay/README.md).
+
+## New Factory Supply Order candidate
+
+[Factory Supply Order](../curriculum/pilots/factorio/factory-supply-order/README.md)
+has its own original draft activity and exact offline receipt mapping. The
+existing pinned Factorio PR #7 producer does not create this receipt. The
+inspector's synthetic tests are **not** proof of actual game execution. If a
+producer supplies a candidate receipt, the integration verifier also requires
+the new actual-engine inventory, active/completed reload, and server receipt
+gates before classifying it as an unverified practice claim. It does not
+pretend that optional candidate inspection updates the immutable compatibility
+lock. Owner review and tested producer/consumer revision pins still gate rollout.

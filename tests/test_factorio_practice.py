@@ -23,6 +23,7 @@ def completion(activity_id, mod_version):
 SMELTING = completion("L-FACTORIO-SMELTING-01", "0.2.0")
 CURRENT_SMELTING = completion("L-FACTORIO-SMELTING-01", "0.3.0")
 RATIO = completion("L-FACTORIO-RATIO-01", "0.3.0")
+SUPPLY = completion("L-FACTORIO-SUPPLY-01", "0.3.0")
 
 
 class FactorioPracticeTest(unittest.TestCase):
@@ -36,6 +37,7 @@ class FactorioPracticeTest(unittest.TestCase):
             (SMELTING, "R-FACTORIO-001", "curriculum/pilots/factorio/README.md"),
             (CURRENT_SMELTING, "R-FACTORIO-001", "curriculum/pilots/factorio/README.md"),
             (RATIO, "R-FACTORIO-002", "curriculum/pilots/factorio/ratio-loading-bay/README.md"),
+            (SUPPLY, "R-FACTORIO-003", "curriculum/pilots/factorio/factory-supply-order/README.md"),
         )
         for receipt, resource_id, record in cases:
             with self.subTest(activity=receipt["activity_id"]):
@@ -49,7 +51,7 @@ class FactorioPracticeTest(unittest.TestCase):
                 })
 
     def test_receipt_fields_are_exact_for_each_activity(self):
-        for receipt in (SMELTING, CURRENT_SMELTING, RATIO):
+        for receipt in (SMELTING, CURRENT_SMELTING, RATIO, SUPPLY):
             missing_result = receipt.copy()
             del missing_result["result"]
             invalid = {
@@ -71,7 +73,7 @@ class FactorioPracticeTest(unittest.TestCase):
                         inspect_receipt(self.path)
 
     def test_duplicate_fields_are_rejected_even_with_matching_values(self):
-        for receipt in (SMELTING, CURRENT_SMELTING, RATIO):
+        for receipt in (SMELTING, CURRENT_SMELTING, RATIO, SUPPLY):
             for field, value in receipt.items():
                 with self.subTest(activity=receipt["activity_id"], field=field):
                     duplicate = json.dumps(receipt)[:-1] + ", " + json.dumps({field: value})[1:]
@@ -80,7 +82,7 @@ class FactorioPracticeTest(unittest.TestCase):
                         inspect_receipt(self.path)
 
     def test_receipt_byte_limit(self):
-        for receipt in (SMELTING, CURRENT_SMELTING, RATIO):
+        for receipt in (SMELTING, CURRENT_SMELTING, RATIO, SUPPLY):
             with self.subTest(activity=receipt["activity_id"]):
                 at_limit = json.dumps(receipt).encode("utf-8").ljust(MAX_RECEIPT_BYTES)
                 self.path.write_bytes(at_limit)
@@ -96,6 +98,19 @@ class FactorioPracticeTest(unittest.TestCase):
                 self.path.write_bytes(payload)
                 with self.assertRaises(ValueError):
                     inspect_receipt(self.path)
+
+    def test_factory_supply_catalog_is_draft_and_not_world_proof(self):
+        record = Path(__file__).resolve().parents[1] / (
+            "curriculum/pilots/factorio/factory-supply-order/activity.json")
+        metadata = json.loads(record.read_text(encoding="utf-8"))
+        self.assertEqual(set(metadata), {"status", "resource_id", "expected_receipt"})
+        self.assertEqual(metadata["status"], "draft")
+        self.assertEqual(metadata["expected_receipt"], SUPPLY)
+        self.path.write_text(json.dumps(SUPPLY), encoding="utf-8")
+        result = inspect_receipt(self.path)
+        self.assertEqual(result["evidence"], "unverified_practice_completion_claim")
+        self.assertEqual(result["material_status"], "draft")
+        self.assertEqual(result["resource_id"], "R-FACTORIO-003")
 
     def test_cli_rejects_an_identity_field_without_echoing_its_value(self):
         self.path.write_text(json.dumps(dict(RATIO, learner_id="synthetic-private-id")),
@@ -179,6 +194,32 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
         for record in result["receipts"].values():
             self.assertEqual(record["inspection"]["evidence"], "unverified_practice_completion_claim")
             self.assertEqual(record["inspection"]["material_status"], "draft")
+
+    def test_candidate_supply_requires_engine_gates_and_exact_exported_bytes(self):
+        payload = self.producer / "receipts/factory-supply-order.json"
+        payload.write_text(json.dumps(SUPPLY), encoding="utf-8")
+        self.report["artifacts"]["receipts"]["supply_unregistered"] = {
+            "path": "receipts/factory-supply-order.json",
+            "sha256": integration.sha256(payload),
+        }
+        for name in ("real_engine_supply", "supply_reload_active",
+                     "supply_reload_complete", "actual_supply_receipt"):
+            self.report["checks"][name] = {"status": "passed", "evidence": "synthetic parser fixture"}
+        self.write_report()
+        verified = self.validate()
+        self.assertEqual(set(verified["receipts"]), {"smelting", "ratio", "supply_candidate"})
+        self.assertEqual(verified["receipts"]["supply_candidate"]["inspection"]["evidence"],
+                         "unverified_practice_completion_claim")
+        self.report["checks"]["supply_reload_complete"]["status"] = "not_run"
+        self.write_report()
+        with self.assertRaises(integration.IntegrationError):
+            self.validate()
+        self.report["checks"]["supply_reload_complete"]["status"] = "passed"
+        payload.write_text(json.dumps(dict(SUPPLY, learner_id="private-value")), encoding="utf-8")
+        self.report["artifacts"]["receipts"]["supply_unregistered"]["sha256"] = integration.sha256(payload)
+        self.write_report()
+        with self.assertRaises(integration.IntegrationError):
+            self.validate()
 
     def test_every_required_engine_gate_must_be_present_and_passed(self):
         original = json.loads(json.dumps(self.report))
