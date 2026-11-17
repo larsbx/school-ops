@@ -239,7 +239,8 @@ def validate_producer(output, checkout, lock, identity, *, allow_local_source=Fa
         require(SUPPLY_SOURCE_PATHS <= set(hashes),
                 "candidate supply receipt lacks source-bound supply implementation/tests")
         for name in ("real_engine_supply", "supply_reload_active",
-                     "supply_reload_complete", "actual_supply_receipt"):
+                     "supply_reload_complete", "supply_reissue_guard",
+                     "actual_supply_receipt"):
             gate = checks.get(name)
             require(type(gate) is dict and gate.get("status") == "passed"
                     and type(gate.get("evidence")) is str and bool(gate["evidence"]),
