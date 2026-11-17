@@ -50,3 +50,7 @@ The [draft Factory Supply Order pilot](pilots/factorio/factory-supply-order/READ
 ## Grade 3 language evidence-writing pilot (unregistered)
 
 The [Grade 3 original evidence-writing pilot](language/grade-3-evidence-writing-pilot/README.md) authors four illustrative Trivium episodes, four prerequisite prompts with remediation/rechecks, eight guided exercises and ten **exposed** reference items with separate complete keys and **proposed** rubrics. The [language planning scaffold](scaffolds/grade-3/language.md) remains **not ready**. No new canonical identifiers, approved courses, teaching dates or learner results. Islamic studies throughout the K–12 matrix still requires qualified source, Qur'an/translation, hadith and fiqh review.
+
+## Grade 4 mathematical authoring pilot — unregistered
+
+The [Grade 4 common-unit fraction sums pilot](mathematics/grade-4-fractions-pilot/README.md) is a **draft, not ready**, original teaching/evidence prototype with [Grade 4 scaffold context](scaffolds/grade-4/mathematics.md). Its fixed reference exemplars are not secure assessments. **No canonical ID or course registration is created**; the registered-course table above is unchanged.
