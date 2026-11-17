@@ -51,9 +51,17 @@ Producer evidence schema: schoolops.factorio.acceptance.v1
   callbacks with modeled GUI/player objects, not a real desktop LuaPlayer.
   Real engine inventory and save checks use synthetic test fixtures; they do
   not establish acceptance for a connected learner client.
-- Artifact paths and hashes are checked before inspection. The two expected
-  receipt paths are receipts/from-ore-to-plate.json and receipts/ratio-loading-bay.json.
+- Artifact paths and hashes are checked before inspection. Baseline receipt
+  paths are receipts/from-ore-to-plate.json and receipts/ratio-loading-bay.json.
+  A source-bound Factory Supply Order candidate additionally requires the
+  actual receipts/factory-supply-order.json, its real engine inventory,
+  active/completed save/reload and supply_reissue_guard gates, and four-field
+  offline inspection as an unsigned draft claim.
 - The current mod package is learning-lab_0.3.0.zip.
+- The proposed reverse lock selects producer f8f14b42b9f03c489e9a5f72e5458c8d13f5d654,
+  tested forward with merged SchoolOps 36688338abe6e3d8eabb4a20c21e45c2b82aeca6
+  on actual headless Factorio 2.0.77. Strict reverse acceptance of the updated
+  consumer lock is a separate pending test; do not inherit the older pair's pass.
 
 Receipt and authority boundary
 - Current producer receipts have the four exact v1 fields: schema, activity_id,
