@@ -513,6 +513,63 @@ class Unit4GeometryDraftTests(unittest.TestCase):
 
 
 
+class Grade4FractionDraftChecks(unittest.TestCase):
+    PILOT = ROOT / "curriculum/mathematics/grade-4-fractions-pilot"
+
+    def test_reference_key_and_entry_separation(self):
+        entry = (self.PILOT / "entry-learner.md").read_text(encoding="utf-8")
+        ekey = (self.PILOT / "entry-teacher.md").read_text(encoding="utf-8")
+        guided = (self.PILOT / "guided-learner.md").read_text(encoding="utf-8")
+        teacher = (self.PILOT / "teacher-guide.md").read_text(encoding="utf-8")
+        ref = (self.PILOT / "draft-assessments/reference-learner.md").read_text(encoding="utf-8")
+        key = (self.PILOT / "draft-assessments/reference-teacher.md").read_text(encoding="utf-8")
+        for n in range(1, 5):
+            self.assertIn(f"**E{n}.**", entry)
+            self.assertIn(f"| E{n} |", ekey)
+            self.assertIn(f"| X{n} |", teacher)
+        for n in range(1, 9):
+            self.assertIn(f"**G{n}.**", guided)
+            self.assertIn(f"| G{n} |", teacher)
+        for n in range(1, 11):
+            self.assertIn(f"**S{n}.**", ref)
+            self.assertIn(f"| S{n} |", key)
+        for learner in (entry, guided, ref):
+            self.assertNotIn("reference-teacher.md", learner)
+            self.assertNotIn("entry-teacher.md", learner)
+            self.assertNotIn("teacher-guide.md", learner)
+
+    def test_four_actual_trivium_episodes(self):
+        lessons = (self.PILOT / "lessons.md").read_text(encoding="utf-8")
+        episodes = re.split(r"(?=^## Episode [1-4] )", lessons, flags=re.M)[1:]
+        self.assertEqual(4, len(episodes))
+        for n, episode in enumerate(episodes, 1):
+            self.assertIn(f"X{n}", episode)
+            for art in ("Grammar:", "Logic:", "Rhetoric"):
+                self.assertIn(art, episode)
+            minutes = [int(x) for x in re.findall(r"^\| [^|]+ \| (\d+) \|$", episode, re.M)]
+            self.assertEqual(25, sum(minutes))
+
+    def test_exact_math_and_links_without_registration(self):
+        from fractions import Fraction as F
+        self.assertEqual(F(3, 4), F(1, 2) + F(1, 4))
+        self.assertEqual(F(5, 8), F(3, 8) + F(1, 4))
+        self.assertEqual(F(5, 8), F(3, 4) - F(1, 8))
+        self.assertEqual(F(1), F(2, 3) + F(1, 3))
+        self.assertEqual(F(1, 2), F(2, 5) + F(1, 10))
+        intro = (self.PILOT / "README.md").read_text(encoding="utf-8")
+        for phrase in ("not ready", "unassigned", "Music is excluded", "Islamic studies"):
+            self.assertIn(phrase, intro)
+        self.assertIn("grade-4-fractions-pilot/README.md", (BASE / "grade-4/mathematics.md").read_text(encoding="utf-8"))
+        self.assertIn("mathematics/grade-4-fractions-pilot/README.md", (ROOT / "curriculum/README.md").read_text(encoding="utf-8"))
+        for file in self.PILOT.rglob("*.md"):
+            body = file.read_text(encoding="utf-8")
+            self.assertNotRegex(body, r"(?:C|U|L|O|A)-G4F-[0-9]{3}")
+            for link in re.findall(r"\]\(([^)]+)\)", body):
+                if link.startswith(("http:", "https:", "mailto:", "#")):
+                    continue
+                target = (file.parent / link.split("#", 1)[0]).resolve()
+                self.assertTrue(target.is_file(), f"broken pilot link: {file}: {link}")
+
 
 if __name__ == "__main__":
     unittest.main()

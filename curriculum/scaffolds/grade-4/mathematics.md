@@ -39,3 +39,9 @@ The ordering and difficulty are proposals, not grade-based prerequisite claims. 
 Agree subject scope, observed entry skills, the order and dependency of real units, course IDs, outcome IDs, assessment coverage, materials, time and calendar. Review those records under the [curriculum model](../../../docs/curriculum-model.md); keep all learner-specific records private. This scaffold does not itself establish a teaching-ready course.
 
 [Grade 4 class overview](README.md) · [K–12 index](../README.md)
+
+## Authored fractional-arithmetic pilot — proposed, not registered (2026-11-17)
+
+The [Grade 4 common-unit fractions pilot](../../mathematics/grade-4-fractions-pilot/README.md) is an **original draft** for the fraction-sums investigation: four Trivium episodes with X1–X4 exits, four independently keyed prerequisite checks and distinct rechecks, eight keyed guided tasks, ten publicly exposed reference tasks and separate full teacher key. It extends, not repeats, the Grade 3 same-whole partition bridge; the other Grade 4 arithmetic strands remain planning gaps. No course, outcome, assessment or resource ID is allocated, and no teaching readiness, actual calendar or learner mastery is asserted.
+
+Islamic studies stays in the [13×8 plan](../README.md), subject to qualified religious-source, translation, hadith, fiqh and historical review. Grade 2 mathematics stays unchanged.
