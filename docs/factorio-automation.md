@@ -1,8 +1,8 @@
 # Automated Factorio practice checks
 
 SchoolOps and the Learning Lab share a repeatable software check. The private
-Factorio repository runs the pinned game engine, exercises the original smelting
-and Ratio Loading Bay activities, exports their practice receipts, and checks
+Factorio repository runs the pinned game engine, exercises the original smelting, Ratio Loading Bay, and Factory Supply Order
+activities, exports their practice receipts, and checks
 them with a pinned public SchoolOps inspector. It prepares the mod package and
 a review report containing the source revisions and executed checks.
 
@@ -24,7 +24,7 @@ multiplayer, accessibility, teaching time, and classroom suitability retain
 their own review decisions. Software success does not approve curriculum or
 establish learner mastery.
 
-Both activities currently use original synthetic material. Khan Academy and
+All three activities currently use original synthetic material. Khan Academy and
 Membean content selection, authorized reuse, and provider progress integration
 remain separate dependencies. Automation does not invent provider permissions
 or copy account information into the mod.
@@ -64,11 +64,21 @@ See [the technical contract](factorio-automation.llm.txt), the
 ## New Factory Supply Order candidate
 
 [Factory Supply Order](../curriculum/pilots/factorio/factory-supply-order/README.md)
-has its own original draft activity and exact offline receipt mapping. The
-existing pinned Factorio PR #7 producer does not create this receipt. The
-inspector requires the exact, locally rehashed supply implementation and save/reload test sources; a legacy producer with invented green supply gates is refused. This source check is not runtime authentication. Its synthetic tests are **not** proof of actual game execution. If a
-producer supplies a candidate receipt, the integration verifier also requires
-the new actual-engine inventory, active/completed reload, and server receipt
-gates before classifying it as an unverified practice claim. It does not
-pretend that optional candidate inspection updates the immutable compatibility
-lock. Owner review and tested producer/consumer revision pins still gate rollout.
+has its own original draft activity and exact offline receipt mapping.
+The proposed reverse lock pins private Factorio producer
+`f8f14b42b9f03c489e9a5f72e5458c8d13f5d654`, whose private
+[hosted acceptance](https://github.com/larsbx/factorio-mods/actions/runs/44098312981)
+passed actual headless Factorio 2.0.77 with the official archive digest.
+That producer's three real server-written receipts were inspected by merged
+SchoolOps `36688338abe6e3d8eabb4a20c21e45c2b82aeca6`, each only as
+a draft unsigned claim. This is **forward producer-side evidence**, not yet
+a strict reverse execution of this proposed lock.
+
+The inspector requires the exact rehashed supply implementation and
+save/reload sources. It now also rejects a missing, failed or `not_run`
+`supply_reissue_guard`: a real saved active checkpoint must refuse to
+reissue 17 plates when station references are lost on another surface.
+Legacy producers with invented green supply gates are refused. Synthetic
+consumer tests do not constitute engine execution. Desktop GUI input,
+connected multiplayer, source rights, and classroom review remain separate;
+this source lock authorizes none of them.
