@@ -209,7 +209,8 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
             "sha256": integration.sha256(payload),
         }
         for name in ("real_engine_supply", "supply_reload_active",
-                     "supply_reload_complete", "actual_supply_receipt"):
+                     "supply_reload_complete", "supply_reissue_guard",
+                     "actual_supply_receipt"):
             self.report["checks"][name] = {"status": "passed", "evidence": "synthetic parser fixture"}
         self.write_report()
         verified = self.validate()
@@ -233,6 +234,11 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
         with self.assertRaises(integration.IntegrationError):
             self.validate()
         self.report["checks"]["supply_reload_complete"]["status"] = "passed"
+        self.report["checks"]["supply_reissue_guard"]["status"] = "not_run"
+        self.write_report()
+        with self.assertRaises(integration.IntegrationError):
+            self.validate()
+        self.report["checks"]["supply_reissue_guard"]["status"] = "passed"
         payload.write_text(json.dumps(dict(SUPPLY, learner_id="private-value")), encoding="utf-8")
         self.report["artifacts"]["receipts"]["supply_unregistered"]["sha256"] = integration.sha256(payload)
         self.write_report()
