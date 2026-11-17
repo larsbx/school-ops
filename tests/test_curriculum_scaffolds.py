@@ -546,7 +546,7 @@ class Grade4FractionDraftChecks(unittest.TestCase):
             self.assertIn(f"X{n}", episode)
             for art in ("Grammar:", "Logic:", "Rhetoric"):
                 self.assertIn(art, episode)
-            minutes = [int(x) for x in re.findall(r"^\\| [^|]+ \\| (\\d+) \\|$", episode, re.M)]
+            minutes = [int(x) for x in re.findall(r"^\| [^|]+ \| (\d+) \|$", episode, re.M)]
             self.assertEqual(25, sum(minutes))
 
     def test_exact_math_and_links_without_registration(self):
@@ -564,7 +564,7 @@ class Grade4FractionDraftChecks(unittest.TestCase):
         for file in self.PILOT.rglob("*.md"):
             body = file.read_text(encoding="utf-8")
             self.assertNotRegex(body, r"(?:C|U|L|O|A)-G4F-[0-9]{3}")
-            for link in re.findall(r"\\]\\(([^)]+)\\)", body):
+            for link in re.findall(r"\]\(([^)]+)\)", body):
                 if link.startswith(("http:", "https:", "mailto:", "#")):
                     continue
                 target = (file.parent / link.split("#", 1)[0]).resolve()
