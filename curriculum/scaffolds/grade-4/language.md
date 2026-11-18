@@ -34,6 +34,10 @@ The ordering and difficulty are proposals, not grade-based prerequisite claims. 
 - **Logic:** investigate interpretation and textual evidence.
 - **Rhetoric:** communicate clear speaking and writing.
 
+## Authored perspectives and revision pilot (unregistered)
+
+The [Grade 4 original perspectives pilot](../../language/grade-4-perspectives-pilot/README.md) adds a **draft, not ready** four-episode Trivium sequence with an [invented three-card source packet](../../language/grade-4-perspectives-pilot/source-packet.md), four [entry checks](../../language/grade-4-perspectives-pilot/entry-learner.md) and [remediation/rechecks](../../language/grade-4-perspectives-pilot/entry-teacher.md), eight [guided learner tasks](../../language/grade-4-perspectives-pilot/guided-learner.md) with a [complete teacher key](../../language/grade-4-perspectives-pilot/guided-teacher.md), plus ten **publicly exposed** [garden reference tasks](../../language/grade-4-perspectives-pilot/draft-assessments/reference-learner.md) and [keyed outcome-by-outcome evidence decisions](../../language/grade-4-perspectives-pilot/draft-assessments/reference-teacher.md). Local P1–P4 goals are not stable IDs. This progresses beyond the [Grade 3 language work](../../language/grade-3-evidence-writing-pilot/README.md) by comparing partial narrators, interpreting figurative sentences and revising claims for an absent reader. No reviewed classroom assessment, course registration, delivery, observed skill or ready status follows. The [Islamic studies source-review guide](../islamic-studies-guide.md) remains in force across all grades.
+
 ## Gates before course registration
 
 Agree subject scope, observed entry skills, the order and dependency of real units, course IDs, outcome IDs, assessment coverage, materials, time and calendar. Review those records under the [curriculum model](../../../docs/curriculum-model.md); keep all learner-specific records private. This scaffold does not itself establish a teaching-ready course.
