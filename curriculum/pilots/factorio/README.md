@@ -33,6 +33,9 @@ python3 -m unittest discover -s tests -p test_factorio_practice.py
 ```
 
 The inspector reads the receipt and checks the activity mapping in [activity.json](activity.json).
+It accepts the exact smelting receipt for `0.2.0` and `0.3.0`. The current mapping
+was added after inspecting the actual engine's disposable save/reload export;
+other versions are not accepted automatically.
 Its result is a self-reported practice claim for staff review. It creates no
 assignment, identity link, grade or learner record. A receipt can be edited or
 replayed. For this pilot, keep any private teaching observations in the school's
@@ -42,3 +45,7 @@ offline pilot.
 
 Khan Academy and Membean interfaces in the mod currently use original synthetic
 items. This pilot has no provider sign-in or reporting.
+
+The [automated compatibility workflow](../../../docs/factorio-automation.md)
+prepares software evidence and a mod package for owner review. Practice and
+classroom suitability remain separate decisions.
