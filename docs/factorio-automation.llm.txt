@@ -1,0 +1,76 @@
+SchoolOps Factorio automation contract
+
+Scope
+- Consumer code: tools/factorio_practice.py and tools/verify_factorio_integration.py.
+- Existing tests/test_factorio_practice.py contains receipt tests and synthetic
+  producer-report consumer tests. Synthetic report fixtures are not Factorio
+  runtime evidence. Existing ci/policy.json maps both tools and the source lock
+  to factorio-practice; no second pure-unit workflow is introduced.
+- Private larsbx/factorio-mods owns the engine workflow, source, generated ZIP,
+  and full synthetic runtime evidence. Public SchoolOps CI never fetches that
+  private source and never uploads its package or private source artifacts.
+
+One-way hosted dependency
+- The private producer tests its actual checked-out revision and pins a public
+  SchoolOps revision for receipt inspection. It records the actual consumer
+  revision and relevant source hashes. This avoids a two-way commit-pin cycle.
+- The SchoolOps local compatibility lock pins one previously published producer
+  revision plus its complete relevant source manifest. A later producer commit
+  is not silently relabelled as that revision, even if its runtime files match.
+- A pending null revision/source_status must fail the default local command.
+  Root publication fills revision, source_status=pinned and source_hashes from
+  the published producer. Never insert a guessed commit or synthetic clean state.
+
+Local command
+python3 tools/verify_factorio_integration.py --factorio-checkout PATH --output DIR
+- DIR must be new or empty and outside both source checkouts. Refuse old reports.
+- Invoke tools/verify_learning_lab.py --output DIR/producer from the producer
+  checkout, with a 1,200-second process limit. Nonzero exit or missing engine is
+  failure, never a request to downgrade to a mocked runtime.
+- Default mode checks real git HEAD, tracked changes and untracked files, exact
+  locked source hashes, and source identity after execution. Symlinked and
+  traversing evidence/source paths are rejected.
+- --allow-local-source is an explicit development override, labelled local_source.
+  Snapshot revision and dirtiness remain null; no claimed revision argument exists.
+
+Producer evidence schema: schoolops.factorio.acceptance.v1
+- Required status=passed, scope=headless_software_acceptance,
+  material_status=draft, receipt_evidence=unverified_practice_completion_claim.
+- source_revision, source_dirty and source_mode must match actual checkout state.
+- Every reported source hash is independently recomputed. Strict pinned mode
+  requires exact equality with the complete locked manifest, not a subset.
+- engine.version=2.0.77; engine.execution=actual_headless; binary SHA-256 required.
+- Official provisioning archive SHA-256 is exactly
+  c4efc11529f74d37c96933e291e0db73fd9f5aa4738913d9301b24680b3e947f.
+  An explicit local binary is separately labelled and must not claim an archive.
+- Required passed checks: real_engine_smelting, real_engine_ratio,
+  ratio_reload_active, ratio_reload_complete, gui_handler_model, content_binding,
+  deterministic_package, runtime. Missing, failed or not_run fails compatibility.
+- desktop_gui and connected_multiplayer remain not_run in this contract.
+- gui_handler_model must carry kind=simulated_lua. It exercises production
+  callbacks with modeled GUI/player objects, not a real desktop LuaPlayer.
+  Real engine inventory and save checks use synthetic test fixtures; they do
+  not establish acceptance for a connected learner client.
+- Artifact paths and hashes are checked before inspection. The two expected
+  receipt paths are receipts/from-ore-to-plate.json and receipts/ratio-loading-bay.json.
+- The current mod package is learning-lab_0.3.0.zip.
+
+Receipt and authority boundary
+- Current producer receipts have the four exact v1 fields: schema, activity_id,
+  mod_version, result. Each accepted activity/version pair is explicitly catalogued.
+- Preserve legacy smelting 0.2.0 compatibility. Add current smelting versions only
+  after inspecting their actual runtime-produced receipts; never accept arbitrary
+  versions or a matching aggregate count in place of the exact receipt.
+- Duplicate fields, unknown fields, wrong types, malformed/non-object JSON and
+  files exceeding 1,024 bytes remain rejected. Failure diagnostics do not echo
+  injected learner fields or raw subprocess output into the review summary.
+- Receipt matching is not learner authentication. Files are editable and replayable.
+  Hashes identify bytes; they do not prove pedagogy, provider authorization or a
+  person's completion. No grade, identity, assignment or learner-record writer exists.
+- Local full evidence includes private producer artifacts; retain its access scope.
+
+Verification
+python3 -m unittest discover -s tests -p test_factorio_practice.py -v
+python3 -m unittest discover -s ci -p 'test_*.py' -v
+- Report exact local and hosted revisions and checks separately. Do not count an
+  unrun workflow, simulated parser fixture, desktop or classroom review as passed.
