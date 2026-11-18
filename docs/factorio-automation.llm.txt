@@ -82,3 +82,9 @@ python3 -m unittest discover -s tests -p test_factorio_practice.py -v
 python3 -m unittest discover -s ci -p 'test_*.py' -v
 - Report exact local and hosted revisions and checks separately. Do not count an
   unrun workflow, simulated parser fixture, desktop or classroom review as passed.
+
+2026-11-18 proposed identity-bound producer pair
+- Strict lock revision 3c5459c36b551009a34596405787d5c094fba7ac has all 24 producer source SHA-256 values from the successful private headless run #44312254755. The changed station identity is persisted as four original Factorio unit numbers, separate from mutable entity references; old unbound records fail closed without reissuing stock.
+- The actual engine destroys a crate, reconstructs an apparently identical crate at the original position and refuses the substitute. Real active save/reload rejects a corrupted persisted station ID; real completed save/reload rejects changed original lesson content. The producer must report supply_station_identity, supply_station_reload and supply_reload_content_binding as passed; missing/failed/not_run is rejected by the SchoolOps consumer. Unit tests for these gates are synthetic parser controls, not engine evidence.
+- The private run verified current producer 3c5459c36b551009a34596405787d5c094fba7ac forward with SchoolOps main 36688338abe6e3d8eabb4a20c21e45c2b82aeca6 (unchanged receipt inspector). Its independent reverse jobs still used the preceding SchoolOps lock, so strict reverse acceptance of this changed SchoolOps consumer head remains not_run until a separate exact-pair job succeeds.
+- GUI callbacks remain simulated_lua, not desktop input. Independent Factorio surfaces and loopback servers are not two connected multiplayer players. No rights or classroom approval, no private learners, grades, teachers or provider exchanges. Three unsigned receipts stay draft unverified_practice_completion_claim.

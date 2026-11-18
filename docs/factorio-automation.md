@@ -82,3 +82,9 @@ Legacy producers with invented green supply gates are refused. Synthetic
 consumer tests do not constitute engine execution. Desktop GUI input,
 connected multiplayer, source rights, and classroom review remain separate;
 this source lock authorizes none of them.
+
+## 2026-11-18 — entity-identity binding (draft review increment)
+
+The proposed compatibility lock now selects private producer `3c5459c36b551009a34596405787d5c094fba7ac` and 24 exact source digests. [Hosted producer acceptance #44312254755](https://github.com/larsbx/factorio-mods/actions/runs/44312254755) passed at that exact revision using the official-checksum Factorio 2.0.77 engine, physical crate replacement, saved station identity refusal, changed-content refusal after save/reload, packaging, and all three actual server-written practice receipts inspected by merged SchoolOps main. These new gates are mandatory in the consumer.
+
+The previous paragraph records the historical `f8f14b...` trial; it is superseded by this new proposal. A second **strict reverse** test of this *new SchoolOps branch head* and its immutable producer lock is still required; the preceding hosted reverse job only checked the older lock. Keep it `not_run` until a new exact-pair job finishes. These protections remain save-local; they do not attest learner identity or authorize classroom use.
