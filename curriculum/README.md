@@ -50,3 +50,7 @@ The [draft Factory Supply Order pilot](pilots/factorio/factory-supply-order/READ
 ## Grade 3 language evidence-writing pilot (unregistered)
 
 The [Grade 3 original evidence-writing pilot](language/grade-3-evidence-writing-pilot/README.md) authors four illustrative Trivium episodes, four prerequisite prompts with remediation/rechecks, eight guided exercises and ten **exposed** reference items with separate complete keys and **proposed** rubrics. The [language planning scaffold](scaffolds/grade-3/language.md) remains **not ready**. No new canonical identifiers, approved courses, teaching dates or learner results. Islamic studies throughout the K–12 matrix still requires qualified source, Qur'an/translation, hadith and fiqh review.
+
+## Grade 3 astronomy authoring pilot (unregistered)
+
+The [original Grade 3 shadow-record literacy pilot](astronomy/grade-3-shadow-records-pilot/README.md) adds actual draft prerequisite checks, four Trivium episodes, eight guided worked tasks, ten fixed public reference exemplars and a separate teacher key. Its logs are **fictional**, and it does **not** supply a real astronomical observation, registered course ID, secure assessment or teaching-ready record. This proposal is independent of the Grade 2 astronomy Unit 5 PR #41. The [Grade 3 astronomy planning scaffold](scaffolds/grade-3/astronomy.md) identifies owner review gates.
