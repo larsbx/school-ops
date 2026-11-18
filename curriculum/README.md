@@ -39,9 +39,17 @@ A separate [unregistered Grade 3 Islamic studies source-literacy pilot](islamic-
 
 The [unregistered Grade 3 boundary/tiling/angle pilot](geometry/grade-3-tiling-pilot/README.md) contains four original geometry episodes, independent prerequisite checks, seven coached tasks with teacher key and ten **exposed** reference items with separate key and rubric. The [Grade 3 geometry planning entry](scaffolds/grade-3/geometry.md) remains **not ready**, and no stable IDs, course registration or learner results follow.
 
-## Factorio practice pilot
+## Factorio practice pilots
 
 The [draft From ore to plate pilot](pilots/factorio/README.md) uses the Learning Lab mod for one-to-one counting and process vocabulary. Its offline receipt can be inspected locally for staff practice review.
+
+The [draft Ratio Loading Bay pilot](pilots/factorio/ratio-loading-bay/README.md) practices equivalent ratios using shipment inventories. Both pilots use unsigned receipts for offline staff review.
+
+The [draft Factory Supply Order pilot](pilots/factorio/factory-supply-order/README.md) adds distinct shipping crates and reserve vocabulary to original arithmetic practice. Its candidate receipt is not yet part of the pinned actual-engine compatibility pair.
+
+## Grade 3 language evidence-writing pilot (unregistered)
+
+The [Grade 3 original evidence-writing pilot](language/grade-3-evidence-writing-pilot/README.md) authors four illustrative Trivium episodes, four prerequisite prompts with remediation/rechecks, eight guided exercises and ten **exposed** reference items with separate complete keys and **proposed** rubrics. The [language planning scaffold](scaffolds/grade-3/language.md) remains **not ready**. No new canonical identifiers, approved courses, teaching dates or learner results. Islamic studies throughout the K–12 matrix still requires qualified source, Qur'an/translation, hadith and fiqh review.
 
 ## Grade 3 astronomy authoring pilot (unregistered)
 

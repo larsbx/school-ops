@@ -39,10 +39,10 @@ class ImpactPlanningTests(unittest.TestCase):
         self.assertIn("unit3-sessions", decision["suites"])
 
     def test_factorio_practice_is_registered_and_scoped(self):
-        self.assertEqual(
-            plan(POLICY, ["tools/factorio_practice.py"])["suites"],
-            ["factorio-practice"],
-        )
+        for path in ("tools/factorio_practice.py", "tools/verify_factorio_integration.py",
+                     "tools/factorio_integration.lock.json"):
+            with self.subTest(path=path):
+                self.assertEqual(plan(POLICY, [path])["suites"], ["factorio-practice"])
         self.assertIn(
             "factorio-practice",
             plan(POLICY, ["curriculum/scaffolds/grade-3/geometry.md"])["suites"],
