@@ -24,3 +24,8 @@
 **X4 — P4.** Revise “The log proved Noah lied about all the folders” into three audience-readable sentences: one cited observation, one log claim, one uncertainty. **Key:** A2 says Leena saw three folders on table at 08:10; C2 records placement on east shelf at 08:17; B4 says Noah saw three there, and no source establishes intention or deliberate falsehood. Accept precise equivalent with a bounded conclusion.
 
 **Feedback:** Withhold an outcome decision when a correct detail lacks source attribution, when a figurative statement is graded literally, when an inference is presented as observation, or when a paragraph makes an unsupported accusation. Model a parallel case and use a fresh check with the same requirement. These public exits are formative only.
+
+## Teacher-only reading conditions
+
+
+“A hallway swallowed my footsteps” is **figurative**: it does not report an actual swallowing. A sign, a witness and a log have different vantage points. A log line can record a reported placement without proving who acted, why, or whether it was verified by another person. The texts may support a provisional sequence but do **not** identify the mover or warrant a moral accusation. Treat the fictional log as partially documented, not as infallible proof.
