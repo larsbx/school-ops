@@ -50,3 +50,7 @@ The [draft Factory Supply Order pilot](pilots/factorio/factory-supply-order/READ
 ## Grade 3 language evidence-writing pilot (unregistered)
 
 The [Grade 3 original evidence-writing pilot](language/grade-3-evidence-writing-pilot/README.md) authors four illustrative Trivium episodes, four prerequisite prompts with remediation/rechecks, eight guided exercises and ten **exposed** reference items with separate complete keys and **proposed** rubrics. The [language planning scaffold](scaffolds/grade-3/language.md) remains **not ready**. No new canonical identifiers, approved courses, teaching dates or learner results. Islamic studies throughout the K–12 matrix still requires qualified source, Qur'an/translation, hadith and fiqh review.
+
+## Grade 4 language perspectives pilot (unregistered)
+
+The [Grade 4 original perspectives and audience-revision pilot](language/grade-4-perspectives-pilot/README.md) provides four draft Trivium episodes, separate entry/recheck and guided-task teacher keys, and ten **exposed** reference items with separate answers. The [Grade 4 planning scaffold](scaffolds/grade-4/language.md) remains **not ready**; no course, outcome, lesson or assessment identifier is assigned. Fixed examples do not demonstrate mastery or supply an approved independent assessment. Islamic studies remains in the [13×8 K–12 coverage plan](scaffolds/README.md) under its [qualified source/translation/hadith/fiqh review gates](scaffolds/islamic-studies-guide.md).
