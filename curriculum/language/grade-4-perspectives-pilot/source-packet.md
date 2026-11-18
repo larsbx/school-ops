@@ -25,6 +25,3 @@
 - **C3.** This log gives no name of the person who placed the folders.
 - **C4.** The page has no final check of what remained in the room.
 
-## Reading conditions
-
-“A hallway swallowed my footsteps” is **figurative**: it does not report an actual swallowing. A sign, a witness and a log have different vantage points. A log line can record a reported placement without proving who acted, why, or whether it was verified by another person. The texts may support a provisional sequence but do **not** identify the mover or warrant a moral accusation. Treat the fictional log as partially documented, not as infallible proof.
