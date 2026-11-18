@@ -59,6 +59,14 @@ class Grade4LanguageDraftTests(unittest.TestCase):
                     resolved = (path.parent / target.split("#", 1)[0]).resolve()
                     self.assertTrue(resolved.is_file(), f"broken link: {path} -> {target}")
 
+    def test_learner_packet_does_not_disclose_answer_rationale(self):
+        packet = (PILOT / "source-packet.md").read_text(encoding="utf-8")
+        teacher = (PILOT / "guided-teacher.md").read_text(encoding="utf-8")
+        self.assertNotIn("## Reading conditions", packet)
+        self.assertNotIn("is **figurative**", packet)
+        self.assertIn("## Teacher-only reading conditions", teacher)
+        self.assertIn("is **figurative**", teacher)
+
     def test_source_labels_and_claim_limit(self):
         packet = (PILOT / "source-packet.md").read_text(encoding="utf-8")
         reference = (PILOT / "draft-assessments/reference-learner.md").read_text(encoding="utf-8")
