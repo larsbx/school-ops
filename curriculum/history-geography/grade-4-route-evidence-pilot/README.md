@@ -1,0 +1,24 @@
+# Grade 4 history–geography: routes, dated maps and source limits
+
+**Authored draft, unregistered, not ready.** Proposed teaching pilot only: no adopted course, timetable, real historical claims, approved resource, secure assessment or learner mastery. Formal course/unit/lesson/outcome/assessment IDs remain **unassigned** pending owner scope approval. Labels P1–P4, E1–E4, G1–G8, X1–X4 and S1–S10 are local authoring references only.
+
+This develops the [Grade 4 history–geography planning scaffold](../../scaffolds/grade-4/history-geography.md) with source-aware route networks, changes between map editions, chronology and a supported civic memo. It follows but **does not presume mastery** of the [Grade 3 planning entry](../../scaffolds/grade-3/history-geography.md). It does not repeat [Grade 4 language's partial narrators](../../language/grade-4-perspectives-pilot/README.md), Grade 3 astronomy's shadow measurements, Grade 3 habitat science or Grade 4 fraction work. Existing Grade 2 mathematics and Islamic-studies prototype remain unchanged.
+
+The [source packet](source-packet.md) is entirely **invented**, including map, notice, plan and diary: no real routes, public decisions, historical narratives or copyright permissions are asserted. Map lengths and additions exercise **arithmetic**, while identifying connected segments and map positions exercises **geometry**; neither travel speed nor actual safety is taught. **Grammar** names map/record terms; **logic** evaluates reachability, chronology and overclaim; **rhetoric** produces checkable recommendations. Astronomy is not claimed, and music is excluded.
+
+## Proposed objective-to-evidence map
+
+| Local target | Observable work given the paper packet | Guided / independent exit | Fixed public reference |
+| --- | --- | --- | --- |
+| **P1** | Read a dated map legend, connected endpoints and kilometre distances; distinguish length from time | G1–G3, X1 | S1–S2 |
+| **P2** | Calculate eligible alternative route lengths and differences after a closure; avoid unwarranted speed/safety claims | G4–G5, X2 | S3–S6 |
+| **P3** | Distinguish dated notice, map, proposed plan and personal account; order reports while naming unsupported generalizations and causes | G6–G7, X3 | S7–S9 |
+| **P4** | Explain a paper route recommendation with a correct sum, two source labels, counterclaim and qualification | G8, X4 | S10 |
+
+**Entry:** Use [E1–E4 prompts](entry-learner.md) and [complete key, differentiated support and new rechecks](entry-teacher.md). E1/E2 gate independent route work; E3/E4 gate sources and chronology. Re-teach missing skills and use a different equivalent uncoached recheck; grade placement is not evidence. The [four illustrative 25-minute Trivium episodes](lessons.md) contain actual questions, phases, exits and feedback, not an approved schedule. [Eight guided learner problems](guided-learner.md) have a [separate worked teacher key](guided-teacher.md); [ten exposed transfer tasks](draft-assessments/reference-learner.md) have a [complete separate rubric/key](draft-assessments/reference-teacher.md).
+
+**Assessment boundary:** P1–P4 are independently necessary. A correct paragraph cannot erase a closed-edge mistake, and correct addition does not validate a fabricated citation. Exposed S tasks and X exits are **not** unseen mastery evidence. Teaching and secure testing require new reviewed forms and owner-approved evidence criteria.
+
+**Proposed accessibility:** enlarged text, screen-reader-ready plain edge lists, tactile segment cards or raised-line maps preserving exactly the endpoints/lengths, read-aloud of every source label and date, neutral vocabulary glossary, dictation without substantive adult prompting, oral/written/pointing/AAC responses. Do not withdraw access supports to claim independence. Any helped answer is supported practice requiring a fresh form. No child names, addresses, travel reports, class assignment links or individual scores in GitHub.
+
+**Human-only blockers:** Grade 4 scope and prerequisites, genuine learner-entry evidence, vocabulary/language load, diagram/tactile equivalence, timing, materials, local-history relevance, cultural suitability, independently secured forms, answer/rubric audit, assessment thresholds and source/provenance/rights review before using any actual government or historical records. The [13×8 K–12 matrix](../../scaffolds/README.md) retains Islamic studies in all grades with [qualified Qur'an/translation, hadith authentication, fiqh, sīrah and historical-source review](../../scaffolds/islamic-studies-guide.md). Fictional secular records here neither fulfill nor relax religious review. [Curriculum model](../../../docs/curriculum-model.md) · [Trivium/Quadrivium](../../../docs/trivium-quadrivium.md) · [Course index](../../README.md).

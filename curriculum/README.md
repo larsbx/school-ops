@@ -54,3 +54,7 @@ The [Grade 3 original evidence-writing pilot](language/grade-3-evidence-writing-
 ## Grade 4 language perspectives pilot (unregistered)
 
 The [Grade 4 original perspectives and audience-revision pilot](language/grade-4-perspectives-pilot/README.md) provides four draft Trivium episodes, separate entry/recheck and guided-task teacher keys, and ten **exposed** reference items with separate answers. The [Grade 4 planning scaffold](scaffolds/grade-4/language.md) remains **not ready**; no course, outcome, lesson or assessment identifier is assigned. Fixed examples do not demonstrate mastery or supply an approved independent assessment. Islamic studies remains in the [13×8 K–12 coverage plan](scaffolds/README.md) under its [qualified source/translation/hadith/fiqh review gates](scaffolds/islamic-studies-guide.md).
+
+## Grade 4 history-geography: dated maps and source-evidence pilot (unregistered)
+
+[Original fictional route-network pilot](history-geography/grade-4-route-evidence-pilot/README.md) with four proposed Trivium episodes, separate E1–E4 entry/rechecks, G1–G8 guided tasks and S1–S10 exposed reference tasks with full keys. The [Grade 4 history-geography plan](scaffolds/grade-4/history-geography.md) is **draft / not ready**; no stable IDs, course, assessments or real historical source authority are registered. The K–12 Islamic-studies source-review obligations remain unchanged.
