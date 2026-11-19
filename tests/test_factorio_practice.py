@@ -276,6 +276,58 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
             with self.assertRaises(integration.IntegrationError):
                 self.validate()
 
+    def test_pinned_reverse_requires_official_archive_not_just_binary_version(self):
+        # This synthetic report intentionally does not establish game execution.
+        # The local development mode can inspect an explicitly supplied binary,
+        # but a pinned acceptance verdict must have the official archive proof.
+        engine = self.report["engine"]
+        engine["provisioning"] = "explicit_local_binary"
+        engine["archive_sha256"] = None
+        self.write_report()
+        self.assertIn("smelting", self.validate()["receipts"])
+        self.lock["source_hashes"] = self.hashes
+        with self.assertRaisesRegex(integration.IntegrationError, "official Factorio archive"):
+            integration.validate_producer(self.producer, self.checkout, self.lock,
+                                          self.identity, allow_local_source=False)
+
+    def test_pinned_reverse_refuses_dirty_schoolops_checkout(self):
+        # Source binding must fail before invoking Factorio. No private output
+        # from a dirty SchoolOps tree is eligible as exact-revision evidence.
+        lock = dict(self.lock, revision="a" * 40, source_status="pinned",
+                    source_hashes=self.hashes)
+        self.lock_path.write_text(json.dumps(lock), encoding="utf-8")
+        dirty = {"revision": "b" * 40, "dirty": True, "mode": "git_checkout"}
+        with mock.patch.object(integration, "verify_source", return_value=self.identity), \\
+             mock.patch.object(integration, "git_identity", return_value=dirty), \\
+             mock.patch.object(integration, "invoke_producer") as producer:
+            report = integration.run_integration(
+                self.checkout, self.root / "dirty-schoolops",
+                lock_path=self.lock_path)
+        self.assertEqual(report["status"], "failed")
+        self.assertEqual(report["checks"]["source_binding"], "failed")
+        self.assertEqual(report["checks"]["producer_execution"], "not_run")
+        producer.assert_not_called()
+
+    def test_pinned_reverse_refuses_schoolops_mutation_during_engine_run(self):
+        lock = dict(self.lock, revision="a" * 40, source_status="pinned",
+                    source_hashes=self.hashes)
+        self.lock_path.write_text(json.dumps(lock), encoding="utf-8")
+        clean = {"revision": "b" * 40, "dirty": False, "mode": "git_checkout"}
+        changed = dict(clean, dirty=True)
+        with mock.patch.object(integration, "verify_source", return_value=self.identity), \\
+             mock.patch.object(integration, "git_identity",
+                               side_effect=[clean, self.identity, changed]), \\
+             mock.patch.object(integration, "invoke_producer") as producer, \\
+             mock.patch.object(integration, "validate_producer") as inspector:
+            report = integration.run_integration(
+                self.checkout, self.root / "mutated-schoolops",
+                lock_path=self.lock_path)
+        self.assertEqual(report["status"], "failed")
+        self.assertEqual(report["checks"]["source_binding"], "passed")
+        self.assertEqual(report["checks"]["producer_execution"], "failed")
+        producer.assert_called_once()
+        inspector.assert_not_called()
+
     def test_mocked_missing_or_wrong_engine_cannot_be_reported_as_runtime_acceptance(self):
         original = self.report["engine"].copy()
         for mutation in ({"execution": "lua_mock"}, {"version": "2.0.78"},
