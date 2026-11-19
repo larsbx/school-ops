@@ -297,8 +297,8 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
                     source_hashes=self.hashes)
         self.lock_path.write_text(json.dumps(lock), encoding="utf-8")
         dirty = {"revision": "b" * 40, "dirty": True, "mode": "git_checkout"}
-        with mock.patch.object(integration, "verify_source", return_value=self.identity), \\
-             mock.patch.object(integration, "git_identity", return_value=dirty), \\
+        with mock.patch.object(integration, "verify_source", return_value=self.identity), \
+             mock.patch.object(integration, "git_identity", return_value=dirty), \
              mock.patch.object(integration, "invoke_producer") as producer:
             report = integration.run_integration(
                 self.checkout, self.root / "dirty-schoolops",
@@ -314,10 +314,10 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
         self.lock_path.write_text(json.dumps(lock), encoding="utf-8")
         clean = {"revision": "b" * 40, "dirty": False, "mode": "git_checkout"}
         changed = dict(clean, dirty=True)
-        with mock.patch.object(integration, "verify_source", return_value=self.identity), \\
+        with mock.patch.object(integration, "verify_source", return_value=self.identity), \
              mock.patch.object(integration, "git_identity",
-                               side_effect=[clean, self.identity, changed]), \\
-             mock.patch.object(integration, "invoke_producer") as producer, \\
+                               side_effect=[clean, self.identity, changed]), \
+             mock.patch.object(integration, "invoke_producer") as producer, \
              mock.patch.object(integration, "validate_producer") as inspector:
             report = integration.run_integration(
                 self.checkout, self.root / "mutated-schoolops",
