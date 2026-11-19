@@ -30,7 +30,19 @@ class ImpactPlanningTests(unittest.TestCase):
 
     def test_curriculum_change_includes_dependents_transitively(self):
         decision = plan(POLICY, ["curriculum/scaffolds/islamic_studies.md"])
-        self.assertEqual(decision["suites"], ["bank", "curriculum", "factorio-practice", "islamic-prototype", "reasoning-grade3", "teaching", "unit2-sessions", "unit3-authored", "unit3-sessions"])
+        self.assertEqual(decision["suites"], ["bank", "curriculum", "factorio-practice", "islamic-prototype", "language-grade4", "reasoning-grade3", "teaching", "unit2-sessions", "unit3-authored", "unit3-sessions"])
+
+    def test_grade4_language_changes_select_pilot_suite(self):
+        for path in (
+            "curriculum/language/grade-4-perspectives-pilot/source-packet.md",
+            "curriculum/scaffolds/grade-4/language.md",
+            "tests/test_grade4_language_pilot.py",
+        ):
+            with self.subTest(path=path):
+                decision = plan(POLICY, [path])
+                self.assertEqual(decision["mode"], "targeted")
+                self.assertEqual(decision["direct_components"], ["curriculum"])
+                self.assertIn("language-grade4", decision["suites"])
 
     def test_unit3_sessions_change_includes_curriculum_contract_and_bank_tests(self):
         decision = plan(POLICY, ["exercise_bank/unit3.py"])
