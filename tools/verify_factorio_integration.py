@@ -192,6 +192,12 @@ def validate_producer(output, checkout, lock, identity, *, allow_local_source=Fa
             and digest_string(engine.get("binary_sha256")), "actual pinned engine execution was not established")
     require(engine.get("provisioning") in ("official_sha256_archive", "explicit_local_binary"),
             "unknown engine provisioning")
+    # A version string and binary hash alone cannot establish official archive
+    # provenance. Development may use an explicitly supplied local binary;
+    # pinned reverse acceptance must verify the official checksum-locked one.
+    if not allow_local_source:
+        require(engine["provisioning"] == "official_sha256_archive",
+                "pinned acceptance requires official Factorio archive provisioning")
     if engine["provisioning"] == "official_sha256_archive":
         require(engine.get("archive_sha256") == lock["factorio_archive_sha256"],
                 "engine archive differs from the pinned official archive")
@@ -239,7 +245,9 @@ def validate_producer(output, checkout, lock, identity, *, allow_local_source=Fa
         require(SUPPLY_SOURCE_PATHS <= set(hashes),
                 "candidate supply receipt lacks source-bound supply implementation/tests")
         for name in ("real_engine_supply", "supply_reload_active",
-                     "supply_reload_complete", "actual_supply_receipt"):
+                     "supply_reload_complete", "supply_reissue_guard",
+                     "supply_blocked_preflight", "supply_station_identity", "supply_station_reload",
+                     "supply_reload_content_binding", "actual_supply_receipt"):
             gate = checks.get(name)
             require(type(gate) is dict and gate.get("status") == "passed"
                     and type(gate.get("evidence")) is str and bool(gate["evidence"]),
@@ -314,13 +322,20 @@ def run_integration(checkout, output, *, allow_local_source=False, lock_path=LOC
         lock = load_lock(lock_path, allow_local_source=allow_local_source)
         identity = verify_source(checkout, lock, allow_local_source=allow_local_source)
         report["factorio_source"] = identity
-        report["schoolops_source"] = git_identity(REPO_ROOT)
+        schoolops_identity = git_identity(REPO_ROOT)
+        if not allow_local_source:
+            require(schoolops_identity["mode"] == "git_checkout"
+                    and schoolops_identity["dirty"] is False,
+                    "pinned acceptance requires a clean SchoolOps Git checkout")
+        report["schoolops_source"] = schoolops_identity
         report["schoolops_source_hashes"] = {name: sha256(local_file(REPO_ROOT, name)) for name in SCHOOL_SOURCE_PATHS}
         report["checks"][active] = "passed"
         active = "producer_execution"
         invoke_producer(checkout, output / "producer")
         report["checks"][active] = "passed"
         require(git_identity(checkout) == identity, "source identity changed during execution")
+        require(git_identity(REPO_ROOT) == schoolops_identity,
+                "SchoolOps checkout changed during producer execution")
         active = "receipt_compatibility"
         report["verification"] = validate_producer(output / "producer", checkout, lock, identity,
                                                    allow_local_source=allow_local_source)

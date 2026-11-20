@@ -209,7 +209,9 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
             "sha256": integration.sha256(payload),
         }
         for name in ("real_engine_supply", "supply_reload_active",
-                     "supply_reload_complete", "actual_supply_receipt"):
+                     "supply_reload_complete", "supply_reissue_guard",
+                     "supply_blocked_preflight", "supply_station_identity", "supply_station_reload",
+                     "supply_reload_content_binding", "actual_supply_receipt"):
             self.report["checks"][name] = {"status": "passed", "evidence": "synthetic parser fixture"}
         self.write_report()
         verified = self.validate()
@@ -233,6 +235,25 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
         with self.assertRaises(integration.IntegrationError):
             self.validate()
         self.report["checks"]["supply_reload_complete"]["status"] = "passed"
+        self.report["checks"]["supply_reissue_guard"]["status"] = "not_run"
+        self.write_report()
+        with self.assertRaises(integration.IntegrationError):
+            self.validate()
+        self.report["checks"]["supply_reissue_guard"]["status"] = "passed"
+        for name in ("supply_blocked_preflight", "supply_station_identity",
+                     "supply_station_reload", "supply_reload_content_binding"):
+            with self.subTest(gate=name):
+                self.report["checks"][name]["status"] = "not_run"
+                self.write_report()
+                with self.assertRaises(integration.IntegrationError):
+                    self.validate()
+                self.report["checks"][name]["status"] = "passed"
+                self.write_report()
+                saved = self.report["checks"].pop(name)
+                self.write_report()
+                with self.assertRaises(integration.IntegrationError):
+                    self.validate()
+                self.report["checks"][name] = saved
         payload.write_text(json.dumps(dict(SUPPLY, learner_id="private-value")), encoding="utf-8")
         self.report["artifacts"]["receipts"]["supply_unregistered"]["sha256"] = integration.sha256(payload)
         self.write_report()
@@ -254,6 +275,58 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
             self.write_report()
             with self.assertRaises(integration.IntegrationError):
                 self.validate()
+
+    def test_pinned_reverse_requires_official_archive_not_just_binary_version(self):
+        # This synthetic report intentionally does not establish game execution.
+        # The local development mode can inspect an explicitly supplied binary,
+        # but a pinned acceptance verdict must have the official archive proof.
+        engine = self.report["engine"]
+        engine["provisioning"] = "explicit_local_binary"
+        engine["archive_sha256"] = None
+        self.write_report()
+        self.assertIn("smelting", self.validate()["receipts"])
+        self.lock["source_hashes"] = self.hashes
+        with self.assertRaisesRegex(integration.IntegrationError, "official Factorio archive"):
+            integration.validate_producer(self.producer, self.checkout, self.lock,
+                                          self.identity, allow_local_source=False)
+
+    def test_pinned_reverse_refuses_dirty_schoolops_checkout(self):
+        # Source binding must fail before invoking Factorio. No private output
+        # from a dirty SchoolOps tree is eligible as exact-revision evidence.
+        lock = dict(self.lock, revision="a" * 40, source_status="pinned",
+                    source_hashes=self.hashes)
+        self.lock_path.write_text(json.dumps(lock), encoding="utf-8")
+        dirty = {"revision": "b" * 40, "dirty": True, "mode": "git_checkout"}
+        with mock.patch.object(integration, "verify_source", return_value=self.identity), \
+             mock.patch.object(integration, "git_identity", return_value=dirty), \
+             mock.patch.object(integration, "invoke_producer") as producer:
+            report = integration.run_integration(
+                self.checkout, self.root / "dirty-schoolops",
+                lock_path=self.lock_path)
+        self.assertEqual(report["status"], "failed")
+        self.assertEqual(report["checks"]["source_binding"], "failed")
+        self.assertEqual(report["checks"]["producer_execution"], "not_run")
+        producer.assert_not_called()
+
+    def test_pinned_reverse_refuses_schoolops_mutation_during_engine_run(self):
+        lock = dict(self.lock, revision="a" * 40, source_status="pinned",
+                    source_hashes=self.hashes)
+        self.lock_path.write_text(json.dumps(lock), encoding="utf-8")
+        clean = {"revision": "b" * 40, "dirty": False, "mode": "git_checkout"}
+        changed = dict(clean, dirty=True)
+        with mock.patch.object(integration, "verify_source", return_value=self.identity), \
+             mock.patch.object(integration, "git_identity",
+                               side_effect=[clean, self.identity, changed]), \
+             mock.patch.object(integration, "invoke_producer") as producer, \
+             mock.patch.object(integration, "validate_producer") as inspector:
+            report = integration.run_integration(
+                self.checkout, self.root / "mutated-schoolops",
+                lock_path=self.lock_path)
+        self.assertEqual(report["status"], "failed")
+        self.assertEqual(report["checks"]["source_binding"], "passed")
+        self.assertEqual(report["checks"]["producer_execution"], "failed")
+        producer.assert_called_once()
+        inspector.assert_not_called()
 
     def test_mocked_missing_or_wrong_engine_cannot_be_reported_as_runtime_acceptance(self):
         original = self.report["engine"].copy()
