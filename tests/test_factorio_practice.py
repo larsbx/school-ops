@@ -210,7 +210,7 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
         }
         for name in ("real_engine_supply", "supply_reload_active",
                      "supply_reload_complete", "supply_reissue_guard",
-                     "supply_station_identity", "supply_station_reload",
+                     "supply_blocked_preflight", "supply_station_identity", "supply_station_reload",
                      "supply_reload_content_binding", "actual_supply_receipt"):
             self.report["checks"][name] = {"status": "passed", "evidence": "synthetic parser fixture"}
         self.write_report()
@@ -240,8 +240,8 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
         with self.assertRaises(integration.IntegrationError):
             self.validate()
         self.report["checks"]["supply_reissue_guard"]["status"] = "passed"
-        for name in ("supply_station_identity", "supply_station_reload",
-                     "supply_reload_content_binding"):
+        for name in ("supply_blocked_preflight", "supply_station_identity",
+                     "supply_station_reload", "supply_reload_content_binding"):
             with self.subTest(gate=name):
                 self.report["checks"][name]["status"] = "not_run"
                 self.write_report()
