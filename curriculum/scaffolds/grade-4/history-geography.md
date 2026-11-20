@@ -12,6 +12,10 @@
 
 Ask the learner to demonstrate **check historical claims against sources** from a prior planning bin, using an example and explanation. Do not assume it was taught.
 
+## Draft authored evidence pilot (not an adopted unit)
+
+The [Grade 4 fictional route-map pilot](../../history-geography/grade-4-route-evidence-pilot/README.md) supplies E1–E4 independent prerequisite probes and different rechecks; four proposed Trivium teaching sequences and exits; eight guided learner tasks and full separate keys; and ten exposed transfer tasks with distinct complete teacher keys and noncompensatory criteria. Source packet maps, fictional council notice, planning sheet and diary are invented, not verified historic documents. It remains **draft, unregistered, not ready** with no canonical identifiers, teaching dates or learner evidence. It extends route and evidence investigations below while retaining the scope review gate.
+
 ## Proposed sequence (not authored units)
 
 | Order | Investigation | Observable demonstration to develop |

@@ -514,5 +514,88 @@ class Unit4GeometryDraftTests(unittest.TestCase):
 
 
 
+
+class Grade4RouteEvidenceDraftTests(unittest.TestCase):
+    """Verify invented graph distances, key separation and pilot links."""
+    PILOT = ROOT / "curriculum/history-geography/grade-4-route-evidence-pilot"
+
+    def test_grade4_route_packet_and_keys(self):
+        self.assertIn("unregistered, not ready",
+                      (self.PILOT / "README.md").read_text(encoding="utf-8"))
+        self.assertIn("unassigned",
+                      (self.PILOT / "README.md").read_text(encoding="utf-8"))
+        entry = (self.PILOT / "entry-learner.md").read_text(encoding="utf-8")
+        entry_key = (self.PILOT / "entry-teacher.md").read_text(encoding="utf-8")
+        guide = (self.PILOT / "guided-learner.md").read_text(encoding="utf-8")
+        guide_key = (self.PILOT / "guided-teacher.md").read_text(encoding="utf-8")
+        learner = (self.PILOT / "draft-assessments/reference-learner.md").read_text(encoding="utf-8")
+        key = (self.PILOT / "draft-assessments/reference-teacher.md").read_text(encoding="utf-8")
+        for n in range(1, 5):
+            self.assertEqual(1, entry.count(f"**E{n}.**"))
+            self.assertIn(f"| E{n} |", entry_key)
+            self.assertIn(f"**X{n}**", guide_key)
+        for n in range(1, 9):
+            self.assertEqual(1, guide.count(f"**G{n}.**"))
+            self.assertIn(f"| G{n} |", guide_key)
+        for n in range(1, 11):
+            self.assertEqual(1, learner.count(f"**S{n}.**"))
+            self.assertIn(f"| S{n} |", key)
+        self.assertNotIn("guided-teacher.md", guide)
+        self.assertNotIn("reference-teacher.md", learner)
+        for term in ("2 + 5 = 7 km", "4 + 4 = 8 km",
+                     "2 + 3 + 4 = 9 km", "1 km shorter"):
+            self.assertIn(term, key)
+
+    def test_route_dijkstra_oracle_and_trivium_phases(self):
+        import heapq
+        for edges, blocked, start, end, expected in (
+            ({("A","B"):4,("B","C"):3,("A","D"):5,("D","C"):4,("B","D"):2},
+             ("B","C"), "A","C",9),
+            ({("E","F"):2,("F","G"):5,("E","H"):4,("H","G"):4,("F","H"):3},
+             ("F","G"), "E","G",8),
+        ):
+            graph = {}
+            for (a,b), length in edges.items():
+                if (a,b)==blocked:
+                    continue
+                graph.setdefault(a,[]).append((b,length))
+                graph.setdefault(b,[]).append((a,length))
+            best = {start:0}
+            queue = [(0,start)]
+            while queue:
+                length,node = heapq.heappop(queue)
+                if length != best[node]:
+                    continue
+                for next_node,edge_length in graph.get(node,[]):
+                    cost = length+edge_length
+                    if cost < best.get(next_node,float("inf")):
+                        best[next_node] = cost
+                        heapq.heappush(queue,(cost,next_node))
+            self.assertEqual(expected,best[end])
+        lesson = (self.PILOT / "lessons.md").read_text(encoding="utf-8")
+        self.assertEqual(4, lesson.count("## Episode "))
+        for token in ("**Grammar:**", "**Logic:**", "**Rhetoric:**",
+                      "**Independent X1:**", "**Independent X2:**",
+                      "**Independent X3:**", "**Independent X4:**"):
+            self.assertIn(token, lesson)
+        for section in lesson.split("## Episode ")[1:]:
+            minutes = [int(row.split("|")[1].strip()) for row in section.splitlines()
+                       if re.match(r"^\| [0-9]+ \|",row)]
+            self.assertEqual(25,sum(minutes))
+
+    def test_route_markdown_links_and_status(self):
+        self.assertIn("grade-4-route-evidence-pilot/README.md",
+                      (BASE / "grade-4/history-geography.md").read_text(encoding="utf-8"))
+        for p in self.PILOT.rglob("*.md"):
+            body = p.read_text(encoding="utf-8")
+            with self.subTest(file=p):
+                self.assertNotRegex(body,r"(?:C|U|L|O|A)-HG-[0-9]{3}")
+                for url in re.findall(r"\]\(([^)]+)\)",body):
+                    if url.startswith(("http:","https:","mailto:")):
+                        continue
+                    target=(p.parent/url.split("#",1)[0]).resolve()
+                    self.assertTrue(target.is_file(),f"missing {url} in {p}")
+
+
 if __name__ == "__main__":
     unittest.main()
