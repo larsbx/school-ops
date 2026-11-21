@@ -239,6 +239,12 @@ def validate_producer(output, checkout, lock, identity, *, allow_local_source=Fa
     # manually supplied four-field JSON or from catalog registration alone.
     # The immutable lock still governs the original two-receipt baseline.
     candidate = artifacts["receipts"].get("supply_unregistered")
+    # Once a pinned producer includes the Factory Supply Order implementation
+    # and its reload tests, omission of the supply receipt is not optional.
+    # Otherwise a green baseline receipt pair could conceal a failed/omitted
+    # supply export. Local development fixtures remain explicitly unverified.
+    if not allow_local_source and SUPPLY_SOURCE_PATHS <= set(lock["source_hashes"]):
+        require(candidate is not None, "pinned supply producer receipt is missing")
     if candidate is not None:
         # A legacy producer with only baseline sources cannot self-declare
         # supply acceptance by appending a four-field receipt and green gates.
