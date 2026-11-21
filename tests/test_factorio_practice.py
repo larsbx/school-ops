@@ -260,6 +260,23 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
         with self.assertRaises(integration.IntegrationError):
             self.validate()
 
+    def test_pinned_supply_receipt_omission_is_not_baseline_success(self):
+        # Synthetic parser fixture: this is deliberately not Factorio execution.
+        # A source-bound pinned supply producer may not silently downgrade to
+        # the older two-receipt baseline when its supply artifact disappears.
+        for relative in integration.SUPPLY_SOURCE_PATHS:
+            source = self.checkout / relative
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_text("synthetic supply source fixture\\n", encoding="utf-8")
+            self.report["source_hashes"][relative] = integration.sha256(source)
+        self.lock["source_hashes"] = dict(self.report["source_hashes"])
+        self.write_report()
+        self.assertEqual(set(self.validate()["receipts"]), {"smelting", "ratio"})
+        with self.assertRaisesRegex(integration.IntegrationError,
+                                    "pinned supply producer receipt is missing"):
+            integration.validate_producer(self.producer, self.checkout, self.lock,
+                                          self.identity, allow_local_source=False)
+
     def test_every_required_engine_gate_must_be_present_and_passed(self):
         original = json.loads(json.dumps(self.report))
         for name in integration.REQUIRED_CHECKS:
