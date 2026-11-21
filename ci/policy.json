@@ -26,7 +26,8 @@
         "exercise_bank/**",
         "tests/test_bank.py",
         "tests/test_unit2_sessions.py",
-        "tests/test_unit3_sessions.py"
+        "tests/test_unit3_sessions.py",
+        "tests/test_water_pathways.py"
       ],
       "depends_on": [
         "curriculum"
@@ -191,6 +192,13 @@
       ],
       "directory": "tests",
       "pattern": "test_unit3_authored.py"
+    },
+    "water-pathways": {
+      "components": [
+        "bank"
+      ],
+      "directory": "tests",
+      "pattern": "test_water_pathways.py"
     },
     "unit3-sessions": {
       "components": [
