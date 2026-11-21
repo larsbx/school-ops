@@ -516,3 +516,71 @@ class Unit4GeometryDraftTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class Grade4WaterPathwayDraftTests(unittest.TestCase):
+    """Draft structural/numeric controls, not pedagogy, science or readiness."""
+
+    PILOT = ROOT / "curriculum/natural-science/grade-4-water-pathways-pilot"
+
+    def test_scope_and_entry_rechecks(self):
+        info = (self.PILOT / "README.md").read_text(encoding="utf-8")
+        plan = (BASE / "grade-4/natural-science.md").read_text(encoding="utf-8")
+        entry = (self.PILOT / "entry-learner.md").read_text(encoding="utf-8")
+        key = (self.PILOT / "entry-teacher.md").read_text(encoding="utf-8")
+        for term in ("not ready", "unassigned", "invented", "Music is excluded",
+                     "qualified religious-source"):
+            self.assertIn(term, info)
+        self.assertIn("grade-4-water-pathways-pilot/README.md", plan)
+        for i in range(1, 5):
+            self.assertIn(f"G4-SCI-P{i}", info)
+            self.assertEqual(1, entry.count(f"**E{i}."))
+            self.assertIn(f"| E{i} ", key)
+        for correct in ("24 mL", "41 mL", "12 mL", "15 mL"):
+            self.assertIn(correct, key)
+
+    def test_key_separation_and_arithmetic_replay(self):
+        learner = (self.PILOT / "draft-assessments/reference-learner.md").read_text(encoding="utf-8")
+        key = (self.PILOT / "draft-assessments/reference-teacher.md").read_text(encoding="utf-8")
+        coached = (self.PILOT / "guided-learner.md").read_text(encoding="utf-8")
+        coached_key = (self.PILOT / "guided-teacher.md").read_text(encoding="utf-8")
+        self.assertNotIn("reference-teacher.md", learner)
+        self.assertNotIn("guided-teacher.md", coached)
+        for i in range(1, 9):
+            self.assertEqual(1, coached.count(f"**G{i}."))
+            self.assertIn(f"| G{i} ", coached_key)
+        for i in range(1, 11):
+            self.assertEqual(1, learner.count(f"**S{i}."))
+            self.assertIn(f"| S{i} ", key)
+        fixtures = [(100, 72, 68, 70), (100, 41, 39, 40),
+                    (100, 26, 30, 28), (80, 60, 56, 58),
+                    (80, 36, 40, 38), (80, 22, 26, 24),
+                    (120, 86, 90, 88)]
+        for volume, r1, r2, expected in fixtures:
+            self.assertEqual(expected, (r1+r2)//2)
+            self.assertGreaterEqual(volume-r1, 0)
+            self.assertGreaterEqual(volume-r2, 0)
+        self.assertEqual((70-40, 70-28, 58-38, 58-24, 88-58),
+                         (30, 42, 20, 34, 30))
+        for fragment in ("20 mL", "34 mL", "44 mL", "88 mL", "120 mL"):
+            self.assertIn(fragment, key)
+
+    def test_lessons_links_and_unassigned_ids(self):
+        lesson = (self.PILOT / "lessons.md").read_text(encoding="utf-8")
+        guide = (self.PILOT / "teacher-guide.md").read_text(encoding="utf-8")
+        for i in range(1, 5):
+            self.assertIn(f"Episode {i}", lesson)
+            self.assertIn(f"**X{i}.**", lesson)
+            self.assertIn(f"X{i}", guide)
+        for term in ("Grammar:", "Logic:", "Rhetoric:"):
+            self.assertEqual(4, lesson.count("| " + term))
+        for episode in re.split(r"(?=^## Episode \d)", lesson, flags=re.M)[1:]:
+            self.assertEqual(25, sum(map(int, re.findall(r"\| (\d+) \|$", episode, re.M))))
+        for file in self.PILOT.rglob("*.md"):
+            with self.subTest(file=file.name):
+                body = file.read_text(encoding="utf-8")
+                self.assertNotRegex(body, r"(?:C|U|L|O|A)-SCI-\d{3}")
+                for raw in re.findall(r"\]\(([^)]+)\)", body):
+                    if raw.startswith(("http:", "https:", "mailto:", "#")):
+                        continue
+                    target = (file.parent / raw.split("#", 1)[0]).resolve()
+                    self.assertTrue(target.is_file(), f"broken pilot link: {file} -> {raw}")
