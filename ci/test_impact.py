@@ -26,11 +26,11 @@ class ImpactPlanningTests(unittest.TestCase):
 
     def test_bank_change_includes_downstream_teaching(self):
         decision = plan(POLICY, ["exercise_bank/generator.py"])
-        self.assertEqual(decision["suites"], ["bank", "islamic-prototype", "teaching", "unit2-sessions", "unit3-authored", "unit3-sessions"])
+        self.assertEqual(decision["suites"], ["bank", "islamic-prototype", "teaching", "unit2-sessions", "unit3-authored", "unit3-sessions", "water-pathways"])
 
     def test_curriculum_change_includes_dependents_transitively(self):
         decision = plan(POLICY, ["curriculum/scaffolds/islamic_studies.md"])
-        self.assertEqual(decision["suites"], ["bank", "curriculum", "factorio-practice", "islamic-prototype", "language-grade4", "reasoning-grade3", "teaching", "unit2-sessions", "unit3-authored", "unit3-sessions"])
+        self.assertEqual(decision["suites"], ["bank", "curriculum", "factorio-practice", "islamic-prototype", "language-grade4", "reasoning-grade3", "teaching", "unit2-sessions", "unit3-authored", "unit3-sessions", "water-pathways"])
 
     def test_grade4_language_changes_select_pilot_suite(self):
         for path in (
@@ -49,6 +49,17 @@ class ImpactPlanningTests(unittest.TestCase):
         self.assertEqual(decision["mode"], "targeted")
         self.assertIn("unit3-authored", decision["suites"])
         self.assertIn("unit3-sessions", decision["suites"])
+
+    def test_water_pathways_changes_select_the_registered_suite(self):
+        for path in (
+            "exercise_bank/water_pathways.py",
+            "exercise_bank/core.py",
+            "tests/test_water_pathways.py",
+        ):
+            with self.subTest(path=path):
+                decision = plan(POLICY, [path])
+                self.assertEqual(decision["mode"], "targeted")
+                self.assertIn("water-pathways", decision["suites"])
 
     def test_factorio_practice_is_registered_and_scoped(self):
         for path in ("tools/factorio_practice.py", "tools/verify_factorio_integration.py",
