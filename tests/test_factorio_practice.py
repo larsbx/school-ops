@@ -153,9 +153,17 @@ class FactorioPracticeTest(unittest.TestCase):
                         inspect_receipt(self.path)
                     catalog.write_bytes(original)
 
-            self.path.write_text(json.dumps(SUPPLY), encoding="utf-8")
+            # All known metadata is validated even when the receipt names
+            # another activity. Catalogs are never self-approving manifests.
             catalog = root / practice.PILOT_ROOT / "factory-supply-order" / "activity.json"
             original = json.loads(catalog.read_text(encoding="utf-8"))
+            self.path.write_text(json.dumps(CURRENT_SMELTING), encoding="utf-8")
+            catalog.write_text(json.dumps(dict(original, status="approved")), encoding="utf-8")
+            with self.assertRaises(ValueError):
+                inspect_receipt(self.path)
+            catalog.write_text(json.dumps(original), encoding="utf-8")
+
+            self.path.write_text(json.dumps(SUPPLY), encoding="utf-8")
             variants = {
                 "provider-rights self-assertion": dict(original, provider_reuse_authorized=True),
                 "extra receipt version": dict(original, additional_expected_receipts=[
