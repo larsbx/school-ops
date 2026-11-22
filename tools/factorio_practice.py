@@ -75,8 +75,10 @@ def inspect_receipt(path):
     if len(data) > MAX_RECEIPT_BYTES:
         raise ValueError("receipt is too large")
     receipt = json.loads(data.decode("utf-8"), object_pairs_hook=unique_fields)
-    for directory in REGISTERED_ACTIVITIES:
-        activity = _load_known_catalog(directory)
+    # Validate all known catalog entries before classifying any receipt; an
+    # unrelated malformed or promoted manifest must not pass unnoticed.
+    catalogs = {directory: _load_known_catalog(directory) for directory in REGISTERED_ACTIVITIES}
+    for directory, activity in catalogs.items():
         supported = [activity["expected_receipt"], *activity.get("additional_expected_receipts", [])]
         if any(receipt == expected for expected in supported):
             return {
