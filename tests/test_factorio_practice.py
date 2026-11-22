@@ -180,7 +180,7 @@ class FactorioPracticeTest(unittest.TestCase):
                 "non-finite": original_bytes.replace(
                     b'"status": "draft"', b'"status": NaN', 1),
                 "not an object": b"[]",
-                "invalid encoding": b"\\xff",
+                "invalid encoding": bytes([255]),
                 "oversized catalog": b" " * (practice.MAX_CATALOG_BYTES + 1),
             }
             for reason, payload in malformed.items():
