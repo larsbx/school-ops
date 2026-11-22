@@ -124,6 +124,72 @@ class FactorioPracticeTest(unittest.TestCase):
         self.assertNotIn("synthetic-private-id", result.stderr)
 
 
+    def test_known_catalog_metadata_is_not_its_own_authorization(self):
+        # Synthetic catalog mutations, not game execution or provider content.
+        from tools import factorio_practice as practice
+
+        root = self.path.parent / "isolated-catalogs"
+        for directory in practice.REGISTERED_ACTIVITIES:
+            target = root / directory / "activity.json"
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes((practice.REPO_ROOT / directory / "activity.json").read_bytes())
+
+        entries = (
+            (practice.PILOT_ROOT, CURRENT_SMELTING),
+            (practice.PILOT_ROOT / "ratio-loading-bay", RATIO),
+            (practice.PILOT_ROOT / "factory-supply-order", SUPPLY),
+        )
+        with mock.patch.object(practice, "REPO_ROOT", root):
+            for directory, receipt in entries:
+                with self.subTest(activity=receipt["activity_id"]):
+                    self.path.write_text(json.dumps(receipt), encoding="utf-8")
+                    catalog = root / directory / "activity.json"
+                    original = catalog.read_bytes()
+                    self.assertEqual(inspect_receipt(self.path)["material_status"], "draft")
+                    changed = json.loads(original)
+                    changed["status"] = "approved"
+                    catalog.write_text(json.dumps(changed), encoding="utf-8")
+                    with self.assertRaises(ValueError):
+                        inspect_receipt(self.path)
+                    catalog.write_bytes(original)
+
+            self.path.write_text(json.dumps(SUPPLY), encoding="utf-8")
+            catalog = root / practice.PILOT_ROOT / "factory-supply-order" / "activity.json"
+            original = json.loads(catalog.read_text(encoding="utf-8"))
+            variants = {
+                "provider-rights self-assertion": dict(original, provider_reuse_authorized=True),
+                "extra receipt version": dict(original, additional_expected_receipts=[
+                    completion("L-FACTORIO-SUPPLY-01", "0.4.0")]),
+                "resource swap": dict(original, resource_id="R-FACTORIO-002"),
+                "receipt schema swap": dict(original, expected_receipt=dict(
+                    SUPPLY, schema="schoolops.factorio.practice.v2")),
+            }
+            for reason, value in variants.items():
+                with self.subTest(reason=reason):
+                    catalog.write_text(json.dumps(value), encoding="utf-8")
+                    with self.assertRaises(ValueError):
+                        inspect_receipt(self.path)
+
+            original_bytes = json.dumps(original).encode("utf-8")
+            malformed = {
+                "duplicate field": original_bytes.replace(
+                    b'"status": "draft"', b'"status": "draft", "status": "draft"', 1),
+                "duplicate receipt field": original_bytes.replace(
+                    b'"activity_id": "L-FACTORIO-SUPPLY-01"',
+                    b'"activity_id": "L-FACTORIO-SUPPLY-01", "activity_id": "L-FACTORIO-SUPPLY-01"', 1),
+                "non-finite": original_bytes.replace(
+                    b'"status": "draft"', b'"status": NaN', 1),
+                "not an object": b"[]",
+                "invalid encoding": b"\\xff",
+                "oversized catalog": b" " * (practice.MAX_CATALOG_BYTES + 1),
+            }
+            for reason, payload in malformed.items():
+                with self.subTest(reason=reason):
+                    catalog.write_bytes(payload)
+                    with self.assertRaises(ValueError):
+                        inspect_receipt(self.path)
+
+
 class FactorioIntegrationConsumerTest(unittest.TestCase):
     """Synthetic report-consumer tests; these do not run or simulate the game."""
 
