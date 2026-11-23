@@ -26,9 +26,10 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 LOCK_PATH = Path(__file__).with_name("factorio_integration.lock.json")
 FACTORIO_ARCHIVE_SHA256 = "c4efc11529f74d37c96933e291e0db73fd9f5aa4738913d9301b24680b3e947f"
 REQUIRED_CHECKS = (
+    "runtime", "tooling_tests", "source_unchanged",
     "real_engine_smelting", "real_engine_ratio", "ratio_reload_active",
-    "ratio_reload_complete", "gui_handler_model", "content_binding",
-    "deterministic_package", "runtime",
+    "ratio_reload_complete", "actual_receipt_files",
+    "gui_handler_model", "content_binding", "deterministic_package",
 )
 SUPPLY_SOURCE_PATHS = frozenset({
     "mods/learning-lab/supply_order.lua",
