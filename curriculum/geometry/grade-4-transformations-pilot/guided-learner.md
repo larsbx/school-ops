@@ -1,6 +1,6 @@
 # Guided coordinate-and-proof tasks — learner
 
-**Draft, publicly exposed coaching material.** Use [the coordinate packet](coordinate-cards.md), 6×6 board and unit-square convention. Show your transformed coordinates **and** a reason; use speech/touch/dictation if preferred. The teacher has a [separate worked key](guided-teacher.md).
+**Draft, publicly exposed coaching material.** Use [the coordinate packet](coordinate-cards.md), 6×6 board and unit-square convention. Show your transformed coordinates **and** a reason; use speech/touch/dictation if preferred. The teacher keeps the worked key on a separate, teacher-only surface.
 
 **G1.** Find V`(1,2)`. Which coordinate remains unchanged?
 
