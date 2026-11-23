@@ -38,16 +38,16 @@
 | Rhetoric: provide a two-cell explanatory trace that another learner can reproduce, including coordinate order | 5 |
 | **X3.** Calculate Q`(2,4)` and V`(2,4)`; explain why the outputs differ | 2 |
 
-## Episode 4 — Conservation is not its converse
+## Episode 4 — Same area, different perimeters
 
 **Primary art:** geometry and arithmetic of unit-square area and exposed-side perimeter.
 
 | Trivium move and actual teaching work | Minutes |
 | --- | --- |
-| Grammar: distinguish area in square units and boundary in length units; define a counterexample | 5 |
-| Logic: independently count Card A and D, note equal areas but compare perimeters; locate shared sides | 7 |
-| Investigation: use the matching rules to argue a rigid V or Q move preserves side adjacency and hence perimeter; challenge "same area always means same perimeter" | 6 |
-| Rhetoric: write or dictate a two-part museum label: one valid conservation claim, one bounded false-converse counterexample | 5 |
-| **X4.** Compare the perimeter of Card D and Card E, which each have four unit squares; explain whether equal area forces equal boundary | 2 |
+| Grammar: distinguish area in square units and perimeter in length units; define a counterexample as an example that makes an "always" claim false | 5 |
+| Logic: count the cells and exposed sides of Cards A and D; use the shared sides to test "same area always means same perimeter" | 7 |
+| Investigation: match cells and full shared sides before/after V or Q to justify conservation of both area and perimeter; distinguish a moved copy from any other shape with equal area | 6 |
+| Rhetoric: write or dictate a two-part museum label: one justified conservation claim and one counterexample to the invalid generalization "same area always means same perimeter"; name which claim the example refutes | 5 |
+| **X4.** Compare the perimeters of Cards D and E, which each have four unit squares; decide whether equal area forces equal perimeter and justify your answer using shared sides | 2 |
 
 **Diagnostic routing:** If X1 fails, revisit E2/E4 and map columns with new points. If X2 fails, distinguish a symmetric set from unmoved cells, then test another bar. If X3 fails, use `Q(c,r)=(5-r,c)` with a new point and independent recheck. If X4 fails, trace and count exposed sides (E3) with a new arrangement. Do not claim mastery from this sequence, and retain all accommodations.

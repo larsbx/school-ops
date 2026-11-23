@@ -26,7 +26,9 @@ E1–E4 explicitly check equal-square count, reading coordinate order, exposed-e
 1. [Episode 1](lessons.md): name and construct a vertical reflection; show exactly which square corresponds.
 2. [Episode 2](lessons.md): test a claimed line of symmetry and inverse mirrors.
 3. [Episode 3](lessons.md): construct a quarter-turn with `(c,r)` conventions; rebut mirror/rotation confusion.
-4. [Episode 4](lessons.md): prove area/perimeter preservation under a rigid grid transformation and refute the converse "same area implies same perimeter."
+4. [Episode 4 — Same area, different perimeters](lessons.md): justify that rigid grid transformations preserve both area and perimeter, then use Cards A and D to refute the invalid generalization "same area implies same perimeter."
+
+The [teacher-only logic check](guided-teacher.md#teacher-only-logic-check) distinguishes conservation, its actual converse, and the invalid generalization tested here. Learner work asks for a conservation reason and an equal-area counterexample; the separate converse explanation adds no learner task or assessment criterion.
 
 [Guided tasks G1–G8](guided-learner.md) are coached examples; [X1–X4](lessons.md) are individual exit prompts with separate keys. [S1–S10](draft-assessments/reference-learner.md) supply exposed **illustrative assessment references**, not a secure/fresh mastery test.
 

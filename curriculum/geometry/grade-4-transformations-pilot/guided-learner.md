@@ -16,4 +16,4 @@
 
 **G7.** Compare Card A and Q(A). Calculate area and perimeter of each. Justify why a quarter-turn preserves contact between full sides.
 
-**G8.** A learner says, "Any shape made of four unit squares has the same perimeter." Compare A with Card D and refute or defend the claim, giving units. Is that statement the same as "a reflection preserves perimeter"?
+**G8.** A learner says, "Any two shapes made of four unit squares must have the same perimeter." Compare Cards A and D: give both areas and perimeters with units, and refute or defend the claim using shared sides. Explain how this claim differs from "reflecting or turning a whole shape preserves its area and perimeter."

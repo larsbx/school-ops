@@ -18,6 +18,6 @@
 
 **S8.** A classmate claims moving every cell of `{(0,1),(0,2),(1,2)}` one column to the right is **the V reflection** of the original. Construct both images and decide whether the claim holds.
 
-**S9.** Refute or defend: "Every four-cell shape has perimeter 10 length units." Compare Cards A and D, using a reason based on full shared sides.
+**S9.** Refute or defend: "If two shapes have equal area, they must have equal perimeter." Compare Cards A and D, giving both measurements with units and a reason based on full shared sides. Explain why your comparison does or does not challenge the rule that a reflection or quarter-turn preserves a whole shape's area and perimeter.
 
 **S10.** Start with `(1,1)`, reflect under V, then apply Q to the result. Give both intermediate and final coordinates, label the operations in order and explain one property that both moves preserve. Would reversing the order necessarily give the same result for this point? Show it.
