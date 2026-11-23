@@ -614,7 +614,6 @@ class Grade4TransformationsDraftTests(unittest.TestCase):
         for cell in cells:
             for op in (self.v, self.h, self.q):
                 self.assertEqual(1, len(op({cell})))
-                self.assertEqual(4, len(op({cell}) | op({cell}))) if False else None
             self.assertEqual({cell}, self.v(self.v({cell})))
             self.assertEqual({cell}, self.h(self.h({cell})))
             rotated = {cell}
