@@ -367,6 +367,24 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
             with self.assertRaises(integration.IntegrationError):
                 self.validate()
 
+    def test_producer_stability_and_receipt_file_gates_need_real_evidence(self):
+        # Report-parser negative controls only, not a game-engine simulation.
+        # New reverse acceptance must refuse a forged green status if producer
+        # self-tests, disk-written receipt checks, or source-stability evidence
+        # was omitted even while the two baseline receipts are present.
+        for gate in ("tooling_tests", "actual_receipt_files", "source_unchanged"):
+            self.assertIn(gate, integration.REQUIRED_CHECKS)
+            for evidence in ("", None, 0):
+                with self.subTest(gate=gate, evidence=evidence):
+                    self.report["checks"][gate]["evidence"] = evidence
+                    self.write_report()
+                    with self.assertRaisesRegex(integration.IntegrationError,
+                                                "required producer check did not pass"):
+                        self.validate()
+            self.report["checks"][gate]["evidence"] = "synthetic parser fixture"
+        self.write_report()
+        self.assertEqual(set(self.validate()["receipts"]), {"smelting", "ratio"})
+
     def test_pinned_reverse_requires_official_archive_not_just_binary_version(self):
         # This synthetic report intentionally does not establish game execution.
         # The local development mode can inspect an explicitly supplied binary,
