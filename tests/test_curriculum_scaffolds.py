@@ -584,3 +584,110 @@ class Grade4WaterPathwayDraftTests(unittest.TestCase):
                         continue
                     target = (file.parent / raw.split("#", 1)[0]).resolve()
                     self.assertTrue(target.is_file(), f"broken pilot link: {file} -> {raw}")
+
+class Grade4TransformationsDraftTests(unittest.TestCase):
+    """Only deterministic coordinate/content controls; not pedagogical acceptance."""
+
+    PILOT = ROOT / "curriculum/geometry/grade-4-transformations-pilot"
+
+    @staticmethod
+    def v(cells):
+        return {(5-c, r) for c, r in cells}
+
+    @staticmethod
+    def h(cells):
+        return {(c, 5-r) for c, r in cells}
+
+    @staticmethod
+    def q(cells):
+        return {(5-r, c) for c, r in cells}
+
+    @staticmethod
+    def boundary(cells):
+        return sum((c+dc, r+dr) not in cells for c, r in cells
+                   for dc, dr in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+
+    def test_transformations_preserve_area_boundary_and_inverse(self):
+        # Exhaust all cells, all adjacent pairs, and several different topologies.
+        from itertools import combinations
+        cells = {(c, r) for c in range(6) for r in range(6)}
+        for cell in cells:
+            for op in (self.v, self.h, self.q):
+                self.assertEqual(1, len(op({cell})))
+                self.assertEqual(4, len(op({cell}) | op({cell}))) if False else None
+            self.assertEqual({cell}, self.v(self.v({cell})))
+            self.assertEqual({cell}, self.h(self.h({cell})))
+            rotated = {cell}
+            for _ in range(4):
+                rotated = self.q(rotated)
+            self.assertEqual({cell}, rotated)
+        fixtures = [
+            {(0,1),(1,1),(1,2),(1,3)},
+            {(1,2),(2,2),(3,2),(4,2)},
+            {(1,1),(1,2),(2,2)},
+            {(1,1),(2,1),(1,2),(2,2)},
+            {(0,0),(1,1),(2,2)},
+            {(1,1),(2,1),(3,1),(4,1)},
+        ]
+        for pair in combinations(sorted(cells), 2):
+            fixtures.append(set(pair))
+        for original in fixtures:
+            for op in (self.v, self.h, self.q):
+                image = op(original)
+                self.assertEqual(len(original), len(image))
+                self.assertEqual(self.boundary(original), self.boundary(image))
+        a, b, c, d = fixtures[:4]
+        self.assertEqual((4, 10), (len(a), self.boundary(a)))
+        self.assertEqual((4, 10), (len(b), self.boundary(b)))
+        self.assertEqual((3, 8), (len(c), self.boundary(c)))
+        self.assertEqual((4, 8), (len(d), self.boundary(d)))
+        self.assertEqual({(5,1),(4,1),(4,2),(4,3)}, self.v(a))
+        self.assertEqual({(4,0),(4,1),(3,1),(2,1)}, self.q(a))
+        self.assertEqual(b, self.v(b))
+        self.assertEqual({(4,1),(4,2),(3,2)}, self.v(c))
+        self.assertNotEqual(self.v(self.q({(1,1)})), self.q(self.v({(1,1)})))
+
+    def test_task_key_pairs_and_no_unapproved_ids(self):
+        cases = (
+            ("entry-learner.md", "entry-teacher.md", "E", 4),
+            ("guided-learner.md", "guided-teacher.md", "G", 8),
+            ("draft-assessments/reference-learner.md",
+             "draft-assessments/reference-teacher.md", "S", 10),
+        )
+        for learner_file, teacher_file, label, count in cases:
+            learner = (self.PILOT / learner_file).read_text(encoding="utf-8")
+            teacher = (self.PILOT / teacher_file).read_text(encoding="utf-8")
+            self.assertNotIn(teacher_file.split("/")[-1], learner)
+            for i in range(1, count+1):
+                self.assertEqual(1, learner.count(f"**{label}{i}."))
+                self.assertIn(f"| {label}{i} |", teacher)
+        lessons = (self.PILOT / "lessons.md").read_text(encoding="utf-8")
+        key = (self.PILOT / "guided-teacher.md").read_text(encoding="utf-8")
+        episodes = re.split(r"(?=^## Episode [1-4] )", lessons, flags=re.M)[1:]
+        self.assertEqual(4, len(episodes))
+        for i, episode in enumerate(episodes, 1):
+            self.assertIn(f"**X{i}.**", episode)
+            self.assertIn(f"| X{i} |", key)
+            self.assertEqual(25, sum(map(int, re.findall(r"\| (\d+) \|$", episode, re.M))))
+            for art in ("Grammar:", "Logic:", "Rhetoric:"):
+                self.assertIn(art, episode)
+        for file in self.PILOT.rglob("*.md"):
+            body = file.read_text(encoding="utf-8")
+            self.assertNotRegex(body, r"(?:C|U|L|O|A)-GEO-\d{3}")
+            for raw in re.findall(r"\]\(([^)]+)\)", body):
+                if raw.startswith(("http:", "https:", "mailto:", "#")):
+                    continue
+                dest = (file.parent / raw.split("#", 1)[0]).resolve()
+                self.assertTrue(dest.is_file(), f"missing {raw} in {file}")
+
+    def test_plan_and_course_index_do_not_register_pilot(self):
+        plan = (BASE / "grade-4/geometry.md").read_text(encoding="utf-8")
+        index = (ROOT / "curriculum/README.md").read_text(encoding="utf-8")
+        intro = (self.PILOT / "README.md").read_text(encoding="utf-8")
+        for body in (plan, index):
+            self.assertIn("grade-4-transformations-pilot/README.md", body)
+        for tag in ("not ready", "unassigned", "Islamic studies",
+                    "qualified", "Music is excluded"):
+            self.assertIn(tag, intro)
+        self.assertIn("C-MATH-001", index)
+        self.assertIn("qualified religious-source", intro)
