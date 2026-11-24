@@ -39,3 +39,7 @@ The ordering and difficulty are proposals, not grade-based prerequisite claims. 
 Agree subject scope, observed entry skills, the order and dependency of real units, course IDs, outcome IDs, assessment coverage, materials, time and calendar. Review those records under the [curriculum model](../../../docs/curriculum-model.md); keep all learner-specific records private. This scaffold does not itself establish a teaching-ready course.
 
 [Grade 4 class overview](README.md) · [K–12 index](../README.md)
+
+## Authored draft: reflection and rotation investigation (not ready)
+
+The [unregistered Grade 4 transformations pilot](../../geometry/grade-4-transformations-pilot/README.md) develops **investigation 1 only** with actual original coordinate-card tasks, independent prerequisite/rechecks, four Trivium episodes, eight guided problems, ten exposed reference prompts and complete separate teacher keys. Local goals `G4-GEO-P1`–`P4` are **not canonical IDs**. No real learner outcomes, secure assessment or adopted 25-minute budget follows. Investigations 2 (volume) and 3 (shape fractions) remain **un-authored proposals**. Keep the [Grade 3 geometry](../../geometry/grade-3-tiling-pilot/README.md) and Grade 2 course boundaries independent. The [Islamic studies source/translation/hadith/fiqh gates](../islamic-studies-guide.md) remain unresolved throughout K–12.

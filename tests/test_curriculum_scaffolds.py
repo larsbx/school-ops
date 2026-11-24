@@ -584,3 +584,225 @@ class Grade4WaterPathwayDraftTests(unittest.TestCase):
                         continue
                     target = (file.parent / raw.split("#", 1)[0]).resolve()
                     self.assertTrue(target.is_file(), f"broken pilot link: {file} -> {raw}")
+
+class Grade4TransformationsDraftTests(unittest.TestCase):
+    """Only deterministic coordinate/content controls; not pedagogical acceptance."""
+
+    PILOT = ROOT / "curriculum/geometry/grade-4-transformations-pilot"
+
+    @staticmethod
+    def v(cells):
+        return {(5-c, r) for c, r in cells}
+
+    @staticmethod
+    def h(cells):
+        return {(c, 5-r) for c, r in cells}
+
+    @staticmethod
+    def q(cells):
+        return {(5-r, c) for c, r in cells}
+
+    @staticmethod
+    def boundary(cells):
+        return sum((c+dc, r+dr) not in cells for c, r in cells
+                   for dc, dr in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+
+    def test_transformations_preserve_area_boundary_and_inverse(self):
+        # Exhaust all cells, all adjacent pairs, and several different topologies.
+        from itertools import combinations
+        cells = {(c, r) for c in range(6) for r in range(6)}
+        for cell in cells:
+            for op in (self.v, self.h, self.q):
+                self.assertEqual(1, len(op({cell})))
+            self.assertEqual({cell}, self.v(self.v({cell})))
+            self.assertEqual({cell}, self.h(self.h({cell})))
+            rotated = {cell}
+            for _ in range(4):
+                rotated = self.q(rotated)
+            self.assertEqual({cell}, rotated)
+        fixtures = [
+            {(0,1),(1,1),(1,2),(1,3)},
+            {(1,2),(2,2),(3,2),(4,2)},
+            {(1,1),(1,2),(2,2)},
+            {(1,1),(2,1),(1,2),(2,2)},
+            {(0,0),(1,1),(2,2)},
+            {(1,1),(2,1),(3,1),(4,1)},
+        ]
+        for pair in combinations(sorted(cells), 2):
+            fixtures.append(set(pair))
+        for original in fixtures:
+            for op in (self.v, self.h, self.q):
+                image = op(original)
+                self.assertEqual(len(original), len(image))
+                self.assertEqual(self.boundary(original), self.boundary(image))
+        a, b, c, d = fixtures[:4]
+        self.assertEqual((4, 10), (len(a), self.boundary(a)))
+        self.assertEqual((4, 10), (len(b), self.boundary(b)))
+        self.assertEqual((3, 8), (len(c), self.boundary(c)))
+        self.assertEqual((4, 8), (len(d), self.boundary(d)))
+        self.assertEqual({(5,1),(4,1),(4,2),(4,3)}, self.v(a))
+        self.assertEqual({(4,0),(4,1),(3,1),(2,1)}, self.q(a))
+        self.assertEqual(b, self.v(b))
+        self.assertEqual({(4,1),(4,2),(3,2)}, self.v(c))
+        self.assertNotEqual(self.v(self.q({(1,1)})), self.q(self.v({(1,1)})))
+
+    def test_conservation_converse_and_equal_area_have_distinct_witnesses(self):
+        from itertools import combinations
+
+        # Read the actual teaching cards so a changed witness cannot silently
+        # leave a passing test of unrelated hard-coded coordinates.
+        packet = (self.PILOT / "coordinate-cards.md").read_text(encoding="utf-8")
+        cards = {}
+        for name in ("A", "D", "E"):
+            line = re.search(rf"^\*\*Card {name},.*$", packet, re.M)
+            self.assertIsNotNone(line, f"missing Card {name}")
+            cards[name] = {
+                (int(c), int(r))
+                for c, r in re.findall(r"\((\d+),\s*(\d+)\)", line.group())
+            }
+
+        def measurements(cells):
+            return len(cells), self.boundary(cells)
+
+        def squared_distances(cells):
+            # Cell-center differences equal the integer coordinate differences.
+            # Every rigid motion preserves these distances, including motions
+            # beyond the three specified central board transformations.
+            return sorted((c1-c2)**2 + (r1-r2)**2
+                          for (c1, r1), (c2, r2) in combinations(cells, 2))
+
+        a, d, e = (cards[name] for name in ("A", "D", "E"))
+        self.assertEqual((4, 10), measurements(a))
+        self.assertEqual((4, 8), measurements(d))
+        self.assertEqual((4, 10), measurements(e))
+
+        # Conservation: a rigidly moved copy has equal area AND perimeter.
+        for original in cards.values():
+            for move in (self.v, self.h, self.q):
+                image = move(original)
+                self.assertEqual(measurements(original), measurements(image))
+                self.assertEqual(squared_distances(original), squared_distances(image))
+
+        # A/D refutes equal area -> equal perimeter. It does not meet the
+        # equal-area-AND-equal-perimeter premise of conservation's converse.
+        self.assertEqual(len(a), len(d))
+        self.assertNotEqual(self.boundary(a), self.boundary(d))
+        converse_premise_ad = measurements(a) == measurements(d)
+        self.assertFalse(converse_premise_ad)
+
+        # A/E DOES meet that premise but cannot be rigidly related: even the
+        # unordered pairwise distances of its cell centers fail to match.
+        self.assertEqual(measurements(a), measurements(e))
+        self.assertEqual([1, 1, 1, 2, 4, 5], squared_distances(a))
+        self.assertEqual([1, 1, 1, 4, 4, 9], squared_distances(e))
+        self.assertNotEqual(squared_distances(a), squared_distances(e))
+
+    def test_conservation_language_distinguishes_all_three_claims(self):
+        teacher = (self.PILOT / "guided-teacher.md").read_text(encoding="utf-8")
+        statements = {
+            "Conservation": (
+                "If two shapes are related by a rigid motion, then they have "
+                "equal area and equal perimeter."
+            ),
+            "Actual converse": (
+                "If two shapes have equal area and equal perimeter, then they "
+                "are related by a rigid motion."
+            ),
+            "Invalid generalization": (
+                "If two shapes have equal area, then they have equal perimeter."
+            ),
+        }
+        for label, statement in statements.items():
+            with self.subTest(claim=label):
+                row = re.search(rf"^\| {label} \| ([^|]+) \|", teacher, re.M)
+                self.assertIsNotNone(row, f"missing teacher distinction: {label}")
+                self.assertEqual(statement, " ".join(row.group(1).split()))
+
+        intro = (self.PILOT / "README.md").read_text(encoding="utf-8")
+        sequence = re.search(r"^4\. \[Episode 4[^\]]*\].*$", intro, re.M)
+        self.assertIsNotNone(sequence)
+        self.assertIn("invalid generalization", sequence.group().lower())
+        self.assertNotIn("converse", sequence.group().lower())
+
+        lessons = (self.PILOT / "lessons.md").read_text(encoding="utf-8")
+        episode = lessons.split("## Episode 4 — ", 1)[1]
+        self.assertEqual("Same area, different perimeters", episode.splitlines()[0])
+        rhetoric = re.search(r"^\| Rhetoric:.*$", episode, re.M)
+        self.assertIsNotNone(rhetoric)
+        self.assertIn("invalid generalization", rhetoric.group().lower())
+        self.assertNotIn("converse", rhetoric.group().lower())
+
+        reference = (self.PILOT / "draft-assessments/reference-teacher.md").read_text(
+            encoding="utf-8")
+        for label, body in (("G8", teacher), ("X4", teacher), ("S9", reference)):
+            with self.subTest(key=label):
+                row = re.search(rf"^\| {label} \|.*$", body, re.M)
+                self.assertIsNotNone(row)
+                self.assertIn("invalid generalization", row.group().lower())
+                if label in ("G8", "S9"):
+                    self.assertIn("conservation", row.group().lower())
+        self.assertIn("equal area and different perimeters", reference)
+        self.assertNotIn("same-area/noncongruent", reference)
+
+        for file in self.PILOT.rglob("*.md"):
+            with self.subTest(file=file.name):
+                body = file.read_text(encoding="utf-8").lower()
+                self.assertNotIn("conservation is not its converse", body)
+                self.assertNotIn("false-converse", body)
+
+    def test_task_key_pairs_and_no_unapproved_ids(self):
+        cases = (
+            ("entry-learner.md", "entry-teacher.md", "E", 4),
+            ("guided-learner.md", "guided-teacher.md", "G", 8),
+            ("draft-assessments/reference-learner.md",
+             "draft-assessments/reference-teacher.md", "S", 10),
+        )
+        teacher_names = [teacher_file.split("/")[-1]
+                         for _, teacher_file, _, _ in cases]
+        for learner_file, teacher_file, label, count in cases:
+            learner = (self.PILOT / learner_file).read_text(encoding="utf-8")
+            teacher = (self.PILOT / teacher_file).read_text(encoding="utf-8")
+            for i in range(1, count+1):
+                self.assertEqual(1, learner.count(f"**{label}{i}."))
+                self.assertIn(f"| {label}{i} |", teacher)
+        learner_files = [case[0] for case in cases] + ["coordinate-cards.md"]
+        for learner_file in learner_files:
+            learner = (self.PILOT / learner_file).read_text(encoding="utf-8")
+            for teacher_name in teacher_names:
+                self.assertNotIn(teacher_name, learner)
+            self.assertNotIn("actual converse", learner.lower())
+            self.assertNotRegex(learner, r"\bA\s*(?:and|/)\s*(?:Card\s+)?E\b")
+            self.assertNotIn(
+                "If two shapes have equal area and equal perimeter, then they "
+                "are related by a rigid motion.", learner,
+            )
+        lessons = (self.PILOT / "lessons.md").read_text(encoding="utf-8")
+        key = (self.PILOT / "guided-teacher.md").read_text(encoding="utf-8")
+        episodes = re.split(r"(?=^## Episode [1-4] )", lessons, flags=re.M)[1:]
+        self.assertEqual(4, len(episodes))
+        for i, episode in enumerate(episodes, 1):
+            self.assertIn(f"**X{i}.**", episode)
+            self.assertIn(f"| X{i} |", key)
+            self.assertEqual(25, sum(map(int, re.findall(r"\| (\d+) \|$", episode, re.M))))
+            for art in ("Grammar:", "Logic:", "Rhetoric:"):
+                self.assertIn(art, episode)
+        for file in self.PILOT.rglob("*.md"):
+            body = file.read_text(encoding="utf-8")
+            self.assertNotRegex(body, r"(?:C|U|L|O|A)-GEO-\d{3}")
+            for raw in re.findall(r"\]\(([^)]+)\)", body):
+                if raw.startswith(("http:", "https:", "mailto:", "#")):
+                    continue
+                dest = (file.parent / raw.split("#", 1)[0]).resolve()
+                self.assertTrue(dest.is_file(), f"missing {raw} in {file}")
+
+    def test_plan_and_course_index_do_not_register_pilot(self):
+        plan = (BASE / "grade-4/geometry.md").read_text(encoding="utf-8")
+        index = (ROOT / "curriculum/README.md").read_text(encoding="utf-8")
+        intro = (self.PILOT / "README.md").read_text(encoding="utf-8")
+        for body in (plan, index):
+            self.assertIn("grade-4-transformations-pilot/README.md", body)
+        for tag in ("not ready", "unassigned", "Islamic studies",
+                    "qualified", "Music is excluded"):
+            self.assertIn(tag, intro)
+        self.assertIn("C-MATH-001", index)
+        self.assertIn("qualified religious-source", intro)
