@@ -30,7 +30,7 @@ class ImpactPlanningTests(unittest.TestCase):
 
     def test_curriculum_change_includes_dependents_transitively(self):
         decision = plan(POLICY, ["curriculum/scaffolds/islamic_studies.md"])
-        self.assertEqual(decision["suites"], ["bank", "curriculum", "factorio-practice", "islamic-prototype", "language-grade4", "reasoning-grade3", "teaching", "unit2-sessions", "unit3-authored", "unit3-sessions", "water-pathways"])
+        self.assertEqual(decision["suites"], ["bank", "curriculum", "factorio-practice", "islamic-prototype", "language-grade4", "reasoning-grade3", "reasoning-grade4", "teaching", "unit2-sessions", "unit3-authored", "unit3-sessions", "water-pathways"])
 
     def test_grade4_language_changes_select_pilot_suite(self):
         for path in (
@@ -43,6 +43,18 @@ class ImpactPlanningTests(unittest.TestCase):
                 self.assertEqual(decision["mode"], "targeted")
                 self.assertEqual(decision["direct_components"], ["curriculum"])
                 self.assertIn("language-grade4", decision["suites"])
+
+    def test_grade4_reasoning_changes_select_pilot_suite(self):
+        for path in (
+            "curriculum/reasoning/grade-4-exceptions-pilot/rule-packet.md",
+            "curriculum/scaffolds/grade-4/reasoning.md",
+            "tests/test_grade4_reasoning.py",
+        ):
+            with self.subTest(path=path):
+                decision = plan(POLICY, [path])
+                self.assertEqual(decision["mode"], "targeted")
+                self.assertEqual(decision["direct_components"], ["curriculum"])
+                self.assertIn("reasoning-grade4", decision["suites"])
 
     def test_unit3_sessions_change_includes_curriculum_contract_and_bank_tests(self):
         decision = plan(POLICY, ["exercise_bank/unit3.py"])
