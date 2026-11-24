@@ -2,7 +2,7 @@
 
 - Record kind: **planning scaffold**, not a course, unit, lesson or assessment
 - Course ID and outcome IDs: **unassigned**; do not reserve before scope approval
-- Teaching status: **not ready**; no lesson or assessment is claimed as authored
+- Teaching status: **not ready**; a separate draft teaching pilot is linked below
 - Intended audience: Grade 4 (skills must be checked)
 - Primary study: Logic and dialectic
 - Session length, frequency, dates and access: **not selected**
@@ -27,6 +27,10 @@ The ordering and difficulty are proposals, not grade-based prerequisite claims. 
 **Candidate task:** Revise an overly broad rule.
 
 **Assessment gap:** Specify actual tasks, administration conditions, supports, teacher key or model responses, and threshold criteria. Proposed dimensions: accurate representation and naming; justified reason or counterexample; and an explanation another learner could check. These are **not** assessment results.
+
+## Authored pilot (unregistered, not ready)
+
+The [exceptions, missing facts and rule repair pilot](../../reasoning/grade-4-exceptions-pilot/README.md) provides original fictional rules, four entry/recheck pairs, four draft teaching episodes, eight guided tasks and ten exposed reference tasks with separate keys. It advances the first three investigations without assuming Grade 3 mastery. No canonical IDs or adoption; scope, assessment freshness, accessibility, time and owner approval remain unresolved.
 
 ## Trivium in this subject
 

@@ -58,3 +58,7 @@ The [Grade 4 original perspectives and audience-revision pilot](language/grade-4
 ## Grade 4 natural science — water-pathway evidence pilot (unregistered)
 
 The [Grade 4 original water-collector ledger pilot](natural-science/grade-4-water-pathways-pilot/README.md) supplies four draft Trivium episodes, independent prerequisite/rechecks, eight guided questions and ten **exposed** transfer reference tasks with complete separate keys. Data are **invented**, not measurements or evidence of causal mechanisms. The [Grade 4 natural-science planning scaffold](scaffolds/grade-4/natural-science.md) remains **not ready**. No new canonical identifiers, scientific source approval, learner results, adopted time or secure assessment are implied; [Islamic studies](scaffolds/islamic-studies-guide.md) remains under qualified source, Qur'an/translation, hadith and fiqh review across K–12.
+
+## Grade 4 reasoning — exceptions and rule repair (unregistered)
+
+The [original Grade 4 exceptions and missing-facts pilot](reasoning/grade-4-exceptions-pilot/README.md) authors four Trivium episodes, concrete prerequisite rechecks, guided tasks and exposed reference tasks with separate keys. The [planning scaffold](scaffolds/grade-4/reasoning.md) remains **not ready**. No canonical IDs, teaching approval or learner outcomes are implied.
