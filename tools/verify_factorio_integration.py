@@ -26,9 +26,10 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 LOCK_PATH = Path(__file__).with_name("factorio_integration.lock.json")
 FACTORIO_ARCHIVE_SHA256 = "c4efc11529f74d37c96933e291e0db73fd9f5aa4738913d9301b24680b3e947f"
 REQUIRED_CHECKS = (
+    "runtime", "tooling_tests", "source_unchanged",
     "real_engine_smelting", "real_engine_ratio", "ratio_reload_active",
-    "ratio_reload_complete", "gui_handler_model", "content_binding",
-    "deterministic_package", "runtime",
+    "ratio_reload_complete", "actual_receipt_files",
+    "gui_handler_model", "content_binding", "deterministic_package",
 )
 SUPPLY_SOURCE_PATHS = frozenset({
     "mods/learning-lab/supply_order.lua",
@@ -239,6 +240,12 @@ def validate_producer(output, checkout, lock, identity, *, allow_local_source=Fa
     # manually supplied four-field JSON or from catalog registration alone.
     # The immutable lock still governs the original two-receipt baseline.
     candidate = artifacts["receipts"].get("supply_unregistered")
+    # Once a pinned producer includes the Factory Supply Order implementation
+    # and its reload tests, omission of the supply receipt is not optional.
+    # Otherwise a green baseline receipt pair could conceal a failed/omitted
+    # supply export. Local development fixtures remain explicitly unverified.
+    if not allow_local_source and SUPPLY_SOURCE_PATHS <= set(lock["source_hashes"]):
+        require(candidate is not None, "pinned supply producer receipt is missing")
     if candidate is not None:
         # A legacy producer with only baseline sources cannot self-declare
         # supply acceptance by appending a four-field receipt and green gates.

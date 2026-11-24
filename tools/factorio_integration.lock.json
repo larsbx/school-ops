@@ -1,14 +1,14 @@
 {
   "schema": "schoolops.factorio.integration-lock.v1",
   "repository": "larsbx/factorio-mods",
-  "revision": "3c5459c36b551009a34596405787d5c094fba7ac",
+  "revision": "15a671b51615e665e34e42b2ae9aa3e8e33ee058",
   "source_status": "pinned",
   "factorio_version": "2.0.77",
   "factorio_archive_sha256": "c4efc11529f74d37c96933e291e0db73fd9f5aa4738913d9301b24680b3e947f",
   "mod_version": "0.3.0",
   "producer_schema": "schoolops.factorio.acceptance.v1",
   "source_hashes": {
-    ".github/workflows/learning-lab.yml": "44381dc236e9fc627c887b26413839b31e2fce8c57ad1bdd72fa398aa62d794d",
+    ".github/workflows/learning-lab.yml": "1f87bba73d34e04c074aeb39da47e306ce356e93cb30a88dab9ac7d6b083f806",
     ".gitignore": "60d7f603995b06add04d80d91fd29e438428213e0f727057e378ac5892163c01",
     "docs/learning-lab-automation.md": "45b69f6da3c6c574a380d57a222da548f3818af7a4d941818376a6dbb8e9e135",
     "mod.py": "4cb8a44b5c23f34b0ef5d259341b4441d5e13ce7c7ad3355848591ef2cb0c29f",
@@ -25,12 +25,12 @@
     "mods/learning-lab/ui.lua": "8eb0d8f29fcdd02ce530b3df02215c5db3d5e927c427105172278557f9f7d369",
     "tests/learning_lab_reload.py": "e9ea726460b66648276fbb857dab300fc2013c06995245086ef5654737ee3160",
     "tests/learning-lab-ui.lua": "6c8d1b03c8bcac0f24db55d6ae2867467c7fcdd753764dd088be032ec254be7b",
-    "tests/learning-lab.lua": "2588d9182a81a0dfe254f455b776e74a3afa6385cf6f292c58ddb6b81e040881",
+    "tests/learning-lab.lua": "733269e047be9ccb8e8f13aec1ee2bf5d5d03efedb16371819ff1d7b887fea50",
     "tests/ratio_reload.lua": "afdb37cd0d66e1ac70e4a813c6cd99f86cff6a0b87faaf494c31726569ac0998",
     "tests/ratio-loading-bay-test.lua": "ef345416da63af4d98cefed5d15f6f8bcddbeec9a72fa6ac08256670c9e136e5",
     "tests/supply_reload.lua": "046c5869ba8852ba7d01583f8099552119e64acfdaaf559db6b1d86474db807b",
     "tests/test_learning_lab_tooling.py": "39babea951bd00f3edec2abac41a8eb461da43f6363f4d5c751c47494a2dc56d",
     "tools/factorio_runtime.py": "4da1ba36a97d83674f76205611f8b0a59ad2d18b8ab9d6d1228c3be0d8ca1c25",
-    "tools/verify_learning_lab.py": "39fb6840e92c7e5a76e1c235cef327d016ff35d684ad05337f8ecdfb1398ced8"
+    "tools/verify_learning_lab.py": "55af0edd5c317c569dfe447bff021a09508a64eeeafd87e7a31ebd475138b38d"
   }
 }
