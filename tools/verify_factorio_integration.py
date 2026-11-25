@@ -254,7 +254,8 @@ def validate_producer(output, checkout, lock, identity, *, allow_local_source=Fa
         for name in ("real_engine_supply", "supply_reload_active",
                      "supply_reload_complete", "supply_reissue_guard",
                      "supply_blocked_preflight", "supply_station_identity", "supply_station_reload",
-                     "supply_reload_content_binding", "actual_supply_receipt"):
+                     "supply_reload_content_binding", "supply_checkpoint_revalidation",
+                     "actual_supply_receipt"):
             gate = checks.get(name)
             require(type(gate) is dict and gate.get("status") == "passed"
                     and type(gate.get("evidence")) is str and bool(gate["evidence"]),
