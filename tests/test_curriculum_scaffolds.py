@@ -600,6 +600,17 @@ class Grade4DaylightDraftTests(unittest.TestCase):
                  ("05:20", "20:40", 920), ("07:10", "17:50", 640),
                  ("07:25", "17:05", 580), ("05:50", "19:10", 800),
                  ("06:10", "19:50", 820))
+        packets = ((self.PILOT / "records.md", "Alder", 4),
+                   (self.PILOT / "draft-assessments/reference-learner.md", "Cedar", 3))
+        actual = []
+        for path, site, count in packets:
+            rows = re.findall(r"^\| " + site + r" \| [^|]+ \| ([^|]+) \| ([^|]+) \|$",
+                              path.read_text(encoding="utf-8"), re.MULTILINE)
+            complete = [(a.strip(), b.strip()) for a, b in rows if "—" not in (a + b)]
+            self.assertEqual(count, len(complete))
+            self.assertEqual(count + 1, len(rows))
+            actual.extend(complete)
+        self.assertEqual([(start, end) for start, end, _ in cases], actual)
         for start, end, expected in cases:
             self.assertEqual(expected, minutes(end) - minutes(start))
         guided = (self.PILOT / "guided-teacher.md").read_text(encoding="utf-8")

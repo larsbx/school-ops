@@ -16,6 +16,8 @@ All times use one fixed hypothetical clock. No real observations or location.
 
 Use a horizon strip with 15 degrees per cell, north at 0 and 360, east 90, south 180 and west 270; bearings increase clockwise.
 
+The following separate fictional direction samples are from one hypothetical date at Cedar, not necessarily one of the dates above.
+
 | Time | Bearing (degrees) |
 | --- | --- |
 | 09:00 | 120 |
@@ -28,7 +30,7 @@ Use a horizon strip with 15 degrees per cell, north at 0 and 360, east 90, south
 
 **S2.** Calculate Cedar May duration in total minutes; explain how a clock reading differs from a duration.
 
-**S3.** Calculate the three complete Cedar durations in minutes. Give their lengths on a common scale of 100 minutes per cell (or a labeled table); identify the largest of these samples.
+**S3.** Calculate the three complete Cedar durations in minutes. Give their lengths on a common scale of 100 minutes per cell (or a labeled table); mark November unknown and identify the largest of the complete samples.
 
 **S4.** How many minutes longer is August than February at Cedar? State what dates and site you compared.
 
