@@ -2,7 +2,7 @@
 
 - Record kind: **planning scaffold**, not a course, unit, lesson or assessment
 - Course ID and outcome IDs: **unassigned**; do not reserve before scope approval
-- Teaching status: **not ready**; no lesson or assessment is claimed as authored
+- Teaching status: **not ready**; investigation 3 has an unregistered draft rehearsal pilot; no approved lesson or assessment
 - Intended audience: Grade 4 (starting knowledge and languages must be checked)
 - Primary study: Islamic studies (Qur'an, belief, character, worship and fiqh, sīrah, hadith, and Islamic history)
 - Session length, frequency, dates, materials and access: **not selected**
@@ -13,13 +13,13 @@
 
 Ask the learner to distinguish what happened in a sourced account from the value inferred from it.
 
-## Proposed sequence (not authored units)
+## Proposed sequence (not registered units)
 
 | Order | Investigation | Observable demonstration to develop |
 | --- | --- | --- |
 | 1 | Beliefs and meanings of selected Divine names | Define selected terms, identify actual source types, and explain a relevant claim or reason using reviewed evidence. |
 | 2 | Ramadan, fasting, generosity and respect for health needs | Compare two community plans using stated constraints and explain the recommendation. See the investigation scaffold below. |
-| 3 | Sīrah: community life, agreements and responsibilities | Define selected terms, identify actual source types, and explain a relevant claim or reason using reviewed evidence. |
+| 3 | Sīrah: community life, agreements and responsibilities | [Draft agreement-evidence pilot](../../islamic-studies/grade-4-agreement-evidence-pilot/README.md): compare accepted wording, conditions, reported details and bounded explanations. Actual religious reading remains review-gated. |
 
 These investigations are planning hypotheses, not assertions about learner prerequisites or religious practice. Select and review actual source passages, translations, hadith reports and scholarly interpretations before teaching.
 

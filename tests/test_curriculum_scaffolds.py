@@ -584,3 +584,48 @@ class Grade4WaterPathwayDraftTests(unittest.TestCase):
                         continue
                     target = (file.parent / raw.split("#", 1)[0]).resolve()
                     self.assertTrue(target.is_file(), f"broken pilot link: {file} -> {raw}")
+
+
+class Grade4IslamicAgreementEvidenceTests(unittest.TestCase):
+    def test_agreement_pilot_labels_and_custody(self):
+        root = ROOT / "curriculum" / "islamic-studies" / "grade-4-agreement-evidence-pilot"
+        learner = (root / "learner.md").read_text(encoding="utf-8")
+        key = (root / "teacher-key.md").read_text(encoding="utf-8")
+        expected = {f"{prefix}{i}" for prefix, count in
+                    (("E", 4), ("R", 4), ("G", 8), ("X", 4), ("S", 8))
+                    for i in range(1, count + 1)}
+        for body in (learner, key):
+            labels = re.findall(r"^\*\*([ERGXS]\d+)\.", body, re.M)
+            self.assertEqual(expected, set(labels))
+            self.assertEqual(len(expected), len(labels))
+        self.assertNotIn("teacher-key.md", learner)
+        self.assertNotIn("sunnah.com", learner)
+        self.assertIn("invented classroom examples", learner)
+        for file in root.glob("*.md"):
+            body = file.read_text(encoding="utf-8")
+            self.assertNotRegex(body, r"(?:C|U|L|O|A)-[A-Z]+-\d{3}")
+            for dest in re.findall(r"\]\(([^)]+)\)", body):
+                if not dest.startswith(("http:", "https:", "#")):
+                    self.assertTrue((file.parent / dest.split("#")[0]).resolve().is_file(), dest)
+        ledger = (root / "source-review.md").read_text(encoding="utf-8")
+        for token in ("2731 and 2732", "Qualified review pending", "not admitted",
+                      "Translation/translator/edition", "No external wording"):
+            self.assertIn(token, ledger)
+        self.assertIn("grade-4-agreement-evidence-pilot/README.md",
+                      (BASE / "grade-4" / "islamic-studies.md").read_text(encoding="utf-8"))
+
+    def test_agreement_conditions_and_episode_budgets(self):
+        root = ROOT / "curriculum" / "islamic-studies" / "grade-4-agreement-evidence-pilot"
+        learner = (root / "learner.md").read_text(encoding="utf-8")
+        rows = re.findall(r"^\| (K[123]) \| (yes|no|unknown) \| \? \|$", learner, re.M)
+        self.assertEqual([("K1", "yes"), ("K2", "no"), ("K3", "unknown")], rows)
+        key = (root / "teacher-key.md").read_text(encoding="utf-8")
+        self.assertIn("K1 yes; K2 no", key)
+        self.assertIn("Not established; check return log", key)
+        teaching = (root / "teaching.md").read_text(encoding="utf-8")
+        episodes = teaching.split("## Episode ")[1:]
+        self.assertEqual(4, len(episodes))
+        for episode in episodes:
+            self.assertEqual(25, sum(map(int, re.findall(r"\| (\d+) \|$", episode, re.M))))
+            for art in ("Grammar:", "Logic:", "Rhetoric:"):
+                self.assertIn(art, episode)
