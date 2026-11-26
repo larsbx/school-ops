@@ -19,11 +19,11 @@ If E1 misses, sort a fresh action and invented motive together, then R1 independ
 
 **G1.** A proposes Friday; B accepts Thursday for Cedar; B controls.
 **G2.** Cedar only until Thursday per B; Friday conditional for Willow.
-**G3.** K1 yes; K2 no; condition is key returned. Permission does not establish action.
+**G3.** K1 yes; K2 no; condition is key returned before Friday opening. Permission does not establish action.
 **G4.** Not established; check return log or adequate other evidence. Unknown is neither yes nor no.
 **G5.** Both report Willow collecting; D did not witness return.
 **G6.** Neither establishes motive; F is unsupported opinion.
-**G7.** B permits Willow Friday if key returned; C records return and collection. Cedar's reason remains unknown. Require both locators.
+**G7.** B permits Willow Friday if key returned before opening; C records return and collection. Cedar's reason remains unknown. Require both locators.
 **G8.** A is fictional, not hadith; real report needs traceable collection/report and edition, qualified attribution and text/translation review. Label alone is not authentication.
 
 ## Exits
