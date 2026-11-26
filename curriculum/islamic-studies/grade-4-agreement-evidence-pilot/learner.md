@@ -27,7 +27,7 @@ The Cedar and Willow clubs share a reading room.
 | Card | Kind | Record |
 | --- | --- | --- |
 | A | Proposal, Monday | Cedar suggests keeping the blue cupboard until Friday. |
-| B | Accepted agreement, Tuesday | Both clubs agree Cedar may use the cupboard until Thursday. Willow may use it Friday if the key has returned to the desk. |
+| B | Accepted agreement, Tuesday | Both clubs agree Cedar may use the cupboard until Thursday. Willow may use it Friday if the key was returned to the desk before Friday opening. |
 | C | Desk log, Friday | The key was returned before opening. Willow collected it. |
 | D | Later recollection | A helper saw Willow collect the key; the helper did not see the return. |
 | F | Opinion | A pupil says Cedar changed the wording because it disliked Willow. |
