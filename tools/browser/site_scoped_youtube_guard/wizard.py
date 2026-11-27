@@ -876,7 +876,15 @@ def _package_self_test(report_path):
         _root, published = load_bundle(bundle)
         published.update(extension_id="abcdefghijklmnopabcdefghijklmnop", publication_confirmed=True)
         final = export_bundle(published, Path(temp) / "published")
-        verify_policy_bundle(final)
+        policy = verify_policy_bundle(final)
+        # Independently exercise the packaged read-only classifier on known
+        # fixture bytes. No actual Chrome managed directory is read or changed.
+        from device_check import classify_linux, OWN_LINUX_NAME
+        expected_local = json.loads(policy)
+        if classify_linux({OWN_LINUX_NAME: policy}, expected_local) != "matching":
+            raise RuntimeError("Packaged local policy classifier rejected its own reviewed policy")
+        if classify_linux({}, expected_local) != "missing":
+            raise RuntimeError("Packaged local policy classifier accepted an absent policy")
         if (bundle / "extension.zip").read_bytes() != (final / "extension.zip").read_bytes():
             raise RuntimeError("Publication changed the prepared extension ZIP")
     report = {
