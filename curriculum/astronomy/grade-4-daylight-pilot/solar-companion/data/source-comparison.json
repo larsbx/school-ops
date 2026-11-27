@@ -1,0 +1,38 @@
+{
+  "scope": "Four Greenwich event labels only; no second-provider Sydney or bearing data",
+  "capture_kind": "Manual transcription of a selected factual table row from successful search_service open normalized source text. This is not an HTTP response capture.",
+  "source_url": "https://aa.usno.navy.mil/calculated/rstt/year?ID=AA&label=Greenwich&lat=51.4769&lon=0.0000&task=0&tz=0&tz_sign=1&year=2026",
+  "time_scale_caveat": "Universal Time as labeled by table; USNO API documentation defines timezone offsets relative to UT1. Do not relabel these source values UTC to sub-minute precision.",
+  "tolerance_minutes": 1,
+  "observational_validation": false,
+  "checks": [
+    {
+      "date": "2026-06-21",
+      "event": "sunrise",
+      "jpl_derived_fixed_utc_time": "03:43",
+      "usno_published_UT_time": "03:43",
+      "displayed_minute_difference": 0
+    },
+    {
+      "date": "2026-06-21",
+      "event": "sunset",
+      "jpl_derived_fixed_utc_time": "20:21",
+      "usno_published_UT_time": "20:21",
+      "displayed_minute_difference": 0
+    },
+    {
+      "date": "2026-12-21",
+      "event": "sunrise",
+      "jpl_derived_fixed_utc_time": "08:03",
+      "usno_published_UT_time": "08:03",
+      "displayed_minute_difference": 0
+    },
+    {
+      "date": "2026-12-21",
+      "event": "sunset",
+      "jpl_derived_fixed_utc_time": "15:53",
+      "usno_published_UT_time": "15:53",
+      "displayed_minute_difference": 0
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "C1": {
+    "kind": "calculated_prediction",
+    "observation": false
+  },
+  "C2": {
+    "minutes": 998,
+    "hours_minutes": [
+      16,
+      38
+    ]
+  },
+  "C3": {
+    "minutes": 470,
+    "june_minus_december_minutes": 528
+  },
+  "C4": {
+    "june_minutes": 594,
+    "december_minutes": 864,
+    "december_minus_june_minutes": 270
+  },
+  "C5": {
+    "greenwich-2026-06-21": 998,
+    "greenwich-2026-12-21": 470,
+    "sydney-2026-06-21": 594,
+    "sydney-2026-12-21": 864
+  },
+  "C6": {
+    "duration_from_M1_only": null,
+    "reason": "author_withheld_sunset"
+  },
+  "C7": {
+    "rounded_bearings": [
+      105,
+      210
+    ],
+    "strip_cells": [
+      7,
+      14
+    ]
+  },
+  "C8": {
+    "paper_marker_clockwise_degrees": 45,
+    "cells": 3,
+    "kind": "synthetic_control"
+  },
+  "C9": {
+    "missing_time": "11:00",
+    "direction_from_presented_samples": null
+  },
+  "C10": {
+    "clockwise_changes_degrees": [
+      45,
+      60
+    ],
+    "equal_time_gap_minutes": 120,
+    "equal_changes": false
+  },
+  "C11": {
+    "statement_classifications": [
+      "calculated_source_result",
+      "packet_representation_choice",
+      "unsupported",
+      "unsupported",
+      "model_assumption"
+    ],
+    "ephemeris_source_result": "calculated",
+    "level_horizon": "model_assumption",
+    "eyewitness_observation": "not_provided"
+  },
+  "C12": {
+    "required": [
+      "site",
+      "date",
+      "fixed_clock",
+      "two_shown_time_bearing_pairs",
+      "rounded_values",
+      "calculated_not_observed",
+      "missing_value_limit",
+      "complete_path_not_established",
+      "no_causal_claim_from_samples"
+    ]
+  }
+}
