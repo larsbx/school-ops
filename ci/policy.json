@@ -15,7 +15,9 @@
         "planning/**",
         "tests/test_curriculum_scaffolds.py",
         "tests/test_grade3_reasoning.py",
-        "tests/test_grade4_language_pilot.py"
+        "tests/test_grade4_language_pilot.py",
+        "tools/solar_ephemeris.py",
+        "tests/test_solar_ephemeris.py"
       ],
       "depends_on": []
     },
@@ -248,6 +250,13 @@
       ],
       "directory": "tests",
       "pattern": "test_grade4_language_pilot.py"
+    },
+    "solar-ephemeris": {
+      "components": [
+        "curriculum"
+      ],
+      "directory": "tests",
+      "pattern": "test_solar_ephemeris.py"
     }
   }
 }

@@ -2,7 +2,7 @@
 
 - Record kind: **planning scaffold**, not a course, unit, lesson or assessment
 - Course ID and outcome IDs: **unassigned**; do not reserve before scope approval
-- Teaching status: **not ready**; no lesson or assessment is claimed as authored
+- Teaching status: **not ready**; unregistered draft pilot authored; no approved course or assessment
 - Intended audience: Grade 4 (skills must be checked)
 - Primary study: Astronomy
 - Session length, frequency, dates and access: **not selected**
@@ -10,7 +10,7 @@
 
 ## Proposed entry evidence
 
-Ask the learner to demonstrate **graph observations over weeks** from a prior planning bin, using an example and explanation. Do not assume it was taught.
+Use the [daylight pilot](../../astronomy/grade-4-daylight-pilot/README.md) with independent elapsed-time, labeled comparisons, scale and missing-record checks. Do not assume earlier graph work was taught.
 
 ## Proposed sequence (not authored units)
 
@@ -20,13 +20,13 @@ Ask the learner to demonstrate **graph observations over weeks** from a prior pl
 | 2 | Draw sky directions to scale | Show an example and representation, test a claim, and explain the reasoning with appropriate terms. |
 | 3 | Investigate apparent sky motion | Show an example and representation, test a claim, and explain the reasoning with appropriate terms. |
 
-The ordering and difficulty are proposals, not grade-based prerequisite claims. Real outcomes, prerequisite dependencies, tasks and success criteria must be authored after checking entry work.
+The linked draft authors D1–D4 with four episodes, guided work and separate reference keys. Other course scopes, teaching time, real observations and approval remain open.
 
 ## Proposed culminating performance
 
 **Candidate task:** Support a daylight-change claim with dated observations.
 
-**Assessment gap:** Specify actual tasks, administration conditions, supports, teacher key or model responses, and threshold criteria. Proposed dimensions: accurate representation and naming; justified reason or counterexample; and an explanation another learner could check. These are **not** assessment results.
+**Draft evidence:** The pilot contains ten exposed keyed tasks with administration and candidate criteria; a fresh independent form and human review remain necessary. Proposed dimensions: accurate representation and naming; justified reason or counterexample; and an explanation another learner could check. These are **not** assessment results.
 
 ## Trivium in this subject
 

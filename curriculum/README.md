@@ -59,6 +59,10 @@ The [Grade 4 original perspectives and audience-revision pilot](language/grade-4
 
 The [Grade 4 original water-collector ledger pilot](natural-science/grade-4-water-pathways-pilot/README.md) supplies four draft Trivium episodes, independent prerequisite/rechecks, eight guided questions and ten **exposed** transfer reference tasks with complete separate keys. Data are **invented**, not measurements or evidence of causal mechanisms. The [Grade 4 natural-science planning scaffold](scaffolds/grade-4/natural-science.md) remains **not ready**. No new canonical identifiers, scientific source approval, learner results, adopted time or secure assessment are implied; [Islamic studies](scaffolds/islamic-studies-guide.md) remains under qualified source, Qur'an/translation, hadith and fiqh review across K–12.
 
+## Grade 4 astronomy — daylight intervals and directions (unregistered)
+
+The [Grade 4 original daylight evidence pilot](astronomy/grade-4-daylight-pilot/README.md) adds four draft Trivium episodes, concrete prerequisite checks, eight guided and ten exposed reference tasks with separate keys. All sky records are fictional; the [Grade 4 scaffold](scaffolds/grade-4/astronomy.md) remains not ready. No canonical IDs, approved assessment, learner evidence or new course registration. Islamic studies remains subject to qualified religious-source, translation, hadith and fiqh review.
+
 ## Grade 4 Islamic studies agreement evidence pilot (unregistered)
 
 The [draft agreements and reported-actions pilot](islamic-studies/grade-4-agreement-evidence-pilot/README.md) authors four Trivium episodes, fictional evidence packets, separate keys and exposed reference tasks for investigation 3. Actual religious reading remains blocked pending qualified hadith, sīrah, translation and fiqh review. No course registration or teaching readiness follows.

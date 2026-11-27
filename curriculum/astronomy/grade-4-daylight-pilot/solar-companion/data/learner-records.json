@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "status": "draft-review-only",
+  "daylight": [
+    {
+      "id": "greenwich-2026-06-21",
+      "site_id": "greenwich",
+      "local_date": "2026-06-21",
+      "fixed_utc_offset_minutes": 0,
+      "sunrise": "03:43",
+      "sunset": "20:21"
+    },
+    {
+      "id": "greenwich-2026-12-21",
+      "site_id": "greenwich",
+      "local_date": "2026-12-21",
+      "fixed_utc_offset_minutes": 0,
+      "sunrise": "08:03",
+      "sunset": "15:53"
+    },
+    {
+      "id": "sydney-2026-06-21",
+      "site_id": "sydney",
+      "local_date": "2026-06-21",
+      "fixed_utc_offset_minutes": 600,
+      "sunrise": "07:00",
+      "sunset": "16:54"
+    },
+    {
+      "id": "sydney-2026-12-21",
+      "site_id": "sydney",
+      "local_date": "2026-12-21",
+      "fixed_utc_offset_minutes": 600,
+      "sunrise": "04:41",
+      "sunset": "19:05"
+    }
+  ],
+  "bearings": [
+    {
+      "id": "greenwich-2026-06-21",
+      "samples": [
+        {
+          "utc": "2026-06-21T09:00:00+00:00",
+          "fixed_local": "2026-06-21T09:00:00+00:00",
+          "source_azimuth_deg": "111.371720",
+          "source_elevation_deg": "45.403494",
+          "bearing_15_deg": 105,
+          "strip_cell": 7,
+          "status": "calculated"
+        },
+        {
+          "utc": "2026-06-21T11:00:00+00:00",
+          "fixed_local": "2026-06-21T11:00:00+00:00",
+          "source_azimuth_deg": "151.171667",
+          "source_elevation_deg": "59.537582",
+          "bearing_15_deg": 150,
+          "strip_cell": 10,
+          "status": "calculated"
+        },
+        {
+          "utc": "2026-06-21T13:00:00+00:00",
+          "fixed_local": "2026-06-21T13:00:00+00:00",
+          "source_azimuth_deg": "207.264056",
+          "source_elevation_deg": "59.803540",
+          "bearing_15_deg": 210,
+          "strip_cell": 14,
+          "status": "calculated"
+        },
+        {
+          "utc": "2026-06-21T15:00:00+00:00",
+          "fixed_local": "2026-06-21T15:00:00+00:00",
+          "source_azimuth_deg": "247.702028",
+          "source_elevation_deg": "45.928485",
+          "bearing_15_deg": 255,
+          "strip_cell": 17,
+          "status": "calculated"
+        }
+      ]
+    },
+    {
+      "id": "greenwich-2026-12-21",
+      "samples": [
+        {
+          "utc": "2026-12-21T09:00:00+00:00",
+          "fixed_local": "2026-12-21T09:00:00+00:00",
+          "source_azimuth_deg": "139.751240",
+          "source_elevation_deg": "5.529995",
+          "bearing_15_deg": 135,
+          "strip_cell": 9,
+          "status": "calculated"
+        },
+        {
+          "utc": "2026-12-21T11:00:00+00:00",
+          "fixed_local": "2026-12-21T11:00:00+00:00",
+          "source_azimuth_deg": null,
+          "source_elevation_deg": null,
+          "bearing_15_deg": null,
+          "strip_cell": null,
+          "status": "author_withheld_for_practice"
+        },
+        {
+          "utc": "2026-12-21T13:00:00+00:00",
+          "fixed_local": "2026-12-21T13:00:00+00:00",
+          "source_azimuth_deg": "194.607631",
+          "source_elevation_deg": "13.857271",
+          "bearing_15_deg": 195,
+          "strip_cell": 13,
+          "status": "calculated"
+        },
+        {
+          "utc": "2026-12-21T15:00:00+00:00",
+          "fixed_local": "2026-12-21T15:00:00+00:00",
+          "source_azimuth_deg": "221.047584",
+          "source_elevation_deg": "5.137025",
+          "bearing_15_deg": 225,
+          "strip_cell": 15,
+          "status": "calculated"
+        }
+      ]
+    },
+    {
+      "id": "sydney-2026-06-21",
+      "samples": [
+        {
+          "utc": "2026-06-20T23:00:00+00:00",
+          "fixed_local": "2026-06-21T09:00:00+10:00",
+          "source_azimuth_deg": "42.563605",
+          "source_elevation_deg": "18.930570",
+          "bearing_15_deg": 45,
+          "strip_cell": 3,
+          "status": "calculated"
+        },
+        {
+          "utc": "2026-06-21T01:00:00+00:00",
+          "fixed_local": "2026-06-21T11:00:00+10:00",
+          "source_azimuth_deg": "15.264261",
+          "source_elevation_deg": "31.124719",
+          "bearing_15_deg": 15,
+          "strip_cell": 1,
+          "status": "calculated"
+        },
+        {
+          "utc": "2026-06-21T03:00:00+00:00",
+          "fixed_local": "2026-06-21T13:00:00+10:00",
+          "source_azimuth_deg": "343.123321",
+          "source_elevation_deg": "30.766641",
+          "bearing_15_deg": 345,
+          "strip_cell": 23,
+          "status": "calculated"
+        },
+        {
+          "utc": "2026-06-21T05:00:00+00:00",
+          "fixed_local": "2026-06-21T15:00:00+10:00",
+          "source_azimuth_deg": "316.253770",
+          "source_elevation_deg": "18.045841",
+          "bearing_15_deg": 315,
+          "strip_cell": 21,
+          "status": "calculated"
+        }
+      ]
+    },
+    {
+      "id": "sydney-2026-12-21",
+      "samples": [
+        {
+          "utc": "2026-12-20T23:00:00+00:00",
+          "fixed_local": "2026-12-21T09:00:00+10:00",
+          "source_azimuth_deg": "86.161982",
+          "source_elevation_deg": "50.951352",
+          "bearing_15_deg": 90,
+          "strip_cell": 6,
+          "status": "calculated"
+        },
+        {
+          "utc": "2026-12-21T01:00:00+00:00",
+          "fixed_local": "2026-12-21T11:00:00+10:00",
+          "source_azimuth_deg": "51.488440",
+          "source_elevation_deg": "74.409360",
+          "bearing_15_deg": 45,
+          "strip_cell": 3,
+          "status": "calculated"
+        },
+        {
+          "utc": "2026-12-21T03:00:00+00:00",
+          "fixed_local": "2026-12-21T13:00:00+10:00",
+          "source_azimuth_deg": "301.078467",
+          "source_elevation_deg": "72.027011",
+          "bearing_15_deg": 300,
+          "strip_cell": 20,
+          "status": "calculated"
+        },
+        {
+          "utc": "2026-12-21T05:00:00+00:00",
+          "fixed_local": "2026-12-21T15:00:00+10:00",
+          "source_azimuth_deg": "271.726203",
+          "source_elevation_deg": "48.057466",
+          "bearing_15_deg": 270,
+          "strip_cell": 18,
+          "status": "calculated"
+        }
+      ]
+    }
+  ],
+  "missing_event_control": {
+    "id": "M1",
+    "site_id": "greenwich",
+    "local_date": "2026-12-21",
+    "fixed_utc_offset_minutes": 0,
+    "sunrise": "08:03",
+    "sunset": null,
+    "sunset_status": "author_withheld_for_practice",
+    "scope": "Use only this deliberately incomplete copy for C6; the full source record is available separately."
+  }
+}

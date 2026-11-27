@@ -30,7 +30,7 @@ class ImpactPlanningTests(unittest.TestCase):
 
     def test_curriculum_change_includes_dependents_transitively(self):
         decision = plan(POLICY, ["curriculum/scaffolds/islamic_studies.md"])
-        self.assertEqual(decision["suites"], ["bank", "curriculum", "factorio-practice", "islamic-prototype", "language-grade4", "reasoning-grade3", "teaching", "unit2-sessions", "unit3-authored", "unit3-sessions", "water-pathways"])
+        self.assertEqual(decision["suites"], ["bank", "curriculum", "factorio-practice", "islamic-prototype", "language-grade4", "reasoning-grade3", "solar-ephemeris", "teaching", "unit2-sessions", "unit3-authored", "unit3-sessions", "water-pathways"])
 
     def test_grade4_language_changes_select_pilot_suite(self):
         for path in (

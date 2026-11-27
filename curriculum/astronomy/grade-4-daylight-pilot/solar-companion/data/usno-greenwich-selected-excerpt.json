@@ -1,0 +1,18 @@
+{
+  "provider": "U.S. Naval Observatory, Astronomical Applications Department",
+  "url": "https://aa.usno.navy.mil/calculated/rstt/year?ID=AA&label=Greenwich&lat=51.4769&lon=0.0000&task=0&tz=0&tz_sign=1&year=2026",
+  "retrieved_date_utc": "2026-11-26",
+  "capture_method": "Manual transcription of a selected factual table row from successful search_service open normalized source text. This is not an HTTP response capture.",
+  "retrieval_reference": "turn962302502view0",
+  "source_header": "Location: 000 00, N51 29; GREENWICH; Rise and Set for the Sun for 2026; Universal Time",
+  "source_month_columns": ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
+  "source_row_21": "21  0753 1630  0702 1726  0601 1815  0452 1907  0400 1954  0343 2021  0408 2004  0455 1910  0544 1801  0634 1654  0728 1603  0803 1553",
+  "selected_records": [
+    {"date":"2026-06-21", "sunrise":"03:43", "sunset":"20:21", "duration_from_displayed_minutes":998},
+    {"date":"2026-12-21", "sunrise":"08:03", "sunset":"15:53", "duration_from_displayed_minutes":470}
+  ],
+  "time_scale": "Universal Time as labeled by table; USNO API documentation defines timezone offsets relative to UT1. Do not relabel these source values UTC to sub-minute precision.",
+  "coordinate_caveat": "Request latitude 51.4769, longitude 0.0000. Source header renders coordinates to whole arcminutes (N51 29, 000 00). Source internal rounding has not been independently inspected.",
+  "access_caveat": "This normalized source retrieval succeeded once. Later direct and repeated requests failed or timed out; live reproducibility was not established in this session.",
+  "evidence_kind": "calculated prediction, not observation"
+}

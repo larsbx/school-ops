@@ -1,0 +1,46 @@
+{
+  "provider": "NASA/JPL Horizons",
+  "site_id": "sydney",
+  "latitude_deg": -33.86,
+  "longitude_deg_east": 151.21,
+  "ellipsoid_height_km": 0,
+  "height_note": "Idealized WGS84/ITRF93 ellipsoid-height zero; not actual terrain height",
+  "packet_fixed_utc_offset_hours": 10.0,
+  "packet_local_date": "2026-12-21",
+  "request_url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40399%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27151.21%2C-33.86%2C0%27&START_TIME=%272026-12-20+14%3A00%27&STOP_TIME=%272026-12-21+14%3A00%27&STEP_SIZE=%271+m%27&QUANTITIES=%274%27&CSV_FORMAT=%27YES%27&APPARENT=%27AIRLESS%27&CAL_TYPE=%27GREGORIAN%27&ELEV_CUT=%27-90%27&SKIP_DAYLT=%27NO%27&TIME_DIGITS=%27SECONDS%27",
+  "parameters": {
+    "format": "json",
+    "COMMAND": "'10'",
+    "EPHEM_TYPE": "'OBSERVER'",
+    "CENTER": "'coord@399'",
+    "COORD_TYPE": "'GEODETIC'",
+    "SITE_COORD": "'151.21,-33.86,0'",
+    "START_TIME": "'2026-12-20 14:00'",
+    "STOP_TIME": "'2026-12-21 14:00'",
+    "STEP_SIZE": "'1 m'",
+    "QUANTITIES": "'4'",
+    "CSV_FORMAT": "'YES'",
+    "APPARENT": "'AIRLESS'",
+    "CAL_TYPE": "'GREGORIAN'",
+    "ELEV_CUT": "'-90'",
+    "SKIP_DAYLT": "'NO'",
+    "TIME_DIGITS": "'SECONDS'"
+  },
+  "retrieved_at_utc": "2026-11-26T22:40:57.857489+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "server": "envoy",
+    "date": "Thu, 26 Nov 2026 22:41:00 GMT",
+    "content-type": "application/json",
+    "x-envoy-upstream-service-time": "234",
+    "connection": "close",
+    "transfer-encoding": "chunked"
+  },
+  "raw_json": "sydney-2026-12-21-minute.json",
+  "raw_result_text": "sydney-2026-12-21-minute.txt",
+  "sha256": "4fc2caa9bed6df08a0aff24a8cb20d26a856d2a245efa80f6f688c8602c1b76b",
+  "api_signature": {
+    "source": "NASA/JPL Horizons API",
+    "version": "1.2"
+  }
+}
