@@ -25,7 +25,7 @@ EXPECTED = {"ExtensionSettings": {ID: {
 
 
 def published(os_name="linux"):
-    return {
+    cfg = {
         "allowed_embed_sites": ["school.example.org"],
         "mode": "blacklist",
         "allowed_sites": [],
@@ -36,11 +36,9 @@ def published(os_name="linux"):
         "extension_version": "0.1.0",
         "target_os": os_name,
         "publication_confirmed": True,
-        "published_extension_sha256": core.extension_digest(core.validate_settings({
-            "allowed_embed_sites": ["school.example.org"],
-            "mode": "blacklist", "allowed_sites": [], "blocked_sites": [],
-        })),
     }
+    cfg["published_extension_sha256"] = core.extension_digest(core.validate_settings(cfg))
+    return cfg
 
 
 class PureLinuxPolicyClassification(unittest.TestCase):
