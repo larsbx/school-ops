@@ -1,14 +1,14 @@
 {
   "schema": "schoolops.factorio.integration-lock.v1",
   "repository": "larsbx/factorio-mods",
-  "revision": "2e9aa4e39dc79be9a72b85e7e52b40c50e12602e",
+  "revision": "a58a9c0b86aa723c87f69cc49593545af965b8cb",
   "source_status": "pinned",
   "factorio_version": "2.0.77",
   "factorio_archive_sha256": "c4efc11529f74d37c96933e291e0db73fd9f5aa4738913d9301b24680b3e947f",
   "mod_version": "0.3.0",
   "producer_schema": "schoolops.factorio.acceptance.v1",
   "source_hashes": {
-    ".github/workflows/learning-lab.yml": "600131cf474655f1bcf42b8aa37d6e120486f733243831db7451c86956d7d8b3",
+    ".github/workflows/learning-lab.yml": "b699a2620d7df00bbaebf3024256f5025bf85a76facece2afe26581617c76d63",
     ".gitignore": "60d7f603995b06add04d80d91fd29e438428213e0f727057e378ac5892163c01",
     "docs/learning-lab-automation.md": "45b69f6da3c6c574a380d57a222da548f3818af7a4d941818376a6dbb8e9e135",
     "mod.py": "4cb8a44b5c23f34b0ef5d259341b4441d5e13ce7c7ad3355848591ef2cb0c29f",
@@ -21,16 +21,16 @@
     "mods/learning-lab/locale/en/locale.cfg": "3b6b5778367b70c575c547e645c3a43896d56135692d1d75eada2dff35adcfae",
     "mods/learning-lab/progress_binding.lua": "4db9b6ad9e5e9967cc6ef4437e1d8feba7fe1589efd42b2c3c41353eccf6ac1f",
     "mods/learning-lab/ratio_bay.lua": "83db2bb5abe9126a04ce1f58d88fb421a81451cf4e80c242c86d65a46ff87cce",
-    "mods/learning-lab/supply_order.lua": "78d5988575aaab9199ccf4db7b3c71f1dd9b73466546702f3a634094797f3870",
+    "mods/learning-lab/supply_order.lua": "b19d2a2147486f689053afa6ae59f817538becc9381d697212933fe0eb0520aa",
     "mods/learning-lab/ui.lua": "8796e15c1c63c5963b9eba974bd4fac28f2b7ccf6d1cc7dd7117f5a7f8685a95",
-    "tests/learning_lab_reload.py": "55a98e7eeb68722be2b0e55ab00c1a5612974475dd2be23ba55a96857c55527c",
+    "tests/learning_lab_reload.py": "d3e40c4bbe1944e701533c2d4819413234bbe8ad7d7d7ca0bfaa850659e6137f",
     "tests/learning-lab-ui.lua": "e1351c2ca3cfd4f337e97c7f5f45d612960431712aa696d9cfbc8facceab3f05",
     "tests/learning-lab.lua": "733269e047be9ccb8e8f13aec1ee2bf5d5d03efedb16371819ff1d7b887fea50",
     "tests/ratio_reload.lua": "afdb37cd0d66e1ac70e4a813c6cd99f86cff6a0b87faaf494c31726569ac0998",
     "tests/ratio-loading-bay-test.lua": "ef345416da63af4d98cefed5d15f6f8bcddbeec9a72fa6ac08256670c9e136e5",
-    "tests/supply_reload.lua": "7ccc95c069021840fce8340617038b7c128cf680bd31a1872bb826b5ce211a8a",
+    "tests/supply_reload.lua": "5719baa8f5637311e9f077cc144379dea3aedc04a50cb1abdf3ebd064588d196",
     "tests/test_learning_lab_tooling.py": "39babea951bd00f3edec2abac41a8eb461da43f6363f4d5c751c47494a2dc56d",
     "tools/factorio_runtime.py": "4da1ba36a97d83674f76205611f8b0a59ad2d18b8ab9d6d1228c3be0d8ca1c25",
-    "tools/verify_learning_lab.py": "b7915ea9d85fdf43862bc7bd6643704ff85c47f3fd5f4326fd57b33dead0a9b5"
+    "tools/verify_learning_lab.py": "a369a8ced465d5d25e86d9faee67010fac48a36adfd1eda0e052dff72c23bc94"
   }
 }

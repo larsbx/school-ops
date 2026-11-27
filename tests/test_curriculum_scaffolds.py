@@ -584,3 +584,69 @@ class Grade4WaterPathwayDraftTests(unittest.TestCase):
                         continue
                     target = (file.parent / raw.split("#", 1)[0]).resolve()
                     self.assertTrue(target.is_file(), f"broken pilot link: {file} -> {raw}")
+
+
+class Grade4DaylightDraftTests(unittest.TestCase):
+    """Check original arithmetic controls and public answer separation."""
+
+    PILOT = ROOT / "curriculum/astronomy/grade-4-daylight-pilot"
+
+    def test_daylight_duration_and_missing_records(self):
+        def minutes(value):
+            hour, minute = map(int, value.split(":"))
+            return 60 * hour + minute
+
+        cases = (("08:10", "16:40", 510), ("06:30", "18:50", 740),
+                 ("05:20", "20:40", 920), ("07:10", "17:50", 640),
+                 ("07:25", "17:05", 580), ("05:50", "19:10", 800),
+                 ("06:10", "19:50", 820))
+        packets = ((self.PILOT / "records.md", "Alder", 4),
+                   (self.PILOT / "draft-assessments/reference-learner.md", "Cedar", 3))
+        actual = []
+        for path, site, count in packets:
+            rows = re.findall(r"^\| " + site + r" \| [^|]+ \| ([^|]+) \| ([^|]+) \|$",
+                              path.read_text(encoding="utf-8"), re.MULTILINE)
+            complete = [(a.strip(), b.strip()) for a, b in rows if "—" not in (a + b)]
+            self.assertEqual(count, len(complete))
+            self.assertEqual(count + 1, len(rows))
+            actual.extend(complete)
+        self.assertEqual([(start, end) for start, end, _ in cases], actual)
+        for start, end, expected in cases:
+            self.assertEqual(expected, minutes(end) - minutes(start))
+        guided = (self.PILOT / "guided-teacher.md").read_text(encoding="utf-8")
+        teacher = (self.PILOT / "draft-assessments/reference-teacher.md").read_text(encoding="utf-8")
+        for value in (510, 740, 920, 640, 410):
+            self.assertIn(str(value), guided)
+        for value in (580, 800, 820, 240):
+            self.assertIn(str(value), teacher)
+        self.assertIn("unknown", teacher)
+        for start, end, turn in ((330, 30, 60), (315, 15, 60), (345, 15, 30),
+                                 (105, 255, 150), (120, 240, 120)):
+            self.assertEqual(turn, (end - start) % 360)
+            self.assertEqual(turn // 15, (end // 15 - start // 15) % 24)
+
+    def test_pairs_links_status_and_lesson_duration(self):
+        for learner, teacher, label, count in (
+            ("entry-learner.md", "entry-teacher.md", "E", 4),
+            ("guided-learner.md", "guided-teacher.md", "G", 8),
+            ("draft-assessments/reference-learner.md",
+             "draft-assessments/reference-teacher.md", "S", 10),
+        ):
+            prompts = (self.PILOT / learner).read_text(encoding="utf-8")
+            answers = (self.PILOT / teacher).read_text(encoding="utf-8")
+            self.assertNotRegex(prompts, r"\]\([^)]*teacher[^)]*\)")
+            for index in range(1, count + 1):
+                self.assertIn(f"**{label}{index}.**", prompts)
+                self.assertIn(f"| {label}{index} |", answers)
+        for file in self.PILOT.rglob("*.md"):
+            body = file.read_text(encoding="utf-8")
+            self.assertNotRegex(body, r"(?:C|U|L|O|A)-AST-[0-9]{3}")
+            for dest in re.findall(r"\]\(([^)]+)\)", body):
+                if not dest.startswith(("https:", "http:", "#")):
+                    self.assertTrue((file.parent / dest.split("#")[0]).is_file(), dest)
+        for episode in (self.PILOT / "lessons.md").read_text(encoding="utf-8").split("## Episode ")[1:]:
+            self.assertEqual(25, sum(map(int, re.findall(r"\| (\d+) \|$", episode, re.MULTILINE))))
+            for term in ("Grammar:", "Logic:", "Rhetoric"):
+                self.assertIn(term, episode)
+        self.assertIn("not ready", (self.PILOT / "README.md").read_text(encoding="utf-8"))
+        self.assertIn("grade-4-daylight-pilot/README.md", (BASE / "grade-4/astronomy.md").read_text(encoding="utf-8"))

@@ -286,6 +286,7 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
                      "supply_reload_complete", "supply_reissue_guard",
                      "supply_blocked_preflight", "supply_station_identity", "supply_station_reload",
                      "supply_reload_content_binding", "supply_checkpoint_revalidation",
+                     "supply_answer_key_binding",
                      "actual_supply_receipt"):
             self.report["checks"][name] = {"status": "passed", "evidence": "synthetic parser fixture"}
         self.write_report()
@@ -317,7 +318,7 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
         self.report["checks"]["supply_reissue_guard"]["status"] = "passed"
         for name in ("supply_blocked_preflight", "supply_station_identity",
                      "supply_station_reload", "supply_reload_content_binding",
-                     "supply_checkpoint_revalidation"):
+                     "supply_checkpoint_revalidation", "supply_answer_key_binding"):
             with self.subTest(gate=name):
                 self.report["checks"][name]["status"] = "not_run"
                 self.write_report()
@@ -330,15 +331,16 @@ class FactorioIntegrationConsumerTest(unittest.TestCase):
                 with self.assertRaises(integration.IntegrationError):
                     self.validate()
                 self.report["checks"][name] = saved
-        gate = self.report["checks"]["supply_checkpoint_revalidation"]
-        for evidence in ("", None, 0):
-            with self.subTest(evidence=evidence):
-                gate["evidence"] = evidence
-                self.write_report()
-                with self.assertRaisesRegex(integration.IntegrationError,
-                                            "candidate supply engine gate did not pass: supply_checkpoint_revalidation"):
-                    self.validate()
-        gate["evidence"] = "synthetic parser fixture"
+        for name in ("supply_checkpoint_revalidation", "supply_answer_key_binding"):
+            gate = self.report["checks"][name]
+            for evidence in ("", None, 0):
+                with self.subTest(gate=name, evidence=evidence):
+                    gate["evidence"] = evidence
+                    self.write_report()
+                    with self.assertRaisesRegex(integration.IntegrationError,
+                                                "candidate supply engine gate did not pass: " + name):
+                        self.validate()
+            gate["evidence"] = "synthetic parser fixture"
         self.write_report()
         self.assertIn("supply_candidate", self.validate()["receipts"])
         payload.write_text(json.dumps(dict(SUPPLY, learner_id="private-value")), encoding="utf-8")
