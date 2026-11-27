@@ -15,6 +15,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, simpledialog, ttk
 import webbrowser
 
+from device_check import check_bundle as check_device_bundle, format_result as format_device_result
 from installer_core import (ROOT, WEBSTORE_URL, change_local_policy, export_bundle,
                             load_bundle, publication_ready, validate_settings,
                             verify_policy_bundle)
@@ -372,6 +373,8 @@ class GuardWizard(tk.Tk):
                     self.apply_button, self.remove_button, self.publish_button,
                     self.prepare_release_button, self.verify_release_button, self.channel_control,
                     self.id_entry, self.confirmation, self.target_os_control, self.update_url_entry)
+        if hasattr(self, "check_button"):
+            controls += (self.check_button,)
         self._release_control_states = [(control, control.cget("state")) for control in controls]
         for control, _state in self._release_control_states:
             control.configure(state="disabled")
@@ -468,6 +471,9 @@ class GuardWizard(tk.Tk):
         self.apply_button.pack(side="left")
         self.remove_button = ttk.Button(row, text="Remove local policy", command=lambda: self.install_policy(True))
         self.remove_button.pack(side="left", padx=8)
+        self.check_button = ttk.Button(row, text="Check local policy (read-only)",
+                                       command=self.check_local_policy)
+        self.check_button.pack(side="left", padx=(8, 0))
         self.policy_status = ttk.Label(page, text="Policy application: not checked", wraplength=740)
         self.policy_status.pack(anchor="w", pady=8)
         ttk.Label(page, text="Paste these addresses into Chrome. Browser security prevents a setup page "
@@ -477,6 +483,20 @@ class GuardWizard(tk.Tk):
         for address in ("chrome://policy", "chrome://extensions"):
             ttk.Button(row, text="Copy " + address,
                        command=lambda value=address: self.copy_text(value)).pack(side="left", padx=(0, 8))
+
+    def check_local_policy(self):
+        """Observe local policy only; never claim Chrome enforced it."""
+        if (self.policy_process is not None or
+                getattr(self, "release_operation", None) is not None or
+                self.bundle_path is None):
+            return
+        try:
+            result = check_device_bundle(self.bundle_path)
+            message = "Read-only local policy check: " + format_device_result(result)
+        except (ValueError, OSError, RuntimeError, TypeError) as exc:
+            message = ("Local policy could not be inspected: " + str(exc) +
+                       ". Chrome installation and enforcement remain UNVERIFIED.")
+        self.policy_status.configure(text=message)
 
     def copy_text(self, value):
         self.clipboard_clear()
@@ -583,6 +603,7 @@ class GuardWizard(tk.Tk):
         self.apply_button.configure(state="normal" if local and not legacy_hosted else "disabled")
         self.remove_button.configure(state="normal" if local else "disabled")
         self.publish_button.configure(state="normal" if not published or legacy_hosted else "disabled")
+        self.check_button.configure(state="normal" if published else "disabled")
         self.policy_status.configure(text="Policy application: not checked")
 
     def open_guide(self):
@@ -616,7 +637,8 @@ class GuardWizard(tk.Tk):
     def _lock_policy_controls(self):
         controls = (self.open_button, self.new_button, self.prev, self.next,
                     self.exit_button, self.apply_button, self.remove_button, self.publish_button)
-        controls += tuple(getattr(self, name) for name in ("prepare_release_button", "verify_release_button")
+        controls += tuple(getattr(self, name) for name in
+                          ("prepare_release_button", "verify_release_button", "check_button")
                           if hasattr(self, name))
         self._policy_control_states = [(control, control.cget("state")) for control in controls]
         for control, _state in self._policy_control_states:
@@ -879,12 +901,15 @@ if __name__ == "__main__":
         release_core.main()
     elif len(sys.argv) == 3 and sys.argv[1] == "--self-test":
         _package_self_test(sys.argv[2])
+    elif len(sys.argv) == 3 and sys.argv[1] == "--check-policy":
+        from device_check import main as check_policy_main
+        raise SystemExit(check_policy_main([sys.argv[2]]))
     elif len(sys.argv) == 3 and sys.argv[1] == "--apply-linux" and platform.system() != "Linux":
         raise SystemExit("--apply-linux is only supported on Linux")
     elif len(sys.argv) == 3 and sys.argv[1] in ("--apply-policy", "--apply-linux", "--remove-policy"):
         raise SystemExit(_policy_cli(sys.argv[2], sys.argv[1] == "--remove-policy"))
     elif len(sys.argv) != 1:
         raise SystemExit("Usage: Setup [--self-test REPORT | --release COMMAND ... | "
-                         "--apply-policy BUNDLE | --remove-policy BUNDLE]")
+                         "--check-policy BUNDLE | --apply-policy BUNDLE | --remove-policy BUNDLE]")
     else:
         GuardWizard().mainloop()
