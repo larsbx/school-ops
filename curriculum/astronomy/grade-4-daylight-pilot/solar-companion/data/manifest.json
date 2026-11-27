@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "status": "draft-review-only",
+  "base_revision": "2aa3eb3a7934a564755823c0fb604ff1bb3b3cfd",
+  "source_kind": "calculated_ephemeris_not_observation",
+  "snapshot_date_utc": "2026-11-26",
+  "provider": "NASA/JPL Horizons",
+  "api_version": "1.2",
+  "target": "Sun (10)",
+  "ephemeris": "DE441",
+  "sites": {
+    "greenwich": {
+      "name": "Greenwich public reference",
+      "latitude_deg": "51.4769",
+      "longitude_deg_east": "0.0",
+      "ellipsoid_height_km": "0",
+      "fixed_utc_offset_minutes": 0,
+      "coordinate_basis": "Author-selected reference near public Greenwich, not a surveyed observatory or learner location",
+      "coordinate_source_url": null
+    },
+    "sydney": {
+      "name": "Sydney Observatory Hill reference",
+      "latitude_deg": "-33.86",
+      "longitude_deg_east": "151.21",
+      "ellipsoid_height_km": "0",
+      "fixed_utc_offset_minutes": 600,
+      "coordinate_basis": "Rounded public coordinates of BOM station 066062; idealized reference height, not its actual 39 m elevation",
+      "coordinate_source_url": "https://www.bom.gov.au/climate/averages/tables/cw_066062_SiteMap.shtml"
+    }
+  },
+  "dates": [
+    "2026-06-21",
+    "2026-12-21"
+  ],
+  "sample_local_times": [
+    "09:00",
+    "11:00",
+    "13:00",
+    "15:00"
+  ],
+  "horizon_threshold": {
+    "numerator": -5,
+    "denominator": 6,
+    "unit": "degrees",
+    "source_url": "https://aa.usno.navy.mil/faq/RST_defs",
+    "method": "Apply standard -50 arcminute solar-center threshold to airless apparent JPL elevations. One-minute brackets plus actual midpoint samples choose nearest-minute labels. These labels are author-derived, not native provider rise/set output.",
+    "rounding_tie": "later minute",
+    "assumption": "One continuous monotone crossing within each one-minute bracket; idealized level horizon, fixed disk/refraction convention and zero ellipsoid height, not actual terrain."
+  },
+  "bearing_rounding": {
+    "cell_degrees": 15,
+    "tie": "half up (clockwise), then modulo 360",
+    "input_precision": "Use full six-decimal provider text without intermediate rounding."
+  },
+  "sources": [
+    {
+      "id": "greenwich-2026-06-21-minute",
+      "site_id": "greenwich",
+      "local_date": "2026-06-21",
+      "kind": "minute",
+      "raw_path": "raw/greenwich-2026-06-21-minute.json",
+      "raw_sha256": "12b144655d7ab3c67cbc968fd8fc6e57ca98f9fb4eee4f78f6e521f5866affb1",
+      "text_path": "raw/greenwich-2026-06-21-minute.txt",
+      "text_sha256": "2483b56190e971ebd7eedff8c8d0cf7f593c9ef279968ae4cd092a6a674e7182",
+      "request_path": "raw/greenwich-2026-06-21-minute-request.json",
+      "request_sha256": "8d90915a2faeb62c435bb06ddc00699cdde4720b108137d07040ac5b2ed3178e"
+    },
+    {
+      "id": "greenwich-2026-06-21-midpoints",
+      "site_id": "greenwich",
+      "local_date": "2026-06-21",
+      "kind": "midpoints",
+      "raw_path": "raw/greenwich-2026-06-21-midpoints.json",
+      "raw_sha256": "94d550f6e8650a9d10690ceb073322393eac5725fa1bfc2459e38638d7b015b2",
+      "text_path": "raw/greenwich-2026-06-21-midpoints.txt",
+      "text_sha256": "c5947903f5f8f83ffaeb36ff83c9335b45d8af93c9c243c3e43e33ee176348a9",
+      "request_path": "raw/greenwich-2026-06-21-midpoints-request.json",
+      "request_sha256": "d6b7fdb901a67283e6bd86b662c2e94f4e95a0a1bb56a826532ffc5f77178667"
+    },
+    {
+      "id": "greenwich-2026-12-21-minute",
+      "site_id": "greenwich",
+      "local_date": "2026-12-21",
+      "kind": "minute",
+      "raw_path": "raw/greenwich-2026-12-21-minute.json",
+      "raw_sha256": "e7d4f1d347a7def8d2133ad42f26b96e199d2e9df9cb8473c4d791df482f7960",
+      "text_path": "raw/greenwich-2026-12-21-minute.txt",
+      "text_sha256": "597f5601fb78410e28cc1ee59e58d41e04f2e61c42f2e9eede11704e933a981b",
+      "request_path": "raw/greenwich-2026-12-21-minute-request.json",
+      "request_sha256": "bfe770b55c68a83607c47cc3b315f6d993d810bf5924127d695da25eddb08c96"
+    },
+    {
+      "id": "greenwich-2026-12-21-midpoints",
+      "site_id": "greenwich",
+      "local_date": "2026-12-21",
+      "kind": "midpoints",
+      "raw_path": "raw/greenwich-2026-12-21-midpoints.json",
+      "raw_sha256": "e817967cd83809493a8a8ec61fd01702f7e99bebe98230dbd89a62fd2b70a0be",
+      "text_path": "raw/greenwich-2026-12-21-midpoints.txt",
+      "text_sha256": "4a76eb20fade1224b95a8084c8b77351e661be11d47ba0ea39e085c2f0b4cf9c",
+      "request_path": "raw/greenwich-2026-12-21-midpoints-request.json",
+      "request_sha256": "b41e3fe81802b01f82d74f86b934800fe3b6039b6117afb0920c10b36485d766"
+    },
+    {
+      "id": "sydney-2026-06-21-minute",
+      "site_id": "sydney",
+      "local_date": "2026-06-21",
+      "kind": "minute",
+      "raw_path": "raw/sydney-2026-06-21-minute.json",
+      "raw_sha256": "071267644d7d566fa3c82dec530a176388204678788d2c479ceef59fe2b1f4fe",
+      "text_path": "raw/sydney-2026-06-21-minute.txt",
+      "text_sha256": "bc7390c35b06d652481c1af8af0744c2bb9f2e4066a02d7e76cb9cae36eb663e",
+      "request_path": "raw/sydney-2026-06-21-minute-request.json",
+      "request_sha256": "49c836f11d59265434a3cbdc5350bf0f214246daa53dd83ee7c0308e0459587b"
+    },
+    {
+      "id": "sydney-2026-06-21-midpoints",
+      "site_id": "sydney",
+      "local_date": "2026-06-21",
+      "kind": "midpoints",
+      "raw_path": "raw/sydney-2026-06-21-midpoints.json",
+      "raw_sha256": "3a358b5ae83922e4ec9f8db476efd16ac88fa0595f9c9d86c852a005035e0f62",
+      "text_path": "raw/sydney-2026-06-21-midpoints.txt",
+      "text_sha256": "aeeabedbdb1817da8b9569435bd932622803d2a59b4ed560895a2e2a9e6702eb",
+      "request_path": "raw/sydney-2026-06-21-midpoints-request.json",
+      "request_sha256": "5eb7f5b41cef1849ba97b360ac47ac88da57a2237f9360b7aab48e0590ab11bf"
+    },
+    {
+      "id": "sydney-2026-12-21-minute",
+      "site_id": "sydney",
+      "local_date": "2026-12-21",
+      "kind": "minute",
+      "raw_path": "raw/sydney-2026-12-21-minute.json",
+      "raw_sha256": "4fc2caa9bed6df08a0aff24a8cb20d26a856d2a245efa80f6f688c8602c1b76b",
+      "text_path": "raw/sydney-2026-12-21-minute.txt",
+      "text_sha256": "f0990f96c4e940e508bbb7ac942f27f2ca6e6649f44a30201f2df68a2a1e552f",
+      "request_path": "raw/sydney-2026-12-21-minute-request.json",
+      "request_sha256": "e42bdf4ddc74eff27c4bfa814d46bbf195f800abe566b06637e0dddf99f2517d"
+    },
+    {
+      "id": "sydney-2026-12-21-midpoints",
+      "site_id": "sydney",
+      "local_date": "2026-12-21",
+      "kind": "midpoints",
+      "raw_path": "raw/sydney-2026-12-21-midpoints.json",
+      "raw_sha256": "e646d3d01ccc00e9cfec1758088180e6617b7332b4208c238fdc6b808f6a1780",
+      "text_path": "raw/sydney-2026-12-21-midpoints.txt",
+      "text_sha256": "edf74f73190ac180e1bffabae708a0fedcebf2ef0bdd03e2895424f021930970",
+      "request_path": "raw/sydney-2026-12-21-midpoints-request.json",
+      "request_sha256": "55ecbc71ed561cf59be7a4470d39a5c2e60ad8b5df51fb0b24e888df216120d2"
+    }
+  ],
+  "independent_comparison": {
+    "path": "usno-greenwich-selected-excerpt.json",
+    "sha256": "6aaaf35c5a06d4fe4dc57a03d1e5148cf2f0505e938eeab0db3eb94e090b885c",
+    "scope": "Greenwich selected event labels only; transcribed normalized primary-source output, not raw HTTP or observational evidence",
+    "event_tolerance_minutes": 1
+  }
+}

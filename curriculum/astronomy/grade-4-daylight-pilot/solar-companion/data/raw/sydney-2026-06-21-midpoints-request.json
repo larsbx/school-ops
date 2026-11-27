@@ -1,0 +1,46 @@
+{
+  "provider": "NASA/JPL Horizons",
+  "site_id": "sydney",
+  "latitude_deg": -33.86,
+  "longitude_deg_east": 151.21,
+  "ellipsoid_height_km": 0,
+  "packet_fixed_utc_offset_hours": 10.0,
+  "packet_local_date": "2026-06-21",
+  "purpose": "Determine nearest-minute endpoint of -50/60-degree airless solar-center threshold by actual half-minute output",
+  "parameters": {
+    "format": "json",
+    "COMMAND": "'10'",
+    "EPHEM_TYPE": "'OBSERVER'",
+    "CENTER": "'coord@399'",
+    "COORD_TYPE": "'GEODETIC'",
+    "SITE_COORD": "'151.21,-33.86,0'",
+    "QUANTITIES": "'4'",
+    "CSV_FORMAT": "'YES'",
+    "APPARENT": "'AIRLESS'",
+    "CAL_TYPE": "'GREGORIAN'",
+    "ELEV_CUT": "'-90'",
+    "SKIP_DAYLT": "'NO'",
+    "TIME_DIGITS": "'SECONDS'",
+    "TLIST": "'2026-06-20 20:59:30' '2026-06-21 06:53:30'",
+    "TLIST_TYPE": "'CAL'",
+    "TIME_TYPE": "'UT'"
+  },
+  "request_url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40399%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%27151.21%2C-33.86%2C0%27&QUANTITIES=%274%27&CSV_FORMAT=%27YES%27&APPARENT=%27AIRLESS%27&CAL_TYPE=%27GREGORIAN%27&ELEV_CUT=%27-90%27&SKIP_DAYLT=%27NO%27&TIME_DIGITS=%27SECONDS%27&TLIST=%272026-06-20+20%3A59%3A30%27+%272026-06-21+06%3A53%3A30%27&TLIST_TYPE=%27CAL%27&TIME_TYPE=%27UT%27",
+  "retrieved_at_utc": "2026-11-26T22:43:54.211971+00:00",
+  "http_status": 200,
+  "response_headers": {
+    "server": "envoy",
+    "date": "Thu, 26 Nov 2026 22:43:55 GMT",
+    "content-type": "application/json",
+    "x-envoy-upstream-service-time": "136",
+    "connection": "close",
+    "transfer-encoding": "chunked"
+  },
+  "raw_json": "sydney-2026-06-21-midpoints.json",
+  "raw_result_text": "sydney-2026-06-21-midpoints.txt",
+  "sha256": "3a358b5ae83922e4ec9f8db476efd16ac88fa0595f9c9d86c852a005035e0f62",
+  "api_signature": {
+    "version": "1.2",
+    "source": "NASA/JPL Horizons API"
+  }
+}
