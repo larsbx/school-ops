@@ -650,3 +650,59 @@ class Grade4DaylightDraftTests(unittest.TestCase):
                 self.assertIn(term, episode)
         self.assertIn("not ready", (self.PILOT / "README.md").read_text(encoding="utf-8"))
         self.assertIn("grade-4-daylight-pilot/README.md", (BASE / "grade-4/astronomy.md").read_text(encoding="utf-8"))
+
+
+class Grade5DecimalMeasuresDraftTests(unittest.TestCase):
+    PILOT = ROOT / "curriculum/mathematics/grade-5-decimal-measures-pilot"
+
+    def test_exact_reference_rows_and_key(self):
+        from fractions import Fraction
+
+        learner = (self.PILOT / "reference-learner.md").read_text(encoding="utf-8")
+        key = (self.PILOT / "reference-teacher.md").read_text(encoding="utf-8")
+        comparisons = re.findall(r"^\| ([AB]) \| ([0-9/]+) \| ([0-9.]+) \|$", learner, re.M)
+        self.assertEqual(["A", "B"], [row[0] for row in comparisons])
+        for (row, frac, dec), expected in zip(comparisons, ((45, 50), (46, 46))):
+            actual = (100 * Fraction(frac), 100 * Fraction(dec))
+            self.assertEqual(expected, actual, row)
+            self.assertTrue(all(x.denominator == 1 for x in actual))
+            self.assertIn(f"{expected[0]} cm", key)
+            self.assertIn(f"{expected[1]} cm", key)
+        budgets = re.findall(r"^\| ([CDE]) \| ([0-9.]+) \| ([0-9.]+) \| ([0-9/]+) \| ([0-9]+) \|$", learner, re.M)
+        self.assertEqual(["C", "D", "E"], [row[0] for row in budgets])
+        for (row, stock, first, second, minimum), expected in zip(budgets, ((33, 0), (25, 0), (16, 4))):
+            remainder = 100 * (Fraction(stock) - Fraction(first) - Fraction(second))
+            shortage = max(0, int(minimum) - remainder)
+            self.assertEqual(expected, (remainder, shortage), row)
+            self.assertIn(f"{expected[0]} cm", key)
+            if shortage:
+                self.assertIn(f"shortage {expected[1]} cm", key)
+
+    def test_links_labels_duration_and_no_learner_key_links(self):
+        for learner, teacher, labels in (
+            ("learner-entry.md", "teacher-entry.md", ("E", 4, "R", 4)),
+            ("learner-practice.md", "teacher-practice.md", ("G", 8, "X", 4)),
+            ("reference-learner.md", "reference-teacher.md", ("S", 10)),
+        ):
+            prompts = (self.PILOT / learner).read_text(encoding="utf-8")
+            answers = (self.PILOT / teacher).read_text(encoding="utf-8")
+            self.assertNotRegex(prompts, r"\]\([^)]*teacher[^)]*\)")
+            for prefix, count in zip(labels[::2], labels[1::2]):
+                for i in range(1, count + 1):
+                    self.assertEqual(1, prompts.count(f"**{prefix}{i}.**"))
+                    self.assertEqual(1, answers.count(f"| {prefix}{i} |"))
+        episodes = (self.PILOT / "lessons.md").read_text(encoding="utf-8").split("## Episode ")[1:]
+        self.assertEqual(4, len(episodes))
+        for episode in episodes:
+            self.assertEqual(25, sum(map(int, re.findall(r"\| (\d+) \|$", episode, re.M))))
+            for term in ("Grammar:", "Logic:", "Rhetoric:"):
+                self.assertIn(term, episode)
+        for file in self.PILOT.glob("*.md"):
+            body = file.read_text(encoding="utf-8")
+            self.assertNotRegex(body, r"(?:C|U|L|O|A)-MATH-[0-9]{3}")
+            for dest in re.findall(r"\]\(([^)]+)\)", body):
+                if not dest.startswith(("https:", "http:", "#")):
+                    self.assertTrue((file.parent / dest.split("#")[0]).is_file(), dest)
+        for file in (ROOT / "curriculum/README.md", BASE / "grade-5/mathematics.md"):
+            self.assertIn("grade-5-decimal-measures-pilot/README.md", file.read_text(encoding="utf-8"))
+        self.assertIn("not ready", (self.PILOT / "README.md").read_text(encoding="utf-8"))
