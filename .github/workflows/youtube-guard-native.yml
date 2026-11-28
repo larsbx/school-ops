@@ -3,30 +3,27 @@ name: SchoolOps YouTube Guard native wizard bundles
 on:
   pull_request:
     paths:
-      - 'tools/browser/site_scoped_youtube_guard/wizard.py'
-      - 'tools/browser/site_scoped_youtube_guard/installer_core.py'
-      - 'tools/browser/site_scoped_youtube_guard/platform_policy.py'
-      - 'tools/browser/site_scoped_youtube_guard/crx3.py'
-      - 'tools/browser/site_scoped_youtube_guard/release_core.py'
-      - 'tests/test_guard_release.py'
-      - 'tests/test_guard_release_wizard.py'
+      - 'tools/browser/site_scoped_youtube_guard/**'
+      - 'tests/test_guard_release*.py'
       - 'tests/test_guard_platform_policy.py'
-      - 'tools/browser/site_scoped_youtube_guard/build_rules.py'
-      - 'tools/browser/site_scoped_youtube_guard/package_native.py'
-      - 'tools/browser/site_scoped_youtube_guard/manifest.json'
       - 'tests/test_native_youtube_wizard.py'
+      - 'tests/test_native_candidate.py'
       - 'tests/test_youtube_guard_installer.py'
-      - 'tools/browser/site_scoped_youtube_guard/smoke_gui.py'
       - '.github/workflows/youtube-guard-native.yml'
   push:
     branches: [main]
     paths:
       - 'tools/browser/site_scoped_youtube_guard/**'
+      - 'tests/test_native_candidate.py'
       - '.github/workflows/youtube-guard-native.yml'
   workflow_dispatch:
 
 permissions:
   contents: read
+
+env:
+  SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+  PYTHONUTF8: '1'
 
 jobs:
   native-wizard:
@@ -36,17 +33,14 @@ jobs:
       matrix:
         os: [windows-2025, macos-15, ubuntu-24.04]
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 25
-    env:
-      # The repository and generated fixtures use UTF-8 on every platform.
-      PYTHONUTF8: '1'
+    timeout-minutes: 35
     steps:
       - name: Preserve committed fixture bytes on checkout
-        # Hash checks must see Git's LF bytes, including on Windows runners.
         run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ env.SOURCE_COMMIT }}
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -63,23 +57,76 @@ jobs:
         run: |
           openssl version
           python -c 'import subprocess; assert subprocess.check_output(["openssl", "version"], text=True).startswith("OpenSSL 3."), "OpenSSL 3 is required"'
+      - name: Probe selected Python Tk and Linux display
+        if: runner.os == 'Linux'
+        shell: bash
+        run: bash tools/browser/site_scoped_youtube_guard/native_display.sh
       - name: Install pinned native packager
-        run: python -m pip install --disable-pip-version-check "pyinstaller==6.22.3"
+        run: python -m pip install --disable-pip-version-check --retries 3 --timeout 30 "pyinstaller==6.22.3"
       - name: Validate Python contracts
         run: python -m unittest discover -s tests -v
-      - name: Install Linux virtual-display dependencies
-        if: matrix.os == 'ubuntu-24.04'
-        run: sudo apt-get update && sudo apt-get install -y xvfb python3-tk
       - name: Smoke-test interactive Tkinter wizard on a virtual display
-        if: matrix.os == 'ubuntu-24.04'
-        run: xvfb-run -a python tools/browser/site_scoped_youtube_guard/smoke_gui.py
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          xvfb-run -a python tools/browser/site_scoped_youtube_guard/smoke_gui.py | tee source-gui-smoke.txt
       - name: Build and smoke-test unsigned native wizard
         run: python tools/browser/site_scoped_youtube_guard/package_native.py --output-dir native-wizard-output
-      - name: Upload unsigned build and smoke evidence
-        if: always()
+      - name: Attach source GUI smoke log
+        if: runner.os == 'Linux'
+        shell: bash
+        run: cp source-gui-smoke.txt native-wizard-output/
+      - name: Replay extracted archive and seal exact-revision evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/browser/site_scoped_youtube_guard/native_candidate.py seal native-wizard-output \
+            --runner '${{ matrix.os }}' --commit "$SOURCE_COMMIT" --tree "$(git rev-parse 'HEAD^{tree}')" \
+            --run "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT"
+      - name: Upload verified unsigned platform candidate
         uses: actions/upload-artifact@v4
         with:
-          name: schoolops-youtube-guard-${{ matrix.os }}-unsigned
+          name: native-${{ env.SOURCE_COMMIT }}-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.os }}
           path: native-wizard-output/
-          if-no-files-found: warn
-          retention-days: 14
+          if-no-files-found: error
+          retention-days: 90
+  candidate-set:
+    name: Cross-platform unsigned candidate set
+    needs: native-wizard
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SOURCE_COMMIT }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: native-${{ env.SOURCE_COMMIT }}-${{ github.run_id }}-${{ github.run_attempt }}-*
+          path: downloaded
+      - name: Verify complete same-attempt platform set
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_COMMIT"
+          mkdir candidate-set
+          for os in windows-2025 macos-15 ubuntu-24.04; do
+            mv "downloaded/native-$SOURCE_COMMIT-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-$os" "candidate-set/$os"
+          done
+          test -z "$(ls -A downloaded)"
+          verifier=tools/browser/site_scoped_youtube_guard/native_candidate.py
+          args=(--commit "$SOURCE_COMMIT" --tree "$(git rev-parse 'HEAD^{tree}')" --run "$GITHUB_RUN_ID" --attempt "$GITHUB_RUN_ATTEMPT")
+          python "$verifier" index candidate-set "${args[@]}"
+          python "$verifier" verify candidate-set "${args[@]}"
+          sha256sum candidate-set/INDEX.json
+      - name: Upload portable candidate set for approved offline archival
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-set-${{ env.SOURCE_COMMIT }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: candidate-set/
+          if-no-files-found: error
+          retention-days: 90
