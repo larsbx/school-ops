@@ -83,7 +83,10 @@
       "paths": [
         "tools/browser/site_scoped_youtube_guard/package_native.py",
         "tools/browser/site_scoped_youtube_guard/smoke_gui.py",
-        "tests/test_native_youtube_wizard.py"
+        "tests/test_native_youtube_wizard.py",
+        "tools/browser/site_scoped_youtube_guard/native_candidate.py",
+        "tools/browser/site_scoped_youtube_guard/native_display.sh",
+        "tests/test_native_candidate.py"
       ],
       "depends_on": [
         "installer",
@@ -172,6 +175,13 @@
       ],
       "directory": "tests",
       "pattern": "test_native_youtube_wizard.py"
+    },
+    "native-candidate": {
+      "components": [
+        "native"
+      ],
+      "directory": "tests",
+      "pattern": "test_native_candidate.py"
     },
     "islamic-prototype": {
       "components": [
